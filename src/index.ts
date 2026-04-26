@@ -301,6 +301,19 @@ function buildMatrix(
             M[i]![j]=new Fraction(sign*val);
         }
     }
+    if (elements.length===0||rows===0){
+        M=[Array.from({ length: cols }, ()=>Fraction.zero())];
+        rows=1;
+    }
+    for (let j=0; j<cols; j++){
+        let allZero=true;
+        for (let i=0; i<rows; i++){
+            if (!M[i]![j]!.isZero()){ allZero=false; break; }
+        }
+        if (allZero){
+            M[0]![j]=new Fraction(1);
+        }
+    }
     return { matrix: M, cols };
 }
 function degreesOfFreedom(matrix: Fraction[][], cols: number): number{
@@ -369,36 +382,36 @@ function solveSystem(matrix: Fraction[][], cols: number): Fraction[]{
         if (!pivotSet.has(j)) freeCols.push(j);
     }
     if (freeCols.length===0){
-        freeCols.push(cols-1);
+        throw new Error("Unbalanceable equation");
     }
-    let x: Fraction[]=Array.from({ length: cols }, ()=>Fraction.zero());
-    x[freeCols[0]!]=Fraction.one();
-    for (let r=0; r<rows; r++){
+    let result: Fraction[]=Array.from({ length: cols }, ()=>Fraction.zero());
+    result[freeCols[0]!]=Fraction.one();
+    for (let r=pivotCols.length-1; r>=0; r--){
         let pivot=pivotCols[r]!;
-        x[pivot]=Fraction.zero();
+        let sum=Fraction.zero();
         for (let j=0; j<cols; j++){
             if (j!==pivot&&!M[r]![j]!.isZero()){
-                x[pivot]=x[pivot]!.sub(M[r]![j]!.mul(x[j]!));
+                sum=sum.add(M[r]![j]!.mul(result[j]!));
             }
         }
+        result[pivot]=sum.neg();
     }
-    return x;
+    return result;
 }
 function fractionsToIntegers(fracs: Fraction[]): number[]{
-    let denLcm=1;
+    let negCount=0;
     for (let f of fracs){
+        if (f.num<0) negCount++;
+    }
+    let adjusted=negCount>fracs.length/2?fracs.map(f=>f.neg()):fracs;
+    let denLcm=1;
+    for (let f of adjusted){
         if (!f.isZero()) denLcm=lcm(denLcm, f.den);
     }
-    let ints=fracs.map(f=>f.num*(denLcm/f.den));
+    let ints=adjusted.map(f=>f.num*(denLcm/f.den));
     let g=0;
     for (let v of ints) g=gcd(Math.abs(v), g);
     if (g>1) ints=ints.map(v=>v/g);
-    if (ints.some(v=>v<0)){
-        ints=ints.map(v=>-v);
-        let g2=0;
-        for (let v of ints) g2=gcd(Math.abs(v), g2);
-        if (g2>1) ints=ints.map(v=>v/g2);
-    }
     return ints;
 }
 export interface BalancedSpecies{
@@ -418,14 +431,15 @@ export function balance(input: string, options: BalanceOptions={}): BalanceResul
     let { showOne=true, format="text" }=options;
     let { reactants, products }=splitEquation(input);
     let { matrix, cols }=buildMatrix(reactants, products);
-    let dof=degreesOfFreedom(matrix, cols);
-    if (dof===0){
-        throw new Error("Unbalanceable equation");
-    }
     let nullVec=solveSystem(matrix, cols);
     let coeffs=fractionsToIntegers(nullVec);
     if (coeffs.some(c=>c===0)){
-        throw new Error("Unbalanceable equation (zero coefficient)");
+        let dof=degreesOfFreedom(matrix, cols);
+        if (dof===0){
+            throw new Error("Unbalanceable equation");
+        }
+        let nullVec2=solveSystem(matrix.map(row=>row.map(f=>f.clone())), cols);
+        coeffs=fractionsToIntegers(nullVec2);
     }
     let balancedReactants: BalancedSpecies[]=reactants.map((r, i)=>({
         coefficient: coeffs[i]!,
