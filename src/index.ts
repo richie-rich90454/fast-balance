@@ -280,12 +280,10 @@ function buildMatrix(
 ): { matrix: Fraction[][]; cols: number }{
     let species=[...reactants, ...products];
     let elSet=new Set<string>();
-    let hasCharge=false;
     for (let s of species){
         for (let el in s.elements) elSet.add(el);
-        if (s.charge!==0) hasCharge=true;
     }
-    if (hasCharge) elSet.add("e");
+    elSet.add("e");
     let elements=Array.from(elSet).sort();
     let rows=elements.length;
     let cols=species.length;
@@ -352,18 +350,46 @@ function nullspaceVector(matrix: Fraction[][], cols: number): Fraction[]{
     if (freeCols.length===0){
         throw new Error("Equation cannot be balanced (only trivial solution)");
     }
-    let x: Fraction[]=Array.from({ length: cols }, ()=>Fraction.zero());
-    for (let fc of freeCols) x[fc]=Fraction.one();
-    for (let r=0; r<rows; r++){
-        let pivot=pivotCols[r]!;
-        x[pivot]=Fraction.zero();
-        for (let j=0; j<cols; j++){
-            if (j!==pivot&&!M[r]![j]!.isZero()){
-                x[pivot]=x[pivot]!.sub(M[r]![j]!.mul(x[j]!));
+    let best: Fraction[]|null=null;
+    let bestSum=Infinity;
+    for (let attempt=0; attempt<100; attempt++){
+        let x: Fraction[]=Array.from({ length: cols }, ()=>Fraction.zero());
+        for (let fc of freeCols) x[fc]=new Fraction(1+attempt);
+        for (let r=0; r<rows; r++){
+            let pivot=pivotCols[r]!;
+            x[pivot]=Fraction.zero();
+            for (let j=0; j<cols; j++){
+                if (j!==pivot&&!M[r]![j]!.isZero()){
+                    x[pivot]=x[pivot]!.sub(M[r]![j]!.mul(x[j]!));
+                }
+            }
+        }
+        let allPositive=true;
+        let sum=0;
+        for (let v of x){
+            if (v.num<=0){ allPositive=false; break; }
+            sum+=v.num;
+        }
+        if (allPositive&&sum<bestSum){
+            best=x;
+            bestSum=sum;
+            break;
+        }
+    }
+    if (best===null){
+        best=Array.from({ length: cols }, ()=>Fraction.zero());
+        for (let fc of freeCols) best[fc]=Fraction.one();
+        for (let r=0; r<rows; r++){
+            let pivot=pivotCols[r]!;
+            best[pivot]=Fraction.zero();
+            for (let j=0; j<cols; j++){
+                if (j!==pivot&&!M[r]![j]!.isZero()){
+                    best[pivot]=best[pivot]!.sub(M[r]![j]!.mul(best[j]!));
+                }
             }
         }
     }
-    return x;
+    return best;
 }
 function fractionsToIntegers(fracs: Fraction[]): number[]{
     let denLcm=1;
