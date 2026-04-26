@@ -101,6 +101,9 @@ interface ParsedUnit{
     elements: ElementMap;
     charge: number;
 }
+function stripStateSymbols(formula: string): string{
+    return formula.replace(STATE_REGEX, "");
+}
 function parseFormula(formula: string): ParsedUnit{
     formula=formula.replace(STATE_REGEX, "");
     if (/^e[\^]?-?$/i.test(formula.trim())){
@@ -262,8 +265,9 @@ function splitEquation(input: string): Equation{
                 let match=term.match(/^(\d+)\s*(.*)/);
                 let formulaStr=term;
                 if (match) formulaStr=match[2]!;
+                let cleanedFormula=stripStateSymbols(formulaStr);
                 let { elements, charge }=parseFormula(formulaStr);
-                return { formula: formulaStr, elements, charge };
+                return { formula: cleanedFormula, elements, charge };
             });
     return {
         reactants: parseSide(parts[0]!.trim()),
@@ -276,10 +280,12 @@ function buildMatrix(
 ): { matrix: Fraction[][]; cols: number }{
     let species=[...reactants, ...products];
     let elSet=new Set<string>();
+    let hasCharge=false;
     for (let s of species){
         for (let el in s.elements) elSet.add(el);
-        if (s.charge!==0) elSet.add("e");
+        if (s.charge!==0) hasCharge=true;
     }
+    if (hasCharge) elSet.add("e");
     let elements=Array.from(elSet).sort();
     let rows=elements.length;
     let cols=species.length;

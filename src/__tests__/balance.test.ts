@@ -97,7 +97,7 @@ describe("balance()", ()=>{
         expect(result.products[1]?.coefficient).toBe(10);
     });
     it("handles bullet (•) as hydrate dot", ()=>{
-        let result=balance("CaCl2•2H2O -> CaCl2 + H2O");
+        let result=balance("CaCl2·2H2O -> CaCl2 + H2O");
         expect(result.reactants[0]?.coefficient).toBe(1);
         expect(result.products[0]?.coefficient).toBe(1);
         expect(result.products[1]?.coefficient).toBe(2);
@@ -248,5 +248,59 @@ describe("balance()", ()=>{
         let res=balance(eq, { showOne: false });
         let expected="2 H2 + O2 -> 2 H2O";
         expect(res.equation).toBe(expected);
+    });
+    it("handles a neutralization reaction", ()=>{
+        let result=balance("H2SO4 + NaOH -> Na2SO4 + H2O");
+        expect(result.reactants[0]?.coefficient).toBe(1);
+        expect(result.reactants[1]?.coefficient).toBe(2);
+        expect(result.products[0]?.coefficient).toBe(1);
+        expect(result.products[1]?.coefficient).toBe(2);
+    });
+    it("handles a displacement reaction with polyatomic ions", ()=>{
+        let result=balance("Zn + CuSO4 -> ZnSO4 + Cu");
+        expect(result.reactants[0]?.coefficient).toBe(1);
+        expect(result.reactants[1]?.coefficient).toBe(1);
+        expect(result.products[0]?.coefficient).toBe(1);
+        expect(result.products[1]?.coefficient).toBe(1);
+    });
+    it("handles ammonia synthesis", ()=>{
+        let result=balance("N2 + H2 -> NH3");
+        expect(result.reactants[0]?.coefficient).toBe(1);
+        expect(result.reactants[1]?.coefficient).toBe(3);
+        expect(result.products[0]?.coefficient).toBe(2);
+    });
+    it("handles thermal decomposition of potassium chlorate", ()=>{
+        let result=balance("KClO3 -> KCl + O2");
+        expect(result.reactants[0]?.coefficient).toBe(2);
+        expect(result.products[0]?.coefficient).toBe(2);
+        expect(result.products[1]?.coefficient).toBe(3);
+    });
+    it("handles reaction of sodium with water", ()=>{
+        let result=balance("Na + H2O -> NaOH + H2");
+        expect(result.reactants[0]?.coefficient).toBe(2);
+        expect(result.reactants[1]?.coefficient).toBe(2);
+        expect(result.products[0]?.coefficient).toBe(2);
+        expect(result.products[1]?.coefficient).toBe(1);
+    });
+    it("handles ferric oxide reduction with carbon monoxide", ()=>{
+        let result=balance("Fe2O3 + CO -> Fe + CO2");
+        expect(result.reactants[0]?.coefficient).toBe(1);
+        expect(result.reactants[1]?.coefficient).toBe(3);
+        expect(result.products[0]?.coefficient).toBe(2);
+        expect(result.products[1]?.coefficient).toBe(3);
+    });
+    it("handles an equation with only charged species on both sides", ()=>{
+        let result=balance("Cr2O7^2- + H+ + e- -> Cr3+ + H2O");
+        expect(result.reactants[0]?.coefficient).toBe(1);
+        expect(result.reactants[1]?.coefficient).toBe(14);
+        expect(result.reactants[2]?.coefficient).toBe(6);
+        expect(result.products[0]?.coefficient).toBe(2);
+        expect(result.products[1]?.coefficient).toBe(7);
+    });
+    it("handles hydrate dehydration with asterisk", ()=>{
+        let result=balance("MgSO4*7H2O -> MgSO4 + H2O");
+        expect(result.reactants[0]?.coefficient).toBe(1);
+        expect(result.products[0]?.coefficient).toBe(1);
+        expect(result.products[1]?.coefficient).toBe(7);
     });
 });
