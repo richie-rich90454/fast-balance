@@ -313,42 +313,34 @@ function buildMatrix(
     }
     return { matrix: M, cols };
 }
-function solveSystem(matrix: Fraction[][], cols: number): Fraction[]{
-    if (matrix.length===0){
-        return Array.from({ length: cols }, ()=>Fraction.one());
-    }
+function solveNullspace(matrix: Fraction[][], cols: number): Fraction[][]{
     let rows=matrix.length;
+    if (rows===0){
+        return [Array.from({ length: cols }, ()=>Fraction.one())];
+    }
     let M=matrix.map(row=>row.map(f=>f.clone()));
     let pivotCols: number[]=[];
-    let lead=0;
-    for (let r=0; r<rows; r++){
-        if (lead>=cols) break;
-        let i=r;
-        while (i<rows&&M[i]![lead]!.isZero()) i++;
-        if (i===rows){
-            lead++;
-            r--;
-            continue;
-        }
-        [M[i]!, M[r]!]=[M[r]!, M[i]!];
-        let pivot=M[r]![lead]!;
+    let row=0;
+    for (let col=0; col<cols&&row<rows; col++){
+        let sel=row;
+        while (sel<rows&&M[sel]![col]!.isZero()) sel++;
+        if (sel===rows) continue;
+        [M[sel]!, M[row]!]=[M[row]!, M[sel]!];
+        let pivot=M[row]![col]!;
         for (let j=0; j<cols; j++){
-            M[r]![j]=M[r]![j]!.div(pivot);
+            M[row]![j]=M[row]![j]!.div(pivot);
         }
-        for (let i2=0; i2<rows; i2++){
-            if (i2===r) continue;
-            let factor=M[i2]![lead]!;
+        for (let i=0; i<rows; i++){
+            if (i===row) continue;
+            let factor=M[i]![col]!;
             if (!factor.isZero()){
                 for (let j=0; j<cols; j++){
-                    M[i2]![j]=M[i2]![j]!.sub(factor.mul(M[r]![j]!));
+                    M[i]![j]=M[i]![j]!.sub(factor.mul(M[row]![j]!));
                 }
             }
         }
-        pivotCols.push(lead);
-        lead++;
-    }
-    if (pivotCols.length===cols){
-        throw new Error("Unbalanceable equation");
+        pivotCols.push(col);
+        row++;
     }
     let pivotSet=new Set(pivotCols);
     let freeCols: number[]=[];
@@ -356,20 +348,76 @@ function solveSystem(matrix: Fraction[][], cols: number): Fraction[]{
         if (!pivotSet.has(j)) freeCols.push(j);
     }
     if (freeCols.length===0){
-        freeCols.push(cols-1);
+        return [];
     }
-    let x: Fraction[]=Array.from({ length: cols }, ()=>Fraction.zero());
-    x[freeCols[0]!]=Fraction.one();
-    for (let r=0; r<rows; r++){
-        let pivot=pivotCols[r]!;
-        x[pivot]=Fraction.zero();
-        for (let j=0; j<cols; j++){
-            if (j!==pivot&&!M[r]![j]!.isZero()){
-                x[pivot]=x[pivot]!.sub(M[r]![j]!.mul(x[j]!));
+    let basis: Fraction[][]=[];
+    for (let fc of freeCols){
+        let x: Fraction[]=Array.from({ length: cols }, ()=>Fraction.zero());
+        x[fc]=Fraction.one();
+        for (let r=0; r<row; r++){
+            let pivot=pivotCols[r]!;
+            x[pivot]=Fraction.zero();
+            for (let j=0; j<cols; j++){
+                if (!M[r]![j]!.isZero()){
+                    x[pivot]=x[pivot]!.sub(M[r]![j]!.mul(x[j]!));
+                }
+            }
+        }
+        basis.push(x);
+    }
+    return basis;
+}
+function findMinimalPositiveSolution(basis: Fraction[][], cols: number): Fraction[]{
+    if (basis.length===0){
+        return Array.from({ length: cols }, ()=>Fraction.one());
+    }
+    if (basis.length===1){
+        let ints=fractionsToIntegers(basis[0]!);
+        if (ints.every(v=>v>0)){
+            return basis[0]!;
+        }
+        return basis[0]!.map(f=>f.neg());
+    }
+    let best: Fraction[]|null=null;
+    let bestSum=Infinity;
+    for (let scale=1; scale<=100; scale++){
+        let combined: Fraction[]=Array.from({ length: cols }, ()=>Fraction.zero());
+        for (let k=0; k<basis.length; k++){
+            let factor=new Fraction(k===0?scale:1);
+            for (let j=0; j<cols; j++){
+                combined[j]=combined[j]!.add(basis[k]![j]!.mul(factor));
+            }
+        }
+        let ints=fractionsToIntegers(combined);
+        if (ints.every(v=>v>0)){
+            let sum=ints.reduce((a, b)=>a+b, 0);
+            if (sum<bestSum){
+                best=combined;
+                bestSum=sum;
+                break;
             }
         }
     }
-    return x;
+    if (best===null){
+        for (let scale=1; scale<=100; scale++){
+            let combined: Fraction[]=Array.from({ length: cols }, ()=>Fraction.zero());
+            for (let k=0; k<basis.length; k++){
+                let factor=new Fraction(scale);
+                for (let j=0; j<cols; j++){
+                    combined[j]=combined[j]!.add(basis[k]![j]!.mul(factor));
+                }
+            }
+            let ints=fractionsToIntegers(combined);
+            if (ints.every(v=>v>0)){
+                best=combined;
+                break;
+            }
+        }
+    }
+    if (best===null){
+        best=basis[0]!;
+    }
+    return best;
 }
 function fractionsToIntegers(fracs: Fraction[]): number[]{
     let denLcm=1;
@@ -405,7 +453,11 @@ export function balance(input: string, options: BalanceOptions={}): BalanceResul
     let { showOne=true, format="text" }=options;
     let { reactants, products }=splitEquation(input);
     let { matrix, cols }=buildMatrix(reactants, products);
-    let nullVec=solveSystem(matrix, cols);
+    let basis=solveNullspace(matrix, cols);
+    if (basis.length===0){
+        throw new Error("Unbalanceable equation");
+    }
+    let nullVec=findMinimalPositiveSolution(basis, cols);
     let coeffs=fractionsToIntegers(nullVec);
     if (coeffs.some(c=>c===0)){
         throw new Error("Unbalanceable equation (zero coefficient)");
