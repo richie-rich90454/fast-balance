@@ -172,21 +172,25 @@ function parseWithoutMultiplier(str: string): ParsedUnit{
             totalCharge=savedCharge;
             let subscript=1;
             let charge=0;
-            let cr=tryParseCharge();
-            if (cr){
-                charge=cr.charge;
-                i+=cr.len;
-            }
-            else{
-                if (i<str.length&&/\d/.test(str[i]!)){
-                    let start=i;
-                    while (i<str.length&&/\d/.test(str[i]!)) i++;
-                    subscript=parseInt(str.slice(start, i), 10);
+            if (i<str.length){
+                let cr=tryParseCharge();
+                if (cr){
+                    charge=cr.charge;
+                    i+=cr.len;
                 }
-                let cr2=tryParseCharge();
-                if (cr2){
-                    charge=cr2.charge;
-                    i+=cr2.len;
+                else{
+                    if (i<str.length&&/\d/.test(str[i]!)){
+                        let start=i;
+                        while (i<str.length&&/\d/.test(str[i]!)) i++;
+                        subscript=parseInt(str.slice(start, i), 10);
+                    }
+                    if (i<str.length){
+                        let cr2=tryParseCharge();
+                        if (cr2){
+                            charge=cr2.charge;
+                            i+=cr2.len;
+                        }
+                    }
                 }
             }
             let multiplied: ElementMap={};
@@ -207,21 +211,25 @@ function parseWithoutMultiplier(str: string): ParsedUnit{
         let symbol=str.slice(start, i);
         let subscript=1;
         let charge=0;
-        let cr=tryParseCharge();
-        if (cr){
-            charge=cr.charge;
-            i+=cr.len;
-        }
-        else{
-            if (i<str.length&&/\d/.test(str[i]!)){
-                let sStart=i;
-                while (i<str.length&&/\d/.test(str[i]!)) i++;
-                subscript=parseInt(str.slice(sStart, i), 10);
+        if (i<str.length){
+            let cr=tryParseCharge();
+            if (cr){
+                charge=cr.charge;
+                i+=cr.len;
             }
-            let cr2=tryParseCharge();
-            if (cr2){
-                charge=cr2.charge;
-                i+=cr2.len;
+            else{
+                if (i<str.length&&/\d/.test(str[i]!)){
+                    let sStart=i;
+                    while (i<str.length&&/\d/.test(str[i]!)) i++;
+                    subscript=parseInt(str.slice(sStart, i), 10);
+                }
+                if (i<str.length){
+                    let cr2=tryParseCharge();
+                    if (cr2){
+                        charge=cr2.charge;
+                        i+=cr2.len;
+                    }
+                }
             }
         }
         return {
@@ -257,6 +265,8 @@ function splitEquation(input: string): Equation{
         .replace(/=/g, "->");
     let parts=cleaned.split("->");
     if (parts.length!==2) throw new Error("Invalid equation: missing a valid arrow");
+    let leftStr=parts[0]!.trim();
+    let rightStr=parts[1]!.trim();
     let parseSide=(side: string): Species[]=>
         side.split("+")
             .map(term=>term.trim())
@@ -269,10 +279,12 @@ function splitEquation(input: string): Equation{
                 let { elements, charge }=parseFormula(formulaStr);
                 return { formula: cleanedFormula, elements, charge };
             });
-    return {
-        reactants: parseSide(parts[0]!.trim()),
-        products: parseSide(parts[1]!.trim())
-    };
+    let reactants=parseSide(leftStr);
+    let products=parseSide(rightStr);
+    if (reactants.length===0&&products.length===0) throw new Error("Both sides of the equation are empty");
+    if (reactants.length===0) throw new Error("Left side of equation is empty");
+    if (products.length===0) throw new Error("Right side of equation is empty");
+    return { reactants, products };
 }
 function buildMatrix(
     reactants: Species[],
@@ -280,11 +292,13 @@ function buildMatrix(
 ): { matrix: Fraction[][]; cols: number }{
     let species=[...reactants, ...products];
     let elSet=new Set<string>();
+    let hasCharge=false;
     for (let s of species){
         for (let el in s.elements) elSet.add(el);
+        if (s.charge!==0) hasCharge=true;
     }
-    elSet.add("e");
     let elements=Array.from(elSet).sort();
+    if (hasCharge) elements.push("e");
     let rows=elements.length;
     let cols=species.length;
     let M: Fraction[][]=Array.from({ length: rows }, ()=>
@@ -306,16 +320,15 @@ function buildMatrix(
             M[i]![j]=new Fraction(sign*val);
         }
     }
-    let nonZeroRows=M.filter(row=>row.some(frac=>!frac.isZero()));
-    return { matrix: nonZeroRows, cols };
+    return { matrix: M, cols };
 }
-function nullspaceVector(matrix: Fraction[][], cols: number): Fraction[]{
-    let rows=matrix.length;
-    if (rows===0){
+function solveSystem(matrix: Fraction[][], cols: number): Fraction[]{
+    if (matrix.length===0){
         return Array.from({ length: cols }, ()=>Fraction.one());
     }
+    let rows=matrix.length;
     let M=matrix.map(row=>row.map(f=>f.clone()));
-    let pivotCols: number[]=[];
+    let pivotRow: number[]=[];
     let lead=0;
     for (let r=0; r<rows; r++){
         if (lead>=cols) break;
@@ -340,23 +353,27 @@ function nullspaceVector(matrix: Fraction[][], cols: number): Fraction[]{
                 }
             }
         }
-        pivotCols.push(lead);
+        pivotRow.push(lead);
         lead++;
     }
+    let pivotSet=new Set(pivotRow);
     let freeCols: number[]=[];
     for (let j=0; j<cols; j++){
-        if (pivotCols.indexOf(j)===-1) freeCols.push(j);
+        if (!pivotSet.has(j)) freeCols.push(j);
     }
     if (freeCols.length===0){
         throw new Error("Equation cannot be balanced (only trivial solution)");
     }
-    let best: Fraction[]|null=null;
+    let best: number[]|null=null;
     let bestSum=Infinity;
-    for (let attempt=0; attempt<100; attempt++){
+    for (let attempt=1; attempt<=100; attempt++){
         let x: Fraction[]=Array.from({ length: cols }, ()=>Fraction.zero());
-        for (let fc of freeCols) x[fc]=new Fraction(1+attempt);
+        for (let k=0; k<freeCols.length; k++){
+            x[freeCols[k]!]=new Fraction(k===0?attempt:1);
+        }
         for (let r=0; r<rows; r++){
-            let pivot=pivotCols[r]!;
+            let pivot=pivotRow[r]!;
+            if (pivot===-1) continue;
             x[pivot]=Fraction.zero();
             for (let j=0; j<cols; j++){
                 if (j!==pivot&&!M[r]![j]!.isZero()){
@@ -371,36 +388,50 @@ function nullspaceVector(matrix: Fraction[][], cols: number): Fraction[]{
             sum+=v.num;
         }
         if (allPositive&&sum<bestSum){
-            best=x;
+            let ints=rationalToIntegers(x);
+            best=ints;
             bestSum=sum;
             break;
         }
     }
     if (best===null){
-        best=Array.from({ length: cols }, ()=>Fraction.zero());
-        for (let fc of freeCols) best[fc]=Fraction.one();
+        let x: Fraction[]=Array.from({ length: cols }, ()=>Fraction.zero());
+        for (let fc of freeCols) x[fc]=Fraction.one();
         for (let r=0; r<rows; r++){
-            let pivot=pivotCols[r]!;
-            best[pivot]=Fraction.zero();
+            let pivot=pivotRow[r]!;
+            if (pivot===-1) continue;
+            x[pivot]=Fraction.zero();
             for (let j=0; j<cols; j++){
                 if (j!==pivot&&!M[r]![j]!.isZero()){
-                    best[pivot]=best[pivot]!.sub(M[r]![j]!.mul(best[j]!));
+                    x[pivot]=x[pivot]!.sub(M[r]![j]!.mul(x[j]!));
                 }
             }
         }
+        best=rationalToIntegers(x);
+        if (best.some(v=>v<0)) best=best.map(v=>-v);
     }
-    return best;
+    let result: Fraction[]=Array.from({ length: cols }, (_, i)=>new Fraction(best![i]!));
+    return result;
 }
-function fractionsToIntegers(fracs: Fraction[]): number[]{
+function rationalToIntegers(fracs: Fraction[]): number[]{
     let denLcm=1;
     for (let f of fracs){
-        if (!f.isZero()) denLcm=lcm(denLcm, f.den);
+        if (!f.isZero()) denLcm=lcm(denLcm, Math.abs(f.den));
     }
-    let ints=fracs.map(f=>f.num*(denLcm/f.den));
+    let ints=fracs.map(f=>f.num*(denLcm/Math.abs(f.den)));
     let g=0;
     for (let v of ints) g=gcd(Math.abs(v), g);
-    let reduced=g>1?ints.map(v=>v/g):ints;
-    return reduced.some(v=>v<0)?reduced.map(v=>-v):reduced;
+    if (g>1) ints=ints.map(v=>v/g);
+    return ints;
+}
+function fractionsToIntegers(fracs: Fraction[]): number[]{
+    let innts=rationalToIntegers(fracs);
+    let allPositive=true;
+    for (let v of innts){
+        if (v<=0){ allPositive=false; break; }
+    }
+    if (!allPositive) innts=innts.map(v=>-v);
+    return innts;
 }
 export interface BalancedSpecies{
     coefficient: number;
@@ -419,7 +450,7 @@ export function balance(input: string, options: BalanceOptions={}): BalanceResul
     let { showOne=true, format="text" }=options;
     let { reactants, products }=splitEquation(input);
     let { matrix, cols }=buildMatrix(reactants, products);
-    let nullVec=nullspaceVector(matrix, cols);
+    let nullVec=solveSystem(matrix, cols);
     let coeffs=fractionsToIntegers(nullVec);
     let balancedReactants: BalancedSpecies[]=reactants.map((r, i)=>({
         coefficient: coeffs[i]!,
