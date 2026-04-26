@@ -399,19 +399,29 @@ function solveSystem(matrix: Fraction[][], cols: number): Fraction[]{
     return result;
 }
 function fractionsToIntegers(fracs: Fraction[]): number[]{
-    let negCount=0;
-    for (let f of fracs){
-        if (f.num<0) negCount++;
-    }
-    let adjusted=negCount>fracs.length/2?fracs.map(f=>f.neg()):fracs;
     let denLcm=1;
-    for (let f of adjusted){
-        if (!f.isZero()) denLcm=lcm(denLcm, f.den);
+    for (let f of fracs){
+        if (!f.isZero()) denLcm=lcm(denLcm, Math.abs(f.den));
     }
-    let ints=adjusted.map(f=>f.num*(denLcm/f.den));
+    let ints=fracs.map(f=>{
+        let sign=f.num<0?-1:1;
+        return sign*Math.abs(f.num)*(denLcm/Math.abs(f.den));
+    });
     let g=0;
     for (let v of ints) g=gcd(Math.abs(v), g);
     if (g>1) ints=ints.map(v=>v/g);
+    let negCount=0;
+    let posCount=0;
+    for (let v of ints){
+        if (v<0) negCount++;
+        if (v>0) posCount++;
+    }
+    if (negCount>posCount){
+        ints=ints.map(v=>-v);
+        g=0;
+        for (let v of ints) g=gcd(Math.abs(v), g);
+        if (g>1) ints=ints.map(v=>v/g);
+    }
     return ints;
 }
 export interface BalancedSpecies{
