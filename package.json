@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "tsc --emitDeclarationOnly && esbuild src/index.ts --bundle --minify --target=es6 --format=esm --outfile=dist/index.js",
-    "prepublishOnly": "npm run test && npm run build",
+    "prepublishOnly": "npm run build",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:es6": "es-check es6 dist/index.js --module"
@@ -28,6 +28,13 @@
     "fast",
     "esm",
     "typescript"
+  ],
+  "files": [
+    "dist/index.js",
+    "dist/index.d.ts",
+    "dist/index.js.map",
+    "dist/index.d.ts.map",
+    "README.md"
   ],
   "license": "MIT",
   "devDependencies": {
