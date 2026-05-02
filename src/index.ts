@@ -124,6 +124,8 @@ function parseWithoutMultiplier(str: string): ParsedUnit{
     let i=0;
     let elements: ElementMap={};
     let totalCharge=0;
+    let seenElementStack: boolean[] = [];
+    let currentSeen = false;
     let tryParseCharge=(): { charge: number; len: number }|null=>{
         let sub=str.slice(i);
         let m=sub.match(/^(\^?)(\d*)([+-])/);
@@ -158,6 +160,8 @@ function parseWithoutMultiplier(str: string): ParsedUnit{
             let open=str[i]!;
             let close=open==="("?")":"]";
             i++;
+            seenElementStack.push(currentSeen);
+            currentSeen = false;
             let savedElements=elements;
             let savedCharge=totalCharge;
             elements={};
@@ -166,33 +170,31 @@ function parseWithoutMultiplier(str: string): ParsedUnit{
             let group: ParsedUnit={ elements, charge: totalCharge };
             elements=savedElements;
             totalCharge=savedCharge;
+            currentSeen = seenElementStack.pop()!;
             let subscript=1;
             let charge=0;
             if (i<str.length&&/\d/.test(str[i]!)){
                 let digitStart=i;
                 while (i<str.length&&/\d/.test(str[i]!)) i++;
                 if (i<str.length&&(str[i]==="+"||str[i]==="-")){
-                    i=digitStart;
-                    let cr=tryParseCharge();
-                    if (cr){
-                        charge=cr.charge;
-                        i+=cr.len;
+                    if (!currentSeen && seenElementStack.length===0){
+                        i=digitStart;
+                        let cr=tryParseCharge();
+                        if (cr){ charge=cr.charge; i+=cr.len; }
+                        subscript=1;
+                    } else {
+                        subscript=parseInt(str.slice(digitStart, i), 10);
+                        let cr=tryParseCharge();
+                        if (cr){ charge=cr.charge; i+=cr.len; }
                     }
-                    subscript=1;
                 } else {
                     subscript=parseInt(str.slice(digitStart, i), 10);
                     let cr=tryParseCharge();
-                    if (cr){
-                        charge=cr.charge;
-                        i+=cr.len;
-                    }
+                    if (cr){ charge=cr.charge; i+=cr.len; }
                 }
             } else {
                 let cr=tryParseCharge();
-                if (cr){
-                    charge=cr.charge;
-                    i+=cr.len;
-                }
+                if (cr){ charge=cr.charge; i+=cr.len; }
             }
             let multiplied: ElementMap={};
             for (let el in group.elements) multiplied[el]=group.elements[el]!*subscript;
@@ -209,28 +211,27 @@ function parseWithoutMultiplier(str: string): ParsedUnit{
             let digitStart=i;
             while (i<str.length&&/\d/.test(str[i]!)) i++;
             if (i<str.length&&(str[i]==="+"||str[i]==="-")){
-                i=digitStart;
-                let cr=tryParseCharge();
-                if (cr){
-                    charge=cr.charge;
-                    i+=cr.len;
+                if (!currentSeen && seenElementStack.length===0){
+                    i=digitStart;
+                    let cr=tryParseCharge();
+                    if (cr){ charge=cr.charge; i+=cr.len; }
+                    subscript=1;
+                } else {
+                    subscript=parseInt(str.slice(digitStart, i), 10);
+                    let cr=tryParseCharge();
+                    if (cr){ charge=cr.charge; i+=cr.len; }
                 }
-                subscript=1;
             } else {
                 subscript=parseInt(str.slice(digitStart, i), 10);
                 let cr=tryParseCharge();
-                if (cr){
-                    charge=cr.charge;
-                    i+=cr.len;
-                }
+                if (cr){ charge=cr.charge; i+=cr.len; }
             }
         } else {
             let cr=tryParseCharge();
-            if (cr){
-                charge=cr.charge;
-                i+=cr.len;
-            }
+            if (cr){ charge=cr.charge; i+=cr.len; }
         }
+        if (seenElementStack.length>0) seenElementStack[seenElementStack.length-1] = true;
+        else currentSeen = true;
         return { elements: { [symbol]: subscript }, charge };
     };
     parseExpression();
