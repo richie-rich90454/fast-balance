@@ -1,6 +1,6 @@
 {
   "name": "fast-balance",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Blazing fast chemical equation balancer - handles complex formulas, redox, charges, hydrates, all arrow styles.",
   "type": "module",
   "main": "./dist/index.js",
