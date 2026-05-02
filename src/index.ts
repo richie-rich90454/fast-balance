@@ -45,11 +45,8 @@
  * @packageDocumentation
  */
 class Fraction{
-    constructor(
-        public readonly num: number,
-        public readonly den: number=1
-    ){
-        if (den<0){ num=-num; den=-den; }
+    constructor(public readonly num: number, public readonly den: number=1){
+        if(den<0){ num=-num; den=-den; }
         let g=gcd(Math.abs(num), den);
         this.num=num/g;
         this.den=den/g;
@@ -58,16 +55,10 @@ class Fraction{
     static one(): Fraction{ return new Fraction(1); }
     isZero(): boolean{ return this.num===0; }
     add(other: Fraction): Fraction{
-        return new Fraction(
-            this.num*other.den+other.num*this.den,
-            this.den*other.den
-        );
+        return new Fraction(this.num*other.den+other.num*this.den, this.den*other.den);
     }
     sub(other: Fraction): Fraction{
-        return new Fraction(
-            this.num*other.den-other.num*this.den,
-            this.den*other.den
-        );
+        return new Fraction(this.num*other.den-other.num*this.den, this.den*other.den);
     }
     mul(other: Fraction): Fraction{
         return new Fraction(this.num*other.num, this.den*other.den);
@@ -107,13 +98,9 @@ function stripStateSymbols(formula: string): string{
 function parseFormula(formula: string): ParsedUnit{
     formula=formula.replace(STATE_REGEX, "");
     let f=formula.trim();
-    if (/^e-?$/.test(f)){
-        return { elements: {}, charge: -1 };
-    }
-    if (/^e\+$/.test(f)){
-        return { elements: {}, charge: 1 };
-    }
-    let parts=formula.split(/[·*•]/u).map(s=>s.trim()).filter(Boolean);
+    if (/^e-?$/.test(f)) return { elements: {}, charge: -1 };
+    if (/^e\+$/.test(f)) return { elements: {}, charge: 1 };
+    let parts=f.split(/[·*•]/u).map(s=>s.trim()).filter(Boolean);
     let totalElements: ElementMap={};
     let totalCharge=0;
     for (let part of parts){
@@ -153,12 +140,8 @@ function parseWithoutMultiplier(str: string): ParsedUnit{
             }
             totalCharge+=unit.charge;
         }
-        if (closeChar!==undefined&&i<str.length&&str[i]===closeChar){
-            i++;
-        }
-        else if (closeChar!==undefined){
-            throw new Error("Mismatched brackets: expected \""+closeChar+"\" at position "+i);
-        }
+        if (closeChar!==undefined&&i<str.length&&str[i]===closeChar) i++;
+        else if (closeChar!==undefined) throw new Error("Mismatched brackets: expected \""+closeChar+"\" at position "+i);
     };
     let parseUnit=(): ParsedUnit=>{
         if (i>=str.length) throw new Error("Unexpected end of formula");
@@ -186,27 +169,36 @@ function parseWithoutMultiplier(str: string): ParsedUnit{
             let subscript=1;
             let charge=0;
             if (i<str.length&&/\d/.test(str[i]!)){
-                let start=i;
+                let digitStart=i;
                 while (i<str.length&&/\d/.test(str[i]!)) i++;
-                subscript=parseInt(str.slice(start, i), 10);
-            }
-            let cr=tryParseCharge();
-            if (cr){
-                charge=cr.charge;
-                i+=cr.len;
+                if (i<str.length&&(str[i]==="+"||str[i]==="-")){
+                    i=digitStart;
+                    let cr=tryParseCharge();
+                    if (cr){
+                        charge=cr.charge;
+                        i+=cr.len;
+                    }
+                    subscript=1;
+                } else {
+                    subscript=parseInt(str.slice(digitStart, i), 10);
+                    let cr=tryParseCharge();
+                    if (cr){
+                        charge=cr.charge;
+                        i+=cr.len;
+                    }
+                }
+            } else {
+                let cr=tryParseCharge();
+                if (cr){
+                    charge=cr.charge;
+                    i+=cr.len;
+                }
             }
             let multiplied: ElementMap={};
-            for (let el in group.elements){
-                multiplied[el]=group.elements[el]!*subscript;
-            }
-            return {
-                elements: multiplied,
-                charge: group.charge*subscript+charge
-            };
+            for (let el in group.elements) multiplied[el]=group.elements[el]!*subscript;
+            return { elements: multiplied, charge: group.charge*subscript+charge };
         }
-        if (!/[A-Z]/.test(str[i]!)){
-            throw new Error("Expected element at position "+i+", got '"+str[i]+"'");
-        }
+        if (!/[A-Z]/.test(str[i]!)) throw new Error("Expected element at position "+i+", got '"+str[i]+"'");
         let start=i;
         i++;
         while (i<str.length&&/[a-z]/.test(str[i]!)) i++;
@@ -214,19 +206,32 @@ function parseWithoutMultiplier(str: string): ParsedUnit{
         let subscript=1;
         let charge=0;
         if (i<str.length&&/\d/.test(str[i]!)){
-            let sStart=i;
+            let digitStart=i;
             while (i<str.length&&/\d/.test(str[i]!)) i++;
-            subscript=parseInt(str.slice(sStart, i), 10);
+            if (i<str.length&&(str[i]==="+"||str[i]==="-")){
+                i=digitStart;
+                let cr=tryParseCharge();
+                if (cr){
+                    charge=cr.charge;
+                    i+=cr.len;
+                }
+                subscript=1;
+            } else {
+                subscript=parseInt(str.slice(digitStart, i), 10);
+                let cr=tryParseCharge();
+                if (cr){
+                    charge=cr.charge;
+                    i+=cr.len;
+                }
+            }
+        } else {
+            let cr=tryParseCharge();
+            if (cr){
+                charge=cr.charge;
+                i+=cr.len;
+            }
         }
-        let cr=tryParseCharge();
-        if (cr){
-            charge=cr.charge;
-            i+=cr.len;
-        }
-        return {
-            elements: { [symbol]: subscript },
-            charge
-        };
+        return { elements: { [symbol]: subscript }, charge };
     };
     parseExpression();
     if (i<str.length){
@@ -236,9 +241,7 @@ function parseWithoutMultiplier(str: string): ParsedUnit{
             i+=trail.len;
         }
     }
-    if (i<str.length){
-        throw new Error("Unexpected characters at position "+i+": \""+str.slice(i)+"\"");
-    }
+    if (i<str.length) throw new Error("Unexpected characters at position "+i+": \""+str.slice(i)+"\"");
     return { elements, charge: totalCharge };
 }
 interface Species{
@@ -259,7 +262,7 @@ function splitEquation(input: string): Equation{
     let leftStr=parts[0]!.trim();
     let rightStr=parts[1]!.trim();
     let parseSide=(side: string): Species[]=>
-        side.split("+")
+        side.split(/\s+\+\s+/)
             .map(term=>term.trim())
             .filter(Boolean)
             .map(term=>{
@@ -282,11 +285,10 @@ function buildMatrix(
 ): { matrix: Fraction[][]; cols: number }{
     let species=[...reactants, ...products];
     let elSet=new Set<string>();
-    for (let s of species){
-        for (let el in s.elements) elSet.add(el);
-    }
+    for (let s of species) for (let el in s.elements) elSet.add(el);
     let elements=Array.from(elSet).sort();
-    let rows=elements.length;
+    let hasCharge=species.some(s=>s.charge!==0);
+    let rows=elements.length+(hasCharge?1:0);
     let cols=species.length;
     let M: Fraction[][]=Array.from({ length: rows }, ()=>
         Array.from({ length: cols }, ()=>Fraction.zero())
@@ -295,58 +297,22 @@ function buildMatrix(
         let isReactant=j<reactants.length;
         let sign=isReactant?1:-1;
         let sp=species[j]!;
-        for (let i=0; i<rows; i++){
+        for (let i=0; i<elements.length; i++){
             let el=elements[i]!;
             let val=sp.elements[el]??0;
             M[i]![j]=new Fraction(sign*val);
         }
+        if (hasCharge) M[rows-1]![j]=new Fraction(sign*sp.charge);
     }
-    if (elements.length===0||rows===0){
+    if (rows===0){
         M=[Array.from({ length: cols }, ()=>Fraction.zero())];
         rows=1;
     }
-    for (let j=0; j<cols; j++){
-        let allZero=true;
-        for (let i=0; i<rows; i++){
-            if (!M[i]![j]!.isZero()){ allZero=false; break; }
-        }
-        if (allZero){
-            M[0]![j]=new Fraction(1);
-        }
-    }
     return { matrix: M, cols };
-}
-function degreesOfFreedom(matrix: Fraction[][], cols: number): number{
-    let rows=matrix.length;
-    if (rows===0) return cols;
-    let rank=0;
-    let M=matrix.map(row=>row.map(f=>f.clone()));
-    let col=0;
-    for (let r=0; r<rows&&col<cols; r++, col++){
-        let sel=r;
-        while (sel<rows&&M[sel]![col]!.isZero()) sel++;
-        if (sel===rows){
-            r--;
-            continue;
-        }
-        [M[sel]!, M[r]!]=[M[r]!, M[sel]!];
-        for (let i=r+1; i<rows; i++){
-            if (!M[i]![col]!.isZero()){
-                let factor=M[i]![col]!.div(M[r]![col]!);
-                for (let j=col; j<cols; j++){
-                    M[i]![j]=M[i]![j]!.sub(factor.mul(M[r]![j]!));
-                }
-            }
-        }
-        rank=r+1;
-    }
-    return cols-rank;
 }
 function solveSystem(matrix: Fraction[][], cols: number): Fraction[]{
     let rows=matrix.length;
-    if (rows===0){
-        return Array.from({ length: cols }, ()=>Fraction.one());
-    }
+    if (rows===0) return Array.from({ length: cols }, ()=>Fraction.one());
     let M=matrix.map(row=>row.map(f=>f.clone()));
     let pivotCols: number[]=[];
     let lead=0;
@@ -354,23 +320,15 @@ function solveSystem(matrix: Fraction[][], cols: number): Fraction[]{
         if (lead>=cols) break;
         let i=r;
         while (i<rows&&M[i]![lead]!.isZero()) i++;
-        if (i===rows){
-            lead++;
-            r--;
-            continue;
-        }
+        if (i===rows){ lead++; r--; continue; }
         [M[i]!, M[r]!]=[M[r]!, M[i]!];
         let pivot=M[r]![lead]!;
-        for (let j=0; j<cols; j++){
-            M[r]![j]=M[r]![j]!.div(pivot);
-        }
+        for (let j=0; j<cols; j++) M[r]![j]=M[r]![j]!.div(pivot);
         for (let i2=0; i2<rows; i2++){
             if (i2===r) continue;
             let factor=M[i2]![lead]!;
             if (!factor.isZero()){
-                for (let j=0; j<cols; j++){
-                    M[i2]![j]=M[i2]![j]!.sub(factor.mul(M[r]![j]!));
-                }
+                for (let j=0; j<cols; j++) M[i2]![j]=M[i2]![j]!.sub(factor.mul(M[r]![j]!));
             }
         }
         pivotCols.push(lead);
@@ -378,31 +336,21 @@ function solveSystem(matrix: Fraction[][], cols: number): Fraction[]{
     }
     let pivotSet=new Set(pivotCols);
     let freeCols: number[]=[];
-    for (let j=0; j<cols; j++){
-        if (!pivotSet.has(j)) freeCols.push(j);
-    }
-    if (freeCols.length===0){
-        throw new Error("Unbalanceable equation");
-    }
+    for (let j=0; j<cols; j++) if (!pivotSet.has(j)) freeCols.push(j);
+    if (freeCols.length===0) throw new Error("Unbalanceable equation");
     let result: Fraction[]=Array.from({ length: cols }, ()=>Fraction.zero());
     result[freeCols[0]!]=Fraction.one();
     for (let r=pivotCols.length-1; r>=0; r--){
         let pivot=pivotCols[r]!;
         let sum=Fraction.zero();
-        for (let j=0; j<cols; j++){
-            if (j!==pivot&&!M[r]![j]!.isZero()){
-                sum=sum.add(M[r]![j]!.mul(result[j]!));
-            }
-        }
+        for (let j=0; j<cols; j++) if (j!==pivot&&!M[r]![j]!.isZero()) sum=sum.add(M[r]![j]!.mul(result[j]!));
         result[pivot]=sum.neg();
     }
     return result;
 }
 function fractionsToIntegers(fracs: Fraction[]): number[]{
     let denLcm=1;
-    for (let f of fracs){
-        if (!f.isZero()) denLcm=lcm(denLcm, Math.abs(f.den));
-    }
+    for (let f of fracs) if (!f.isZero()) denLcm=lcm(denLcm, Math.abs(f.den));
     let ints=fracs.map(f=>{
         let sign=f.num<0?-1:1;
         return sign*Math.abs(f.num)*(denLcm/Math.abs(f.den));
@@ -410,12 +358,8 @@ function fractionsToIntegers(fracs: Fraction[]): number[]{
     let g=0;
     for (let v of ints) g=gcd(Math.abs(v), g);
     if (g>1) ints=ints.map(v=>v/g);
-    let negCount=0;
-    let posCount=0;
-    for (let v of ints){
-        if (v<0) negCount++;
-        if (v>0) posCount++;
-    }
+    let negCount=0, posCount=0;
+    for (let v of ints){ if (v<0) negCount++; if (v>0) posCount++; }
     if (negCount>posCount){
         ints=ints.map(v=>-v);
         g=0;
@@ -443,14 +387,7 @@ export function balance(input: string, options: BalanceOptions={}): BalanceResul
     let { matrix, cols }=buildMatrix(reactants, products);
     let nullVec=solveSystem(matrix, cols);
     let coeffs=fractionsToIntegers(nullVec);
-    if (coeffs.some(c=>c===0)){
-        let dof=degreesOfFreedom(matrix, cols);
-        if (dof===0){
-            throw new Error("Unbalanceable equation");
-        }
-        let nullVec2=solveSystem(matrix.map(row=>row.map(f=>f.clone())), cols);
-        coeffs=fractionsToIntegers(nullVec2);
-    }
+    if (coeffs.some(c=>c===0)) throw new Error("Unbalanceable equation");
     let balancedReactants: BalancedSpecies[]=reactants.map((r, i)=>({
         coefficient: coeffs[i]!,
         formula: r.formula
@@ -460,19 +397,12 @@ export function balance(input: string, options: BalanceOptions={}): BalanceResul
         formula: p.formula
     }));
     let fmt=(side: BalancedSpecies[]): string=>
-        side
-            .map(s=>(showOne||s.coefficient!==1?s.coefficient+" ":"")+s.formula)
-            .join(" + ");
+        side.map(s=>(showOne||s.coefficient!==1?s.coefficient+" ":"")+s.formula).join(" + ");
     let eqStr: string;
     switch (format){
-        case "html":
-            eqStr=fmt(balancedReactants)+" &rarr; "+fmt(balancedProducts);
-            break;
-        case "latex":
-            eqStr=fmt(balancedReactants)+" \\rightarrow "+fmt(balancedProducts);
-            break;
-        default:
-            eqStr=fmt(balancedReactants)+" -> "+fmt(balancedProducts);
+        case "html": eqStr=fmt(balancedReactants)+" &rarr; "+fmt(balancedProducts); break;
+        case "latex": eqStr=fmt(balancedReactants)+" \\rightarrow "+fmt(balancedProducts); break;
+        default: eqStr=fmt(balancedReactants)+" -> "+fmt(balancedProducts);
     }
     return { reactants: balancedReactants, products: balancedProducts, equation: eqStr };
 }
