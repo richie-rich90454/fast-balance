@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "tsc --emitDeclarationOnly && esbuild src/index.ts --bundle --minify --target=es6 --format=esm --outfile=dist/index.js",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "npm run test && npm run build",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:es6": "es-check es6 dist/index.js --module"
@@ -45,5 +45,9 @@
   },
   "dependencies": {
     "chemparse": "^1.0.2"
+  },
+    "repository": {
+    "type": "git",
+    "url": "git+https://github.com/richie-rich90454/fast-balance.git"
   }
 }
