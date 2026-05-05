@@ -20,7 +20,7 @@
     "prepublishOnly": "npm run test && npm run build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:es6": "es-check es6 dist/index.js --module"
+    "test:es6": "es-check es6 dist/index.js --module && es-check es6 dist/index.cjs --module"
   },
   "keywords": [
     "chemistry",
