@@ -500,6 +500,24 @@ describe("text format output", () => {
   });
 });
 
+describe("HTML format output", () => {
+  it("uses &rarr; arrow in HTML format", () => {
+    const result = balance("H2 + O2 -> H2O", { format: "html" });
+    expect(result.equation).toContain("&rarr;");
+  });
+
+  it("formats coefficients correctly in HTML format", () => {
+    const result = balance("H2 + O2 -> H2O", { format: "html" });
+    expect(result.equation).toContain("2 H2");
+  });
+
+  it("HTML format with showOne false", () => {
+    const result = balance("H2 + O2 -> H2O", { format: "html", showOne: false });
+    expect(result.equation).toContain("&rarr;");
+    expect(result.equation).not.toContain("1 ");
+  });
+});
+
 describe("missing arrow errors", () => {
   it("throws when no arrow is present", () => {
     expect(() => balance("H2 + O2 H2O")).toThrow();
