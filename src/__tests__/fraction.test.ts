@@ -158,3 +158,25 @@ describe("neg, equals, clone, isZero", () => {
     expect(new Fraction(1, 2).isZero()).toBe(false);
   });
 });
+
+describe("static factory methods", () => {
+  it("zero() returns fraction with num=0 den=1", () => {
+    const f = Fraction.zero();
+    expect(f.num).toBe(0);
+    expect(f.den).toBe(1);
+  });
+
+  it("one() returns fraction with num=1 den=1", () => {
+    const f = Fraction.one();
+    expect(f.num).toBe(1);
+    expect(f.den).toBe(1);
+  });
+
+  it("zero().isZero() is true", () => {
+    expect(Fraction.zero().isZero()).toBe(true);
+  });
+
+  it("one().isZero() is false", () => {
+    expect(Fraction.one().isZero()).toBe(false);
+  });
+});
