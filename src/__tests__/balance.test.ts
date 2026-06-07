@@ -440,3 +440,29 @@ describe("combustion reactions", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([3, 4]);
   });
 });
+
+describe("neutralization reactions", () => {
+  it("balances H2SO4 + NaOH -> Na2SO4 + H2O", () => {
+    const result = balance("H2SO4 + NaOH -> Na2SO4 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances HCl + NaOH -> NaCl + H2O", () => {
+    const result = balance("HCl + NaOH -> NaCl + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances H3PO4 + NaOH -> Na3PO4 + H2O", () => {
+    const result = balance("H3PO4 + NaOH -> Na3PO4 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 3]);
+  });
+
+  it("balances H2SO4 + KOH -> K2SO4 + H2O", () => {
+    const result = balance("H2SO4 + KOH -> K2SO4 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+});
