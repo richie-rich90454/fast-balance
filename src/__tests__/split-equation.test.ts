@@ -58,3 +58,21 @@ describe("splitEquation arrow variants", () => {
     expect(eq.products[0].elements).toEqual({ H: 2, O: 1 });
   });
 });
+
+describe("splitEquation error handling", () => {
+  it("throws on missing arrow", () => {
+    expect(() => splitEquation("H2 + O2 H2O")).toThrow();
+  });
+
+  it("throws on empty left side", () => {
+    expect(() => splitEquation("-> H2O")).toThrow();
+  });
+
+  it("throws on empty right side", () => {
+    expect(() => splitEquation("H2 + O2 ->")).toThrow();
+  });
+
+  it("throws on multiple arrows", () => {
+    expect(() => splitEquation("H2 → O2 → H2O")).toThrow();
+  });
+});
