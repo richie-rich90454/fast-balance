@@ -98,3 +98,29 @@ describe("parseFormula square bracket groups", () => {
     expect(result.charge).toBe(0);
   });
 });
+
+describe("parseFormula charge notation", () => {
+  it("parses Fe2+ correctly", () => {
+    const result = parseFormula("Fe2+");
+    expect(result.elements).toEqual({ Fe: 1 });
+    expect(result.charge).toBe(2);
+  });
+
+  it("parses Fe3+ correctly", () => {
+    const result = parseFormula("Fe3+");
+    expect(result.elements).toEqual({ Fe: 1 });
+    expect(result.charge).toBe(3);
+  });
+
+  it("parses SO4^2- correctly", () => {
+    const result = parseFormula("SO4^2-");
+    expect(result.elements).toEqual({ S: 1, O: 4 });
+    expect(result.charge).toBe(-2);
+  });
+
+  it("parses O2- correctly", () => {
+    const result = parseFormula("O2-");
+    expect(result.elements).toEqual({ O: 1 });
+    expect(result.charge).toBe(-2);
+  });
+});
