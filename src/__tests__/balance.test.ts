@@ -466,3 +466,29 @@ describe("neutralization reactions", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
   });
 });
+
+describe("simple ionic charge balance", () => {
+  it("balances Fe2+ + Cl- -> FeCl2", () => {
+    const result = balance("Fe2+ + Cl- -> FeCl2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances Fe3+ + O2- -> Fe2O3", () => {
+    const result = balance("Fe3+ + O2- -> Fe2O3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances Na+ + Cl- -> NaCl", () => {
+    const result = balance("Na+ + Cl- -> NaCl");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances Ca2+ + Cl- -> CaCl2", () => {
+    const result = balance("Ca2+ + Cl- -> CaCl2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+});
