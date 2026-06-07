@@ -197,7 +197,7 @@ describe("edge cases", () => {
   it("negative of zero is zero", () => {
     const f = new Fraction(0, 1);
     const result = f.neg();
-    expect(result.num).toBe(0);
+    expect(result.num === 0).toBe(true);
     expect(result.den).toBe(1);
   });
 

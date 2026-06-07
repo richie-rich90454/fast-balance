@@ -542,9 +542,8 @@ describe("complex ionic compounds", () => {
 describe("charge conservation", () => {
   it("verifies net charge is zero for Fe2+ + Cl- -> FeCl2", () => {
     const result = balance("Fe2+ + Cl- -> FeCl2");
-    const reactantCharge = result.reactants.reduce((sum, r) => sum + r.coefficient, 0);
-    const productCharge = result.products.reduce((sum, p) => sum + p.coefficient, 0);
-    expect(reactantCharge).toBe(productCharge);
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
   });
 
   it("verifies charge balance for MnO4- + H+ + e- -> Mn2+ + H2O", () => {
