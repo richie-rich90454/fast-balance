@@ -52,3 +52,29 @@ describe("parseFormula subscripts and multipliers", () => {
     expect(result.charge).toBe(0);
   });
 });
+
+describe("parseFormula parenthetical groups", () => {
+  it("parses (OH)2 correctly", () => {
+    const result = parseFormula("(OH)2");
+    expect(result.elements).toEqual({ O: 2, H: 2 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses (PO4)2 correctly", () => {
+    const result = parseFormula("(PO4)2");
+    expect(result.elements).toEqual({ P: 2, O: 8 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses (NH4)2 correctly", () => {
+    const result = parseFormula("(NH4)2");
+    expect(result.elements).toEqual({ N: 2, H: 8 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses Ca3(PO4)2 correctly", () => {
+    const result = parseFormula("Ca3(PO4)2");
+    expect(result.elements).toEqual({ Ca: 3, P: 2, O: 8 });
+    expect(result.charge).toBe(0);
+  });
+});
