@@ -518,6 +518,24 @@ describe("HTML format output", () => {
   });
 });
 
+describe("LaTeX format output", () => {
+  it("uses \\rightarrow arrow in LaTeX format", () => {
+    const result = balance("H2 + O2 -> H2O", { format: "latex" });
+    expect(result.equation).toContain("\\rightarrow");
+  });
+
+  it("formats coefficients correctly in LaTeX format", () => {
+    const result = balance("H2 + O2 -> H2O", { format: "latex" });
+    expect(result.equation).toContain("2 H2");
+  });
+
+  it("LaTeX format with showOne false", () => {
+    const result = balance("H2 + O2 -> H2O", { format: "latex", showOne: false });
+    expect(result.equation).toContain("\\rightarrow");
+    expect(result.equation).not.toContain("1 ");
+  });
+});
+
 describe("missing arrow errors", () => {
   it("throws when no arrow is present", () => {
     expect(() => balance("H2 + O2 H2O")).toThrow();
