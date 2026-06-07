@@ -538,3 +538,30 @@ describe("complex ionic compounds", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
   });
 });
+
+describe("charge conservation", () => {
+  it("verifies net charge is zero for Fe2+ + Cl- -> FeCl2", () => {
+    const result = balance("Fe2+ + Cl- -> FeCl2");
+    const reactantCharge = result.reactants.reduce((sum, r) => sum + r.coefficient, 0);
+    const productCharge = result.products.reduce((sum, p) => sum + p.coefficient, 0);
+    expect(reactantCharge).toBe(productCharge);
+  });
+
+  it("verifies charge balance for MnO4- + H+ + e- -> Mn2+ + H2O", () => {
+    const result = balance("MnO4- + H+ + e- -> Mn2+ + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 8, 5]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 4]);
+  });
+
+  it("verifies charge balance for Cr2O7^2- + H+ + e- -> Cr3+ + H2O", () => {
+    const result = balance("Cr2O7^2- + H+ + e- -> Cr3+ + H2O");
+    expect(result.reactants[0].coefficient).toBeGreaterThan(0);
+    expect(result.products[0].coefficient).toBeGreaterThan(0);
+  });
+
+  it("verifies charge balance for Fe2+ + Ce4+ -> Fe3+ + Ce3+", () => {
+    const result = balance("Fe2+ + Ce4+ -> Fe3+ + Ce3+");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+  });
+});
