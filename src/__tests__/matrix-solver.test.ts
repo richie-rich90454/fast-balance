@@ -102,3 +102,25 @@ describe("fractionsToIntegers basic", () => {
     expect(result).toEqual([3, 5]);
   });
 });
+
+describe("fractionsToIntegers sign and edge cases", () => {
+  it("flips sign when negatives predominate", () => {
+    const result = fractionsToIntegers([new Fraction(-1), new Fraction(-2)]);
+    expect(result).toEqual([1, 2]);
+  });
+
+  it("reduces by GCD after scaling", () => {
+    const result = fractionsToIntegers([new Fraction(2, 3), new Fraction(4, 3)]);
+    expect(result).toEqual([1, 2]);
+  });
+
+  it("handles all positive fractions", () => {
+    const result = fractionsToIntegers([new Fraction(1, 4), new Fraction(3, 4)]);
+    expect(result).toEqual([1, 3]);
+  });
+
+  it("handles single fraction", () => {
+    const result = fractionsToIntegers([new Fraction(3, 4)]);
+    expect(result).toEqual([1]);
+  });
+});
