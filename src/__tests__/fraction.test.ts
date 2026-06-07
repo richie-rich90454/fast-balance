@@ -116,3 +116,45 @@ describe("multiply and divide", () => {
     expect(result.den).toBe(4);
   });
 });
+
+describe("neg, equals, clone, isZero", () => {
+  it("neg returns negated fraction", () => {
+    const f = new Fraction(3, 4);
+    const result = f.neg();
+    expect(result.num).toBe(-3);
+    expect(result.den).toBe(4);
+  });
+
+  it("neg of negative returns positive", () => {
+    const f = new Fraction(-3, 4);
+    const result = f.neg();
+    expect(result.num).toBe(3);
+    expect(result.den).toBe(4);
+  });
+
+  it("equals returns true for equivalent fractions", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(2, 4);
+    expect(a.equals(b)).toBe(true);
+  });
+
+  it("equals returns false for different fractions", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(1, 3);
+    expect(a.equals(b)).toBe(false);
+  });
+
+  it("clone returns independent copy", () => {
+    const f = new Fraction(3, 4);
+    const c = f.clone();
+    expect(c.num).toBe(3);
+    expect(c.den).toBe(4);
+    expect(c).not.toBe(f);
+  });
+
+  it("isZero returns true only for zero fraction", () => {
+    expect(new Fraction(0, 1).isZero()).toBe(true);
+    expect(new Fraction(0, 5).isZero()).toBe(true);
+    expect(new Fraction(1, 2).isZero()).toBe(false);
+  });
+});
