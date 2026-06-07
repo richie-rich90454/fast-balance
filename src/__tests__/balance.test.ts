@@ -449,6 +449,26 @@ describe("leading coefficient handling", () => {
   });
 });
 
+describe("whitespace handling", () => {
+  it("handles extra spaces between terms", () => {
+    const result = balance("H2  +  O2  ->  H2O");
+    expect(result.reactants).toHaveLength(2);
+    expect(result.products).toHaveLength(1);
+  });
+
+  it("handles spaces around arrow", () => {
+    const result = balance("H2 + O2 -> H2O");
+    expect(result.reactants).toHaveLength(2);
+    expect(result.products).toHaveLength(1);
+  });
+
+  it("handles minimal whitespace", () => {
+    const result = balance("H2+O2->H2O");
+    expect(result.reactants).toHaveLength(2);
+    expect(result.products).toHaveLength(1);
+  });
+});
+
 describe("missing arrow errors", () => {
   it("throws when no arrow is present", () => {
     expect(() => balance("H2 + O2 H2O")).toThrow();
