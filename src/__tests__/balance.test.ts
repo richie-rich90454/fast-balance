@@ -469,6 +469,20 @@ describe("whitespace handling", () => {
   });
 });
 
+describe("mixed input formats", () => {
+  it("handles state symbols with charges", () => {
+    const result = balance("Fe2+(aq) + Cl-(aq) -> FeCl2(s)");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("handles hydrate with state symbols", () => {
+    const result = balance("CuSO4*5H2O(s) -> CuSO4(s) + H2O(l)");
+    expect(result.reactants).toHaveLength(1);
+    expect(result.products).toHaveLength(2);
+  });
+});
+
 describe("missing arrow errors", () => {
   it("throws when no arrow is present", () => {
     expect(() => balance("H2 + O2 H2O")).toThrow();
