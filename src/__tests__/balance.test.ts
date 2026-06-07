@@ -377,3 +377,20 @@ describe("full-word state symbols", () => {
     expect(result.products[0].formula).toBe("CO2");
   });
 });
+
+describe("state symbol edge cases", () => {
+  it("strips (cr) crystalline state symbol", () => {
+    const result = balance("NaCl(cr) -> Na+ + Cl-");
+    expect(result.reactants[0].formula).toBe("NaCl");
+  });
+
+  it("strips (am) amorphous state symbol", () => {
+    const result = balance("SiO2(am) + NaOH -> Na2SiO3 + H2O");
+    expect(result.reactants[0].formula).toBe("SiO2");
+  });
+
+  it("strips multiple state symbols from same term", () => {
+    const result = balance("H2O(s)(l) -> H2O");
+    expect(result.reactants[0].formula).toBe("H2O");
+  });
+});
