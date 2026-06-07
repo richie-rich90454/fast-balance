@@ -124,3 +124,29 @@ describe("parseFormula charge notation", () => {
     expect(result.charge).toBe(-2);
   });
 });
+
+describe("parseFormula electron notation", () => {
+  it("parses e- correctly", () => {
+    const result = parseFormula("e-");
+    expect(result.elements).toEqual({});
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses e correctly", () => {
+    const result = parseFormula("e");
+    expect(result.elements).toEqual({});
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses e+ correctly", () => {
+    const result = parseFormula("e+");
+    expect(result.elements).toEqual({});
+    expect(result.charge).toBe(1);
+  });
+
+  it("parses MnO4- correctly", () => {
+    const result = parseFormula("MnO4-");
+    expect(result.elements).toEqual({ Mn: 1, O: 4 });
+    expect(result.charge).toBe(-1);
+  });
+});
