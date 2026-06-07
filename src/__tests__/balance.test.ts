@@ -408,8 +408,22 @@ describe("ASCII arrow styles", () => {
     expect(result.products).toHaveLength(1);
   });
 
-  it("balances with = arrow", () => {
-    const result = balance("H2 + O2 = H2O");
+  it("balances with ⇌ arrow", () => {
+    const result = balance("H2 + O2 ⇌ H2O");
+    expect(result.reactants).toHaveLength(2);
+    expect(result.products).toHaveLength(1);
+  });
+});
+
+describe("special arrow styles", () => {
+  it("balances with <=> arrow", () => {
+    const result = balance("H2 + O2 <=> H2O");
+    expect(result.reactants).toHaveLength(2);
+    expect(result.products).toHaveLength(1);
+  });
+
+  it("balances with <-> arrow", () => {
+    const result = balance("H2 + O2 <-> H2O");
     expect(result.reactants).toHaveLength(2);
     expect(result.products).toHaveLength(1);
   });
