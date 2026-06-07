@@ -150,3 +150,29 @@ describe("parseFormula electron notation", () => {
     expect(result.charge).toBe(-1);
   });
 });
+
+describe("parseFormula hydrate notation", () => {
+  it("parses CuSO4·5H2O with centered dot", () => {
+    const result = parseFormula("CuSO4·5H2O");
+    expect(result.elements).toEqual({ Cu: 1, S: 1, O: 9, H: 10 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses Na2CO3*10H2O with asterisk", () => {
+    const result = parseFormula("Na2CO3*10H2O");
+    expect(result.elements).toEqual({ Na: 2, C: 1, O: 13, H: 20 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses CaCl2·2H2O with bullet", () => {
+    const result = parseFormula("CaCl2•2H2O");
+    expect(result.elements).toEqual({ Ca: 1, Cl: 2, O: 2, H: 4 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses MgSO4*7H2O", () => {
+    const result = parseFormula("MgSO4*7H2O");
+    expect(result.elements).toEqual({ Mg: 1, S: 1, O: 11, H: 14 });
+    expect(result.charge).toBe(0);
+  });
+});
