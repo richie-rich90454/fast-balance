@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { gcd } from "../index";
+import { gcd, lcm } from "../index";
 
 describe("gcd", () => {
   it("returns gcd of 12 and 8 as 4", () => {
@@ -20,5 +20,27 @@ describe("gcd", () => {
 
   it("returns the same number when both arguments are equal (gcd(6, 6) = 6)", () => {
     expect(gcd(6, 6)).toBe(6);
+  });
+});
+
+describe("lcm", () => {
+  it("returns lcm of 4 and 6 as 12", () => {
+    expect(lcm(4, 6)).toBe(12);
+  });
+
+  it("returns product for coprime numbers (lcm(3, 7) = 21)", () => {
+    expect(lcm(3, 7)).toBe(21);
+  });
+
+  it("returns 0 when one argument is 0 (lcm(0, 5) = 0)", () => {
+    expect(lcm(0, 5)).toBe(0);
+  });
+
+  it("returns 0 when one argument is 0 (lcm(5, 0) = 0)", () => {
+    expect(lcm(5, 0)).toBe(0);
+  });
+
+  it("returns the same number when both arguments are equal (lcm(6, 6) = 6)", () => {
+    expect(lcm(6, 6)).toBe(6);
   });
 });
