@@ -336,3 +336,24 @@ describe("synthesis reactions", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([1]);
   });
 });
+
+describe("basic state symbol stripping", () => {
+  it("strips (s) from balanced equation", () => {
+    const result = balance("H2(g) + O2(g) -> H2O(l)");
+    expect(result.reactants[0].formula).toBe("H2");
+    expect(result.reactants[1].formula).toBe("O2");
+    expect(result.products[0].formula).toBe("H2O");
+  });
+
+  it("strips (aq) from balanced equation", () => {
+    const result = balance("NaOH(aq) + HCl(aq) -> NaCl(aq) + H2O(l)");
+    expect(result.reactants[0].formula).toBe("NaOH");
+    expect(result.products[0].formula).toBe("NaCl");
+  });
+
+  it("strips (g) and (l) from balanced equation", () => {
+    const result = balance("N2(g) + H2(g) -> NH3(g)");
+    expect(result.reactants[0].formula).toBe("N2");
+    expect(result.products[0].formula).toBe("NH3");
+  });
+});
