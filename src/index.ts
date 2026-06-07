@@ -44,7 +44,7 @@
  *
  * @packageDocumentation
  */
-class Fraction{
+export class Fraction{
     constructor(public readonly num: number, public readonly den: number=1){
         if(den<0){ num=-num; den=-den; }
         let g=gcd(Math.abs(num), den);
@@ -76,26 +76,26 @@ class Fraction{
         return new Fraction(this.num, this.den);
     }
 }
-function gcd(a: number, b: number): number{
+export function gcd(a: number, b: number): number{
     a=Math.abs(a);
     b=Math.abs(b);
     while (b!==0){ [a, b]=[b, a%b]; }
     return a;
 }
-function lcm(a: number, b: number): number{
+export function lcm(a: number, b: number): number{
     return (a/gcd(a, b))*b;
 }
 let STATE_SYMBOLS=["s", "l", "g", "aq", "solid", "liquid", "gas", "aqueous", "cr", "am"] as const;
 let STATE_REGEX=new RegExp(`\\((${STATE_SYMBOLS.join("|")})\\)`, "gi");
-type ElementMap=Record<string, number>;
-interface ParsedUnit{
+export type ElementMap=Record<string, number>;
+export interface ParsedUnit{
     elements: ElementMap;
     charge: number;
 }
-function stripStateSymbols(formula: string): string{
+export function stripStateSymbols(formula: string): string{
     return formula.replace(STATE_REGEX, "");
 }
-function parseFormula(formula: string): ParsedUnit{
+export function parseFormula(formula: string): ParsedUnit{
     formula=formula.replace(STATE_REGEX, "");
     let f=formula.trim();
     if (/^e-?$/.test(f)) return { elements: {}, charge: -1 };
@@ -120,7 +120,7 @@ function parseFormula(formula: string): ParsedUnit{
     }
     return { elements: totalElements, charge: totalCharge };
 }
-function parseWithoutMultiplier(str: string): ParsedUnit{
+export function parseWithoutMultiplier(str: string): ParsedUnit{
     let i=0;
     let elements: ElementMap={};
     let totalCharge=0;
@@ -245,16 +245,16 @@ function parseWithoutMultiplier(str: string): ParsedUnit{
     if (i<str.length) throw new Error("Unexpected characters at position "+i+": \""+str.slice(i)+"\"");
     return { elements, charge: totalCharge };
 }
-interface Species{
+export interface Species{
     formula: string;
     elements: ElementMap;
     charge: number;
 }
-interface Equation{
+export interface Equation{
     reactants: Species[];
     products: Species[];
 }
-function splitEquation(input: string): Equation{
+export function splitEquation(input: string): Equation{
     let cleaned=input
         .replace(/→|⇒|⇌|<=>|<->|-->/g, "->")
         .replace(/=/g, "->");
@@ -280,7 +280,7 @@ function splitEquation(input: string): Equation{
     if (products.length===0) throw new Error("Right side of equation is empty");
     return { reactants, products };
 }
-function buildMatrix(
+export function buildMatrix(
     reactants: Species[],
     products: Species[]
 ): { matrix: Fraction[][]; cols: number }{
@@ -311,7 +311,7 @@ function buildMatrix(
     }
     return { matrix: M, cols };
 }
-function solveSystem(matrix: Fraction[][], cols: number): Fraction[]{
+export function solveSystem(matrix: Fraction[][], cols: number): Fraction[]{
     let rows=matrix.length;
     if (rows===0) return Array.from({ length: cols }, ()=>Fraction.one());
     let M=matrix.map(row=>row.map(f=>f.clone()));
@@ -349,7 +349,7 @@ function solveSystem(matrix: Fraction[][], cols: number): Fraction[]{
     }
     return result;
 }
-function fractionsToIntegers(fracs: Fraction[]): number[]{
+export function fractionsToIntegers(fracs: Fraction[]): number[]{
     let denLcm=1;
     for (let f of fracs) if (!f.isZero()) denLcm=lcm(denLcm, Math.abs(f.den));
     let ints=fracs.map(f=>{
