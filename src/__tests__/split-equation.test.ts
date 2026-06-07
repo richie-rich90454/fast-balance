@@ -118,3 +118,45 @@ describe("buildMatrix basic construction", () => {
     expect(matrix[1][2]).toEqual(new Fraction(-1));
   });
 });
+
+describe("buildMatrix charge and edge cases", () => {
+  it("includes charge row when any species has non-zero charge", () => {
+    const eq = splitEquation("Fe2+ + Cl- -> FeCl2");
+    const { matrix } = buildMatrix(eq.reactants, eq.products);
+    expect(matrix.length).toBeGreaterThanOrEqual(3);
+    const chargeRow = matrix[matrix.length - 1];
+    expect(chargeRow).toBeDefined();
+    expect(chargeRow![0].num).toBeGreaterThan(0);
+  });
+
+  it("omits charge row when all species have zero charge", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix } = buildMatrix(eq.reactants, eq.products);
+    expect(matrix).toHaveLength(2);
+  });
+
+  it("handles single reactant single product", () => {
+    const eq = splitEquation("O2 -> O2");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    expect(cols).toBe(2);
+    expect(matrix).toHaveLength(1);
+    expect(matrix[0][0]).toEqual(new Fraction(2));
+    expect(matrix[0][1]).toEqual(new Fraction(-2));
+  });
+
+  it("handles multiple elements correctly", () => {
+    const eq = splitEquation("CaCO3 -> CaO + CO2");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    expect(matrix).toHaveLength(3);
+    expect(cols).toBe(3);
+    expect(matrix[0][0]).toEqual(new Fraction(1));
+    expect(matrix[0][1].isZero()).toBe(true);
+    expect(matrix[0][2]).toEqual(new Fraction(-1));
+    expect(matrix[1][0]).toEqual(new Fraction(1));
+    expect(matrix[1][1]).toEqual(new Fraction(-1));
+    expect(matrix[1][2].isZero()).toBe(true);
+    expect(matrix[2][0]).toEqual(new Fraction(3));
+    expect(matrix[2][1]).toEqual(new Fraction(-1));
+    expect(matrix[2][2]).toEqual(new Fraction(-2));
+  });
+});
