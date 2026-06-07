@@ -176,3 +176,19 @@ describe("parseFormula hydrate notation", () => {
     expect(result.charge).toBe(0);
   });
 });
+
+describe("parseFormula edge cases and errors", () => {
+  it("throws on mismatched brackets", () => {
+    expect(() => parseFormula("(OH")).toThrow();
+  });
+
+  it("throws on unexpected characters at position", () => {
+    expect(() => parseFormula("H2@O")).toThrow();
+  });
+
+  it("parses formula with state symbols stripped (H2O(aq) parsed as H2O)", () => {
+    const result = parseFormula("H2O(aq)");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+});
