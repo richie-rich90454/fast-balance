@@ -304,3 +304,35 @@ describe("balance()", ()=>{
         expect(result.products[1]?.coefficient).toBe(7);
     });
 });
+
+describe("synthesis reactions", () => {
+  it("balances H2 + O2 -> H2O", () => {
+    const result = balance("H2 + O2 -> H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2]);
+  });
+
+  it("balances N2 + H2 -> NH3", () => {
+    const result = balance("N2 + H2 -> NH3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2]);
+  });
+
+  it("balances 2Al + 3Cl2 -> 2AlCl3 (ignoring input coefficients)", () => {
+    const result = balance("Al + Cl2 -> AlCl3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2]);
+  });
+
+  it("balances Mg + O2 -> MgO", () => {
+    const result = balance("Mg + O2 -> MgO");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2]);
+  });
+
+  it("balances S + O2 -> SO2", () => {
+    const result = balance("S + O2 -> SO2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+});
