@@ -518,3 +518,23 @@ describe("polyatomic ion balance", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([1]);
   });
 });
+
+describe("complex ionic compounds", () => {
+  it("balances [Fe(CN)6]4- + K+ -> K4[Fe(CN)6]", () => {
+    const result = balance("[Fe(CN)6]4- + K+ -> K4[Fe(CN)6]");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 4]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances [Co(NH3)6]Cl3 + AgNO3 -> AgCl + [Co(NH3)6](NO3)3", () => {
+    const result = balance("[Co(NH3)6]Cl3 + AgNO3 -> AgCl + [Co(NH3)6](NO3)3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([3, 1]);
+  });
+
+  it("balances [Cu(NH3)4](OH)2 + HCl -> [Cu(NH3)4]Cl2 + H2O", () => {
+    const result = balance("[Cu(NH3)4](OH)2 + HCl -> [Cu(NH3)4]Cl2 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+});
