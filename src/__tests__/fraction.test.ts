@@ -74,3 +74,45 @@ describe("add and subtract", () => {
     expect(result.den).toBe(2);
   });
 });
+
+describe("multiply and divide", () => {
+  it("multiplies two fractions (2/3 * 3/4 = 1/2)", () => {
+    const a = new Fraction(2, 3);
+    const b = new Fraction(3, 4);
+    const result = a.mul(b);
+    expect(result.num).toBe(1);
+    expect(result.den).toBe(2);
+  });
+
+  it("multiplies by zero (1/2 * 0 = 0)", () => {
+    const a = new Fraction(1, 2);
+    const b = Fraction.zero();
+    const result = a.mul(b);
+    expect(result.num).toBe(0);
+    expect(result.den).toBe(1);
+  });
+
+  it("multiplies by one (3/4 * 1 = 3/4)", () => {
+    const a = new Fraction(3, 4);
+    const b = Fraction.one();
+    const result = a.mul(b);
+    expect(result.num).toBe(3);
+    expect(result.den).toBe(4);
+  });
+
+  it("divides two fractions (2/3 / 4/3 = 1/2)", () => {
+    const a = new Fraction(2, 3);
+    const b = new Fraction(4, 3);
+    const result = a.div(b);
+    expect(result.num).toBe(1);
+    expect(result.den).toBe(2);
+  });
+
+  it("divides by one (3/4 / 1 = 3/4)", () => {
+    const a = new Fraction(3, 4);
+    const b = Fraction.one();
+    const result = a.div(b);
+    expect(result.num).toBe(3);
+    expect(result.den).toBe(4);
+  });
+});
