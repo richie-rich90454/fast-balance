@@ -32,3 +32,45 @@ describe("constructor and normalization", () => {
     expect(f.den).toBe(1);
   });
 });
+
+describe("add and subtract", () => {
+  it("adds two positive fractions (1/2 + 1/3 = 5/6)", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(1, 3);
+    const result = a.add(b);
+    expect(result.num).toBe(5);
+    expect(result.den).toBe(6);
+  });
+
+  it("adds fraction to zero (1/2 + 0 = 1/2)", () => {
+    const a = new Fraction(1, 2);
+    const b = Fraction.zero();
+    const result = a.add(b);
+    expect(result.num).toBe(1);
+    expect(result.den).toBe(2);
+  });
+
+  it("subtracts two fractions (3/4 - 1/4 = 1/2)", () => {
+    const a = new Fraction(3, 4);
+    const b = new Fraction(1, 4);
+    const result = a.sub(b);
+    expect(result.num).toBe(1);
+    expect(result.den).toBe(2);
+  });
+
+  it("adds negative fraction (1/2 + (-1/3) = 1/6)", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(-1, 3);
+    const result = a.add(b);
+    expect(result.num).toBe(1);
+    expect(result.den).toBe(6);
+  });
+
+  it("subtracts to get negative result (1/4 - 3/4 = -1/2)", () => {
+    const a = new Fraction(1, 4);
+    const b = new Fraction(3, 4);
+    const result = a.sub(b);
+    expect(result.num).toBe(-1);
+    expect(result.den).toBe(2);
+  });
+});
