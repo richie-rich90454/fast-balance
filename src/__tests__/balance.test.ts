@@ -336,3 +336,29 @@ describe("synthesis reactions", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([1]);
   });
 });
+
+describe("decomposition reactions", () => {
+  it("balances CaCO3 -> CaO + CO2", () => {
+    const result = balance("CaCO3 -> CaO + CO2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances KClO3 -> KCl + O2", () => {
+    const result = balance("KClO3 -> KCl + O2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2, 3]);
+  });
+
+  it("balances H2O2 -> H2O + O2", () => {
+    const result = balance("H2O2 -> H2O + O2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2, 1]);
+  });
+
+  it("balances 2HgO -> 2Hg + O2", () => {
+    const result = balance("HgO -> Hg + O2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2, 1]);
+  });
+});
