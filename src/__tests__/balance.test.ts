@@ -357,3 +357,23 @@ describe("basic state symbol stripping", () => {
     expect(result.products[0].formula).toBe("NH3");
   });
 });
+
+describe("full-word state symbols", () => {
+  it("strips (solid) from balanced equation", () => {
+    const result = balance("Fe(solid) + Cl2(gas) -> FeCl2(solid)");
+    expect(result.reactants[0].formula).toBe("Fe");
+    expect(result.products[0].formula).toBe("FeCl2");
+  });
+
+  it("strips (liquid) and (aqueous) from balanced equation", () => {
+    const result = balance("HCl(aqueous) + NaOH(aqueous) -> NaCl(aqueous) + H2O(liquid)");
+    expect(result.reactants[0].formula).toBe("HCl");
+    expect(result.products[1].formula).toBe("H2O");
+  });
+
+  it("strips (gas) from balanced equation", () => {
+    const result = balance("CH4(gas) + O2(gas) -> CO2(gas) + H2O(liquid)");
+    expect(result.reactants[0].formula).toBe("CH4");
+    expect(result.products[0].formula).toBe("CO2");
+  });
+});
