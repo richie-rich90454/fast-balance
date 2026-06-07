@@ -483,6 +483,23 @@ describe("mixed input formats", () => {
   });
 });
 
+describe("text format output", () => {
+  it("uses -> arrow in text format by default", () => {
+    const result = balance("H2 + O2 -> H2O");
+    expect(result.equation).toContain("->");
+  });
+
+  it("uses -> arrow when format is text", () => {
+    const result = balance("H2 + O2 -> H2O", { format: "text" });
+    expect(result.equation).toContain("->");
+  });
+
+  it("formats coefficients correctly in text format", () => {
+    const result = balance("H2 + O2 -> H2O", { format: "text", showOne: false });
+    expect(result.equation).not.toContain("1 ");
+  });
+});
+
 describe("missing arrow errors", () => {
   it("throws when no arrow is present", () => {
     expect(() => balance("H2 + O2 H2O")).toThrow();
