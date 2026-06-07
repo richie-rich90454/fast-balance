@@ -414,3 +414,29 @@ describe("double displacement reactions", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
   });
 });
+
+describe("combustion reactions", () => {
+  it("balances CH4 + O2 -> CO2 + H2O", () => {
+    const result = balance("CH4 + O2 -> CO2 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances C6H12O6 + O2 -> CO2 + H2O", () => {
+    const result = balance("C6H12O6 + O2 -> CO2 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 6]);
+    expect(result.products.map(p => p.coefficient)).toEqual([6, 6]);
+  });
+
+  it("balances C2H6 + O2 -> CO2 + H2O", () => {
+    const result = balance("C2H6 + O2 -> CO2 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 7]);
+    expect(result.products.map(p => p.coefficient)).toEqual([4, 6]);
+  });
+
+  it("balances C3H8 + O2 -> CO2 + H2O", () => {
+    const result = balance("C3H8 + O2 -> CO2 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 5]);
+    expect(result.products.map(p => p.coefficient)).toEqual([3, 4]);
+  });
+});
