@@ -429,6 +429,26 @@ describe("special arrow styles", () => {
   });
 });
 
+describe("leading coefficient handling", () => {
+  it("ignores leading coefficients on reactants", () => {
+    const result = balance("2 H2 + O2 -> H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2]);
+  });
+
+  it("ignores leading coefficients on products", () => {
+    const result = balance("H2 + O2 -> 2 H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2]);
+  });
+
+  it("ignores leading coefficients on both sides", () => {
+    const result = balance("2 H2 + O2 -> 2 H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2]);
+  });
+});
+
 describe("missing arrow errors", () => {
   it("throws when no arrow is present", () => {
     expect(() => balance("H2 + O2 H2O")).toThrow();
