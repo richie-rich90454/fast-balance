@@ -388,3 +388,29 @@ describe("displacement reactions", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([2, 1]);
   });
 });
+
+describe("double displacement reactions", () => {
+  it("balances AgNO3 + NaCl -> AgCl + NaNO3", () => {
+    const result = balance("AgNO3 + NaCl -> AgCl + NaNO3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances Pb(NO3)2 + KI -> PbI2 + KNO3", () => {
+    const result = balance("Pb(NO3)2 + KI -> PbI2 + KNO3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances BaCl2 + Na2SO4 -> BaSO4 + NaCl", () => {
+    const result = balance("BaCl2 + Na2SO4 -> BaSO4 + NaCl");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances NaOH + HCl -> NaCl + H2O", () => {
+    const result = balance("NaOH + HCl -> NaCl + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+  });
+});
