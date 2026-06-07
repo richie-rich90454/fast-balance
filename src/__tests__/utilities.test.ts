@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { gcd, lcm } from "../index";
+import { gcd, lcm, stripStateSymbols } from "../index";
 
 describe("gcd", () => {
   it("returns gcd of 12 and 8 as 4", () => {
@@ -42,5 +42,27 @@ describe("lcm", () => {
 
   it("returns the same number when both arguments are equal (lcm(6, 6) = 6)", () => {
     expect(lcm(6, 6)).toBe(6);
+  });
+});
+
+describe("stripStateSymbols", () => {
+  it("strips (s) from formula", () => {
+    expect(stripStateSymbols("NaCl(s)")).toBe("NaCl");
+  });
+
+  it("strips (aq) from formula", () => {
+    expect(stripStateSymbols("NaOH(aq)")).toBe("NaOH");
+  });
+
+  it("strips (g) and (l) from formula with multiple state symbols", () => {
+    expect(stripStateSymbols("H2O(g) + H2O(l)")).toBe("H2O + H2O");
+  });
+
+  it("strips full-word state symbols like (solid) and (gas)", () => {
+    expect(stripStateSymbols("Fe(solid) + O2(gas)")).toBe("Fe + O2");
+  });
+
+  it("returns unchanged formula when no state symbols present", () => {
+    expect(stripStateSymbols("H2O")).toBe("H2O");
   });
 });
