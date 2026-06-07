@@ -492,3 +492,29 @@ describe("simple ionic charge balance", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([1]);
   });
 });
+
+describe("polyatomic ion balance", () => {
+  it("balances Al3+ + SO4^2- -> Al2(SO4)3", () => {
+    const result = balance("Al3+ + SO4^2- -> Al2(SO4)3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances Ca2+ + NO3- -> Ca(NO3)2", () => {
+    const result = balance("Ca2+ + NO3- -> Ca(NO3)2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances NH4+ + SO4^2- -> (NH4)2SO4", () => {
+    const result = balance("NH4+ + SO4^2- -> (NH4)2SO4");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances Fe3+ + OH- -> Fe(OH)3", () => {
+    const result = balance("Fe3+ + OH- -> Fe(OH)3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+});
