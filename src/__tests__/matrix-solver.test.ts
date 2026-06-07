@@ -80,3 +80,25 @@ describe("solveSystem edge cases", () => {
     expect(result[0]!.equals(new Fraction(1))).toBe(true);
   });
 });
+
+describe("fractionsToIntegers basic", () => {
+  it("converts [1/2, 1/2] to [1, 1]", () => {
+    const result = fractionsToIntegers([new Fraction(1, 2), new Fraction(1, 2)]);
+    expect(result).toEqual([1, 1]);
+  });
+
+  it("converts [2/3, 4/3] to [1, 2]", () => {
+    const result = fractionsToIntegers([new Fraction(2, 3), new Fraction(4, 3)]);
+    expect(result).toEqual([1, 2]);
+  });
+
+  it("converts [1/3, 2/3] to [1, 2]", () => {
+    const result = fractionsToIntegers([new Fraction(1, 3), new Fraction(2, 3)]);
+    expect(result).toEqual([1, 2]);
+  });
+
+  it("converts whole numbers unchanged", () => {
+    const result = fractionsToIntegers([new Fraction(3), new Fraction(5)]);
+    expect(result).toEqual([3, 5]);
+  });
+});
