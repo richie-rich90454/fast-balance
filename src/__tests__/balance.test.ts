@@ -414,3 +414,17 @@ describe("ASCII arrow styles", () => {
     expect(result.products).toHaveLength(1);
   });
 });
+
+describe("missing arrow errors", () => {
+  it("throws when no arrow is present", () => {
+    expect(() => balance("H2 + O2 H2O")).toThrow();
+  });
+
+  it("throws when arrow is just spaces", () => {
+    expect(() => balance("H2 + O2   H2O")).toThrow();
+  });
+
+  it("throws on single side with no arrow", () => {
+    expect(() => balance("H2O")).toThrow();
+  });
+});
