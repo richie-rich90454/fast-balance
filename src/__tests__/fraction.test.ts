@@ -180,3 +180,40 @@ describe("static factory methods", () => {
     expect(Fraction.one().isZero()).toBe(false);
   });
 });
+
+describe("edge cases", () => {
+  it("large numerator and denominator reduce correctly", () => {
+    const f = new Fraction(1000000, 500000);
+    expect(f.num).toBe(2);
+    expect(f.den).toBe(1);
+  });
+
+  it("fraction with zero numerator has den=1", () => {
+    const f = new Fraction(0, 42);
+    expect(f.num).toBe(0);
+    expect(f.den).toBe(1);
+  });
+
+  it("negative of zero is zero", () => {
+    const f = new Fraction(0, 1);
+    const result = f.neg();
+    expect(result.num).toBe(0);
+    expect(result.den).toBe(1);
+  });
+
+  it("adding zero to zero is zero", () => {
+    const a = Fraction.zero();
+    const b = Fraction.zero();
+    const result = a.add(b);
+    expect(result.num).toBe(0);
+    expect(result.den).toBe(1);
+  });
+
+  it("multiplying two negative fractions gives positive", () => {
+    const a = new Fraction(-1, 2);
+    const b = new Fraction(-2, 3);
+    const result = a.mul(b);
+    expect(result.num).toBe(1);
+    expect(result.den).toBe(3);
+  });
+});
