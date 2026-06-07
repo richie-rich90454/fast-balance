@@ -78,3 +78,23 @@ describe("parseFormula parenthetical groups", () => {
     expect(result.charge).toBe(0);
   });
 });
+
+describe("parseFormula square bracket groups", () => {
+  it("parses [Fe(CN)6] correctly", () => {
+    const result = parseFormula("[Fe(CN)6]");
+    expect(result.elements).toEqual({ Fe: 1, C: 6, N: 6 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses [Co(NH3)6] correctly", () => {
+    const result = parseFormula("[Co(NH3)6]");
+    expect(result.elements).toEqual({ Co: 1, N: 6, H: 18 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses K4[Fe(CN)6] correctly", () => {
+    const result = parseFormula("K4[Fe(CN)6]");
+    expect(result.elements).toEqual({ K: 4, Fe: 1, C: 6, N: 6 });
+    expect(result.charge).toBe(0);
+  });
+});
