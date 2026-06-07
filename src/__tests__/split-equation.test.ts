@@ -28,3 +28,33 @@ describe("splitEquation basic splitting", () => {
     expect(eq.products[0].formula).toBe("H2O");
   });
 });
+
+describe("splitEquation arrow variants", () => {
+  it("normalizes Unicode arrow → correctly", () => {
+    const eq = splitEquation("H2 + O2 → H2O");
+    expect(eq.reactants).toHaveLength(2);
+    expect(eq.products).toHaveLength(1);
+    expect(eq.products[0].elements).toEqual({ H: 2, O: 1 });
+  });
+
+  it("normalizes = sign correctly", () => {
+    const eq = splitEquation("H2 + O2 = H2O");
+    expect(eq.reactants).toHaveLength(2);
+    expect(eq.products).toHaveLength(1);
+    expect(eq.products[0].elements).toEqual({ H: 2, O: 1 });
+  });
+
+  it("normalizes ⇌ correctly", () => {
+    const eq = splitEquation("H2 + O2 ⇌ H2O");
+    expect(eq.reactants).toHaveLength(2);
+    expect(eq.products).toHaveLength(1);
+    expect(eq.products[0].elements).toEqual({ H: 2, O: 1 });
+  });
+
+  it("normalizes --> correctly", () => {
+    const eq = splitEquation("H2 + O2 --> H2O");
+    expect(eq.reactants).toHaveLength(2);
+    expect(eq.products).toHaveLength(1);
+    expect(eq.products[0].elements).toEqual({ H: 2, O: 1 });
+  });
+});
