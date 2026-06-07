@@ -362,3 +362,29 @@ describe("decomposition reactions", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([2, 1]);
   });
 });
+
+describe("displacement reactions", () => {
+  it("balances Zn + CuSO4 -> ZnSO4 + Cu", () => {
+    const result = balance("Zn + CuSO4 -> ZnSO4 + Cu");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances Fe + CuSO4 -> FeSO4 + Cu", () => {
+    const result = balance("Fe + CuSO4 -> FeSO4 + Cu");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances Cl2 + KI -> KCl + I2", () => {
+    const result = balance("Cl2 + KI -> KCl + I2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2, 1]);
+  });
+
+  it("balances Na + H2O -> NaOH + H2", () => {
+    const result = balance("Na + H2O -> NaOH + H2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2, 1]);
+  });
+});
