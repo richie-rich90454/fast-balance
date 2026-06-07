@@ -51,3 +51,32 @@ describe("solveSystem basic", () => {
     }
   });
 });
+
+describe("solveSystem edge cases", () => {
+  it("handles all-zero row correctly", () => {
+    const matrix = [
+      [new Fraction(1), new Fraction(-1)],
+      [new Fraction(0), new Fraction(0)],
+    ];
+    const result = solveSystem(matrix, 2);
+    expect(result[0]!.equals(new Fraction(1))).toBe(true);
+    expect(result[1]!.equals(new Fraction(1))).toBe(true);
+  });
+
+  it("throws on system with no free variables (unbalanceable)", () => {
+    const matrix = [
+      [new Fraction(1), new Fraction(0)],
+      [new Fraction(0), new Fraction(1)],
+    ];
+    expect(() => solveSystem(matrix, 2)).toThrow("Unbalanceable equation");
+  });
+
+  it("handles single column system", () => {
+    const matrix = [
+      [new Fraction(0)],
+    ];
+    const result = solveSystem(matrix, 1);
+    expect(result.length).toBe(1);
+    expect(result[0]!.equals(new Fraction(1))).toBe(true);
+  });
+});
