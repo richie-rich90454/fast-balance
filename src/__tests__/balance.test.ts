@@ -722,3 +722,23 @@ describe("mixed parentheses and brackets balance", () => {
     expect(result.products.every(p => p.coefficient > 0)).toBe(true);
   });
 });
+
+describe("hydrate centered dot balance", () => {
+  it("balances CuSO4·5H2O -> CuSO4 + H2O", () => {
+    const result = balance("CuSO4·5H2O -> CuSO4 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 5]);
+  });
+
+  it("balances BaCl2·2H2O -> BaCl2 + H2O", () => {
+    const result = balance("BaCl2·2H2O -> BaCl2 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances CuSO4·5H2O + Fe -> FeSO4 + Cu + H2O", () => {
+    const result = balance("CuSO4·5H2O + Fe -> FeSO4 + Cu + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+});
