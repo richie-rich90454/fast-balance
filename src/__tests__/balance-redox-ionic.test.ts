@@ -156,3 +156,51 @@ describe("precipitation reactions", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
   });
 });
+
+describe("acid-base neutralization reactions", () => {
+  it("balances HCl + NaOH -> NaCl + H2O", () => {
+    const result = balance("HCl + NaOH -> NaCl + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances H2SO4 + NaOH -> Na2SO4 + H2O", () => {
+    const result = balance("H2SO4 + NaOH -> Na2SO4 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances HNO3 + KOH -> KNO3 + H2O", () => {
+    const result = balance("HNO3 + KOH -> KNO3 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances H2SO4 + KOH -> K2SO4 + H2O (positive check)", () => {
+    const result = balance("H2SO4 + KOH -> K2SO4 + H2O");
+    expectPositiveIntegers(result);
+  });
+
+  it("balances H3PO4 + NaOH -> Na3PO4 + H2O (positive check)", () => {
+    const result = balance("H3PO4 + NaOH -> Na3PO4 + H2O");
+    expectPositiveIntegers(result);
+  });
+
+  it("balances HCl + Ca(OH)2 -> CaCl2 + H2O", () => {
+    const result = balance("HCl + Ca(OH)2 -> CaCl2 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances H2SO4 + Ca(OH)2 -> CaSO4 + H2O", () => {
+    const result = balance("H2SO4 + Ca(OH)2 -> CaSO4 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances HNO3 + Ba(OH)2 -> Ba(NO3)2 + H2O", () => {
+    const result = balance("HNO3 + Ba(OH)2 -> Ba(NO3)2 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+});
