@@ -424,3 +424,35 @@ describe("charge notation variation", () => {
     expect(result.charge).toBe(-2);
   });
 });
+
+describe("electron parsing", () => {
+  it("parses e- as { elements: {}, charge: -1 }", () => {
+    const result = parseFormula("e-");
+    expect(result.elements).toEqual({});
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses e as { elements: {}, charge: -1 }", () => {
+    const result = parseFormula("e");
+    expect(result.elements).toEqual({});
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses e+ (positron) as { elements: {}, charge: 1 }", () => {
+    const result = parseFormula("e+");
+    expect(result.elements).toEqual({});
+    expect(result.charge).toBe(1);
+  });
+
+  it("parses e- within a hydrate-split part context", () => {
+    const result = parseFormula("e-");
+    expect(result.elements).toEqual({});
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses multiple e- via hydrate multiplier 2e-", () => {
+    const result = parseFormula("2e-");
+    expect(result.elements).toEqual({});
+    expect(result.charge).toBe(-2);
+  });
+});
