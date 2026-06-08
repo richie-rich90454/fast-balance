@@ -260,3 +260,52 @@ describe("coefficient integer verification", () => {
     expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
 });
+
+describe("output format verification", () => {
+  it("text format uses -> arrow", () => {
+    const result = balance("H2 + O2 -> H2O", { format: "text", showOne: false });
+    expect(result.equation).toContain("->");
+    expect(result.equation).not.toContain("&rarr;");
+    expect(result.equation).not.toContain("\\rightarrow");
+  });
+
+  it("html format uses &rarr; arrow", () => {
+    const result = balance("H2 + O2 -> H2O", { format: "html", showOne: false });
+    expect(result.equation).toContain("&rarr;");
+    expect(result.equation).not.toContain("->");
+    expect(result.equation).not.toContain("\\rightarrow");
+  });
+
+  it("latex format uses \\rightarrow arrow", () => {
+    const result = balance("H2 + O2 -> H2O", { format: "latex", showOne: false });
+    expect(result.equation).toContain("\\rightarrow");
+    expect(result.equation).not.toContain("->");
+    expect(result.equation).not.toContain("&rarr;");
+  });
+
+  it("showOne:true includes '1 ' for coefficient of 1", () => {
+    const result = balance("H2 + O2 -> H2O", { showOne: true });
+    expect(result.equation).toContain("1 ");
+  });
+
+  it("showOne:false omits '1 ' for coefficient of 1", () => {
+    const result = balance("H2 + O2 -> H2O", { showOne: false });
+    expect(result.equation).not.toContain("1 ");
+  });
+
+  it("format html with showOne false produces correct equation", () => {
+    const result = balance("H2 + O2 -> H2O", { format: "html", showOne: false });
+    expect(result.equation).toBe("2 H2 + O2 &rarr; 2 H2O");
+  });
+
+  it("format latex with showOne true produces correct equation", () => {
+    const result = balance("H2 + O2 -> H2O", { format: "latex", showOne: true });
+    expect(result.equation).toBe("2 H2 + 1 O2 \\rightarrow 2 H2O");
+  });
+
+  it("default options use text format with showOne true", () => {
+    const result = balance("H2 + O2 -> H2O");
+    expect(result.equation).toContain("->");
+    expect(result.equation).toContain("1 ");
+  });
+});
