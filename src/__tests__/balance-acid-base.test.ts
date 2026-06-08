@@ -38,3 +38,36 @@ describe("strong acid strong base", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
   });
 });
+
+describe("diprotic and triprotic acid neutralization", () => {
+  it("balances H2SO4 + 2NaOH -> Na2SO4 + 2H2O", () => {
+    const r = balance("H2SO4 + NaOH -> Na2SO4 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+  it("balances H2SO4 + 2KOH -> K2SO4 + 2H2O", () => {
+    const r = balance("H2SO4 + KOH -> K2SO4 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+  it("balances H2SO4 + Ca(OH)2 -> CaSO4 + 2H2O", () => {
+    const r = balance("H2SO4 + Ca(OH)2 -> CaSO4 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+  it("balances H3PO4 + 3NaOH -> Na3PO4 + 3H2O", () => {
+    const r = balance("H3PO4 + NaOH -> Na3PO4 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 3]);
+  });
+  it("balances 2H3PO4 + 3Ca(OH)2 -> Ca3(PO4)2 + 6H2O", () => {
+    const r = balance("H3PO4 + Ca(OH)2 -> Ca3(PO4)2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 6]);
+  });
+  it("balances H2CO3 + 2NaOH -> Na2CO3 + 2H2O", () => {
+    const r = balance("H2CO3 + NaOH -> Na2CO3 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+});
