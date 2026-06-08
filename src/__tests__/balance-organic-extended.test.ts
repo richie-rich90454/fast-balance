@@ -137,3 +137,35 @@ describe("carboxylic acid reactions", () => {
     expectPositiveCoefficients(r);
   });
 });
+
+describe("ester hydrolysis and formation", () => {
+  it("balances CH3COOH + C2H5OH -> CH3COOC2H5 + H2O (positive check)", () => {
+    const r = balance("CH3COOH + C2H5OH -> CH3COOC2H5 + H2O");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances HCOOH + CH3OH -> HCOOCH3 + H2O (positive check)", () => {
+    const r = balance("HCOOH + CH3OH -> HCOOCH3 + H2O");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances CH3COOC2H5 + H2O -> CH3COOH + C2H5OH (positive check)", () => {
+    const r = balance("CH3COOC2H5 + H2O -> CH3COOH + C2H5OH");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances HCOOCH3 + H2O -> HCOOH + CH3OH (positive check)", () => {
+    const r = balance("HCOOCH3 + H2O -> HCOOH + CH3OH");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances CH3COOC2H5 + NaOH -> CH3COONa + C2H5OH (positive check)", () => {
+    const r = balance("CH3COOC2H5 + NaOH -> CH3COONa + C2H5OH");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances C3H7COOC2H5 + NaOH -> C3H7COONa + C2H5OH (positive check)", () => {
+    const r = balance("C3H7COOC2H5 + NaOH -> C3H7COONa + C2H5OH");
+    expectPositiveCoefficients(r);
+  });
+});
