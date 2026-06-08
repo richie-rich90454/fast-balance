@@ -456,3 +456,35 @@ describe("electron parsing", () => {
     expect(result.charge).toBe(-2);
   });
 });
+
+describe("error condition", () => {
+  it("throws on mismatched opening parenthesis", () => {
+    expect(() => parseFormula("(OH")).toThrow();
+  });
+
+  it("throws on mismatched closing parenthesis", () => {
+    expect(() => parseFormula("OH)")).toThrow();
+  });
+
+  it("throws on mismatched opening bracket", () => {
+    expect(() => parseFormula("[Fe(CN)6")).toThrow();
+  });
+
+  it("throws on unexpected @ character", () => {
+    expect(() => parseFormula("H2@O")).toThrow();
+  });
+
+  it("throws on lowercase start h2o", () => {
+    expect(() => parseFormula("h2o")).toThrow();
+  });
+
+  it("returns empty elements for empty string", () => {
+    const result = parseFormula("");
+    expect(result.elements).toEqual({});
+    expect(result.charge).toBe(0);
+  });
+
+  it("handles double charge notation gracefully", () => {
+    expect(() => parseFormula("Fe2+3+")).toThrow();
+  });
+});
