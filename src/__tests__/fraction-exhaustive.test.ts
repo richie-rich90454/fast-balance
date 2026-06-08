@@ -136,3 +136,95 @@ describe("Fraction arithmetic commutativity tests", () => {
     expect(result.isZero()).toBe(true);
   });
 });
+
+describe("Fraction arithmetic associativity tests", () => {
+  it("add is associative for 1/2, 1/3, 1/6", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(1, 3);
+    const c = new Fraction(1, 6);
+    const left = a.add(b.add(c));
+    const right = a.add(b).add(c);
+    expect(left.equals(right)).toBe(true);
+  });
+
+  it("add is associative for 2/5, -1/3, 4/7", () => {
+    const a = new Fraction(2, 5);
+    const b = new Fraction(-1, 3);
+    const c = new Fraction(4, 7);
+    const left = a.add(b.add(c));
+    const right = a.add(b).add(c);
+    expect(left.equals(right)).toBe(true);
+  });
+
+  it("add is associative with zero", () => {
+    const a = new Fraction(3, 8);
+    const b = Fraction.zero();
+    const c = new Fraction(5, 8);
+    const left = a.add(b.add(c));
+    const right = a.add(b).add(c);
+    expect(left.equals(right)).toBe(true);
+  });
+
+  it("mul is associative for 2/3, 3/4, 4/5", () => {
+    const a = new Fraction(2, 3);
+    const b = new Fraction(3, 4);
+    const c = new Fraction(4, 5);
+    const left = a.mul(b.mul(c));
+    const right = a.mul(b).mul(c);
+    expect(left.equals(right)).toBe(true);
+  });
+
+  it("mul is associative for -1/2, 2/3, -3/4", () => {
+    const a = new Fraction(-1, 2);
+    const b = new Fraction(2, 3);
+    const c = new Fraction(-3, 4);
+    const left = a.mul(b.mul(c));
+    const right = a.mul(b).mul(c);
+    expect(left.equals(right)).toBe(true);
+  });
+
+  it("mul is associative with one", () => {
+    const a = new Fraction(5, 9);
+    const b = Fraction.one();
+    const c = new Fraction(9, 5);
+    const left = a.mul(b.mul(c));
+    const right = a.mul(b).mul(c);
+    expect(left.equals(right)).toBe(true);
+  });
+
+  it("sub is NOT associative: (1/2 - 1/3) - 1/4 != 1/2 - (1/3 - 1/4)", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(1, 3);
+    const c = new Fraction(1, 4);
+    const left = a.sub(b).sub(c);
+    const right = a.sub(b.sub(c));
+    expect(left.equals(right)).toBe(false);
+  });
+
+  it("sub is NOT associative with larger values: (3/4 - 1/2) - 1/8 != 3/4 - (1/2 - 1/8)", () => {
+    const a = new Fraction(3, 4);
+    const b = new Fraction(1, 2);
+    const c = new Fraction(1, 8);
+    const left = a.sub(b).sub(c);
+    const right = a.sub(b.sub(c));
+    expect(left.equals(right)).toBe(false);
+  });
+
+  it("div is NOT associative: (1/2 / 1/3) / 1/4 != 1/2 / (1/3 / 1/4)", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(1, 3);
+    const c = new Fraction(1, 4);
+    const left = a.div(b).div(c);
+    const right = a.div(b.div(c));
+    expect(left.equals(right)).toBe(false);
+  });
+
+  it("div is NOT associative with different values: (2/3 / 4/5) / 1/2 != 2/3 / (4/5 / 1/2)", () => {
+    const a = new Fraction(2, 3);
+    const b = new Fraction(4, 5);
+    const c = new Fraction(1, 2);
+    const left = a.div(b).div(c);
+    const right = a.div(b.div(c));
+    expect(left.equals(right)).toBe(false);
+  });
+});
