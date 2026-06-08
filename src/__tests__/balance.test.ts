@@ -776,3 +776,22 @@ describe("hydrate bullet balance", () => {
     expect(result.products.every(p => p.coefficient > 0)).toBe(true);
   });
 });
+
+describe("full-word state symbols balance", () => {
+  it("strips (solid) from balanced equation", () => {
+    const result = balance("Fe(solid) + Cl2(gas) -> FeCl2(solid)");
+    expect(result.reactants[0].formula).toBe("Fe");
+    expect(result.products[0].formula).toBe("FeCl2");
+  });
+
+  it("strips (liquid) and (aqueous) from balanced equation", () => {
+    const result = balance("HCl(aqueous) + NaOH(aqueous) -> NaCl(aqueous) + H2O(liquid)");
+    expect(result.reactants[0].formula).toBe("HCl");
+    expect(result.products[1].formula).toBe("H2O");
+  });
+
+  it("strips (cr) and (am) state symbols", () => {
+    const result = balance("NaCl(cr) -> Na+ + Cl-");
+    expect(result.reactants[0].formula).toBe("NaCl");
+  });
+});
