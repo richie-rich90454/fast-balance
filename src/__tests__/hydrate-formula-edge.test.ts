@@ -313,3 +313,41 @@ describe("formula with consecutive groups", () => {
     expect(result.products.every(p => p.coefficient > 0)).toBe(true);
   });
 });
+
+describe("formula with deep nesting", () => {
+  it("balances [Fe(C2O4)3]3- + H+ -> H3[Fe(C2O4)3]", () => {
+    const result = balance("[Fe(C2O4)3]3- + H+ -> H3[Fe(C2O4)3]");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances Na3[Co(NO2)6] -> Na+ + [Co(NO2)6]3-", () => {
+    const result = balance("Na3[Co(NO2)6] -> Na+ + [Co(NO2)6]3-");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([3, 1]);
+  });
+
+  it("balances [Cu(NH3)4](OH)2 + HCl -> [Cu(NH3)4]Cl2 + H2O", () => {
+    const result = balance("[Cu(NH3)4](OH)2 + HCl -> [Cu(NH3)4]Cl2 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances [Co(NH3)6]Cl3 + AgNO3 -> AgCl + [Co(NH3)6](NO3)3", () => {
+    const result = balance("[Co(NH3)6]Cl3 + AgNO3 -> AgCl + [Co(NH3)6](NO3)3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([3, 1]);
+  });
+
+  it("balances [Ag(NH3)2]+ + Cl- -> [Ag(NH3)2]Cl", () => {
+    const result = balance("[Ag(NH3)2]+ + Cl- -> [Ag(NH3)2]Cl");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances [Cu(NH3)4]2+ + SO4^2- -> [Cu(NH3)4]SO4", () => {
+    const result = balance("[Cu(NH3)4]2+ + SO4^2- -> [Cu(NH3)4]SO4");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+});
