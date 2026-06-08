@@ -374,3 +374,53 @@ describe("state symbol stripping", () => {
     expect(result.charge).toBe(0);
   });
 });
+
+describe("charge notation variation", () => {
+  it("parses Na+ as { Na: 1, charge: 1 }", () => {
+    const result = parseFormula("Na+");
+    expect(result.elements).toEqual({ Na: 1 });
+    expect(result.charge).toBe(1);
+  });
+
+  it("parses K+ as { K: 1, charge: 1 }", () => {
+    const result = parseFormula("K+");
+    expect(result.elements).toEqual({ K: 1 });
+    expect(result.charge).toBe(1);
+  });
+
+  it("parses Ca2+ as { Ca: 1, charge: 2 }", () => {
+    const result = parseFormula("Ca2+");
+    expect(result.elements).toEqual({ Ca: 1 });
+    expect(result.charge).toBe(2);
+  });
+
+  it("parses Mg2+ as { Mg: 1, charge: 2 }", () => {
+    const result = parseFormula("Mg2+");
+    expect(result.elements).toEqual({ Mg: 1 });
+    expect(result.charge).toBe(2);
+  });
+
+  it("parses Al3+ as { Al: 1, charge: 3 }", () => {
+    const result = parseFormula("Al3+");
+    expect(result.elements).toEqual({ Al: 1 });
+    expect(result.charge).toBe(3);
+  });
+
+  it("parses Fe3+ as { Fe: 1, charge: 3 }", () => {
+    const result = parseFormula("Fe3+");
+    expect(result.elements).toEqual({ Fe: 1 });
+    expect(result.charge).toBe(3);
+  });
+
+  it("parses Cl- as { Cl: 1, charge: -1 }", () => {
+    const result = parseFormula("Cl-");
+    expect(result.elements).toEqual({ Cl: 1 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses O2- as { O: 1, charge: -2 }", () => {
+    const result = parseFormula("O2-");
+    expect(result.elements).toEqual({ O: 1 });
+    expect(result.charge).toBe(-2);
+  });
+});
