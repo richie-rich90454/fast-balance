@@ -153,3 +153,24 @@ describe("lcm larger numbers and edge cases", () => {
     expect(lcm(lcm(4, 6), 5)).toBe(60);
   });
 });
+
+describe("gcd and lcm relationship", () => {
+  it("gcd * lcm = a * b for coprime numbers", () => {
+    expect(gcd(3, 7) * lcm(3, 7)).toBe(21);
+  });
+  it("gcd * lcm = a * b for numbers sharing factors", () => {
+    expect(gcd(8, 12) * lcm(8, 12)).toBe(96);
+  });
+  it("gcd * lcm = a * b for one being multiple of other", () => {
+    expect(gcd(4, 12) * lcm(4, 12)).toBe(48);
+  });
+  it("lcm(a,b) / gcd(a,b) = (a/gcd) * (b/gcd) when gcd > 0", () => {
+    const a = 24, b = 36;
+    const g = gcd(a, b);
+    expect(lcm(a, b) / g).toBe((a / g) * (b / g));
+  });
+  it("if gcd(a,b) = 1 then lcm(a,b) = a*b", () => {
+    expect(gcd(8, 9)).toBe(1);
+    expect(lcm(8, 9)).toBe(72);
+  });
+});
