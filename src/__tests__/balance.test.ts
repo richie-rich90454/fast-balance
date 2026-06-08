@@ -584,3 +584,25 @@ describe("redox half-reactions acidic medium", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([1, 4]);
   });
 });
+
+describe("redox half-reactions basic medium", () => {
+  it("balances MnO4- + H2O + e- -> MnO2 + OH-", () => {
+    const result = balance("MnO4- + H2O + e- -> MnO2 + OH-");
+    expect(result.reactants.length).toBe(3);
+    expect(result.products.length).toBe(2);
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances Cl2 + OH- -> ClO- + Cl- + H2O", () => {
+    const result = balance("Cl2 + OH- -> ClO- + Cl- + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances NO2- + H2O + e- -> NO + OH-", () => {
+    const result = balance("NO2- + H2O + e- -> NO + OH-");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+});
