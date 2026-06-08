@@ -224,3 +224,41 @@ describe("multiplicative inverse", () => {
     expect(inv.equals(new Fraction(-5, 2))).toBe(true);
   });
 });
+
+describe("clone and equals consistency", () => {
+  it("clone preserves value", () => {
+    const a = new Fraction(22, 7);
+    const b = a.clone();
+    expect(b.equals(a)).toBe(true);
+  });
+  it("clone is independent", () => {
+    const a = new Fraction(3, 5);
+    const b = a.clone();
+    const c = b.add(Fraction.one());
+    expect(b.equals(a)).toBe(true);
+    expect(c.equals(a)).toBe(false);
+  });
+  it("equals is reflexive", () => {
+    const a = new Fraction(7, 11);
+    expect(a.equals(a)).toBe(true);
+  });
+  it("equals is symmetric", () => {
+    const a = new Fraction(3, 8);
+    const b = new Fraction(3, 8);
+    expect(a.equals(b)).toBe(true);
+    expect(b.equals(a)).toBe(true);
+  });
+  it("equals works for equivalent fractions", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(2, 4);
+    const c = new Fraction(3, 6);
+    expect(a.equals(b)).toBe(true);
+    expect(b.equals(c)).toBe(true);
+    expect(a.equals(c)).toBe(true);
+  });
+  it("negated fraction is not equal to original (unless zero)", () => {
+    const a = new Fraction(3, 7);
+    expect(a.equals(a.neg())).toBe(false);
+    expect(Fraction.zero().equals(Fraction.zero().neg())).toBe(true);
+  });
+});
