@@ -626,3 +626,23 @@ describe("full redox reactions", () => {
     expect(result.products.every(p => p.coefficient > 0)).toBe(true);
   });
 });
+
+describe("disproportionation reactions", () => {
+  it("balances Cl2 + OH- -> ClO- + Cl- + H2O", () => {
+    const result = balance("Cl2 + OH- -> ClO- + Cl- + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances H2O2 -> H2O + O2", () => {
+    const result = balance("H2O2 -> H2O + O2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2, 1]);
+  });
+
+  it("balances Cl2 + OH- -> Cl- + ClO3- + H2O", () => {
+    const result = balance("Cl2 + OH- -> Cl- + ClO3- + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+});
