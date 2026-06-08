@@ -259,3 +259,41 @@ describe("hydrocarbon combustion with element conservation", () => {
     expect(r.reactants[0].coefficient * 18).toBe(r.products[1].coefficient * 2);
   });
 });
+
+describe("organic compound with heteroatoms", () => {
+  it("C6H12O6 combustion: C, H, O conserved", () => {
+    const r = balance("C6H12O6 + O2 -> CO2 + H2O");
+    expectPositiveCoefficients(r);
+    expect(r.reactants[0].coefficient * 6).toBe(r.products[0].coefficient);
+    expect(r.reactants[0].coefficient * 12).toBe(r.products[1].coefficient * 2);
+  });
+
+  it("CH3OH combustion: C, H, O conserved", () => {
+    const r = balance("CH3OH + O2 -> CO2 + H2O");
+    expectPositiveCoefficients(r);
+    expect(r.reactants[0].coefficient * 1).toBe(r.products[0].coefficient);
+    expect(r.reactants[0].coefficient * 4).toBe(r.products[1].coefficient * 2);
+  });
+
+  it("C2H5OH combustion: C, H, O conserved", () => {
+    const r = balance("C2H5OH + O2 -> CO2 + H2O");
+    expectPositiveCoefficients(r);
+    expect(r.reactants[0].coefficient * 2).toBe(r.products[0].coefficient);
+    expect(r.reactants[0].coefficient * 6).toBe(r.products[1].coefficient * 2);
+  });
+
+  it("balances C2H4O2 + O2 -> CO2 + H2O (positive check)", () => {
+    const r = balance("C2H4O2 + O2 -> CO2 + H2O");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances CH2O + O2 -> CO2 + H2O (positive check)", () => {
+    const r = balance("CH2O + O2 -> CO2 + H2O");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances C3H6O3 + O2 -> CO2 + H2O (positive check)", () => {
+    const r = balance("C3H6O3 + O2 -> CO2 + H2O");
+    expectPositiveCoefficients(r);
+  });
+});
