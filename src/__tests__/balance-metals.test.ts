@@ -188,3 +188,41 @@ describe("transition metal salt displacement", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
   });
 });
+
+describe("metal oxide and hydroxide decomposition", () => {
+  it("balances MgCO3 -> MgO + CO2", () => {
+    const r = balance("MgCO3 -> MgO + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances ZnCO3 -> ZnO + CO2", () => {
+    const r = balance("ZnCO3 -> ZnO + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances CuCO3 -> CuO + CO2", () => {
+    const r = balance("CuCO3 -> CuO + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances 2Fe(OH)3 -> Fe2O3 + 3H2O", () => {
+    const r = balance("Fe(OH)3 -> Fe2O3 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 3]);
+  });
+  it("balances Mg(OH)2 -> MgO + H2O", () => {
+    const r = balance("Mg(OH)2 -> MgO + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances Ca(OH)2 -> CaO + H2O", () => {
+    const r = balance("Ca(OH)2 -> CaO + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances 2Al(OH)3 -> Al2O3 + 3H2O", () => {
+    const r = balance("Al(OH)3 -> Al2O3 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 3]);
+  });
+});
