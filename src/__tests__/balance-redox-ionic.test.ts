@@ -1,4 +1,4 @@
-﻿import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "vitest";
 import { balance } from "../index";
 
 function expectPositiveIntegers(result: ReturnType<typeof balance>) {
@@ -252,5 +252,55 @@ describe("ionic compound formation", () => {
     const result = balance("K+ + CO3^2- -> K2CO3");
     expect(result.reactants.map(r => r.coefficient)).toEqual([2, 1]);
     expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+});
+
+describe("redox single replacement", () => {
+  it("balances Cu + AgNO3 -> Cu(NO3)2 + Ag", () => {
+    const result = balance("Cu + AgNO3 -> Cu(NO3)2 + Ag");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances Zn + Cu(NO3)2 -> Zn(NO3)2 + Cu", () => {
+    const result = balance("Zn + Cu(NO3)2 -> Zn(NO3)2 + Cu");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances Fe + Cu(NO3)2 -> Fe(NO3)2 + Cu", () => {
+    const result = balance("Fe + Cu(NO3)2 -> Fe(NO3)2 + Cu");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances Mg + Zn(NO3)2 -> Mg(NO3)2 + Zn", () => {
+    const result = balance("Mg + Zn(NO3)2 -> Mg(NO3)2 + Zn");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances Al + AgNO3 -> Al(NO3)3 + Ag", () => {
+    const result = balance("Al + AgNO3 -> Al(NO3)3 + Ag");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 3]);
+  });
+
+  it("balances Cl2 + KBr -> KCl + Br2", () => {
+    const result = balance("Cl2 + KBr -> KCl + Br2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2, 1]);
+  });
+
+  it("balances Cl2 + KI -> KCl + I2", () => {
+    const result = balance("Cl2 + KI -> KCl + I2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2, 1]);
+  });
+
+  it("balances Br2 + KI -> KBr + I2", () => {
+    const result = balance("Br2 + KI -> KBr + I2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2, 1]);
   });
 });
