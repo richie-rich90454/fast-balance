@@ -228,3 +228,68 @@ describe("Fraction arithmetic associativity tests", () => {
     expect(left.equals(right)).toBe(false);
   });
 });
+
+describe("Fraction distributive property tests", () => {
+  it("a*(b+c) === a*b + a*c for 1/2, 1/3, 1/4", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(1, 3);
+    const c = new Fraction(1, 4);
+    const left = a.mul(b.add(c));
+    const right = a.mul(b).add(a.mul(c));
+    expect(left.equals(right)).toBe(true);
+  });
+
+  it("a*(b+c) === a*b + a*c for 2/3, 3/5, 1/7", () => {
+    const a = new Fraction(2, 3);
+    const b = new Fraction(3, 5);
+    const c = new Fraction(1, 7);
+    const left = a.mul(b.add(c));
+    const right = a.mul(b).add(a.mul(c));
+    expect(left.equals(right)).toBe(true);
+  });
+
+  it("distributive with negative a: (-1/2)*(3/4 + 1/6) === (-1/2)*(3/4) + (-1/2)*(1/6)", () => {
+    const a = new Fraction(-1, 2);
+    const b = new Fraction(3, 4);
+    const c = new Fraction(1, 6);
+    const left = a.mul(b.add(c));
+    const right = a.mul(b).add(a.mul(c));
+    expect(left.equals(right)).toBe(true);
+  });
+
+  it("distributive with negative b: 2/5*((-3/7) + 1/2) === 2/5*(-3/7) + 2/5*(1/2)", () => {
+    const a = new Fraction(2, 5);
+    const b = new Fraction(-3, 7);
+    const c = new Fraction(1, 2);
+    const left = a.mul(b.add(c));
+    const right = a.mul(b).add(a.mul(c));
+    expect(left.equals(right)).toBe(true);
+  });
+
+  it("distributive with all negatives: (-2/3)*((-1/4)+(-1/5)) === (-2/3)*(-1/4) + (-2/3)*(-1/5)", () => {
+    const a = new Fraction(-2, 3);
+    const b = new Fraction(-1, 4);
+    const c = new Fraction(-1, 5);
+    const left = a.mul(b.add(c));
+    const right = a.mul(b).add(a.mul(c));
+    expect(left.equals(right)).toBe(true);
+  });
+
+  it("distributive with zero: 0*(b+c) === 0*b + 0*c", () => {
+    const a = Fraction.zero();
+    const b = new Fraction(3, 7);
+    const c = new Fraction(5, 11);
+    const left = a.mul(b.add(c));
+    const right = a.mul(b).add(a.mul(c));
+    expect(left.equals(right)).toBe(true);
+  });
+
+  it("distributive with one: 1*(b+c) === 1*b + 1*c", () => {
+    const a = Fraction.one();
+    const b = new Fraction(4, 9);
+    const c = new Fraction(2, 13);
+    const left = a.mul(b.add(c));
+    const right = a.mul(b).add(a.mul(c));
+    expect(left.equals(right)).toBe(true);
+  });
+});
