@@ -274,3 +274,53 @@ describe("bracket group parsing", () => {
     expect(result.charge).toBe(-2);
   });
 });
+
+describe("hydrate parsing", () => {
+  it("parses CuSO4·5H2O as { Cu: 1, S: 1, O: 9, H: 10, charge: 0 }", () => {
+    const result = parseFormula("CuSO4·5H2O");
+    expect(result.elements).toEqual({ Cu: 1, S: 1, O: 9, H: 10 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses BaCl2·2H2O as { Ba: 1, Cl: 2, O: 2, H: 4, charge: 0 }", () => {
+    const result = parseFormula("BaCl2·2H2O");
+    expect(result.elements).toEqual({ Ba: 1, Cl: 2, O: 2, H: 4 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses Na2CO3·10H2O as { Na: 2, C: 1, O: 13, H: 20, charge: 0 }", () => {
+    const result = parseFormula("Na2CO3·10H2O");
+    expect(result.elements).toEqual({ Na: 2, C: 1, O: 13, H: 20 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses MgSO4·7H2O as { Mg: 1, S: 1, O: 11, H: 14, charge: 0 }", () => {
+    const result = parseFormula("MgSO4·7H2O");
+    expect(result.elements).toEqual({ Mg: 1, S: 1, O: 11, H: 14 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses FeSO4·7H2O as { Fe: 1, S: 1, O: 11, H: 14, charge: 0 }", () => {
+    const result = parseFormula("FeSO4·7H2O");
+    expect(result.elements).toEqual({ Fe: 1, S: 1, O: 11, H: 14 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses Na2S2O3·5H2O as { Na: 2, S: 2, O: 8, H: 10, charge: 0 }", () => {
+    const result = parseFormula("Na2S2O3·5H2O");
+    expect(result.elements).toEqual({ Na: 2, S: 2, O: 8, H: 10 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses CaCl2·2H2O as { Ca: 1, Cl: 2, O: 2, H: 4, charge: 0 }", () => {
+    const result = parseFormula("CaCl2·2H2O");
+    expect(result.elements).toEqual({ Ca: 1, Cl: 2, O: 2, H: 4 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses CoCl2·6H2O as { Co: 1, Cl: 2, O: 6, H: 12, charge: 0 }", () => {
+    const result = parseFormula("CoCl2·6H2O");
+    expect(result.elements).toEqual({ Co: 1, Cl: 2, O: 6, H: 12 });
+    expect(result.charge).toBe(0);
+  });
+});
