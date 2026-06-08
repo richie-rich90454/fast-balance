@@ -210,3 +210,53 @@ describe("element conservation for redox reactions", () => {
     verifyConservation(result);
   });
 });
+
+describe("coefficient integer verification", () => {
+  it("all coefficients are positive integers for C8H18 + O2 -> CO2 + H2O", () => {
+    const result = balance("C8H18 + O2 -> CO2 + H2O");
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+
+  it("all coefficients are positive integers for C6H12O6 + O2 -> CO2 + H2O", () => {
+    const result = balance("C6H12O6 + O2 -> CO2 + H2O");
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+
+  it("all coefficients are positive integers for Fe2O3 + CO -> Fe + CO2", () => {
+    const result = balance("Fe2O3 + CO -> Fe + CO2");
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+
+  it("all coefficients are positive integers for Al2(SO4)3 + NaOH -> Al(OH)3 + Na2SO4", () => {
+    const result = balance("Al2(SO4)3 + NaOH -> Al(OH)3 + Na2SO4");
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+
+  it("all coefficients are positive integers for Ca3(PO4)2 + H2SO4 -> CaSO4 + H3PO4", () => {
+    const result = balance("Ca3(PO4)2 + H2SO4 -> CaSO4 + H3PO4");
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+
+  it("all coefficients are positive integers for CuSO4·5H2O -> CuSO4 + H2O", () => {
+    const result = balance("CuSO4·5H2O -> CuSO4 + H2O");
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+
+  it("all coefficients are positive integers for CH3COOH + NaOH -> CH3COONa + H2O", () => {
+    const result = balance("CH3COOH + NaOH -> CH3COONa + H2O");
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+
+  it("all coefficients are positive integers for NH3 + HCl -> NH4Cl", () => {
+    const result = balance("NH3 + HCl -> NH4Cl");
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
