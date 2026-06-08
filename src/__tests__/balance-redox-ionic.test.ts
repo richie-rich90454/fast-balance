@@ -404,3 +404,47 @@ describe("half-reaction acidic medium", () => {
     expectPositiveIntegers(result);
   });
 });
+
+describe("half-reaction basic medium", () => {
+  it("balances MnO4- + H2O + e- -> MnO2 + OH-", () => {
+    const result = balance("MnO4- + H2O + e- -> MnO2 + OH-");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 4]);
+  });
+
+  it("balances Cl2 + OH- -> ClO- + Cl- + H2O", () => {
+    const result = balance("Cl2 + OH- -> ClO- + Cl- + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 1, 1]);
+  });
+
+  it("balances Al + OH- + H2O -> Al(OH)4- + H2 (positive check)", () => {
+    const result = balance("Al + OH- + H2O -> Al(OH)4- + H2");
+    expectPositiveIntegers(result);
+  });
+
+  it("balances Zn + OH- -> ZnO2^2- + H2O + e- (positive check)", () => {
+    const result = balance("Zn + OH- -> ZnO2^2- + H2O + e-");
+    expectPositiveIntegers(result);
+  });
+
+  it("balances CrO4^2- + H2O + e- -> Cr(OH)3 + OH- (positive check)", () => {
+    const result = balance("CrO4^2- + H2O + e- -> Cr(OH)3 + OH-");
+    expectPositiveIntegers(result);
+  });
+
+  it("balances NO3- + H2O + e- -> NO + OH- (positive check)", () => {
+    const result = balance("NO3- + H2O + e- -> NO + OH-");
+    expectPositiveIntegers(result);
+  });
+
+  it("balances MnO4- + H2O + e- -> MnO2 + OH- (positive check, duplicate species)", () => {
+    const result = balance("MnO4- + H2O + e- -> MnO2 + OH-");
+    expectPositiveIntegers(result);
+  });
+
+  it("balances ClO- + H2O + e- -> Cl- + OH- (positive check)", () => {
+    const result = balance("ClO- + H2O + e- -> Cl- + OH-");
+    expectPositiveIntegers(result);
+  });
+});
