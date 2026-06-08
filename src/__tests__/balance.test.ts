@@ -835,3 +835,30 @@ describe("input handling edge cases", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([1]);
   });
 });
+
+describe("output format options", () => {
+  it("uses -> arrow in text format by default", () => {
+    const result = balance("H2 + O2 -> H2O");
+    expect(result.equation).toContain("->");
+  });
+
+  it("uses &rarr; arrow in HTML format", () => {
+    const result = balance("H2 + O2 -> H2O", { format: "html" });
+    expect(result.equation).toContain("&rarr;");
+  });
+
+  it("uses \\rightarrow arrow in LaTeX format", () => {
+    const result = balance("H2 + O2 -> H2O", { format: "latex" });
+    expect(result.equation).toContain("\\rightarrow");
+  });
+
+  it("omits coefficient 1 when showOne is false", () => {
+    const result = balance("H2 + O2 -> H2O", { showOne: false });
+    expect(result.equation).not.toContain("1 ");
+  });
+
+  it("includes coefficient 1 when showOne is true", () => {
+    const result = balance("H2 + O2 -> H2O", { showOne: true });
+    expect(result.equation).toContain("1 ");
+  });
+});
