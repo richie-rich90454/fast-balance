@@ -204,3 +204,53 @@ describe("acid-base neutralization reactions", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
   });
 });
+
+describe("ionic compound formation", () => {
+  it("balances Na+ + Cl- -> NaCl", () => {
+    const result = balance("Na+ + Cl- -> NaCl");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances K+ + Br- -> KBr", () => {
+    const result = balance("K+ + Br- -> KBr");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances Ca2+ + Cl- -> CaCl2", () => {
+    const result = balance("Ca2+ + Cl- -> CaCl2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances Al3+ + Cl- -> AlCl3", () => {
+    const result = balance("Al3+ + Cl- -> AlCl3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances Mg2+ + NO3- -> Mg(NO3)2", () => {
+    const result = balance("Mg2+ + NO3- -> Mg(NO3)2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances Na+ + SO4^2- -> Na2SO4", () => {
+    const result = balance("Na+ + SO4^2- -> Na2SO4");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances Na+ + PO4^3- -> Na3PO4", () => {
+    const result = balance("Na+ + PO4^3- -> Na3PO4");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([3, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances K+ + CO3^2- -> K2CO3", () => {
+    const result = balance("K+ + CO3^2- -> K2CO3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+});
