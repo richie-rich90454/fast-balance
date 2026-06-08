@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { gcd, lcm } from "../index";
+import { gcd, lcm, stripStateSymbols } from "../index";
 
 describe("gcd exhaustive", () => {
   it("returns gcd(12, 8) = 4", () => {
@@ -74,5 +74,55 @@ describe("lcm exhaustive", () => {
 
   it("returns lcm(1, 100) = 100", () => {
     expect(lcm(1, 100)).toBe(100);
+  });
+});
+
+describe("stripStateSymbols exhaustive", () => {
+  it("strips (s) from NaCl(s)", () => {
+    expect(stripStateSymbols("NaCl(s)")).toBe("NaCl");
+  });
+
+  it("strips (l) from H2O(l)", () => {
+    expect(stripStateSymbols("H2O(l)")).toBe("H2O");
+  });
+
+  it("strips (g) from CO2(g)", () => {
+    expect(stripStateSymbols("CO2(g)")).toBe("CO2");
+  });
+
+  it("strips (aq) from Na+(aq)", () => {
+    expect(stripStateSymbols("Na+(aq)")).toBe("Na+");
+  });
+
+  it("strips (aq) from Fe2+(aq)", () => {
+    expect(stripStateSymbols("Fe2+(aq)")).toBe("Fe2+");
+  });
+
+  it("strips (aq) from Cl-(aq)", () => {
+    expect(stripStateSymbols("Cl-(aq)")).toBe("Cl-");
+  });
+
+  it("strips (solid) from H2O(solid)", () => {
+    expect(stripStateSymbols("H2O(solid)")).toBe("H2O");
+  });
+
+  it("strips (liquid) from H2O(liquid)", () => {
+    expect(stripStateSymbols("H2O(liquid)")).toBe("H2O");
+  });
+
+  it("strips (gas) from H2O(gas)", () => {
+    expect(stripStateSymbols("H2O(gas)")).toBe("H2O");
+  });
+
+  it("strips (cr) from NaCl(cr)", () => {
+    expect(stripStateSymbols("NaCl(cr)")).toBe("NaCl");
+  });
+
+  it("strips (am) from NaCl(am)", () => {
+    expect(stripStateSymbols("NaCl(am)")).toBe("NaCl");
+  });
+
+  it("strips (aqueous) from H2O(aqueous)", () => {
+    expect(stripStateSymbols("H2O(aqueous)")).toBe("H2O");
   });
 });
