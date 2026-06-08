@@ -160,3 +160,31 @@ describe("halogen displacement", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([2, 1]);
   });
 });
+
+describe("transition metal salt displacement", () => {
+  it("balances Cu + 2AgNO3 -> Cu(NO3)2 + 2Ag", () => {
+    const r = balance("Cu + AgNO3 -> Cu(NO3)2 + Ag");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+  it("balances Zn + CuSO4 -> ZnSO4 + Cu", () => {
+    const r = balance("Zn + CuSO4 -> ZnSO4 + Cu");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances Fe + CuSO4 -> FeSO4 + Cu", () => {
+    const r = balance("Fe + CuSO4 -> FeSO4 + Cu");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances Mg + CuSO4 -> MgSO4 + Cu", () => {
+    const r = balance("Mg + CuSO4 -> MgSO4 + Cu");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances Zn + Pb(NO3)2 -> Zn(NO3)2 + Pb", () => {
+    const r = balance("Zn + Pb(NO3)2 -> Zn(NO3)2 + Pb");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+});
