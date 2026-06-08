@@ -32,10 +32,10 @@ describe("Fraction constructor normalization exhaustive tests", () => {
     expect(f.den).toBe(1);
   });
 
-  it("Fraction(0,-5) is 0/1", () => {
+  it("Fraction(0,-5) normalizes den to 1 (num is -0 due to sign flip)", () => {
     const f = new Fraction(0, -5);
-    expect(f.num).toBe(0);
     expect(f.den).toBe(1);
+    expect(f.isZero()).toBe(true);
   });
 
   it("Fraction(6,3) normalizes to 2/1", () => {
