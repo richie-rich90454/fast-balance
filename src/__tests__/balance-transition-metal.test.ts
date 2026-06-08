@@ -249,3 +249,35 @@ describe("lead compound reactions", () => {
     expectPositiveCoefficients(r);
   });
 });
+
+describe("chromium compound reactions", () => {
+  it("balances Cr + O2 -> Cr2O3", () => {
+    const r = balance("Cr + O2 -> Cr2O3");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances Cr2O3 + HCl -> CrCl3 + H2O", () => {
+    const r = balance("Cr2O3 + HCl -> CrCl3 + H2O");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances Cr2O7^2- + H+ + e- -> Cr3+ + H2O", () => {
+    const r = balance("Cr2O7^2- + H+ + e- -> Cr3+ + H2O");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances Cr + Cl2 -> CrCl3", () => {
+    const r = balance("Cr + Cl2 -> CrCl3");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances K2Cr2O7 + HCl -> KCl + CrCl3 + H2O + Cl2", () => {
+    const r = balance("K2Cr2O7 + HCl -> KCl + CrCl3 + H2O + Cl2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances Cr(OH)3 + HCl -> CrCl3 + H2O", () => {
+    const r = balance("Cr(OH)3 + HCl -> CrCl3 + H2O");
+    expectPositiveCoefficients(r);
+  });
+});
