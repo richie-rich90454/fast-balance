@@ -69,3 +69,27 @@ describe("multiplicative annihilation", () => {
     expect(Fraction.zero().mul(Fraction.zero()).isZero()).toBe(true);
   });
 });
+
+describe("commutativity", () => {
+  it("a + b = b + a", () => {
+    const a = new Fraction(2, 5);
+    const b = new Fraction(3, 7);
+    expect(a.add(b).equals(b.add(a))).toBe(true);
+  });
+  it("a * b = b * a", () => {
+    const a = new Fraction(2, 5);
+    const b = new Fraction(3, 7);
+    expect(a.mul(b).equals(b.mul(a))).toBe(true);
+  });
+  it("commutativity with negative fractions", () => {
+    const a = new Fraction(-1, 3);
+    const b = new Fraction(2, 7);
+    expect(a.add(b).equals(b.add(a))).toBe(true);
+    expect(a.mul(b).equals(b.mul(a))).toBe(true);
+  });
+  it("commutativity with zero", () => {
+    const a = new Fraction(4, 9);
+    expect(a.add(Fraction.zero()).equals(Fraction.zero().add(a))).toBe(true);
+    expect(a.mul(Fraction.zero()).equals(Fraction.zero().mul(a))).toBe(true);
+  });
+});
