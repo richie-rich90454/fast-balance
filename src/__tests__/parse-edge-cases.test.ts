@@ -198,8 +198,9 @@ describe("parseFormula error conditions", () => {
   it("throws on lowercase starting character", () => {
     expect(() => parseFormula("h2o")).toThrow();
   });
-  it("throws on numbers at start without valid formula", () => {
-    expect(() => parseFormula("123")).toThrow();
+  it("parses numbers at start as hydrate multiplier", () => {
+    const r = parseFormula("5H2O");
+    expect(r.elements).toEqual({ H: 10, O: 5 });
   });
 });
 
