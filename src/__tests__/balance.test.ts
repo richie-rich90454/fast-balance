@@ -762,3 +762,17 @@ describe("hydrate asterisk balance", () => {
     expect(result.products.every(p => p.coefficient > 0)).toBe(true);
   });
 });
+
+describe("hydrate bullet balance", () => {
+  it("balances CaCl2·2H2O -> CaCl2 + H2O", () => {
+    const result = balance("CaCl2·2H2O -> CaCl2 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances CaCl2·2H2O + AgNO3 -> AgCl + Ca(NO3)2 + H2O", () => {
+    const result = balance("CaCl2·2H2O + AgNO3 -> AgCl + Ca(NO3)2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+});
