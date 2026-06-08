@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { gcd, lcm, stripStateSymbols, splitEquation } from "../index";
+import { gcd, lcm, stripStateSymbols, splitEquation, buildMatrix, Fraction } from "../index";
 
 describe("gcd exhaustive", () => {
   it("returns gcd(12, 8) = 4", () => {
@@ -208,5 +208,86 @@ describe("splitEquation exhaustive", () => {
 
   it("throws on empty right side", () => {
     expect(() => splitEquation("H2 + O2 ->")).toThrow();
+  });
+});
+
+describe("buildMatrix exhaustive", () => {
+  it("creates correct matrix dimensions for H2 + O2 -> H2O", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    expect(matrix).toHaveLength(2); // H and O rows, no charge row
+    expect(cols).toBe(3); // H2, O2, H2O
+  });
+
+  it("creates correct matrix for Fe + Cl2 -> FeCl3", () => {
+    const eq = splitEquation("Fe + Cl2 -> FeCl3");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    expect(matrix).toHaveLength(2); // Fe and Cl rows, no charge row
+    expect(cols).toBe(3);
+    // Fe row: [1, 0, -1]
+    expect(matrix[0]![0]).toEqual(new Fraction(1));
+    expect(matrix[0]![1]).toEqual(new Fraction(0));
+    expect(matrix[0]![2]).toEqual(new Fraction(-1));
+    // Cl row: [0, 2, -3]
+    expect(matrix[1]![0]).toEqual(new Fraction(0));
+    expect(matrix[1]![1]).toEqual(new Fraction(2));
+    expect(matrix[1]![2]).toEqual(new Fraction(-3));
+  });
+
+  it("includes charge row for ionic equation with charges", () => {
+    const eq = splitEquation("Fe2+ + Cl- -> FeCl2");
+    const { matrix } = buildMatrix(eq.reactants, eq.products);
+    // Fe row, Cl row, and charge row
+    expect(matrix.length).toBeGreaterThanOrEqual(3);
+    const chargeRow = matrix[matrix.length - 1]!;
+    expect(chargeRow).toBeDefined();
+  });
+
+  it("reactant entries are positive (sign convention)", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix } = buildMatrix(eq.reactants, eq.products);
+    for (const row of matrix) {
+      for (let j = 0; j < 2; j++) {
+        if (!row[j]!.isZero()) {
+          expect(row[j]!.num).toBeGreaterThan(0);
+        }
+      }
+    }
+  });
+
+  it("product entries are negative (sign convention)", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix } = buildMatrix(eq.reactants, eq.products);
+    for (const row of matrix) {
+      if (!row[2]!.isZero()) {
+        expect(row[2]!.num).toBeLessThan(0);
+      }
+    }
+  });
+
+  it("omits charge row when no species has charge", () => {
+    const eq = splitEquation("CaCO3 -> CaO + CO2");
+    const { matrix } = buildMatrix(eq.reactants, eq.products);
+    // Ca, C, O rows only — no charge row
+    expect(matrix).toHaveLength(3);
+  });
+
+  it("handles single species on each side", () => {
+    const eq = splitEquation("O2 -> O2");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    expect(cols).toBe(2);
+    expect(matrix).toHaveLength(1);
+    expect(matrix[0]![0]).toEqual(new Fraction(2));
+    expect(matrix[0]![1]).toEqual(new Fraction(-2));
+  });
+
+  it("charge row values follow sign convention", () => {
+    const eq = splitEquation("Na+ + Cl- -> NaCl");
+    const { matrix } = buildMatrix(eq.reactants, eq.products);
+    const chargeRow = matrix[matrix.length - 1]!;
+    // Na+ is reactant: +1, Cl- is reactant: -1, NaCl is product: 0 (negated)
+    expect(chargeRow![0]).toEqual(new Fraction(1));
+    expect(chargeRow![1]).toEqual(new Fraction(-1));
+    expect(chargeRow![2]).toEqual(new Fraction(0));
   });
 });
