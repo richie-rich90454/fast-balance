@@ -564,3 +564,23 @@ describe("charge conservation", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
   });
 });
+
+describe("redox half-reactions acidic medium", () => {
+  it("balances MnO4- + H+ + e- -> Mn2+ + H2O", () => {
+    const result = balance("MnO4- + H+ + e- -> Mn2+ + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 8, 5]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 4]);
+  });
+
+  it("balances Cr2O7^2- + H+ + e- -> Cr3+ + H2O", () => {
+    const result = balance("Cr2O7^2- + H+ + e- -> Cr3+ + H2O");
+    expect(result.reactants[0].coefficient).toBeGreaterThan(0);
+    expect(result.products.length).toBe(2);
+  });
+
+  it("balances MnO4- + H+ + e -> Mn2+ + H2O (bare electron)", () => {
+    const result = balance("MnO4- + H+ + e -> Mn2+ + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 8, 5]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 4]);
+  });
+});
