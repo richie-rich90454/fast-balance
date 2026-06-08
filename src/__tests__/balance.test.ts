@@ -742,3 +742,23 @@ describe("hydrate centered dot balance", () => {
     expect(result.products.every(p => p.coefficient > 0)).toBe(true);
   });
 });
+
+describe("hydrate asterisk balance", () => {
+  it("balances Na2CO3*10H2O -> Na2CO3 + H2O", () => {
+    const result = balance("Na2CO3*10H2O -> Na2CO3 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 10]);
+  });
+
+  it("balances MgSO4*7H2O -> MgSO4 + H2O", () => {
+    const result = balance("MgSO4*7H2O -> MgSO4 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 7]);
+  });
+
+  it("balances Na2CO3*10H2O + HCl -> NaCl + H2O + CO2", () => {
+    const result = balance("Na2CO3*10H2O + HCl -> NaCl + H2O + CO2");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+});
