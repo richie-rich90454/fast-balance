@@ -181,3 +181,38 @@ describe("aluminum compound reactions", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([2, 3]);
   });
 });
+
+describe("silver compound reactions", () => {
+  it("balances Ag + Cl2 -> AgCl", () => {
+    const r = balance("Ag + Cl2 -> AgCl");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances AgNO3 + NaCl -> AgCl + NaNO3", () => {
+    const r = balance("AgNO3 + NaCl -> AgCl + NaNO3");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances AgNO3 + KCl -> AgCl + KNO3", () => {
+    const r = balance("AgNO3 + KCl -> AgCl + KNO3");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances Ag2O -> Ag + O2", () => {
+    const r = balance("Ag2O -> Ag + O2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances Ag + S -> Ag2S", () => {
+    const r = balance("Ag + S -> Ag2S");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances 2AgNO3 + Cu -> Cu(NO3)2 + 2Ag", () => {
+    const r = balance("AgNO3 + Cu -> Cu(NO3)2 + Ag");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+});
