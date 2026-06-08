@@ -150,3 +150,26 @@ describe("acid + metal oxide", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([2, 3]);
   });
 });
+
+describe("acid + ammonia", () => {
+  it("balances HCl + NH3 -> NH4Cl", () => {
+    const r = balance("HCl + NH3 -> NH4Cl");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances HNO3 + NH3 -> NH4NO3", () => {
+    const r = balance("HNO3 + NH3 -> NH4NO3");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances H2SO4 + 2NH3 -> (NH4)2SO4", () => {
+    const r = balance("H2SO4 + NH3 -> (NH4)2SO4");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances CH3COOH + NH3 -> CH3COONH4", () => {
+    const r = balance("CH3COOH + NH3 -> CH3COONH4");
+    expect(r.reactants.every(x => x.coefficient > 0)).toBe(true);
+    expect(r.products.every(x => x.coefficient > 0)).toBe(true);
+  });
+});
