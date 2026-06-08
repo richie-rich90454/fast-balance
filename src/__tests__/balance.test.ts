@@ -666,3 +666,17 @@ describe("nested parentheses balance", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([3, 2]);
   });
 });
+
+describe("square bracket group balance", () => {
+  it("balances [Fe(CN)6]4- + K+ -> K4[Fe(CN)6]", () => {
+    const result = balance("[Fe(CN)6]4- + K+ -> K4[Fe(CN)6]");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 4]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances [Cu(NH3)4]2+ + Cl- -> [Cu(NH3)4]Cl2", () => {
+    const result = balance("[Cu(NH3)4]2+ + Cl- -> [Cu(NH3)4]Cl2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+});
