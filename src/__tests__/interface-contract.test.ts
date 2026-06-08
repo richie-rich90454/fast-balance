@@ -38,3 +38,46 @@ describe("balance return type contract", ()=>{
         expect(result.products).toHaveLength(2);
     });
 });
+
+describe("balance BalancedSpecies contract", ()=>{
+    it("each reactant has coefficient (number)", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        for (let r of result.reactants){
+            expect(typeof r.coefficient).toBe("number");
+        }
+    });
+    it("each reactant has formula (string)", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        for (let r of result.reactants){
+            expect(typeof r.formula).toBe("string");
+        }
+    });
+    it("each product has coefficient (number)", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        for (let p of result.products){
+            expect(typeof p.coefficient).toBe("number");
+        }
+    });
+    it("each product has formula (string)", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        for (let p of result.products){
+            expect(typeof p.formula).toBe("string");
+        }
+    });
+    it("formula matches input", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        let formulas=result.reactants.map(r=>r.formula);
+        expect(formulas).toEqual(["H2", "O2"]);
+        let productFormulas=result.products.map(p=>p.formula);
+        expect(productFormulas).toEqual(["H2O"]);
+    });
+    it("coefficient is integer", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        for (let r of result.reactants){
+            expect(Number.isInteger(r.coefficient)).toBe(true);
+        }
+        for (let p of result.products){
+            expect(Number.isInteger(p.coefficient)).toBe(true);
+        }
+    });
+});
