@@ -422,3 +422,29 @@ describe("Fraction comparison and clone tests", () => {
     expect(a.equals(b)).toBe(true);
   });
 });
+
+describe("Fraction static factory tests", () => {
+  it("Fraction.zero().isZero() is true", () => {
+    expect(Fraction.zero().isZero()).toBe(true);
+  });
+
+  it("Fraction.zero().num === 0", () => {
+    expect(Fraction.zero().num).toBe(0);
+  });
+
+  it("Fraction.one().num === 1", () => {
+    expect(Fraction.one().num).toBe(1);
+  });
+
+  it("Fraction.one().den === 1", () => {
+    expect(Fraction.one().den).toBe(1);
+  });
+
+  it("Fraction.zero().den === 1", () => {
+    expect(Fraction.zero().den).toBe(1);
+  });
+
+  it("Fraction.one().equals(new Fraction(1))", () => {
+    expect(Fraction.one().equals(new Fraction(1))).toBe(true);
+  });
+});
