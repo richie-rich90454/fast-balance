@@ -216,3 +216,36 @@ describe("silver compound reactions", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
   });
 });
+
+describe("lead compound reactions", () => {
+  it("balances Pb + Cl2 -> PbCl2", () => {
+    const r = balance("Pb + Cl2 -> PbCl2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances Pb(NO3)2 + 2KI -> PbI2 + 2KNO3", () => {
+    const r = balance("Pb(NO3)2 + KI -> PbI2 + KNO3");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances PbO + C -> Pb + CO2", () => {
+    const r = balance("PbO + C -> Pb + CO2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances PbO + H2 -> Pb + H2O", () => {
+    const r = balance("PbO + H2 -> Pb + H2O");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances Pb + O2 -> PbO", () => {
+    const r = balance("Pb + O2 -> PbO");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances PbSO4 + Na2CO3 -> PbCO3 + Na2SO4", () => {
+    const r = balance("PbSO4 + Na2CO3 -> PbCO3 + Na2SO4");
+    expectPositiveCoefficients(r);
+  });
+});
