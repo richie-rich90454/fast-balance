@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { gcd, lcm, stripStateSymbols, splitEquation, buildMatrix, Fraction } from "../index";
+import { gcd, lcm, stripStateSymbols, splitEquation, buildMatrix, solveSystem, Fraction } from "../index";
 
 describe("gcd exhaustive", () => {
   it("returns gcd(12, 8) = 4", () => {
@@ -289,5 +289,99 @@ describe("buildMatrix exhaustive", () => {
     expect(chargeRow![0]).toEqual(new Fraction(1));
     expect(chargeRow![1]).toEqual(new Fraction(-1));
     expect(chargeRow![2]).toEqual(new Fraction(0));
+  });
+});
+
+describe("solveSystem exhaustive", () => {
+  it("solves simple 2x2 system with one free variable", () => {
+    const matrix = [
+      [new Fraction(1), new Fraction(-1)],
+    ];
+    const result = solveSystem(matrix, 2);
+    expect(result.length).toBe(2);
+    expect(result[0]!.equals(new Fraction(1))).toBe(true);
+    expect(result[1]!.equals(new Fraction(1))).toBe(true);
+  });
+
+  it("solves 3x3 system from H2 + O2 -> H2O", () => {
+    const matrix = [
+      [new Fraction(2), new Fraction(0), new Fraction(-2)],
+      [new Fraction(0), new Fraction(2), new Fraction(-1)],
+    ];
+    const result = solveSystem(matrix, 3);
+    expect(result[0]!.equals(new Fraction(1))).toBe(true);
+    expect(result[1]!.equals(new Fraction(1, 2))).toBe(true);
+    expect(result[2]!.equals(new Fraction(1))).toBe(true);
+  });
+
+  it("solves system from Fe + Cl2 -> FeCl3", () => {
+    const matrix = [
+      [new Fraction(1), new Fraction(0), new Fraction(-1)],
+      [new Fraction(0), new Fraction(2), new Fraction(-3)],
+    ];
+    const result = solveSystem(matrix, 3);
+    expect(result.length).toBe(3);
+    // Verify result is in nullspace: M * result = 0
+    for (const row of matrix) {
+      let sum = Fraction.zero();
+      for (let j = 0; j < 3; j++) sum = sum.add(row[j]!.mul(result[j]!));
+      expect(sum.isZero()).toBe(true);
+    }
+  });
+
+  it("handles system with free variable (all-zero row)", () => {
+    const matrix = [
+      [new Fraction(1), new Fraction(-1)],
+      [new Fraction(0), new Fraction(0)],
+    ];
+    const result = solveSystem(matrix, 2);
+    expect(result[0]!.equals(new Fraction(1))).toBe(true);
+    expect(result[1]!.equals(new Fraction(1))).toBe(true);
+  });
+
+  it("solves identity-like system (unbalanceable)", () => {
+    const matrix = [
+      [new Fraction(1), new Fraction(0)],
+      [new Fraction(0), new Fraction(1)],
+    ];
+    expect(() => solveSystem(matrix, 2)).toThrow("Unbalanceable equation");
+  });
+
+  it("solves system from ionic equation with charges", () => {
+    const eq = splitEquation("Fe2+ + Cl- -> FeCl2");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const result = solveSystem(matrix, cols);
+    expect(result.length).toBe(cols);
+    // Verify result is in nullspace
+    for (const row of matrix) {
+      let sum = Fraction.zero();
+      for (let j = 0; j < cols; j++) sum = sum.add(row[j]!.mul(result[j]!));
+      expect(sum.isZero()).toBe(true);
+    }
+  });
+
+  it("solves system from H2 + O2 -> H2O via buildMatrix", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const result = solveSystem(matrix, cols);
+    expect(result.length).toBe(3);
+    // Verify nullspace
+    for (const row of matrix) {
+      let sum = Fraction.zero();
+      for (let j = 0; j < cols; j++) sum = sum.add(row[j]!.mul(result[j]!));
+      expect(sum.isZero()).toBe(true);
+    }
+  });
+
+  it("solves system from Fe + Cl2 -> FeCl3 via buildMatrix", () => {
+    const eq = splitEquation("Fe + Cl2 -> FeCl3");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const result = solveSystem(matrix, cols);
+    expect(result.length).toBe(3);
+    for (const row of matrix) {
+      let sum = Fraction.zero();
+      for (let j = 0; j < cols; j++) sum = sum.add(row[j]!.mul(result[j]!));
+      expect(sum.isZero()).toBe(true);
+    }
   });
 });
