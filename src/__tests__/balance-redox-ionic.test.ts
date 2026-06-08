@@ -448,3 +448,39 @@ describe("half-reaction basic medium", () => {
     expectPositiveIntegers(result);
   });
 });
+
+describe("disproportionation and comproportionation", () => {
+  it("balances Cl2 + OH- -> ClO- + Cl- + H2O", () => {
+    const result = balance("Cl2 + OH- -> ClO- + Cl- + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 1, 1]);
+  });
+
+  it("balances H2O2 -> H2O + O2", () => {
+    const result = balance("H2O2 -> H2O + O2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2, 1]);
+  });
+
+  it("balances Cl2 + OH- -> Cl- + ClO3- + H2O (positive check)", () => {
+    const result = balance("Cl2 + OH- -> Cl- + ClO3- + H2O");
+    expectPositiveIntegers(result);
+  });
+
+  it("balances 2H2O2 -> 2H2O + O2", () => {
+    const result = balance("H2O2 -> H2O + O2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2, 1]);
+  });
+
+  it("balances Cu2O + H+ -> Cu + Cu2+ + H2O (positive check)", () => {
+    const result = balance("Cu2O + H+ -> Cu + Cu2+ + H2O");
+    expectPositiveIntegers(result);
+  });
+
+  it("balances 3NO2 + H2O -> 2HNO3 + NO", () => {
+    const result = balance("NO2 + H2O -> HNO3 + NO");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([3, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2, 1]);
+  });
+});
