@@ -293,3 +293,61 @@ describe("Fraction distributive property tests", () => {
     expect(left.equals(right)).toBe(true);
   });
 });
+
+describe("Fraction inverse and identity tests", () => {
+  it("a + a.neg() equals zero for 3/4", () => {
+    const a = new Fraction(3, 4);
+    expect(a.add(a.neg()).equals(Fraction.zero())).toBe(true);
+  });
+
+  it("a + a.neg() equals zero for -5/7", () => {
+    const a = new Fraction(-5, 7);
+    expect(a.add(a.neg()).equals(Fraction.zero())).toBe(true);
+  });
+
+  it("a + a.neg() equals zero for 1/1", () => {
+    const a = Fraction.one();
+    expect(a.add(a.neg()).equals(Fraction.zero())).toBe(true);
+  });
+
+  it("a * a / a equals a for non-zero 2/3", () => {
+    const a = new Fraction(2, 3);
+    expect(a.mul(a).div(a).equals(a)).toBe(true);
+  });
+
+  it("a * a / a equals a for non-zero -4/5", () => {
+    const a = new Fraction(-4, 5);
+    expect(a.mul(a).div(a).equals(a)).toBe(true);
+  });
+
+  it("a * a / a equals a for non-zero 7/1", () => {
+    const a = new Fraction(7, 1);
+    expect(a.mul(a).div(a).equals(a)).toBe(true);
+  });
+
+  it("Fraction.zero().neg() equals zero", () => {
+    const z = Fraction.zero();
+    expect(z.neg().equals(Fraction.zero())).toBe(true);
+  });
+
+  it("Fraction.one().neg() equals new Fraction(-1)", () => {
+    const one = Fraction.one();
+    const negOne = one.neg();
+    expect(negOne.equals(new Fraction(-1))).toBe(true);
+  });
+
+  it("div by self gives one for 3/7", () => {
+    const a = new Fraction(3, 7);
+    expect(a.div(a).equals(Fraction.one())).toBe(true);
+  });
+
+  it("div by self gives one for -2/9", () => {
+    const a = new Fraction(-2, 9);
+    expect(a.div(a).equals(Fraction.one())).toBe(true);
+  });
+
+  it("div by self gives one for 5/1", () => {
+    const a = new Fraction(5, 1);
+    expect(a.div(a).equals(Fraction.one())).toBe(true);
+  });
+});
