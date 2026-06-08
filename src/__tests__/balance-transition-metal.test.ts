@@ -144,3 +144,40 @@ describe("zinc compound reactions", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
   });
 });
+
+describe("aluminum compound reactions", () => {
+  it("balances 2Al + 3Cl2 -> 2AlCl3", () => {
+    const r = balance("Al + Cl2 -> AlCl3");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+
+  it("balances 4Al + 3O2 -> 2Al2O3", () => {
+    const r = balance("Al + O2 -> Al2O3");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([4, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+
+  it("balances Al2O3 + 6HCl -> 2AlCl3 + 3H2O", () => {
+    const r = balance("Al2O3 + HCl -> AlCl3 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 6]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 3]);
+  });
+
+  it("balances Al(OH)3 + 3HCl -> AlCl3 + 3H2O", () => {
+    const r = balance("Al(OH)3 + HCl -> AlCl3 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 3]);
+  });
+
+  it("balances Al + HCl -> AlCl3 + H2", () => {
+    const r = balance("Al + HCl -> AlCl3 + H2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances Al2(SO4)3 + 6NaOH -> 2Al(OH)3 + 3Na2SO4", () => {
+    const r = balance("Al2(SO4)3 + NaOH -> Al(OH)3 + Na2SO4");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 6]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 3]);
+  });
+});
