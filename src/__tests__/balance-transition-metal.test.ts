@@ -57,3 +57,52 @@ describe("iron compound reactions", () => {
     expectPositiveCoefficients(r);
   });
 });
+
+describe("copper compound reactions", () => {
+  it("balances Cu + Cl2 -> CuCl2", () => {
+    const r = balance("Cu + Cl2 -> CuCl2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+
+  it("balances 2Cu + O2 -> 2CuO", () => {
+    const r = balance("Cu + O2 -> CuO");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+
+  it("balances CuO + H2 -> Cu + H2O", () => {
+    const r = balance("CuO + H2 -> Cu + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances Cu + 2AgNO3 -> Cu(NO3)2 + 2Ag", () => {
+    const r = balance("Cu + AgNO3 -> Cu(NO3)2 + Ag");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances Cu(OH)2 + 2HCl -> CuCl2 + 2H2O", () => {
+    const r = balance("Cu(OH)2 + HCl -> CuCl2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances CuCO3 -> CuO + CO2", () => {
+    const r = balance("CuCO3 -> CuO + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances Cu + S -> Cu2S", () => {
+    const r = balance("Cu + S -> Cu2S");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances CuSO4 + 2NaOH -> Cu(OH)2 + Na2SO4", () => {
+    const r = balance("CuSO4 + NaOH -> Cu(OH)2 + Na2SO4");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+});
