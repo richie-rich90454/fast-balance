@@ -354,3 +354,53 @@ describe("complex ionic equations", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([1]);
   });
 });
+
+describe("half-reaction acidic medium", () => {
+  it("balances MnO4- + H+ + e- -> Mn2+ + H2O", () => {
+    const result = balance("MnO4- + H+ + e- -> Mn2+ + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 8, 5]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 4]);
+  });
+
+  it("balances Cr2O7^2- + H+ + e- -> Cr3+ + H2O", () => {
+    const result = balance("Cr2O7^2- + H+ + e- -> Cr3+ + H2O");
+    expect(result.reactants[0].coefficient).toBe(1);
+    expect(result.reactants[1].coefficient).toBe(14);
+    expect(result.reactants[2].coefficient).toBe(6);
+    expect(result.products[0].coefficient).toBe(2);
+    expect(result.products[1].coefficient).toBe(7);
+  });
+
+  it("balances NO3- + H+ + e- -> NO + H2O", () => {
+    const result = balance("NO3- + H+ + e- -> NO + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 4, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances SO4^2- + H+ + e- -> SO2 + H2O (positive check)", () => {
+    const result = balance("SO4^2- + H+ + e- -> SO2 + H2O");
+    expectPositiveIntegers(result);
+  });
+
+  it("balances MnO4- + H+ + e- -> MnO2 + H2O (positive check)", () => {
+    const result = balance("MnO4- + H+ + e- -> MnO2 + H2O");
+    expectPositiveIntegers(result);
+  });
+
+  it("balances H2O2 + H+ + e- -> H2O", () => {
+    const result = balance("H2O2 + H+ + e- -> H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2]);
+  });
+
+  it("balances ClO3- + H+ + e- -> Cl- + H2O", () => {
+    const result = balance("ClO3- + H+ + e- -> Cl- + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 6, 6]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 3]);
+  });
+
+  it("balances IO3- + H+ + e- -> I- + H2O (positive check)", () => {
+    const result = balance("IO3- + H+ + e- -> I- + H2O");
+    expectPositiveIntegers(result);
+  });
+});
