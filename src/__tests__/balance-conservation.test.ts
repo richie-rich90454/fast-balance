@@ -114,3 +114,35 @@ describe("element conservation for double displacement reactions", () => {
     verifyConservation(result);
   });
 });
+
+describe("element conservation for ionic reactions", () => {
+  it("conserves all elements in Fe2+ + Cl- -> FeCl2", () => {
+    const result = balance("Fe2+ + Cl- -> FeCl2");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in Ag+ + Cl- -> AgCl", () => {
+    const result = balance("Ag+ + Cl- -> AgCl");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in Na+ + OH- -> NaOH", () => {
+    const result = balance("Na+ + OH- -> NaOH");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in Ca2+ + Cl- -> CaCl2", () => {
+    const result = balance("Ca2+ + Cl- -> CaCl2");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in Al3+ + O2- -> Al2O3", () => {
+    const result = balance("Al3+ + O2- -> Al2O3");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in K+ + Br- -> KBr", () => {
+    const result = balance("K+ + Br- -> KBr");
+    verifyConservation(result);
+  });
+});
