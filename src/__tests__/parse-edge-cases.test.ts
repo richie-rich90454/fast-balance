@@ -152,3 +152,32 @@ describe("complex polyatomic ions", () => {
     expect(r.charge).toBe(-1);
   });
 });
+
+describe("multiple group nesting", () => {
+  it("parses Mg3(PO4)2 with subscript after group", () => {
+    const r = parseFormula("Mg3(PO4)2");
+    expect(r.elements).toEqual({ Mg: 3, P: 2, O: 8 });
+  });
+  it("parses (NH4)2SO4 with group before element", () => {
+    const r = parseFormula("(NH4)2SO4");
+    expect(r.elements).toEqual({ N: 2, H: 8, S: 1, O: 4 });
+  });
+  it("parses Al2(SO4)3 with multi-subscript group", () => {
+    const r = parseFormula("Al2(SO4)3");
+    expect(r.elements).toEqual({ Al: 2, S: 3, O: 12 });
+  });
+  it("parses Ba(NO3)2", () => {
+    const r = parseFormula("Ba(NO3)2");
+    expect(r.elements).toEqual({ Ba: 1, N: 2, O: 6 });
+  });
+  it("parses Fe4[Fe(CN)6]3 (Prussian blue)", () => {
+    const r = parseFormula("Fe4[Fe(CN)6]3");
+    expect(r.elements.Fe).toBe(7);
+    expect(r.elements.C).toBe(18);
+    expect(r.elements.N).toBe(18);
+  });
+  it("parses Na2CO3*10H2O (hydrate with asterisk)", () => {
+    const r = parseFormula("Na2CO3*10H2O");
+    expect(r.elements).toEqual({ Na: 2, C: 1, O: 13, H: 20 });
+  });
+});
