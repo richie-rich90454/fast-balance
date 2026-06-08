@@ -275,3 +275,41 @@ describe("formula with multiple group types", () => {
     expect(result.products.every(p => p.coefficient > 0)).toBe(true);
   });
 });
+
+describe("formula with consecutive groups", () => {
+  it("balances (NH4)2Cr2O7 -> N2 + Cr2O3 + H2O", () => {
+    const result = balance("(NH4)2Cr2O7 -> N2 + Cr2O3 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances (NH4)2C2O4 -> NH3 + CO + CO2 + H2O", () => {
+    const result = balance("(NH4)2C2O4 -> NH3 + CO + CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances (NH4)2CO3 -> NH3 + H2O + CO2", () => {
+    const result = balance("(NH4)2CO3 -> NH3 + H2O + CO2");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances (NH4)2S -> NH3 + H2S", () => {
+    const result = balance("(NH4)2S -> NH3 + H2S");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances (NH4)2SO3 -> NH3 + H2O + SO2", () => {
+    const result = balance("(NH4)2SO3 -> NH3 + H2O + SO2");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances (NH4)2SO4 + NaOH -> NH3 + Na2SO4 + H2O", () => {
+    const result = balance("(NH4)2SO4 + NaOH -> NH3 + Na2SO4 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+});
