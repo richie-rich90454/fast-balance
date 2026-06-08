@@ -115,3 +115,30 @@ describe("associativity", () => {
     expect(a.mul(b).mul(c).equals(a.mul(b.mul(c)))).toBe(true);
   });
 });
+
+describe("distributivity", () => {
+  it("a * (b + c) = a*b + a*c", () => {
+    const a = new Fraction(2, 3);
+    const b = new Fraction(1, 4);
+    const c = new Fraction(1, 5);
+    const left = a.mul(b.add(c));
+    const right = a.mul(b).add(a.mul(c));
+    expect(left.equals(right)).toBe(true);
+  });
+  it("a * (b - c) = a*b - a*c", () => {
+    const a = new Fraction(3, 5);
+    const b = new Fraction(2, 7);
+    const c = new Fraction(1, 11);
+    const left = a.mul(b.sub(c));
+    const right = a.mul(b).sub(a.mul(c));
+    expect(left.equals(right)).toBe(true);
+  });
+  it("distributivity with negative multiplier", () => {
+    const a = new Fraction(-1, 2);
+    const b = new Fraction(3, 4);
+    const c = new Fraction(1, 6);
+    const left = a.mul(b.add(c));
+    const right = a.mul(b).add(a.mul(c));
+    expect(left.equals(right)).toBe(true);
+  });
+});
