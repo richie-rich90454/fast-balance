@@ -74,3 +74,46 @@ describe("rare and special elements", () => {
     expect(r.elements).toEqual({ W: 1, O: 3 });
   });
 });
+
+describe("charge notation variations", () => {
+  it("parses Na+ (single plus)", () => {
+    const r = parseFormula("Na+");
+    expect(r.elements).toEqual({ Na: 1 });
+    expect(r.charge).toBe(1);
+  });
+  it("parses Ca2+ (number plus)", () => {
+    const r = parseFormula("Ca2+");
+    expect(r.elements).toEqual({ Ca: 1 });
+    expect(r.charge).toBe(2);
+  });
+  it("parses Al3+ (number plus)", () => {
+    const r = parseFormula("Al3+");
+    expect(r.elements).toEqual({ Al: 1 });
+    expect(r.charge).toBe(3);
+  });
+  it("parses Cl- (single minus)", () => {
+    const r = parseFormula("Cl-");
+    expect(r.elements).toEqual({ Cl: 1 });
+    expect(r.charge).toBe(-1);
+  });
+  it("parses O2- (number minus)", () => {
+    const r = parseFormula("O2-");
+    expect(r.elements).toEqual({ O: 1 });
+    expect(r.charge).toBe(-2);
+  });
+  it("parses N3- (number minus)", () => {
+    const r = parseFormula("N3-");
+    expect(r.elements).toEqual({ N: 1 });
+    expect(r.charge).toBe(-3);
+  });
+  it("parses SO4^2- (caret notation)", () => {
+    const r = parseFormula("SO4^2-");
+    expect(r.elements).toEqual({ S: 1, O: 4 });
+    expect(r.charge).toBe(-2);
+  });
+  it("parses PO4^3- (caret notation)", () => {
+    const r = parseFormula("PO4^3-");
+    expect(r.elements).toEqual({ P: 1, O: 4 });
+    expect(r.charge).toBe(-3);
+  });
+});
