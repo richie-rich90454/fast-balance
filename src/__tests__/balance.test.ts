@@ -884,3 +884,29 @@ describe("error cases", () => {
     expect(() => balance("H2@ + O2 -> H2O")).toThrow();
   });
 });
+
+describe("identity and edge cases", () => {
+  it("balances H2O -> H2O", () => {
+    const result = balance("H2O -> H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances Fe -> Fe", () => {
+    const result = balance("Fe -> Fe");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances reaction with large coefficients", () => {
+    const result = balance("C2H6 + O2 -> CO2 + H2O");
+    expect(result.reactants[0].coefficient).toBeGreaterThan(1);
+    expect(result.reactants[1].coefficient).toBeGreaterThan(1);
+  });
+
+  it("balances reaction with many species", () => {
+    const result = balance("Ca3(PO4)2 + SiO2 + C -> CaSiO3 + CO + P");
+    expect(result.reactants).toHaveLength(3);
+    expect(result.products).toHaveLength(3);
+  });
+});
