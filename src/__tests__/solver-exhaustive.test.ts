@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { gcd } from "../index";
+import { gcd, lcm } from "../index";
 
 describe("gcd exhaustive", () => {
   it("returns gcd(12, 8) = 4", () => {
@@ -40,5 +40,39 @@ describe("gcd exhaustive", () => {
 
   it("returns gcd(7, 7) = 7", () => {
     expect(gcd(7, 7)).toBe(7);
+  });
+});
+
+describe("lcm exhaustive", () => {
+  it("returns lcm(4, 6) = 12", () => {
+    expect(lcm(4, 6)).toBe(12);
+  });
+
+  it("returns lcm(3, 7) = 21", () => {
+    expect(lcm(3, 7)).toBe(21);
+  });
+
+  it("returns lcm(1, 1) = 1", () => {
+    expect(lcm(1, 1)).toBe(1);
+  });
+
+  it("returns lcm(0, 5) = 0", () => {
+    expect(lcm(0, 5)).toBe(0);
+  });
+
+  it("returns lcm(5, 0) = 0", () => {
+    expect(lcm(5, 0)).toBe(0);
+  });
+
+  it("returns lcm(12, 8) = 24", () => {
+    expect(lcm(12, 8)).toBe(24);
+  });
+
+  it("returns lcm(100, 75) = 300", () => {
+    expect(lcm(100, 75)).toBe(300);
+  });
+
+  it("returns lcm(1, 100) = 100", () => {
+    expect(lcm(1, 100)).toBe(100);
   });
 });
