@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { gcd, lcm, stripStateSymbols, splitEquation, buildMatrix, solveSystem, Fraction } from "../index";
+import { gcd, lcm, stripStateSymbols, splitEquation, buildMatrix, solveSystem, fractionsToIntegers, Fraction } from "../index";
 
 describe("gcd exhaustive", () => {
   it("returns gcd(12, 8) = 4", () => {
@@ -383,5 +383,51 @@ describe("solveSystem exhaustive", () => {
       for (let j = 0; j < cols; j++) sum = sum.add(row[j]!.mul(result[j]!));
       expect(sum.isZero()).toBe(true);
     }
+  });
+});
+
+describe("fractionsToIntegers exhaustive", () => {
+  it("converts [1/1] to [1]", () => {
+    const result = fractionsToIntegers([new Fraction(1)]);
+    expect(result).toEqual([1]);
+  });
+
+  it("converts [1/2, 1/2] to [1, 1]", () => {
+    const result = fractionsToIntegers([new Fraction(1, 2), new Fraction(1, 2)]);
+    expect(result).toEqual([1, 1]);
+  });
+
+  it("converts [2/3, 1/3] to [2, 1]", () => {
+    const result = fractionsToIntegers([new Fraction(2, 3), new Fraction(1, 3)]);
+    expect(result).toEqual([2, 1]);
+  });
+
+  it("converts [1/2, 3/4] to [2, 3]", () => {
+    const result = fractionsToIntegers([new Fraction(1, 2), new Fraction(3, 4)]);
+    expect(result).toEqual([2, 3]);
+  });
+
+  it("converts all same fractions to [1, 1, 1]", () => {
+    const result = fractionsToIntegers([new Fraction(5), new Fraction(5), new Fraction(5)]);
+    expect(result).toEqual([1, 1, 1]);
+  });
+
+  it("flips negative fractions to positive", () => {
+    const result = fractionsToIntegers([new Fraction(-1), new Fraction(-2)]);
+    expect(result).toEqual([1, 2]);
+  });
+
+  it("handles large denominators", () => {
+    const result = fractionsToIntegers([new Fraction(1, 12), new Fraction(5, 12)]);
+    expect(result).toEqual([1, 5]);
+  });
+
+  it("normalizes mixed signs to positive majority", () => {
+    const result = fractionsToIntegers([new Fraction(1), new Fraction(-1), new Fraction(1)]);
+    expect(result.every(v => v > 0 || v < 0)).toBe(true);
+    // Result should be normalized — the majority sign wins
+    const posCount = result.filter(v => v > 0).length;
+    const negCount = result.filter(v => v < 0).length;
+    expect(posCount).toBeGreaterThanOrEqual(negCount);
   });
 });
