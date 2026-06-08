@@ -79,3 +79,26 @@ describe("oxygenated organic combustion", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([6, 8]);
   });
 });
+
+describe("organic acid reactions", () => {
+  it("balances CH3COOH + NaOH -> CH3COONa + H2O", () => {
+    const r = balance("CH3COOH + NaOH -> CH3COONa + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances CH3COOH + KOH -> CH3COOK + H2O", () => {
+    const r = balance("CH3COOH + KOH -> CH3COOK + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances 2CH3COOH + Ca(OH)2 -> (CH3COO)2Ca + 2H2O", () => {
+    const r = balance("CH3COOH + Ca(OH)2 -> (CH3COO)2Ca + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+  it("balances HCOOH + NaOH -> HCOONa + H2O", () => {
+    const r = balance("HCOOH + NaOH -> HCOONa + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+});
