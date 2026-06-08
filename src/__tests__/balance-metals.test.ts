@@ -61,3 +61,36 @@ describe("alkali metal + water", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
   });
 });
+
+describe("alkaline earth metal reactions", () => {
+  it("balances Ca + Cl2 -> CaCl2", () => {
+    const r = balance("Ca + Cl2 -> CaCl2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances Mg + Cl2 -> MgCl2", () => {
+    const r = balance("Mg + Cl2 -> MgCl2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances Sr + Cl2 -> SrCl2", () => {
+    const r = balance("Sr + Cl2 -> SrCl2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances Ba + Cl2 -> BaCl2", () => {
+    const r = balance("Ba + Cl2 -> BaCl2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances 2Ca + O2 -> 2CaO", () => {
+    const r = balance("Ca + O2 -> CaO");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+  it("balances 2Ba + O2 -> 2BaO", () => {
+    const r = balance("Ba + O2 -> BaO");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+});
