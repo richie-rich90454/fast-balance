@@ -178,3 +178,35 @@ describe("element conservation for decomposition reactions", () => {
     verifyConservation(result);
   });
 });
+
+describe("element conservation for redox reactions", () => {
+  it("conserves all elements in Fe2O3 + CO -> Fe + CO2", () => {
+    const result = balance("Fe2O3 + CO -> Fe + CO2");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in Cu + HNO3 -> Cu(NO3)2 + NO + H2O", () => {
+    const result = balance("Cu + HNO3 -> Cu(NO3)2 + NO + H2O");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in MnO4- + H+ + e- -> Mn2+ + H2O", () => {
+    const result = balance("MnO4- + H+ + e- -> Mn2+ + H2O");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in Cr2O7^2- + H+ + e- -> Cr3+ + H2O", () => {
+    const result = balance("Cr2O7^2- + H+ + e- -> Cr3+ + H2O");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in Zn + HCl -> ZnCl2 + H2", () => {
+    const result = balance("Zn + HCl -> ZnCl2 + H2");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in Fe + CuSO4 -> FeSO4 + Cu", () => {
+    const result = balance("Fe + CuSO4 -> FeSO4 + Cu");
+    verifyConservation(result);
+  });
+});
