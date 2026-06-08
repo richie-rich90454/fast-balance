@@ -708,3 +708,17 @@ describe("deeply nested structure balance", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([3, 1]);
   });
 });
+
+describe("mixed parentheses and brackets balance", () => {
+  it("balances [Ag(NH3)2]+ + Cl- -> [Ag(NH3)2]Cl", () => {
+    const result = balance("[Ag(NH3)2]+ + Cl- -> [Ag(NH3)2]Cl");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances K4[Fe(CN)6] + H2SO4 + H2O -> K2SO4 + FeSO4 + (NH4)2SO4 + CO2 + H2O", () => {
+    const result = balance("K4[Fe(CN)6] + H2SO4 + H2O -> K2SO4 + FeSO4 + (NH4)2SO4 + CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+});
