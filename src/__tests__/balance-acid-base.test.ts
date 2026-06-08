@@ -99,3 +99,21 @@ describe("acid + carbonate", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([2, 1, 1]);
   });
 });
+
+describe("acid + bicarbonate", () => {
+  it("balances HCl + NaHCO3 -> NaCl + H2O + CO2", () => {
+    const r = balance("HCl + NaHCO3 -> NaCl + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1, 1]);
+  });
+  it("balances H2SO4 + 2NaHCO3 -> Na2SO4 + 2H2O + 2CO2", () => {
+    const r = balance("H2SO4 + NaHCO3 -> Na2SO4 + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2, 2]);
+  });
+  it("balances CH3COOH + NaHCO3 -> CH3COONa + H2O + CO2", () => {
+    const r = balance("CH3COOH + NaHCO3 -> CH3COONa + H2O + CO2");
+    expect(r.reactants.every(x => x.coefficient > 0)).toBe(true);
+    expect(r.products.every(x => x.coefficient > 0)).toBe(true);
+  });
+});
