@@ -304,3 +304,53 @@ describe("redox single replacement", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([2, 1]);
   });
 });
+
+describe("complex ionic equations", () => {
+  it("balances [Fe(CN)6]4- + K+ -> K4[Fe(CN)6]", () => {
+    const result = balance("[Fe(CN)6]4- + K+ -> K4[Fe(CN)6]");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 4]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances [Cu(NH3)4]2+ + Cl- -> [Cu(NH3)4]Cl2", () => {
+    const result = balance("[Cu(NH3)4]2+ + Cl- -> [Cu(NH3)4]Cl2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances [Ag(NH3)2]+ + Cl- -> [Ag(NH3)2]Cl", () => {
+    const result = balance("[Ag(NH3)2]+ + Cl- -> [Ag(NH3)2]Cl");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances [Co(NH3)6]3+ + Cl- -> [Co(NH3)6]Cl3", () => {
+    const result = balance("[Co(NH3)6]3+ + Cl- -> [Co(NH3)6]Cl3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances Fe3+ + OH- -> Fe(OH)3", () => {
+    const result = balance("Fe3+ + OH- -> Fe(OH)3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances Al3+ + OH- -> Al(OH)3", () => {
+    const result = balance("Al3+ + OH- -> Al(OH)3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances Fe3+ + SO4^2- -> Fe2(SO4)3", () => {
+    const result = balance("Fe3+ + SO4^2- -> Fe2(SO4)3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances Cu2+ + Cl- -> CuCl2", () => {
+    const result = balance("Cu2+ + Cl- -> CuCl2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+});
