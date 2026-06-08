@@ -309,3 +309,61 @@ describe("output format verification", () => {
     expect(result.equation).toContain("1 ");
   });
 });
+
+describe("equation string format exhaustive tests", () => {
+  it("equation string has correct structure for simple reaction", () => {
+    const result = balance("H2 + O2 -> H2O", { showOne: false });
+    expect(result.equation).toBe("2 H2 + O2 -> 2 H2O");
+    const parts = result.equation.split(" -> ");
+    expect(parts).toHaveLength(2);
+    expect(parts[0]).toBe("2 H2 + O2");
+    expect(parts[1]).toBe("2 H2O");
+  });
+
+  it("equation string handles formulas with parentheses", () => {
+    const result = balance("Al2(SO4)3 + NaOH -> Al(OH)3 + Na2SO4", { showOne: false });
+    expect(result.equation).toContain("Al2(SO4)3");
+    expect(result.equation).toContain("Al(OH)3");
+    expect(result.equation).toContain("Na2SO4");
+  });
+
+  it("equation string handles formulas with brackets", () => {
+    const result = balance("[Fe(CN)6]4- + K+ -> K4[Fe(CN)6]", { showOne: false });
+    expect(result.equation).toContain("[Fe(CN)6]4-");
+    expect(result.equation).toContain("K4[Fe(CN)6]");
+  });
+
+  it("equation string handles formulas with charges", () => {
+    const result = balance("Fe2+ + Cl- -> FeCl2", { showOne: false });
+    expect(result.equation).toContain("Fe2+");
+    expect(result.equation).toContain("Cl-");
+    expect(result.equation).toContain("FeCl2");
+  });
+
+  it("equation string handles hydrate formulas", () => {
+    const result = balance("CuSO4·5H2O -> CuSO4 + H2O", { showOne: false });
+    expect(result.equation).toContain("CuSO4·5H2O");
+    expect(result.equation).toContain("CuSO4");
+  });
+
+  it("equation string has state symbols stripped", () => {
+    const result = balance("H2(g) + O2(g) -> H2O(l)", { showOne: false });
+    expect(result.equation).not.toContain("(g)");
+    expect(result.equation).not.toContain("(l)");
+    expect(result.equation).toContain("H2");
+    expect(result.equation).toContain("O2");
+    expect(result.equation).toContain("H2O");
+  });
+
+  it("equation string with showOne true includes all coefficients", () => {
+    const result = balance("H2 + O2 -> H2O", { showOne: true });
+    expect(result.equation).toContain("1 O2");
+  });
+
+  it("equation string with showOne false omits coefficient 1", () => {
+    const result = balance("H2 + O2 -> H2O", { showOne: false });
+    expect(result.equation).not.toMatch(/\b1 /);
+    expect(result.equation).toContain("2 H2");
+    expect(result.equation).toContain("O2");
+  });
+});
