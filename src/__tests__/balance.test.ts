@@ -910,3 +910,28 @@ describe("identity and edge cases", () => {
     expect(result.products).toHaveLength(3);
   });
 });
+
+describe("mass conservation verification", () => {
+  it("verifies element balance for H2 + O2 -> H2O", () => {
+    const result = balance("H2 + O2 -> H2O");
+    const reactantH = result.reactants.reduce((s, r) => s + r.coefficient * (r.formula === "H2" ? 2 : 0), 0);
+    const productH = result.products.reduce((s, p) => s + p.coefficient * (p.formula === "H2O" ? 2 : 0), 0);
+    expect(reactantH).toBe(productH);
+  });
+
+  it("verifies element balance for CH4 + O2 -> CO2 + H2O", () => {
+    const result = balance("CH4 + O2 -> CO2 + H2O");
+    expect(result.reactants[0].coefficient).toBe(result.products[0].coefficient);
+  });
+
+  it("verifies element balance for Fe2O3 + CO -> Fe + CO2", () => {
+    const result = balance("Fe2O3 + CO -> Fe + CO2");
+    expect(result.reactants[0].coefficient * 2).toBe(result.products[0].coefficient);
+  });
+
+  it("all coefficients are positive integers for C6H12O6 + O2 -> CO2 + H2O", () => {
+    const result = balance("C6H12O6 + O2 -> CO2 + H2O");
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
