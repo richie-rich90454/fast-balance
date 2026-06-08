@@ -606,3 +606,23 @@ describe("redox half-reactions basic medium", () => {
     expect(result.products.every(p => p.coefficient > 0)).toBe(true);
   });
 });
+
+describe("full redox reactions", () => {
+  it("balances Fe + O2 -> Fe2O3", () => {
+    const result = balance("Fe + O2 -> Fe2O3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([4, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2]);
+  });
+
+  it("balances Fe2O3 + CO -> Fe + CO2", () => {
+    const result = balance("Fe2O3 + CO -> Fe + CO2");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2, 3]);
+  });
+
+  it("balances Cu + HNO3 -> Cu(NO3)2 + NO + H2O", () => {
+    const result = balance("Cu + HNO3 -> Cu(NO3)2 + NO + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+});
