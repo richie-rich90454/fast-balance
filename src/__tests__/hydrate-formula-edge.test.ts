@@ -225,3 +225,53 @@ describe("mixed hydrate notation consistency", () => {
     expect(result.products.every(p => p.coefficient > 0)).toBe(true);
   });
 });
+
+describe("formula with multiple group types", () => {
+  it("balances Ca3(PO4)2 + H2SO4 -> CaSO4 + H3PO4", () => {
+    const result = balance("Ca3(PO4)2 + H2SO4 -> CaSO4 + H3PO4");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([3, 2]);
+  });
+
+  it("balances Al2(SO4)3 + NaOH -> Al(OH)3 + Na2SO4", () => {
+    const result = balance("Al2(SO4)3 + NaOH -> Al(OH)3 + Na2SO4");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 6]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2, 3]);
+  });
+
+  it("balances (NH4)2SO4 + NaOH -> NH3 + Na2SO4 + H2O", () => {
+    const result = balance("(NH4)2SO4 + NaOH -> NH3 + Na2SO4 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances Fe4[Fe(CN)6]3 + NaOH -> Fe(OH)3 + Na4[Fe(CN)6]", () => {
+    const result = balance("Fe4[Fe(CN)6]3 + NaOH -> Fe(OH)3 + Na4[Fe(CN)6]");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances Mg3(PO4)2 + HCl -> MgCl2 + H3PO4", () => {
+    const result = balance("Mg3(PO4)2 + HCl -> MgCl2 + H3PO4");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances Ca3(PO4)2 + SiO2 + C -> CaSiO3 + CO + P", () => {
+    const result = balance("Ca3(PO4)2 + SiO2 + C -> CaSiO3 + CO + P");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances Ba3(PO4)2 + H2SO4 -> BaSO4 + H3PO4", () => {
+    const result = balance("Ba3(PO4)2 + H2SO4 -> BaSO4 + H3PO4");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances Sr3(PO4)2 + H2SO4 -> SrSO4 + H3PO4", () => {
+    const result = balance("Sr3(PO4)2 + H2SO4 -> SrSO4 + H3PO4");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+});
