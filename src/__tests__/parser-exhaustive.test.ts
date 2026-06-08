@@ -62,3 +62,65 @@ describe("single element parsing", () => {
     expect(result.charge).toBe(0);
   });
 });
+
+describe("element with subscript", () => {
+  it("parses H2 as { H: 2, charge: 0 }", () => {
+    const result = parseFormula("H2");
+    expect(result.elements).toEqual({ H: 2 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses O2 as { O: 2, charge: 0 }", () => {
+    const result = parseFormula("O2");
+    expect(result.elements).toEqual({ O: 2 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses N2 as { N: 2, charge: 0 }", () => {
+    const result = parseFormula("N2");
+    expect(result.elements).toEqual({ N: 2 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses Cl2 as { Cl: 2, charge: 0 }", () => {
+    const result = parseFormula("Cl2");
+    expect(result.elements).toEqual({ Cl: 2 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses F2 as { F: 2, charge: 0 }", () => {
+    const result = parseFormula("F2");
+    expect(result.elements).toEqual({ F: 2 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses Br2 as { Br: 2, charge: 0 }", () => {
+    const result = parseFormula("Br2");
+    expect(result.elements).toEqual({ Br: 2 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses I2 as { I: 2, charge: 0 }", () => {
+    const result = parseFormula("I2");
+    expect(result.elements).toEqual({ I: 2 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses H2O as { H: 2, O: 1, charge: 0 }", () => {
+    const result = parseFormula("H2O");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses CO2 as { C: 1, O: 2, charge: 0 }", () => {
+    const result = parseFormula("CO2");
+    expect(result.elements).toEqual({ C: 1, O: 2 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses NH3 as { N: 1, H: 3, charge: 0 }", () => {
+    const result = parseFormula("NH3");
+    expect(result.elements).toEqual({ N: 1, H: 3 });
+    expect(result.charge).toBe(0);
+  });
+});
