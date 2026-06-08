@@ -795,3 +795,23 @@ describe("full-word state symbols balance", () => {
     expect(result.reactants[0].formula).toBe("NaCl");
   });
 });
+
+describe("arrow style balance", () => {
+  it("balances with --> arrow", () => {
+    const result = balance("H2 + O2 --> H2O");
+    expect(result.reactants).toHaveLength(2);
+    expect(result.products).toHaveLength(1);
+  });
+
+  it("balances with ⇌ arrow", () => {
+    const result = balance("H2 + O2 ⇌ H2O");
+    expect(result.reactants).toHaveLength(2);
+    expect(result.products).toHaveLength(1);
+  });
+
+  it("balances with <=> arrow", () => {
+    const result = balance("H2 + O2 <=> H2O");
+    expect(result.reactants).toHaveLength(2);
+    expect(result.products).toHaveLength(1);
+  });
+});
