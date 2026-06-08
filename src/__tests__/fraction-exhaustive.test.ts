@@ -448,3 +448,48 @@ describe("Fraction static factory tests", () => {
     expect(Fraction.one().equals(new Fraction(1))).toBe(true);
   });
 });
+
+describe("Fraction large number and edge case tests", () => {
+  it("Fraction(999999, 999999) normalizes to 1/1", () => {
+    const f = new Fraction(999999, 999999);
+    expect(f.num).toBe(1);
+    expect(f.den).toBe(1);
+  });
+
+  it("Fraction(1000000, 7) keeps as fraction", () => {
+    const f = new Fraction(1000000, 7);
+    expect(f.num).toBe(1000000);
+    expect(f.den).toBe(7);
+  });
+
+  it("add two large fractions", () => {
+    const a = new Fraction(999999, 7);
+    const b = new Fraction(1, 7);
+    const result = a.add(b);
+    expect(result.num).toBe(1000000);
+    expect(result.den).toBe(7);
+  });
+
+  it("mul two large fractions", () => {
+    const a = new Fraction(100000, 3);
+    const b = new Fraction(3, 100000);
+    const result = a.mul(b);
+    expect(result.num).toBe(1);
+    expect(result.den).toBe(1);
+  });
+
+  it("Fraction(1, 1000000) is not zero", () => {
+    const f = new Fraction(1, 1000000);
+    expect(f.isZero()).toBe(false);
+    expect(f.num).toBe(1);
+    expect(f.den).toBe(1000000);
+  });
+
+  it("div by very small fraction", () => {
+    const a = new Fraction(1, 1);
+    const b = new Fraction(1, 1000000);
+    const result = a.div(b);
+    expect(result.num).toBe(1000000);
+    expect(result.den).toBe(1);
+  });
+});

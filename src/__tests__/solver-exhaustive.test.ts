@@ -222,16 +222,16 @@ describe("buildMatrix exhaustive", () => {
   it("creates correct matrix for Fe + Cl2 -> FeCl3", () => {
     const eq = splitEquation("Fe + Cl2 -> FeCl3");
     const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
-    expect(matrix).toHaveLength(2); // Fe and Cl rows, no charge row
+    expect(matrix).toHaveLength(2); // Cl and Fe rows (sorted alphabetically), no charge row
     expect(cols).toBe(3);
-    // Fe row: [1, 0, -1]
-    expect(matrix[0]![0]).toEqual(new Fraction(1));
-    expect(matrix[0]![1]).toEqual(new Fraction(0));
-    expect(matrix[0]![2]).toEqual(new Fraction(-1));
     // Cl row: [0, 2, -3]
-    expect(matrix[1]![0]).toEqual(new Fraction(0));
-    expect(matrix[1]![1]).toEqual(new Fraction(2));
-    expect(matrix[1]![2]).toEqual(new Fraction(-3));
+    expect(matrix[0]![0]).toEqual(new Fraction(0));
+    expect(matrix[0]![1]).toEqual(new Fraction(2));
+    expect(matrix[0]![2]).toEqual(new Fraction(-3));
+    // Fe row: [1, 0, -1]
+    expect(matrix[1]![0]).toEqual(new Fraction(1));
+    expect(matrix[1]![1]).toEqual(new Fraction(0));
+    expect(matrix[1]![2]).toEqual(new Fraction(-1));
   });
 
   it("includes charge row for ionic equation with charges", () => {
@@ -288,7 +288,7 @@ describe("buildMatrix exhaustive", () => {
     // Na+ is reactant: +1, Cl- is reactant: -1, NaCl is product: 0 (negated)
     expect(chargeRow![0]).toEqual(new Fraction(1));
     expect(chargeRow![1]).toEqual(new Fraction(-1));
-    expect(chargeRow![2]).toEqual(new Fraction(0));
+    expect(chargeRow![2].isZero()).toBe(true);
   });
 });
 
