@@ -324,3 +324,53 @@ describe("hydrate parsing", () => {
     expect(result.charge).toBe(0);
   });
 });
+
+describe("state symbol stripping", () => {
+  it("strips (s) from NaCl(s)", () => {
+    const result = parseFormula("NaCl(s)");
+    expect(result.elements).toEqual({ Na: 1, Cl: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("strips (l) from H2O(l)", () => {
+    const result = parseFormula("H2O(l)");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("strips (g) from CO2(g)", () => {
+    const result = parseFormula("CO2(g)");
+    expect(result.elements).toEqual({ C: 1, O: 2 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("strips (aq) from Na+(aq) preserving charge", () => {
+    const result = parseFormula("Na+(aq)");
+    expect(result.elements).toEqual({ Na: 1 });
+    expect(result.charge).toBe(1);
+  });
+
+  it("strips (aq) from Fe2+(aq) preserving charge", () => {
+    const result = parseFormula("Fe2+(aq)");
+    expect(result.elements).toEqual({ Fe: 1 });
+    expect(result.charge).toBe(2);
+  });
+
+  it("strips (aq) from Cl-(aq) preserving charge", () => {
+    const result = parseFormula("Cl-(aq)");
+    expect(result.elements).toEqual({ Cl: 1 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("strips (s) from CaCO3(s)", () => {
+    const result = parseFormula("CaCO3(s)");
+    expect(result.elements).toEqual({ Ca: 1, C: 1, O: 3 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("strips (aq) from H2SO4(aq)", () => {
+    const result = parseFormula("H2SO4(aq)");
+    expect(result.elements).toEqual({ H: 2, S: 1, O: 4 });
+    expect(result.charge).toBe(0);
+  });
+});
