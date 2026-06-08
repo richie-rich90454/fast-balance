@@ -146,3 +146,35 @@ describe("element conservation for ionic reactions", () => {
     verifyConservation(result);
   });
 });
+
+describe("element conservation for decomposition reactions", () => {
+  it("conserves all elements in H2O -> H2 + O2", () => {
+    const result = balance("H2O -> H2 + O2");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in KClO3 -> KCl + O2", () => {
+    const result = balance("KClO3 -> KCl + O2");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in CaCO3 -> CaO + CO2", () => {
+    const result = balance("CaCO3 -> CaO + CO2");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in NaHCO3 -> Na2CO3 + H2O + CO2", () => {
+    const result = balance("NaHCO3 -> Na2CO3 + H2O + CO2");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in H2O2 -> H2O + O2", () => {
+    const result = balance("H2O2 -> H2O + O2");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in HgO -> Hg + O2", () => {
+    const result = balance("HgO -> Hg + O2");
+    verifyConservation(result);
+  });
+});
