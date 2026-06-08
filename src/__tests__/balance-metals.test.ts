@@ -33,3 +33,31 @@ describe("alkali metal synthesis", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([2]);
   });
 });
+
+describe("alkali metal + water", () => {
+  it("balances 2Na + 2H2O -> 2NaOH + H2", () => {
+    const r = balance("Na + H2O -> NaOH + H2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1]);
+  });
+  it("balances 2K + 2H2O -> 2KOH + H2", () => {
+    const r = balance("K + H2O -> KOH + H2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1]);
+  });
+  it("balances 2Li + 2H2O -> 2LiOH + H2", () => {
+    const r = balance("Li + H2O -> LiOH + H2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1]);
+  });
+  it("balances Ca + 2H2O -> Ca(OH)2 + H2", () => {
+    const r = balance("Ca + H2O -> Ca(OH)2 + H2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances Ba + 2H2O -> Ba(OH)2 + H2", () => {
+    const r = balance("Ba + H2O -> Ba(OH)2 + H2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+});
