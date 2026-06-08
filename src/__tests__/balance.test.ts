@@ -694,3 +694,17 @@ describe("complex nested group balance", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([3, 1]);
   });
 });
+
+describe("deeply nested structure balance", () => {
+  it("balances [Fe(C2O4)3]3- + H+ -> H3[Fe(C2O4)3]", () => {
+    const result = balance("[Fe(C2O4)3]3- + H+ -> H3[Fe(C2O4)3]");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+
+  it("balances Na3[Co(NO2)6] -> Na+ + [Co(NO2)6]3-", () => {
+    const result = balance("Na3[Co(NO2)6] -> Na+ + [Co(NO2)6]3-");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([3, 1]);
+  });
+});
