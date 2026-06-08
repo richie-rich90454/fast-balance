@@ -106,3 +106,53 @@ describe("acid-metal reactions", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([2, 3]);
   });
 });
+
+describe("precipitation reactions", () => {
+  it("balances AgNO3 + NaCl -> AgCl + NaNO3", () => {
+    const result = balance("AgNO3 + NaCl -> AgCl + NaNO3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances BaCl2 + Na2SO4 -> BaSO4 + NaCl", () => {
+    const result = balance("BaCl2 + Na2SO4 -> BaSO4 + NaCl");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances Pb(NO3)2 + KI -> PbI2 + KNO3", () => {
+    const result = balance("Pb(NO3)2 + KI -> PbI2 + KNO3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances AgNO3 + KCl -> AgCl + KNO3", () => {
+    const result = balance("AgNO3 + KCl -> AgCl + KNO3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances Ba(NO3)2 + Na2SO4 -> BaSO4 + NaNO3", () => {
+    const result = balance("Ba(NO3)2 + Na2SO4 -> BaSO4 + NaNO3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances Pb(NO3)2 + K2CrO4 -> PbCrO4 + KNO3", () => {
+    const result = balance("Pb(NO3)2 + K2CrO4 -> PbCrO4 + KNO3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances Hg2(NO3)2 + NaCl -> Hg2Cl2 + NaNO3", () => {
+    const result = balance("Hg2(NO3)2 + NaCl -> Hg2Cl2 + NaNO3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances CaCl2 + Na2CO3 -> CaCO3 + NaCl", () => {
+    const result = balance("CaCl2 + Na2CO3 -> CaCO3 + NaCl");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+});
