@@ -115,3 +115,21 @@ describe("ester reactions", () => {
     expect(r.products.every(x => x.coefficient > 0)).toBe(true);
   });
 });
+
+describe("large hydrocarbon combustion", () => {
+  it("balances 2C8H18 + 25O2 -> 16CO2 + 18H2O", () => {
+    const r = balance("C8H18 + O2 -> CO2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 25]);
+    expect(r.products.map(x => x.coefficient)).toEqual([16, 18]);
+  });
+  it("balances 2C7H16 + 23O2 -> 14CO2 + 16H2O", () => {
+    const r = balance("C7H16 + O2 -> CO2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 23]);
+    expect(r.products.map(x => x.coefficient)).toEqual([14, 16]);
+  });
+  it("balances C10H22 + 31/2 O2 -> 10CO2 + 11H2O (2C10H22 + 31O2 -> 20CO2 + 22H2O)", () => {
+    const r = balance("C10H22 + O2 -> CO2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 31]);
+    expect(r.products.map(x => x.coefficient)).toEqual([20, 22]);
+  });
+});
