@@ -43,3 +43,34 @@ describe("transition metal formulas", () => {
     expect(r.charge).toBe(0);
   });
 });
+
+describe("rare and special elements", () => {
+  it("parses UO2 (uranium dioxide)", () => {
+    const r = parseFormula("UO2");
+    expect(r.elements).toEqual({ U: 1, O: 2 });
+  });
+  it("parses TiO2 (titanium dioxide)", () => {
+    const r = parseFormula("TiO2");
+    expect(r.elements).toEqual({ Ti: 1, O: 2 });
+  });
+  it("parses V2O5 (vanadium pentoxide)", () => {
+    const r = parseFormula("V2O5");
+    expect(r.elements).toEqual({ V: 2, O: 5 });
+  });
+  it("parses Cr2O3 (chromium oxide)", () => {
+    const r = parseFormula("Cr2O3");
+    expect(r.elements).toEqual({ Cr: 2, O: 3 });
+  });
+  it("parses MnO2 (manganese dioxide)", () => {
+    const r = parseFormula("MnO2");
+    expect(r.elements).toEqual({ Mn: 1, O: 2 });
+  });
+  it("parses MoO3 (molybdenum trioxide)", () => {
+    const r = parseFormula("MoO3");
+    expect(r.elements).toEqual({ Mo: 1, O: 3 });
+  });
+  it("parses WO3 (tungsten trioxide)", () => {
+    const r = parseFormula("WO3");
+    expect(r.elements).toEqual({ W: 1, O: 3 });
+  });
+});
