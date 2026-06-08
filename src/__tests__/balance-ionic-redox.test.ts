@@ -66,3 +66,24 @@ describe("polyatomic ionic compounds", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1]);
   });
 });
+
+describe("redox half-reactions acidic", () => {
+  it("balances MnO4- + 8H+ + 5e- -> Mn2+ + 4H2O", () => {
+    const r = balance("MnO4- + H+ + e- -> Mn2+ + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 8, 5]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 4]);
+  });
+  it("balances Cr2O7^2- + 14H+ + 6e- -> 2Cr3+ + 7H2O", () => {
+    const r = balance("Cr2O7^2- + H+ + e- -> Cr3+ + H2O");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(14);
+    expect(r.reactants[2].coefficient).toBe(6);
+    expect(r.products[0].coefficient).toBe(2);
+    expect(r.products[1].coefficient).toBe(7);
+  });
+  it("balances MnO4- + H+ + e -> Mn2+ + H2O (bare electron)", () => {
+    const r = balance("MnO4- + H+ + e -> Mn2+ + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 8, 5]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 4]);
+  });
+});

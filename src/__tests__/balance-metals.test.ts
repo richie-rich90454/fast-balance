@@ -94,3 +94,41 @@ describe("alkaline earth metal reactions", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([2]);
   });
 });
+
+describe("metal + acid displacement", () => {
+  it("balances Zn + 2HCl -> ZnCl2 + H2", () => {
+    const r = balance("Zn + HCl -> ZnCl2 + H2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances Mg + 2HCl -> MgCl2 + H2", () => {
+    const r = balance("Mg + HCl -> MgCl2 + H2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances Fe + 2HCl -> FeCl2 + H2", () => {
+    const r = balance("Fe + HCl -> FeCl2 + H2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances 2Al + 6HCl -> 2AlCl3 + 3H2", () => {
+    const r = balance("Al + HCl -> AlCl3 + H2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 6]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 3]);
+  });
+  it("balances Zn + H2SO4 -> ZnSO4 + H2", () => {
+    const r = balance("Zn + H2SO4 -> ZnSO4 + H2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances Mg + H2SO4 -> MgSO4 + H2", () => {
+    const r = balance("Mg + H2SO4 -> MgSO4 + H2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances Fe + H2SO4 -> FeSO4 + H2", () => {
+    const r = balance("Fe + H2SO4 -> FeSO4 + H2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+});
