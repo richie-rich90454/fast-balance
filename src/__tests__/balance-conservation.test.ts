@@ -72,3 +72,45 @@ describe("element conservation for simple reactions", () => {
     verifyConservation(result);
   });
 });
+
+describe("element conservation for double displacement reactions", () => {
+  it("conserves all elements in NaOH + HCl -> NaCl + H2O", () => {
+    const result = balance("NaOH + HCl -> NaCl + H2O");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in BaCl2 + Na2SO4 -> BaSO4 + NaCl", () => {
+    const result = balance("BaCl2 + Na2SO4 -> BaSO4 + NaCl");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in AgNO3 + NaCl -> AgCl + NaNO3", () => {
+    const result = balance("AgNO3 + NaCl -> AgCl + NaNO3");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in Pb(NO3)2 + KI -> PbI2 + KNO3", () => {
+    const result = balance("Pb(NO3)2 + KI -> PbI2 + KNO3");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in CaCO3 + HCl -> CaCl2 + H2O + CO2", () => {
+    const result = balance("CaCO3 + HCl -> CaCl2 + H2O + CO2");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in Na2CO3 + HCl -> NaCl + H2O + CO2", () => {
+    const result = balance("Na2CO3 + HCl -> NaCl + H2O + CO2");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in KOH + H2SO4 -> K2SO4 + H2O", () => {
+    const result = balance("KOH + H2SO4 -> K2SO4 + H2O");
+    verifyConservation(result);
+  });
+
+  it("conserves all elements in Al(OH)3 + HCl -> AlCl3 + H2O", () => {
+    const result = balance("Al(OH)3 + HCl -> AlCl3 + H2O");
+    verifyConservation(result);
+  });
+});
