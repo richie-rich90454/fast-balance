@@ -117,3 +117,38 @@ describe("charge notation variations", () => {
     expect(r.charge).toBe(-3);
   });
 });
+
+describe("complex polyatomic ions", () => {
+  it("parses Cr2O7^2- (dichromate)", () => {
+    const r = parseFormula("Cr2O7^2-");
+    expect(r.elements).toEqual({ Cr: 2, O: 7 });
+    expect(r.charge).toBe(-2);
+  });
+  it("parses MnO4- (permanganate)", () => {
+    const r = parseFormula("MnO4-");
+    expect(r.elements).toEqual({ Mn: 1, O: 4 });
+    expect(r.charge).toBe(-1);
+  });
+  it("parses C2O4^2- (oxalate)", () => {
+    const r = parseFormula("C2O4^2-");
+    expect(r.elements).toEqual({ C: 2, O: 4 });
+    expect(r.charge).toBe(-2);
+  });
+  it("parses CH3COO- (acetate)", () => {
+    const r = parseFormula("CH3COO-");
+    expect(r.elements.C).toBe(2);
+    expect(r.elements.H).toBe(3);
+    expect(r.elements.O).toBe(2);
+    expect(r.charge).toBe(-1);
+  });
+  it("parses HCO3- (bicarbonate)", () => {
+    const r = parseFormula("HCO3-");
+    expect(r.elements).toEqual({ H: 1, C: 1, O: 3 });
+    expect(r.charge).toBe(-1);
+  });
+  it("parses HSO4- (bisulfate)", () => {
+    const r = parseFormula("HSO4-");
+    expect(r.elements).toEqual({ H: 1, S: 1, O: 4 });
+    expect(r.charge).toBe(-1);
+  });
+});
