@@ -351,3 +351,74 @@ describe("Fraction inverse and identity tests", () => {
     expect(a.div(a).equals(Fraction.one())).toBe(true);
   });
 });
+
+describe("Fraction comparison and clone tests", () => {
+  it("clone produces equal but distinct object", () => {
+    const f = new Fraction(3, 7);
+    const c = f.clone();
+    expect(c.equals(f)).toBe(true);
+    expect(c).not.toBe(f);
+  });
+
+  it("clone of negative fraction is equal but distinct", () => {
+    const f = new Fraction(-5, 11);
+    const c = f.clone();
+    expect(c.equals(f)).toBe(true);
+    expect(c).not.toBe(f);
+  });
+
+  it("clone of zero is equal but distinct", () => {
+    const f = Fraction.zero();
+    const c = f.clone();
+    expect(c.equals(f)).toBe(true);
+    expect(c).not.toBe(f);
+  });
+
+  it("equals returns true for same fraction", () => {
+    const a = new Fraction(2, 5);
+    const b = new Fraction(2, 5);
+    expect(a.equals(b)).toBe(true);
+  });
+
+  it("equals returns false for different fractions", () => {
+    const a = new Fraction(1, 3);
+    const b = new Fraction(1, 4);
+    expect(a.equals(b)).toBe(false);
+  });
+
+  it("equals returns false for fractions with same value but different sign", () => {
+    const a = new Fraction(2, 5);
+    const b = new Fraction(-2, 5);
+    expect(a.equals(b)).toBe(false);
+  });
+
+  it("isZero returns true for zero fraction", () => {
+    expect(new Fraction(0, 1).isZero()).toBe(true);
+    expect(new Fraction(0, 999).isZero()).toBe(true);
+    expect(Fraction.zero().isZero()).toBe(true);
+  });
+
+  it("isZero returns false for non-zero fraction", () => {
+    expect(new Fraction(1, 1000).isZero()).toBe(false);
+    expect(new Fraction(-1, 1000).isZero()).toBe(false);
+    expect(Fraction.one().isZero()).toBe(false);
+  });
+
+  it("equals across equivalent constructions: 1/2 vs 2/4", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(2, 4);
+    expect(a.equals(b)).toBe(true);
+  });
+
+  it("equals across equivalent constructions: 3/5 vs 9/15", () => {
+    const a = new Fraction(3, 5);
+    const b = new Fraction(9, 15);
+    expect(a.equals(b)).toBe(true);
+  });
+
+  it("equals across equivalent constructions: -2/3 vs 2/-3", () => {
+    const a = new Fraction(-2, 3);
+    const b = new Fraction(2, -3);
+    expect(a.equals(b)).toBe(true);
+  });
+});
