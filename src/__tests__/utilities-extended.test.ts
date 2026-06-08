@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { gcd, lcm } from "../index";
+import { stripStateSymbols } from "../index";
 
 describe("gcd mathematical properties", () => {
   it("gcd is commutative: gcd(a,b) = gcd(b,a)", () => {
@@ -61,5 +62,53 @@ describe("lcm mathematical properties", () => {
   });
   it("lcm is associative: lcm(lcm(a,b),c) = lcm(a,lcm(b,c))", () => {
     expect(lcm(lcm(2, 3), 4)).toBe(lcm(2, lcm(3, 4)));
+  });
+});
+
+describe("stripStateSymbols comprehensive", () => {
+  it("strips (s) solid state", () => {
+    expect(stripStateSymbols("NaCl(s)")).toBe("NaCl");
+  });
+  it("strips (l) liquid state", () => {
+    expect(stripStateSymbols("Br2(l)")).toBe("Br2");
+  });
+  it("strips (g) gas state", () => {
+    expect(stripStateSymbols("H2(g)")).toBe("H2");
+  });
+  it("strips (aq) aqueous state", () => {
+    expect(stripStateSymbols("NaCl(aq)")).toBe("NaCl");
+  });
+  it("strips (cr) crystalline state", () => {
+    expect(stripStateSymbols("SiO2(cr)")).toBe("SiO2");
+  });
+  it("strips (am) amorphous state", () => {
+    expect(stripStateSymbols("SiO2(am)")).toBe("SiO2");
+  });
+  it("strips (solid) full word", () => {
+    expect(stripStateSymbols("Fe(solid)")).toBe("Fe");
+  });
+  it("strips (liquid) full word", () => {
+    expect(stripStateSymbols("H2O(liquid)")).toBe("H2O");
+  });
+  it("strips (gas) full word", () => {
+    expect(stripStateSymbols("O2(gas)")).toBe("O2");
+  });
+  it("strips (aqueous) full word", () => {
+    expect(stripStateSymbols("HCl(aqueous)")).toBe("HCl");
+  });
+  it("strips multiple state symbols", () => {
+    expect(stripStateSymbols("H2O(s)(l)")).toBe("H2O");
+  });
+  it("returns unchanged when no state symbols", () => {
+    expect(stripStateSymbols("H2SO4")).toBe("H2SO4");
+  });
+  it("handles empty string", () => {
+    expect(stripStateSymbols("")).toBe("");
+  });
+  it("does not strip non-state parentheses like (OH)", () => {
+    expect(stripStateSymbols("Ca(OH)2")).toBe("Ca(OH)2");
+  });
+  it("does not strip (CN) which is not a state symbol", () => {
+    expect(stripStateSymbols("[Fe(CN)6]")).toBe("[Fe(CN)6]");
   });
 });
