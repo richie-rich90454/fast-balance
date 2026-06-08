@@ -198,3 +198,69 @@ describe("metal oxide reactions", () => {
     expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
 });
+
+describe("metal hydroxide reactions", () => {
+  it("balances NaOH + HCl -> NaCl + H2O", () => {
+    const result = balance("NaOH + HCl -> NaCl + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+
+  it("balances 2NaOH + H2SO4 -> Na2SO4 + 2H2O", () => {
+    const result = balance("NaOH + H2SO4 -> Na2SO4 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+
+  it("balances KOH + HCl -> KCl + H2O", () => {
+    const result = balance("KOH + HCl -> KCl + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+
+  it("balances 2KOH + H2SO4 -> K2SO4 + 2H2O", () => {
+    const result = balance("KOH + H2SO4 -> K2SO4 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+
+  it("balances Ca(OH)2 + 2HCl -> CaCl2 + 2H2O", () => {
+    const result = balance("Ca(OH)2 + HCl -> CaCl2 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+
+  it("balances Ba(OH)2 + 2HCl -> BaCl2 + 2H2O", () => {
+    const result = balance("Ba(OH)2 + HCl -> BaCl2 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+
+  it("balances Al(OH)3 + 3HCl -> AlCl3 + 3H2O", () => {
+    const result = balance("Al(OH)3 + HCl -> AlCl3 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 3]);
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+
+  it("balances Fe(OH)3 + 3HCl -> FeCl3 + 3H2O", () => {
+    const result = balance("Fe(OH)3 + HCl -> FeCl3 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 3]);
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
