@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { balance, parseFormula } from "../index";
+import { balance, parseFormula, gcd } from "../index";
 import type { BalanceResult } from "../index";
 
 function getElementCounts(result: BalanceResult): { reactants: Record<string, number>; products: Record<string, number> } {
@@ -365,5 +365,47 @@ describe("equation string format exhaustive tests", () => {
     expect(result.equation).not.toMatch(/\b1 /);
     expect(result.equation).toContain("2 H2");
     expect(result.equation).toContain("O2");
+  });
+});
+
+describe("coefficient minimality verification", () => {
+  function gcdOfArray(nums: number[]): number {
+    return nums.reduce((acc, n) => gcd(acc, n));
+  }
+
+  it("GCD of all coefficients is 1 for H2 + O2 -> H2O", () => {
+    const result = balance("H2 + O2 -> H2O");
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(gcdOfArray(allCoeffs)).toBe(1);
+  });
+
+  it("GCD of all coefficients is 1 for Fe + Cl2 -> FeCl3", () => {
+    const result = balance("Fe + Cl2 -> FeCl3");
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(gcdOfArray(allCoeffs)).toBe(1);
+  });
+
+  it("GCD of all coefficients is 1 for N2 + H2 -> NH3", () => {
+    const result = balance("N2 + H2 -> NH3");
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(gcdOfArray(allCoeffs)).toBe(1);
+  });
+
+  it("GCD of all coefficients is 1 for CH4 + O2 -> CO2 + H2O", () => {
+    const result = balance("CH4 + O2 -> CO2 + H2O");
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(gcdOfArray(allCoeffs)).toBe(1);
+  });
+
+  it("GCD of all coefficients is 1 for CaCO3 + HCl -> CaCl2 + H2O + CO2", () => {
+    const result = balance("CaCO3 + HCl -> CaCl2 + H2O + CO2");
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(gcdOfArray(allCoeffs)).toBe(1);
+  });
+
+  it("GCD of all coefficients is 1 for Al2(SO4)3 + NaOH -> Al(OH)3 + Na2SO4", () => {
+    const result = balance("Al2(SO4)3 + NaOH -> Al(OH)3 + Na2SO4");
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(gcdOfArray(allCoeffs)).toBe(1);
   });
 });
