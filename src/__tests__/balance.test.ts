@@ -815,3 +815,23 @@ describe("arrow style balance", () => {
     expect(result.products).toHaveLength(1);
   });
 });
+
+describe("input handling edge cases", () => {
+  it("ignores leading coefficients on both sides", () => {
+    const result = balance("2 H2 + O2 -> 2 H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([2, 1]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2]);
+  });
+
+  it("handles extra spaces between terms", () => {
+    const result = balance("H2  +  O2  ->  H2O");
+    expect(result.reactants).toHaveLength(2);
+    expect(result.products).toHaveLength(1);
+  });
+
+  it("handles state symbols with charges", () => {
+    const result = balance("Fe2+(aq) + Cl-(aq) -> FeCl2(s)");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1]);
+  });
+});
