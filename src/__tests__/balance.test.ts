@@ -646,3 +646,23 @@ describe("disproportionation reactions", () => {
     expect(result.products.every(p => p.coefficient > 0)).toBe(true);
   });
 });
+
+describe("nested parentheses balance", () => {
+  it("balances Ca3(PO4)2 + SiO2 + C -> CaSiO3 + CO + P", () => {
+    const result = balance("Ca3(PO4)2 + SiO2 + C -> CaSiO3 + CO + P");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances Al2(SO4)3 + NaOH -> Al(OH)3 + Na2SO4", () => {
+    const result = balance("Al2(SO4)3 + NaOH -> Al(OH)3 + Na2SO4");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 6]);
+    expect(result.products.map(p => p.coefficient)).toEqual([2, 3]);
+  });
+
+  it("balances Ca3(PO4)2 + H2SO4 -> CaSO4 + H3PO4", () => {
+    const result = balance("Ca3(PO4)2 + H2SO4 -> CaSO4 + H3PO4");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([3, 2]);
+  });
+});
