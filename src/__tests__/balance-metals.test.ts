@@ -226,3 +226,36 @@ describe("metal oxide and hydroxide decomposition", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1, 3]);
   });
 });
+
+describe("metal oxide reduction", () => {
+  it("balances Fe2O3 + 3CO -> 2Fe + 3CO2", () => {
+    const r = balance("Fe2O3 + CO -> Fe + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 3]);
+  });
+  it("balances Fe3O4 + 4CO -> 3Fe + 4CO2", () => {
+    const r = balance("Fe3O4 + CO -> Fe + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 4]);
+    expect(r.products.map(x => x.coefficient)).toEqual([3, 4]);
+  });
+  it("balances CuO + CO -> Cu + CO2", () => {
+    const r = balance("CuO + CO -> Cu + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances ZnO + CO -> Zn + CO2", () => {
+    const r = balance("ZnO + CO -> Zn + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances PbO + CO -> Pb + CO2", () => {
+    const r = balance("PbO + CO -> Pb + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances Fe2O3 + 3C -> 2Fe + 3CO", () => {
+    const r = balance("Fe2O3 + C -> Fe + CO");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 3]);
+  });
+});
