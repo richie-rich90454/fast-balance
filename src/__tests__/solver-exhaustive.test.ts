@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { gcd, lcm, stripStateSymbols } from "../index";
+import { gcd, lcm, stripStateSymbols, splitEquation } from "../index";
 
 describe("gcd exhaustive", () => {
   it("returns gcd(12, 8) = 4", () => {
@@ -124,5 +124,89 @@ describe("stripStateSymbols exhaustive", () => {
 
   it("strips (aqueous) from H2O(aqueous)", () => {
     expect(stripStateSymbols("H2O(aqueous)")).toBe("H2O");
+  });
+});
+
+describe("splitEquation exhaustive", () => {
+  it("splits H2 + O2 -> H2O correctly", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    expect(eq.reactants).toHaveLength(2);
+    expect(eq.products).toHaveLength(1);
+    expect(eq.reactants[0].formula).toBe("H2");
+    expect(eq.reactants[1].formula).toBe("O2");
+    expect(eq.products[0].formula).toBe("H2O");
+  });
+
+  it("splits Fe + Cl2 -> FeCl3 correctly", () => {
+    const eq = splitEquation("Fe + Cl2 -> FeCl3");
+    expect(eq.reactants).toHaveLength(2);
+    expect(eq.products).toHaveLength(1);
+    expect(eq.reactants[0].elements).toEqual({ Fe: 1 });
+    expect(eq.reactants[1].elements).toEqual({ Cl: 2 });
+    expect(eq.products[0].elements).toEqual({ Fe: 1, Cl: 3 });
+  });
+
+  it("handles Unicode arrow →", () => {
+    const eq = splitEquation("H2 + O2 → H2O");
+    expect(eq.reactants).toHaveLength(2);
+    expect(eq.products).toHaveLength(1);
+  });
+
+  it("handles equilibrium arrow ⇌", () => {
+    const eq = splitEquation("H2 + O2 ⇌ H2O");
+    expect(eq.reactants).toHaveLength(2);
+    expect(eq.products).toHaveLength(1);
+  });
+
+  it("handles <=> arrow", () => {
+    const eq = splitEquation("H2 + O2 <=> H2O");
+    expect(eq.reactants).toHaveLength(2);
+    expect(eq.products).toHaveLength(1);
+  });
+
+  it("handles <-> arrow", () => {
+    const eq = splitEquation("H2 + O2 <-> H2O");
+    expect(eq.reactants).toHaveLength(2);
+    expect(eq.products).toHaveLength(1);
+  });
+
+  it("handles --> arrow", () => {
+    const eq = splitEquation("H2 + O2 --> H2O");
+    expect(eq.reactants).toHaveLength(2);
+    expect(eq.products).toHaveLength(1);
+  });
+
+  it("handles = arrow", () => {
+    const eq = splitEquation("H2 + O2 = H2O");
+    expect(eq.reactants).toHaveLength(2);
+    expect(eq.products).toHaveLength(1);
+  });
+
+  it("strips state symbols from formulas", () => {
+    const eq = splitEquation("NaCl(s) + H2O(l) -> Na+(aq) + Cl-(aq)");
+    expect(eq.reactants[0].formula).toBe("NaCl");
+    expect(eq.reactants[1].formula).toBe("H2O");
+    expect(eq.products[0].formula).toBe("Na+");
+    expect(eq.products[1].formula).toBe("Cl-");
+  });
+
+  it("ignores leading coefficients in input", () => {
+    const eq = splitEquation("2 H2 + O2 -> 2 H2O");
+    expect(eq.reactants).toHaveLength(2);
+    expect(eq.products).toHaveLength(1);
+    expect(eq.reactants[0].formula).toBe("H2");
+    expect(eq.products[0].formula).toBe("H2O");
+  });
+
+  it("throws on missing arrow", () => {
+    expect(() => splitEquation("H2 + O2 H2O")).toThrow();
+  });
+
+  it("throws on empty left side", () => {
+    expect(() => splitEquation("-> H2O")).toThrow();
+  });
+
+  it("throws on empty right side", () => {
+    expect(() => splitEquation("H2 + O2 ->")).toThrow();
   });
 });
