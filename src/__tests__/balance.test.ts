@@ -862,3 +862,25 @@ describe("output format options", () => {
     expect(result.equation).toContain("1 ");
   });
 });
+
+describe("error cases", () => {
+  it("throws when no arrow is present", () => {
+    expect(() => balance("H2 + O2 H2O")).toThrow();
+  });
+
+  it("throws on empty left side", () => {
+    expect(() => balance("-> H2O")).toThrow();
+  });
+
+  it("throws on empty right side", () => {
+    expect(() => balance("H2 + O2 ->")).toThrow();
+  });
+
+  it("throws on unbalanceable equation", () => {
+    expect(() => balance("H -> O")).toThrow();
+  });
+
+  it("throws on malformed formula", () => {
+    expect(() => balance("H2@ + O2 -> H2O")).toThrow();
+  });
+});
