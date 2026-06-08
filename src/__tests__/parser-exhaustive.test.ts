@@ -236,3 +236,41 @@ describe("nested group parsing", () => {
     expect(result.charge).toBe(0);
   });
 });
+
+describe("bracket group parsing", () => {
+  it("parses [Fe(CN)6]3- as { Fe: 1, C: 6, N: 6, charge: -3 }", () => {
+    const result = parseFormula("[Fe(CN)6]3-");
+    expect(result.elements).toEqual({ Fe: 1, C: 6, N: 6 });
+    expect(result.charge).toBe(-3);
+  });
+
+  it("parses [Fe(CN)6]4- as { Fe: 1, C: 6, N: 6, charge: -4 }", () => {
+    const result = parseFormula("[Fe(CN)6]4-");
+    expect(result.elements).toEqual({ Fe: 1, C: 6, N: 6 });
+    expect(result.charge).toBe(-4);
+  });
+
+  it("parses [Co(NH3)6]3+ as { Co: 1, N: 6, H: 18, charge: 3 }", () => {
+    const result = parseFormula("[Co(NH3)6]3+");
+    expect(result.elements).toEqual({ Co: 1, N: 6, H: 18 });
+    expect(result.charge).toBe(3);
+  });
+
+  it("parses [Cu(NH3)4]2+ as { Cu: 1, N: 4, H: 12, charge: 2 }", () => {
+    const result = parseFormula("[Cu(NH3)4]2+");
+    expect(result.elements).toEqual({ Cu: 1, N: 4, H: 12 });
+    expect(result.charge).toBe(2);
+  });
+
+  it("parses [Ag(NH3)2]+ as { Ag: 1, N: 2, H: 6, charge: 1 }", () => {
+    const result = parseFormula("[Ag(NH3)2]+");
+    expect(result.elements).toEqual({ Ag: 1, N: 2, H: 6 });
+    expect(result.charge).toBe(1);
+  });
+
+  it("parses [Ni(CN)4]2- as { Ni: 1, C: 4, N: 4, charge: -2 }", () => {
+    const result = parseFormula("[Ni(CN)4]2-");
+    expect(result.elements).toEqual({ Ni: 1, C: 4, N: 4 });
+    expect(result.charge).toBe(-2);
+  });
+});
