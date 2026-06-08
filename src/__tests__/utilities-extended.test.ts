@@ -112,3 +112,24 @@ describe("stripStateSymbols comprehensive", () => {
     expect(stripStateSymbols("[Fe(CN)6]")).toBe("[Fe(CN)6]");
   });
 });
+
+describe("gcd larger numbers and edge cases", () => {
+  it("gcd of large numbers", () => {
+    expect(gcd(1071, 462)).toBe(21);
+  });
+  it("gcd of powers of 2", () => {
+    expect(gcd(64, 32)).toBe(32);
+    expect(gcd(128, 64)).toBe(64);
+  });
+  it("gcd where one divides the other", () => {
+    expect(gcd(12, 4)).toBe(4);
+    expect(gcd(100, 25)).toBe(25);
+  });
+  it("gcd of Fibonacci numbers", () => {
+    expect(gcd(21, 34)).toBe(1);
+    expect(gcd(34, 55)).toBe(1);
+  });
+  it("gcd(1, 1) = 1", () => {
+    expect(gcd(1, 1)).toBe(1);
+  });
+});
