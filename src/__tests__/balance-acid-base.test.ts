@@ -71,3 +71,31 @@ describe("diprotic and triprotic acid neutralization", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
   });
 });
+
+describe("acid + carbonate", () => {
+  it("balances 2HCl + Na2CO3 -> 2NaCl + H2O + CO2", () => {
+    const r = balance("HCl + Na2CO3 -> NaCl + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1, 1]);
+  });
+  it("balances 2HCl + CaCO3 -> CaCl2 + H2O + CO2", () => {
+    const r = balance("HCl + CaCO3 -> CaCl2 + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1, 1]);
+  });
+  it("balances H2SO4 + Na2CO3 -> Na2SO4 + H2O + CO2", () => {
+    const r = balance("H2SO4 + Na2CO3 -> Na2SO4 + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1, 1]);
+  });
+  it("balances H2SO4 + CaCO3 -> CaSO4 + H2O + CO2", () => {
+    const r = balance("H2SO4 + CaCO3 -> CaSO4 + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1, 1]);
+  });
+  it("balances 2HNO3 + Na2CO3 -> 2NaNO3 + H2O + CO2", () => {
+    const r = balance("HNO3 + Na2CO3 -> NaNO3 + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1, 1]);
+  });
+});
