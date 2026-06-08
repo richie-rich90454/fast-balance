@@ -181,3 +181,24 @@ describe("multiple group nesting", () => {
     expect(r.elements).toEqual({ Na: 2, C: 1, O: 13, H: 20 });
   });
 });
+
+describe("parseFormula error conditions", () => {
+  it("throws on mismatched opening parenthesis", () => {
+    expect(() => parseFormula("(OH")).toThrow();
+  });
+  it("throws on mismatched closing parenthesis", () => {
+    expect(() => parseFormula("OH)")).toThrow();
+  });
+  it("throws on mismatched opening bracket", () => {
+    expect(() => parseFormula("[Fe(CN)6")).toThrow();
+  });
+  it("throws on unexpected characters", () => {
+    expect(() => parseFormula("H2@O")).toThrow();
+  });
+  it("throws on lowercase starting character", () => {
+    expect(() => parseFormula("h2o")).toThrow();
+  });
+  it("throws on numbers at start without valid formula", () => {
+    expect(() => parseFormula("123")).toThrow();
+  });
+});
