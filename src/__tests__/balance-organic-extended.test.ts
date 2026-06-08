@@ -208,3 +208,54 @@ describe("fermentation and decomposition", () => {
     expectPositiveCoefficients(r);
   });
 });
+
+describe("hydrocarbon combustion with element conservation", () => {
+  it("CH4 combustion: C and H conserved", () => {
+    const r = balance("CH4 + O2 -> CO2 + H2O");
+    expect(r.reactants[0].coefficient * 1).toBe(r.products[0].coefficient);
+    expect(r.reactants[0].coefficient * 4).toBe(r.products[1].coefficient * 2);
+  });
+
+  it("C2H6 combustion: C and H conserved", () => {
+    const r = balance("C2H6 + O2 -> CO2 + H2O");
+    expect(r.reactants[0].coefficient * 2).toBe(r.products[0].coefficient);
+    expect(r.reactants[0].coefficient * 6).toBe(r.products[1].coefficient * 2);
+  });
+
+  it("C3H8 combustion: C and H conserved", () => {
+    const r = balance("C3H8 + O2 -> CO2 + H2O");
+    expect(r.reactants[0].coefficient * 3).toBe(r.products[0].coefficient);
+    expect(r.reactants[0].coefficient * 8).toBe(r.products[1].coefficient * 2);
+  });
+
+  it("C4H10 combustion: C and H conserved", () => {
+    const r = balance("C4H10 + O2 -> CO2 + H2O");
+    expect(r.reactants[0].coefficient * 4).toBe(r.products[0].coefficient);
+    expect(r.reactants[0].coefficient * 10).toBe(r.products[1].coefficient * 2);
+  });
+
+  it("C2H4 combustion: C and H conserved", () => {
+    const r = balance("C2H4 + O2 -> CO2 + H2O");
+    expect(r.reactants[0].coefficient * 2).toBe(r.products[0].coefficient);
+    expect(r.reactants[0].coefficient * 4).toBe(r.products[1].coefficient * 2);
+  });
+
+  it("C2H2 combustion: C and H conserved", () => {
+    const r = balance("C2H2 + O2 -> CO2 + H2O");
+    expect(r.reactants[0].coefficient * 2).toBe(r.products[0].coefficient);
+    expect(r.reactants[0].coefficient * 2).toBe(r.products[1].coefficient * 2);
+  });
+
+  it("C6H6 combustion: C and H conserved (positive check)", () => {
+    const r = balance("C6H6 + O2 -> CO2 + H2O");
+    expectPositiveCoefficients(r);
+    expect(r.reactants[0].coefficient * 6).toBe(r.products[0].coefficient);
+    expect(r.reactants[0].coefficient * 6).toBe(r.products[1].coefficient * 2);
+  });
+
+  it("C8H18 combustion: C and H conserved", () => {
+    const r = balance("C8H18 + O2 -> CO2 + H2O");
+    expect(r.reactants[0].coefficient * 8).toBe(r.products[0].coefficient);
+    expect(r.reactants[0].coefficient * 18).toBe(r.products[1].coefficient * 2);
+  });
+});
