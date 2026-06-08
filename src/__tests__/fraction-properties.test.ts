@@ -142,3 +142,45 @@ describe("distributivity", () => {
     expect(left.equals(right)).toBe(true);
   });
 });
+
+describe("self-operations", () => {
+  it("a + a = 2a", () => {
+    const a = new Fraction(3, 7);
+    expect(a.add(a).equals(new Fraction(6, 7))).toBe(true);
+  });
+  it("a * a = a^2", () => {
+    const a = new Fraction(2, 3);
+    expect(a.mul(a).equals(new Fraction(4, 9))).toBe(true);
+  });
+  it("a / a = 1 for non-zero a", () => {
+    const a = new Fraction(5, 8);
+    expect(a.div(a).equals(Fraction.one())).toBe(true);
+  });
+  it("a - a = 0", () => {
+    const a = new Fraction(11, 13);
+    expect(a.sub(a).isZero()).toBe(true);
+  });
+});
+
+describe("operation chaining", () => {
+  it("a.add(b).sub(c).mul(d)", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(1, 3);
+    const c = new Fraction(1, 6);
+    const d = new Fraction(3, 4);
+    // (1/2 + 1/3 - 1/6) * 3/4 = (2/3) * 3/4 = 1/2
+    expect(a.add(b).sub(c).mul(d).equals(new Fraction(1, 2))).toBe(true);
+  });
+  it("a.mul(b).add(c.mul(d))", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(2, 3);
+    const c = new Fraction(1, 4);
+    const d = new Fraction(4, 5);
+    // 1/3 + 1/5 = 8/15
+    expect(a.mul(b).add(c.mul(d)).equals(new Fraction(8, 15))).toBe(true);
+  });
+  it("chained negation returns original", () => {
+    const a = new Fraction(3, 7);
+    expect(a.neg().neg().equals(a)).toBe(true);
+  });
+});
