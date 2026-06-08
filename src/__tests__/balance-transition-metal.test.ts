@@ -106,3 +106,41 @@ describe("copper compound reactions", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
   });
 });
+
+describe("zinc compound reactions", () => {
+  it("balances Zn + 2HCl -> ZnCl2 + H2", () => {
+    const r = balance("Zn + HCl -> ZnCl2 + H2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances 2Zn + O2 -> 2ZnO", () => {
+    const r = balance("Zn + O2 -> ZnO");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+
+  it("balances ZnO + 2HCl -> ZnCl2 + H2O", () => {
+    const r = balance("ZnO + HCl -> ZnCl2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances Zn + CuSO4 -> ZnSO4 + Cu", () => {
+    const r = balance("Zn + CuSO4 -> ZnSO4 + Cu");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances Zn + H2SO4 -> ZnSO4 + H2", () => {
+    const r = balance("Zn + H2SO4 -> ZnSO4 + H2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances Zn(OH)2 + 2HCl -> ZnCl2 + 2H2O", () => {
+    const r = balance("Zn(OH)2 + HCl -> ZnCl2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+});
