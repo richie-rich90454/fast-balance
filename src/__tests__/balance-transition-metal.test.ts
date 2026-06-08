@@ -281,3 +281,35 @@ describe("chromium compound reactions", () => {
     expectPositiveCoefficients(r);
   });
 });
+
+describe("manganese compound reactions", () => {
+  it("balances Mn + O2 -> MnO2", () => {
+    const r = balance("Mn + O2 -> MnO2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances MnO4- + H+ + e- -> Mn2+ + H2O", () => {
+    const r = balance("MnO4- + H+ + e- -> Mn2+ + H2O");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances MnO2 + HCl -> MnCl2 + H2O + Cl2", () => {
+    const r = balance("MnO2 + HCl -> MnCl2 + H2O + Cl2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances KMnO4 + HCl -> KCl + MnCl2 + H2O + Cl2", () => {
+    const r = balance("KMnO4 + HCl -> KCl + MnCl2 + H2O + Cl2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances Mn + Cl2 -> MnCl2", () => {
+    const r = balance("Mn + Cl2 -> MnCl2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances MnO2 + C -> Mn + CO2", () => {
+    const r = balance("MnO2 + C -> Mn + CO2");
+    expectPositiveCoefficients(r);
+  });
+});
