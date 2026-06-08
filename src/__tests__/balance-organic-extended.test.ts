@@ -91,3 +91,49 @@ describe("aldehyde and ketone reactions", () => {
     expectPositiveCoefficients(r);
   });
 });
+
+describe("carboxylic acid reactions", () => {
+  it("balances HCOOH + NaOH -> HCOONa + H2O", () => {
+    const r = balance("HCOOH + NaOH -> HCOONa + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances CH3COOH + NaOH -> CH3COONa + H2O", () => {
+    const r = balance("CH3COOH + NaOH -> CH3COONa + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances CH3COOH + KOH -> CH3COOK + H2O", () => {
+    const r = balance("CH3COOH + KOH -> CH3COOK + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances 2CH3COOH + Ca(OH)2 -> (CH3COO)2Ca + 2H2O", () => {
+    const r = balance("CH3COOH + Ca(OH)2 -> (CH3COO)2Ca + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances CH3COOH + NaHCO3 -> CH3COONa + H2O + CO2 (positive check)", () => {
+    const r = balance("CH3COOH + NaHCO3 -> CH3COONa + H2O + CO2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances HCOOH + NaHCO3 -> HCOONa + H2O + CO2 (positive check)", () => {
+    const r = balance("HCOOH + NaHCO3 -> HCOONa + H2O + CO2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances 2CH3COOH + Na2CO3 -> 2CH3COONa + H2O + CO2 (positive check)", () => {
+    const r = balance("CH3COOH + Na2CO3 -> CH3COONa + H2O + CO2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances C2H5COOH + NaOH -> C2H5COONa + H2O (positive check)", () => {
+    const r = balance("C2H5COOH + NaOH -> C2H5COONa + H2O");
+    expectPositiveCoefficients(r);
+  });
+});
