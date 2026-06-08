@@ -56,3 +56,26 @@ describe("alkene and alkyne combustion", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([4, 4]);
   });
 });
+
+describe("oxygenated organic combustion", () => {
+  it("balances C6H12O6 + 6O2 -> 6CO2 + 6H2O", () => {
+    const r = balance("C6H12O6 + O2 -> CO2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 6]);
+    expect(r.products.map(x => x.coefficient)).toEqual([6, 6]);
+  });
+  it("balances 2CH3OH + 3O2 -> 2CO2 + 4H2O", () => {
+    const r = balance("CH3OH + O2 -> CO2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 4]);
+  });
+  it("balances C2H5OH + 3O2 -> 2CO2 + 3H2O", () => {
+    const r = balance("C2H5OH + O2 -> CO2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 3]);
+  });
+  it("balances C3H8O + 9/2 O2 -> 3CO2 + 4H2O (2C3H8O + 9O2 -> 6CO2 + 8H2O)", () => {
+    const r = balance("C3H8O + O2 -> CO2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 9]);
+    expect(r.products.map(x => x.coefficient)).toEqual([6, 8]);
+  });
+});
