@@ -935,3 +935,19 @@ describe("mass conservation verification", () => {
     expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
 });
+
+describe("comprehensive integration", () => {
+  it("balances complex equation with charges, brackets, and state symbols", () => {
+    const result = balance("[Co(NH3)6]Cl3(aq) + AgNO3(aq) -> AgCl(s) + [Co(NH3)6](NO3)3(aq)");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([3, 1]);
+  });
+
+  it("balances complex organic equation with multiple elements", () => {
+    const result = balance("C8H18 + O2 -> CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+    const allCoeffs = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+    expect(allCoeffs.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
