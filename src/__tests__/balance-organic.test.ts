@@ -146,3 +146,32 @@ describe("organic compounds with nitrogen", () => {
     expect(r.products.every(x => x.coefficient > 0)).toBe(true);
   });
 });
+
+describe("organic combustion element conservation", () => {
+  it("C2H6 combustion: C and H conserved", () => {
+    const r = balance("C2H6 + O2 -> CO2 + H2O");
+    // C: 2*2 = 4; H: 6*2 = 12 = 6*2
+    expect(r.reactants[0].coefficient * 2).toBe(r.products[0].coefficient);
+    expect(r.reactants[0].coefficient * 6).toBe(r.products[1].coefficient * 2);
+  });
+  it("C3H8 combustion: C and H conserved", () => {
+    const r = balance("C3H8 + O2 -> CO2 + H2O");
+    expect(r.reactants[0].coefficient * 3).toBe(r.products[0].coefficient);
+    expect(r.reactants[0].coefficient * 8).toBe(r.products[1].coefficient * 2);
+  });
+  it("C6H12O6 combustion: C and H conserved", () => {
+    const r = balance("C6H12O6 + O2 -> CO2 + H2O");
+    expect(r.reactants[0].coefficient * 6).toBe(r.products[0].coefficient);
+    expect(r.reactants[0].coefficient * 12).toBe(r.products[1].coefficient * 2);
+  });
+  it("all coefficients are positive integers for C8H18", () => {
+    const r = balance("C8H18 + O2 -> CO2 + H2O");
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("all coefficients are positive integers for C2H5OH", () => {
+    const r = balance("C2H5OH + O2 -> CO2 + H2O");
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
