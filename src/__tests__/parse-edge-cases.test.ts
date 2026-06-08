@@ -202,3 +202,34 @@ describe("parseFormula error conditions", () => {
     expect(() => parseFormula("123")).toThrow();
   });
 });
+
+describe("parseWithoutMultiplier direct tests", () => {
+  it("parses simple element Fe", () => {
+    const r = parseWithoutMultiplier("Fe");
+    expect(r.elements).toEqual({ Fe: 1 });
+    expect(r.charge).toBe(0);
+  });
+  it("parses H2O", () => {
+    const r = parseWithoutMultiplier("H2O");
+    expect(r.elements).toEqual({ H: 2, O: 1 });
+  });
+  it("parses (OH)2", () => {
+    const r = parseWithoutMultiplier("(OH)2");
+    expect(r.elements).toEqual({ O: 2, H: 2 });
+  });
+  it("parses [Fe(CN)6]4-", () => {
+    const r = parseWithoutMultiplier("[Fe(CN)6]4-");
+    expect(r.elements).toEqual({ Fe: 1, C: 6, N: 6 });
+    expect(r.charge).toBe(-4);
+  });
+  it("parses e- (electron)", () => {
+    const r = parseWithoutMultiplier("e-");
+    expect(r.elements).toEqual({});
+    expect(r.charge).toBe(-1);
+  });
+  it("parses e+ (positron)", () => {
+    const r = parseWithoutMultiplier("e+");
+    expect(r.elements).toEqual({});
+    expect(r.charge).toBe(1);
+  });
+});
