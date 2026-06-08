@@ -233,3 +233,29 @@ describe("parseWithoutMultiplier direct tests", () => {
     expect(r.charge).toBe(1);
   });
 });
+
+describe("hydrate and state symbol combinations", () => {
+  it("parses CuSO4·5H2O with state symbol", () => {
+    const r = parseFormula("CuSO4·5H2O(s)");
+    expect(r.elements).toEqual({ Cu: 1, S: 1, O: 9, H: 10 });
+  });
+  it("parses Na2CO3*10H2O with state symbol", () => {
+    const r = parseFormula("Na2CO3*10H2O(aq)");
+    expect(r.elements).toEqual({ Na: 2, C: 1, O: 13, H: 20 });
+  });
+  it("parses formula with only state symbol stripped", () => {
+    const r = parseFormula("H2O(l)");
+    expect(r.elements).toEqual({ H: 2, O: 1 });
+    expect(r.charge).toBe(0);
+  });
+  it("parses charged species with state symbol", () => {
+    const r = parseFormula("Na+(aq)");
+    expect(r.elements).toEqual({ Na: 1 });
+    expect(r.charge).toBe(1);
+  });
+  it("parses complex ion with state symbol", () => {
+    const r = parseFormula("[Fe(CN)6]4-(aq)");
+    expect(r.elements).toEqual({ Fe: 1, C: 6, N: 6 });
+    expect(r.charge).toBe(-4);
+  });
+});
