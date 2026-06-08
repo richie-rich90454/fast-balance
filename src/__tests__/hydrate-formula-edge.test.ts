@@ -184,3 +184,44 @@ describe("bullet hydrate notation", () => {
     expect(result.products[1]?.coefficient).toBe(6);
   });
 });
+
+describe("mixed hydrate notation consistency", () => {
+  it("parses CuSO4·5H2O and CuSO4*5H2O to same elements", () => {
+    const dot = parseFormula("CuSO4·5H2O");
+    const asterisk = parseFormula("CuSO4*5H2O");
+    expect(dot.elements).toEqual(asterisk.elements);
+    expect(dot.charge).toBe(asterisk.charge);
+  });
+
+  it("parses BaCl2·2H2O and BaCl2*2H2O to same elements", () => {
+    const dot = parseFormula("BaCl2·2H2O");
+    const asterisk = parseFormula("BaCl2*2H2O");
+    expect(dot.elements).toEqual(asterisk.elements);
+    expect(dot.charge).toBe(asterisk.charge);
+  });
+
+  it("parses Na2CO3·10H2O and Na2CO3•10H2O to same elements", () => {
+    const dot = parseFormula("Na2CO3·10H2O");
+    const bullet = parseFormula("Na2CO3•10H2O");
+    expect(dot.elements).toEqual(bullet.elements);
+    expect(dot.charge).toBe(bullet.charge);
+  });
+
+  it("balances hydrate with charge: [Cu(NH3)4]SO4·H2O", () => {
+    const result = balance("[Cu(NH3)4]SO4·H2O -> [Cu(NH3)4]SO4 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances hydrate with brackets: [Co(NH3)6]Cl3·H2O", () => {
+    const result = balance("[Co(NH3)6]Cl3·H2O -> [Co(NH3)6]Cl3 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances mixed hydrate: CuSO4·5H2O + BaCl2 -> BaSO4 + CuCl2 + H2O", () => {
+    const result = balance("CuSO4·5H2O + BaCl2 -> BaSO4 + CuCl2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+});
