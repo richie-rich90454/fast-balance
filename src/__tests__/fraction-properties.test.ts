@@ -184,3 +184,43 @@ describe("operation chaining", () => {
     expect(a.neg().neg().equals(a)).toBe(true);
   });
 });
+
+describe("double negation", () => {
+  it("-(-a) = a for positive", () => {
+    const a = new Fraction(3, 7);
+    expect(a.neg().neg().equals(a)).toBe(true);
+  });
+  it("-(-a) = a for negative", () => {
+    const a = new Fraction(-5, 9);
+    expect(a.neg().neg().equals(a)).toBe(true);
+  });
+  it("-(-a) = a for zero", () => {
+    const a = Fraction.zero();
+    expect(a.neg().neg().equals(a)).toBe(true);
+  });
+});
+
+describe("multiplicative inverse", () => {
+  it("1/a for a > 1", () => {
+    const a = new Fraction(3, 1);
+    const inv = Fraction.one().div(a);
+    expect(inv.equals(new Fraction(1, 3))).toBe(true);
+  });
+  it("1/a for proper fraction", () => {
+    const a = new Fraction(2, 5);
+    const inv = Fraction.one().div(a);
+    expect(inv.equals(new Fraction(5, 2))).toBe(true);
+  });
+  it("a * (1/a) = 1 for non-zero a", () => {
+    const a = new Fraction(3, 7);
+    expect(a.mul(Fraction.one().div(a)).equals(Fraction.one())).toBe(true);
+  });
+  it("inverse of 1 is 1", () => {
+    expect(Fraction.one().div(Fraction.one()).equals(Fraction.one())).toBe(true);
+  });
+  it("inverse of negative fraction is negative", () => {
+    const a = new Fraction(-2, 5);
+    const inv = Fraction.one().div(a);
+    expect(inv.equals(new Fraction(-5, 2))).toBe(true);
+  });
+});
