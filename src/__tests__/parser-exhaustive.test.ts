@@ -124,3 +124,65 @@ describe("element with subscript", () => {
     expect(result.charge).toBe(0);
   });
 });
+
+describe("polyatomic ion parsing", () => {
+  it("parses OH- as { O: 1, H: 1, charge: -1 }", () => {
+    const result = parseFormula("OH-");
+    expect(result.elements).toEqual({ O: 1, H: 1 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses NH4+ as { N: 1, H: 4, charge: 1 }", () => {
+    const result = parseFormula("NH4+");
+    expect(result.elements).toEqual({ N: 1, H: 4 });
+    expect(result.charge).toBe(1);
+  });
+
+  it("parses NO3- as { N: 1, O: 3, charge: -1 }", () => {
+    const result = parseFormula("NO3-");
+    expect(result.elements).toEqual({ N: 1, O: 3 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses SO4^2- as { S: 1, O: 4, charge: -2 }", () => {
+    const result = parseFormula("SO4^2-");
+    expect(result.elements).toEqual({ S: 1, O: 4 });
+    expect(result.charge).toBe(-2);
+  });
+
+  it("parses CO3^2- as { C: 1, O: 3, charge: -2 }", () => {
+    const result = parseFormula("CO3^2-");
+    expect(result.elements).toEqual({ C: 1, O: 3 });
+    expect(result.charge).toBe(-2);
+  });
+
+  it("parses PO4^3- as { P: 1, O: 4, charge: -3 }", () => {
+    const result = parseFormula("PO4^3-");
+    expect(result.elements).toEqual({ P: 1, O: 4 });
+    expect(result.charge).toBe(-3);
+  });
+
+  it("parses ClO3- as { Cl: 1, O: 3, charge: -1 }", () => {
+    const result = parseFormula("ClO3-");
+    expect(result.elements).toEqual({ Cl: 1, O: 3 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses ClO4- as { Cl: 1, O: 4, charge: -1 }", () => {
+    const result = parseFormula("ClO4-");
+    expect(result.elements).toEqual({ Cl: 1, O: 4 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses MnO4- as { Mn: 1, O: 4, charge: -1 }", () => {
+    const result = parseFormula("MnO4-");
+    expect(result.elements).toEqual({ Mn: 1, O: 4 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses Cr2O7^2- as { Cr: 2, O: 7, charge: -2 }", () => {
+    const result = parseFormula("Cr2O7^2-");
+    expect(result.elements).toEqual({ Cr: 2, O: 7 });
+    expect(result.charge).toBe(-2);
+  });
+});
