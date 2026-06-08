@@ -133,3 +133,23 @@ describe("gcd larger numbers and edge cases", () => {
     expect(gcd(1, 1)).toBe(1);
   });
 });
+
+describe("lcm larger numbers and edge cases", () => {
+  it("lcm of large numbers", () => {
+    expect(lcm(21, 6)).toBe(42);
+  });
+  it("lcm where one divides the other", () => {
+    expect(lcm(12, 4)).toBe(12);
+    expect(lcm(100, 25)).toBe(100);
+  });
+  it("lcm of powers of 2", () => {
+    expect(lcm(8, 16)).toBe(16);
+    expect(lcm(32, 64)).toBe(64);
+  });
+  it("lcm(1, 1) = 1", () => {
+    expect(lcm(1, 1)).toBe(1);
+  });
+  it("lcm of three numbers via chaining", () => {
+    expect(lcm(lcm(4, 6), 5)).toBe(60);
+  });
+});
