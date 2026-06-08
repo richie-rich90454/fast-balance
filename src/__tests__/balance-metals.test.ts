@@ -132,3 +132,31 @@ describe("metal + acid displacement", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
   });
 });
+
+describe("halogen displacement", () => {
+  it("balances Cl2 + 2KI -> 2KCl + I2", () => {
+    const r = balance("Cl2 + KI -> KCl + I2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1]);
+  });
+  it("balances Cl2 + 2KBr -> 2KCl + Br2", () => {
+    const r = balance("Cl2 + KBr -> KCl + Br2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1]);
+  });
+  it("balances Br2 + 2KI -> 2KBr + I2", () => {
+    const r = balance("Br2 + KI -> KBr + I2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1]);
+  });
+  it("balances F2 + 2NaCl -> 2NaF + Cl2", () => {
+    const r = balance("F2 + NaCl -> NaF + Cl2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1]);
+  });
+  it("balances Cl2 + 2NaBr -> 2NaCl + Br2", () => {
+    const r = balance("Cl2 + NaBr -> NaCl + Br2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1]);
+  });
+});
