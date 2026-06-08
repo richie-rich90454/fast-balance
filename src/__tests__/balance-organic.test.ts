@@ -102,3 +102,16 @@ describe("organic acid reactions", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
   });
 });
+
+describe("ester reactions", () => {
+  it("balances CH3COOH + C2H5OH -> CH3COOC2H5 + H2O", () => {
+    const r = balance("CH3COOH + C2H5OH -> CH3COOC2H5 + H2O");
+    expect(r.reactants.every(x => x.coefficient > 0)).toBe(true);
+    expect(r.products.every(x => x.coefficient > 0)).toBe(true);
+  });
+  it("balances HCOOH + CH3OH -> HCOOCH3 + H2O", () => {
+    const r = balance("HCOOH + CH3OH -> HCOOCH3 + H2O");
+    expect(r.reactants.every(x => x.coefficient > 0)).toBe(true);
+    expect(r.products.every(x => x.coefficient > 0)).toBe(true);
+  });
+});
