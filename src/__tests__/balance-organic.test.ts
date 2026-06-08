@@ -133,3 +133,16 @@ describe("large hydrocarbon combustion", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([20, 22]);
   });
 });
+
+describe("organic compounds with nitrogen", () => {
+  it("balances C6H12O6 -> C2H5OH + CO2 (fermentation)", () => {
+    const r = balance("C6H12O6 -> C2H5OH + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 2]);
+  });
+  it("balances C2H5OH + O2 -> CH3COOH + H2O (oxidation)", () => {
+    const r = balance("C2H5OH + O2 -> CH3COOH + H2O");
+    expect(r.reactants.every(x => x.coefficient > 0)).toBe(true);
+    expect(r.products.every(x => x.coefficient > 0)).toBe(true);
+  });
+});
