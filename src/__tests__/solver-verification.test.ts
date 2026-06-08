@@ -64,3 +64,31 @@ describe("solveSystem conservation verification", () => {
     }
   });
 });
+
+describe("fractionsToIntegers reduction properties", () => {
+  it("result has no common factor > 1", () => {
+    const result = fractionsToIntegers([new Fraction(2, 3), new Fraction(4, 3), new Fraction(2, 3)]);
+    const g = result.reduce((acc, v) => {
+      let a = Math.abs(acc), b = Math.abs(v);
+      while (b !== 0) { [a, b] = [b, a % b]; }
+      return a;
+    });
+    expect(g).toBe(1);
+  });
+  it("all results are positive for positive input", () => {
+    const result = fractionsToIntegers([new Fraction(1, 2), new Fraction(1, 3), new Fraction(1, 6)]);
+    expect(result.every(v => v > 0)).toBe(true);
+  });
+  it("flips sign when majority negative", () => {
+    const result = fractionsToIntegers([new Fraction(-1), new Fraction(-2), new Fraction(1)]);
+    expect(result.filter(v => v > 0).length).toBeGreaterThanOrEqual(result.filter(v => v < 0).length);
+  });
+  it("preserves relative ratios", () => {
+    const result = fractionsToIntegers([new Fraction(1, 3), new Fraction(2, 3)]);
+    expect(result[1]).toBe(2 * result[0]);
+  });
+  it("handles single element", () => {
+    const result = fractionsToIntegers([new Fraction(3, 7)]);
+    expect(result).toEqual([1]);
+  });
+});
