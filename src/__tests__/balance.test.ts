@@ -680,3 +680,17 @@ describe("square bracket group balance", () => {
     expect(result.products.map(p => p.coefficient)).toEqual([1]);
   });
 });
+
+describe("complex nested group balance", () => {
+  it("balances [Cu(NH3)4](OH)2 + HCl -> [Cu(NH3)4]Cl2 + H2O", () => {
+    const result = balance("[Cu(NH3)4](OH)2 + HCl -> [Cu(NH3)4]Cl2 + H2O");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 2]);
+    expect(result.products.map(p => p.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances [Co(NH3)6]Cl3 + AgNO3 -> AgCl + [Co(NH3)6](NO3)3", () => {
+    const result = balance("[Co(NH3)6]Cl3 + AgNO3 -> AgCl + [Co(NH3)6](NO3)3");
+    expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+    expect(result.products.map(p => p.coefficient)).toEqual([3, 1]);
+  });
+});
