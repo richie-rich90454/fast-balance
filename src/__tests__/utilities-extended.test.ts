@@ -32,3 +32,34 @@ describe("gcd mathematical properties", () => {
     expect(gcd(11, 33)).toBe(11);
   });
 });
+
+describe("lcm mathematical properties", () => {
+  it("lcm is commutative: lcm(a,b) = lcm(b,a)", () => {
+    expect(lcm(4, 6)).toBe(lcm(6, 4));
+    expect(lcm(7, 13)).toBe(lcm(13, 7));
+  });
+  it("lcm(a, 1) = a", () => {
+    expect(lcm(5, 1)).toBe(5);
+    expect(lcm(1, 5)).toBe(5);
+  });
+  it("lcm(a, a) = a", () => {
+    expect(lcm(6, 6)).toBe(6);
+    expect(lcm(15, 15)).toBe(15);
+  });
+  it("lcm(a, 0) = 0", () => {
+    expect(lcm(5, 0)).toBe(0);
+    expect(lcm(0, 5)).toBe(0);
+  });
+  it("gcd(a,b) * lcm(a,b) = a * b for positive a,b", () => {
+    expect(gcd(12, 8) * lcm(12, 8)).toBe(12 * 8);
+    expect(gcd(7, 13) * lcm(7, 13)).toBe(7 * 13);
+    expect(gcd(15, 25) * lcm(15, 25)).toBe(15 * 25);
+  });
+  it("lcm of prime numbers is their product", () => {
+    expect(lcm(3, 5)).toBe(15);
+    expect(lcm(7, 11)).toBe(77);
+  });
+  it("lcm is associative: lcm(lcm(a,b),c) = lcm(a,lcm(b,c))", () => {
+    expect(lcm(lcm(2, 3), 4)).toBe(lcm(2, lcm(3, 4)));
+  });
+});
