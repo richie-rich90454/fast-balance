@@ -297,3 +297,35 @@ describe("organic compound with heteroatoms", () => {
     expectPositiveCoefficients(r);
   });
 });
+
+describe("organic acid salt formation", () => {
+  it("balances CH3COOH + Na -> CH3COONa + H2 (positive check)", () => {
+    const r = balance("CH3COOH + Na -> CH3COONa + H2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances HCOOH + Na -> HCOONa + H2 (positive check)", () => {
+    const r = balance("HCOOH + Na -> HCOONa + H2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances CH3COOH + Mg -> (CH3COO)2Mg + H2 (positive check)", () => {
+    const r = balance("CH3COOH + Mg -> (CH3COO)2Mg + H2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances HCOOH + Ca -> (HCOO)2Ca + H2 (positive check)", () => {
+    const r = balance("HCOOH + Ca -> (HCOO)2Ca + H2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances CH3COOH + K -> CH3COOK + H2 (positive check)", () => {
+    const r = balance("CH3COOH + K -> CH3COOK + H2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances C2H5COOH + Na -> C2H5COONa + H2 (positive check)", () => {
+    const r = balance("C2H5COOH + Na -> C2H5COONa + H2");
+    expectPositiveCoefficients(r);
+  });
+});
