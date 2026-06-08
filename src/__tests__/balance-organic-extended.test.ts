@@ -329,3 +329,36 @@ describe("organic acid salt formation", () => {
     expectPositiveCoefficients(r);
   });
 });
+
+describe("amine and amide reactions", () => {
+  it("balances NH3 + HCl -> NH4Cl", () => {
+    const r = balance("NH3 + HCl -> NH4Cl");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+
+  it("balances CH3NH2 + HCl -> CH3NH3Cl (positive check)", () => {
+    const r = balance("CH3NH2 + HCl -> CH3NH3Cl");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances C2H5NH2 + HCl -> C2H5NH3Cl (positive check)", () => {
+    const r = balance("C2H5NH2 + HCl -> C2H5NH3Cl");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances NH3 + CH3COOH -> CH3COONH4 (positive check)", () => {
+    const r = balance("NH3 + CH3COOH -> CH3COONH4");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances 2NH3 + H2SO4 -> (NH4)2SO4 (positive check)", () => {
+    const r = balance("NH3 + H2SO4 -> (NH4)2SO4");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances NH3 + HNO3 -> NH4NO3 (positive check)", () => {
+    const r = balance("NH3 + HNO3 -> NH4NO3");
+    expectPositiveCoefficients(r);
+  });
+});
