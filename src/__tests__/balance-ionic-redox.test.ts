@@ -33,3 +33,36 @@ describe("ionic compound formation", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1]);
   });
 });
+
+describe("polyatomic ionic compounds", () => {
+  it("balances 2Al3+ + 3SO4^2- -> Al2(SO4)3", () => {
+    const r = balance("Al3+ + SO4^2- -> Al2(SO4)3");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances Ca2+ + 2NO3- -> Ca(NO3)2", () => {
+    const r = balance("Ca2+ + NO3- -> Ca(NO3)2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances 2NH4+ + SO4^2- -> (NH4)2SO4", () => {
+    const r = balance("NH4+ + SO4^2- -> (NH4)2SO4");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances Fe3+ + 3OH- -> Fe(OH)3", () => {
+    const r = balance("Fe3+ + OH- -> Fe(OH)3");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances Cu2+ + 2OH- -> Cu(OH)2", () => {
+    const r = balance("Cu2+ + OH- -> Cu(OH)2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances 2Fe3+ + 3CO3^2- -> Fe2(CO3)3", () => {
+    const r = balance("Fe3+ + CO3^2- -> Fe2(CO3)3");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+});
