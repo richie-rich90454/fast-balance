@@ -186,3 +186,53 @@ describe("polyatomic ion parsing", () => {
     expect(result.charge).toBe(-2);
   });
 });
+
+describe("nested group parsing", () => {
+  it("parses Ca(OH)2 as { Ca: 1, O: 2, H: 2, charge: 0 }", () => {
+    const result = parseFormula("Ca(OH)2");
+    expect(result.elements).toEqual({ Ca: 1, O: 2, H: 2 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses Al(OH)3 as { Al: 1, O: 3, H: 3, charge: 0 }", () => {
+    const result = parseFormula("Al(OH)3");
+    expect(result.elements).toEqual({ Al: 1, O: 3, H: 3 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses Fe(OH)3 as { Fe: 1, O: 3, H: 3, charge: 0 }", () => {
+    const result = parseFormula("Fe(OH)3");
+    expect(result.elements).toEqual({ Fe: 1, O: 3, H: 3 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses Mg(OH)2 as { Mg: 1, O: 2, H: 2, charge: 0 }", () => {
+    const result = parseFormula("Mg(OH)2");
+    expect(result.elements).toEqual({ Mg: 1, O: 2, H: 2 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses (NH4)2SO4 as { N: 2, H: 8, S: 1, O: 4, charge: 0 }", () => {
+    const result = parseFormula("(NH4)2SO4");
+    expect(result.elements).toEqual({ N: 2, H: 8, S: 1, O: 4 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses (NH4)3PO4 as { N: 3, H: 12, P: 1, O: 4, charge: 0 }", () => {
+    const result = parseFormula("(NH4)3PO4");
+    expect(result.elements).toEqual({ N: 3, H: 12, P: 1, O: 4 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses Al2(SO4)3 as { Al: 2, S: 3, O: 12, charge: 0 }", () => {
+    const result = parseFormula("Al2(SO4)3");
+    expect(result.elements).toEqual({ Al: 2, S: 3, O: 12 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses Fe2(SO4)3 as { Fe: 2, S: 3, O: 12, charge: 0 }", () => {
+    const result = parseFormula("Fe2(SO4)3");
+    expect(result.elements).toEqual({ Fe: 2, S: 3, O: 12 });
+    expect(result.charge).toBe(0);
+  });
+});
