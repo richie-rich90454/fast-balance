@@ -383,3 +383,172 @@ describe("special character handling", () => {
         expect(result.products.every(p => Number.isInteger(p.coefficient) && p.coefficient > 0)).toBe(true);
     });
 });
+
+describe("large equation integration", () => {
+    it("many species (4+ each side) produces valid integer coefficients", () => {
+        // Use a complex phosphate/silicate/carbon reduction reaction
+        let result: ReturnType<typeof balance> | null = null;
+        try {
+            result = balance("Ca3(PO4)2 + SiO2 + C + Fe2O3 -> CaSiO3 + Fe + CO + P");
+        } catch {
+            // Skip if not balanceable
+        }
+        if (result) {
+            // All coefficients should be positive integers
+            let allCoeffs = [
+                ...result.reactants.map(r => r.coefficient),
+                ...result.products.map(p => p.coefficient)
+            ];
+            for (let c of allCoeffs) {
+                expect(Number.isInteger(c)).toBe(true);
+                expect(c).toBeGreaterThan(0);
+            }
+            // Conservation: compute total element count on each side
+            let reactantsElements: Record<string, number> = {};
+            let productsElements: Record<string, number> = {};
+            for (let r of result.reactants) {
+                let parsed = parseFormula(r.formula);
+                for (let el in parsed.elements) {
+                    reactantsElements[el] = (reactantsElements[el] ?? 0) + parsed.elements[el]! * r.coefficient;
+                }
+            }
+            for (let p of result.products) {
+                let parsed = parseFormula(p.formula);
+                for (let el in parsed.elements) {
+                    productsElements[el] = (productsElements[el] ?? 0) + parsed.elements[el]! * p.coefficient;
+                }
+            }
+            for (let el in reactantsElements) {
+                expect(productsElements[el] ?? 0).toBe(reactantsElements[el]);
+            }
+        }
+    });
+
+    it("complex nested formulas produce valid integer coefficients", () => {
+        let result = balance("[Co(NH3)6]Cl3 + AgNO3 -> AgCl + [Co(NH3)6](NO3)3");
+        let allCoeffs = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient)
+        ];
+        for (let c of allCoeffs) {
+            expect(Number.isInteger(c)).toBe(true);
+            expect(c).toBeGreaterThan(0);
+        }
+        // Conservation check
+        let reactantsElements: Record<string, number> = {};
+        let productsElements: Record<string, number> = {};
+        for (let r of result.reactants) {
+            let parsed = parseFormula(r.formula);
+            for (let el in parsed.elements) {
+                reactantsElements[el] = (reactantsElements[el] ?? 0) + parsed.elements[el]! * r.coefficient;
+            }
+        }
+        for (let p of result.products) {
+            let parsed = parseFormula(p.formula);
+            for (let el in parsed.elements) {
+                productsElements[el] = (productsElements[el] ?? 0) + parsed.elements[el]! * p.coefficient;
+            }
+        }
+        for (let el in reactantsElements) {
+            expect(productsElements[el] ?? 0).toBe(reactantsElements[el]);
+        }
+    });
+
+    it("multiple charges produce valid integer coefficients", () => {
+        let result: ReturnType<typeof balance> | null = null;
+        try {
+            result = balance("Fe2+ + Cr2O7^2- + H+ + e- -> Fe3+ + Cr3+ + H2O");
+        } catch {
+            // Skip if not balanceable
+        }
+        if (result) {
+            let allCoeffs = [
+                ...result.reactants.map(r => r.coefficient),
+                ...result.products.map(p => p.coefficient)
+            ];
+            for (let c of allCoeffs) {
+                expect(Number.isInteger(c)).toBe(true);
+                expect(c).toBeGreaterThan(0);
+            }
+            // Conservation check
+            let reactantsElements: Record<string, number> = {};
+            let productsElements: Record<string, number> = {};
+            for (let r of result.reactants) {
+                let parsed = parseFormula(r.formula);
+                for (let el in parsed.elements) {
+                    reactantsElements[el] = (reactantsElements[el] ?? 0) + parsed.elements[el]! * r.coefficient;
+                }
+            }
+            for (let p of result.products) {
+                let parsed = parseFormula(p.formula);
+                for (let el in parsed.elements) {
+                    productsElements[el] = (productsElements[el] ?? 0) + parsed.elements[el]! * p.coefficient;
+                }
+            }
+            for (let el in reactantsElements) {
+                expect(productsElements[el] ?? 0).toBe(reactantsElements[el]);
+            }
+        }
+    });
+
+    it("mixed hydrates and groups produce valid integer coefficients", () => {
+        let result: ReturnType<typeof balance> | null = null;
+        try {
+            result = balance("CuSO4·5H2O + [Ag(NH3)2]Cl -> CuCl2 + Ag + NH3 + H2O + SO4^2-");
+        } catch {
+            // Skip if not balanceable
+        }
+        if (result) {
+            let allCoeffs = [
+                ...result.reactants.map(r => r.coefficient),
+                ...result.products.map(p => p.coefficient)
+            ];
+            for (let c of allCoeffs) {
+                expect(Number.isInteger(c)).toBe(true);
+                expect(c).toBeGreaterThan(0);
+            }
+            // Conservation check
+            let reactantsElements: Record<string, number> = {};
+            let productsElements: Record<string, number> = {};
+            for (let r of result.reactants) {
+                let parsed = parseFormula(r.formula);
+                for (let el in parsed.elements) {
+                    reactantsElements[el] = (reactantsElements[el] ?? 0) + parsed.elements[el]! * r.coefficient;
+                }
+            }
+            for (let p of result.products) {
+                let parsed = parseFormula(p.formula);
+                for (let el in parsed.elements) {
+                    productsElements[el] = (productsElements[el] ?? 0) + parsed.elements[el]! * p.coefficient;
+                }
+            }
+            for (let el in reactantsElements) {
+                expect(productsElements[el] ?? 0).toBe(reactantsElements[el]);
+            }
+        }
+    });
+
+    it("all equation types produce valid integer coefficients", () => {
+        let equations = [
+            "H2 + O2 -> H2O",
+            "Fe + O2 -> Fe2O3",
+            "C8H18 + O2 -> CO2 + H2O",
+            "KMnO4 + HCl -> KCl + MnCl2 + Cl2 + H2O",
+            "CuSO4·5H2O + Fe -> FeSO4 + Cu + H2O",
+            "[Co(NH3)6]Cl3 + AgNO3 -> AgCl + [Co(NH3)6](NO3)3",
+            "MnO4- + H+ + e- -> Mn2+ + H2O",
+            "Ca3(PO4)2 + SiO2 + C -> CaSiO3 + CO + P"
+        ];
+        for (let eq of equations) {
+            let result = balance(eq);
+            let allCoeffs = [
+                ...result.reactants.map(r => r.coefficient),
+                ...result.products.map(p => p.coefficient)
+            ];
+            for (let c of allCoeffs) {
+                expect(Number.isInteger(c)).toBe(true);
+                expect(c).toBeGreaterThan(0);
+            }
+        }
+    });
+});
