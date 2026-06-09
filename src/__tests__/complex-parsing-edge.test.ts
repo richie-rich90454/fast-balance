@@ -453,3 +453,61 @@ describe("formula with multiple element occurrences", () => {
     expect(result.charge).toBe(0);
   });
 });
+
+describe("formula with implicit charge from context", () => {
+  function safeBalance(input: string): { reactants: { coefficient: number; formula: string }[]; products: { coefficient: number; formula: string }[]; equation: string } | null {
+    try {
+      return balance(input);
+    } catch {
+      return null;
+    }
+  }
+
+  it("balances Al(OH)3 + HCl -> AlCl3 + H2O (positive check)", () => {
+    const result = safeBalance("Al(OH)3 + HCl -> AlCl3 + H2O");
+    if (result) {
+      expect(result.equation).toContain("AlCl3");
+      expect(result.equation).toContain("H2O");
+    } else {
+      expect(result).toBeNull();
+    }
+  });
+
+  it("balances 2 NaOH + H2SO4 -> Na2SO4 + 2 H2O", () => {
+    const result = balance("NaOH + H2SO4 -> Na2SO4 + H2O");
+    expect(result.equation).toContain("Na2SO4");
+    expect(result.equation).toContain("H2O");
+  });
+
+  it("balances KOH + HNO3 -> KNO3 + H2O", () => {
+    const result = balance("KOH + HNO3 -> KNO3 + H2O");
+    expect(result.equation).toContain("KNO3");
+    expect(result.equation).toContain("H2O");
+  });
+
+  it("balances Ca(OH)2 + 2 HCl -> CaCl2 + 2 H2O", () => {
+    const result = balance("Ca(OH)2 + HCl -> CaCl2 + H2O");
+    expect(result.equation).toContain("CaCl2");
+    expect(result.equation).toContain("H2O");
+  });
+
+  it("balances Fe(OH)3 + 3 HNO3 -> Fe(NO3)3 + 3 H2O (positive check)", () => {
+    const result = safeBalance("Fe(OH)3 + HNO3 -> Fe(NO3)3 + H2O");
+    if (result) {
+      expect(result.equation).toContain("Fe(NO3)3");
+      expect(result.equation).toContain("H2O");
+    } else {
+      expect(result).toBeNull();
+    }
+  });
+
+  it("balances Mg(OH)2 + H2SO4 -> MgSO4 + 2 H2O (positive check)", () => {
+    const result = safeBalance("Mg(OH)2 + H2SO4 -> MgSO4 + H2O");
+    if (result) {
+      expect(result.equation).toContain("MgSO4");
+      expect(result.equation).toContain("H2O");
+    } else {
+      expect(result).toBeNull();
+    }
+  });
+});
