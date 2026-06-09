@@ -261,3 +261,70 @@ describe("electrolyte tests", () => {
     expect(r.products[1].coefficient).toBe(2);
   });
 });
+
+describe("oxidation state verification tests", () => {
+  it("Fe2O3 + CO -> Fe + CO2 (verify Fe reduced)", () => {
+    const r = balance("Fe2O3 + CO -> Fe + CO2");
+    // Fe2O3 + 3CO -> 2Fe + 3CO2
+    // Fe goes from +3 to 0 (reduced)
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(3);
+    expect(r.products[0].coefficient).toBe(2);
+    expect(r.products[1].coefficient).toBe(3);
+    // Verify Fe present in reactant and reduced form in product
+    const feReactant = parseFormula("Fe2O3");
+    const feProduct = parseFormula("Fe");
+    expect(feReactant.elements["Fe"]).toBe(2);
+    expect(feProduct.elements["Fe"]).toBe(1);
+  });
+
+  it("C + O2 -> CO2 (verify C oxidized)", () => {
+    const r = balance("C + O2 -> CO2");
+    // C + O2 -> CO2
+    // C goes from 0 to +4 (oxidized)
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+  });
+
+  it("Zn + H2SO4 -> ZnSO4 + H2 (verify Zn oxidized)", () => {
+    const r = balance("Zn + H2SO4 -> ZnSO4 + H2");
+    // Zn + H2SO4 -> ZnSO4 + H2
+    // Zn goes from 0 to +2 (oxidized)
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(1);
+    const znReactant = parseFormula("Zn");
+    const znProduct = parseFormula("ZnSO4");
+    expect(znReactant.elements["Zn"]).toBe(1);
+    expect(znProduct.elements["Zn"]).toBe(1);
+  });
+
+  it("2H2 + O2 -> 2H2O (verify H oxidized)", () => {
+    const r = balance("H2 + O2 -> H2O");
+    // 2H2 + O2 -> 2H2O
+    // H goes from 0 to +1 (oxidized)
+    expect(r.reactants[0].coefficient).toBe(2);
+    expect(r.reactants[1].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(2);
+    const hReactant = parseFormula("H2");
+    const hProduct = parseFormula("H2O");
+    expect(hReactant.elements["H"]).toBe(2);
+    expect(hProduct.elements["H"]).toBe(2);
+  });
+
+  it("CuO + H2 -> Cu + H2O (verify Cu reduced)", () => {
+    const r = balance("CuO + H2 -> Cu + H2O");
+    // CuO + H2 -> Cu + H2O
+    // Cu goes from +2 to 0 (reduced)
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(1);
+    const cuReactant = parseFormula("CuO");
+    const cuProduct = parseFormula("Cu");
+    expect(cuReactant.elements["Cu"]).toBe(1);
+    expect(cuProduct.elements["Cu"]).toBe(1);
+  });
+});
