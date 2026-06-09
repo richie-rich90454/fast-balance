@@ -194,3 +194,63 @@ describe("balance multiple equation consistency", () => {
   });
 });
 
+describe("equation parsing roundtrip", () => {
+  it("balance output equation can be parsed by splitEquation", () => {
+    const result = balance("H2 + O2 -> H2O");
+    const parsed = splitEquation(result.equation);
+    expect(parsed.reactants.length).toBe(2);
+    expect(parsed.products.length).toBe(1);
+  });
+
+  it("splitEquation output species can be balanced again", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const reactantStr = eq.reactants.map(r => r.formula).join(" + ");
+    const productStr = eq.products.map(p => p.formula).join(" + ");
+    const result = balance(reactantStr + " -> " + productStr);
+    expect(result.reactants.length).toBe(2);
+    expect(result.products.length).toBe(1);
+  });
+
+  it("parseFormula of balanced formulas returns non-empty element maps", () => {
+    const result = balance("H2 + O2 -> H2O");
+    for (const species of [...result.reactants, ...result.products]) {
+      const parsed = parseFormula(species.formula);
+      expect(Object.keys(parsed.elements).length).toBeGreaterThan(0);
+    }
+  });
+
+  it("balanced equations have same element counts on both sides", () => {
+    const result = balance("CH4 + O2 -> CO2 + H2O");
+    const leftElements: Record<string, number> = {};
+    const rightElements: Record<string, number> = {};
+    for (const r of result.reactants) {
+      const parsed = parseFormula(r.formula);
+      for (const [el, count] of Object.entries(parsed.elements)) {
+        leftElements[el] = (leftElements[el] ?? 0) + count * r.coefficient;
+      }
+    }
+    for (const p of result.products) {
+      const parsed = parseFormula(p.formula);
+      for (const [el, count] of Object.entries(parsed.elements)) {
+        rightElements[el] = (rightElements[el] ?? 0) + count * p.coefficient;
+      }
+    }
+    expect(leftElements).toEqual(rightElements);
+  });
+
+  it("balanced equations have same charge totals on both sides", () => {
+    const result = balance("Fe2+ + 2 e- -> Fe");
+    let leftCharge = 0;
+    let rightCharge = 0;
+    for (const r of result.reactants) {
+      const parsed = parseFormula(r.formula);
+      leftCharge += parsed.charge * r.coefficient;
+    }
+    for (const p of result.products) {
+      const parsed = parseFormula(p.formula);
+      rightCharge += parsed.charge * p.coefficient;
+    }
+    expect(leftCharge).toBe(rightCharge);
+  });
+});
+
