@@ -288,3 +288,64 @@ describe("multiplication symmetry", () => {
     }
   });
 });
+
+function canonicalizeElements(elements: Record<string, number>): Record<string, number> {
+  return Object.fromEntries(
+    Object.entries(elements).sort(([a], [b]) => a.localeCompare(b))
+  );
+}
+
+describe("formula parsing symmetry", () => {
+  it("H2O and OH2 produce the same element counts (different order, same map)", () => {
+    const a = parseFormula("H2O");
+    const b = parseFormula("OH2");
+    expect(canonicalizeElements(a.elements)).toEqual(canonicalizeElements(b.elements));
+    expect(a.elements["H"]).toBe(2);
+    expect(a.elements["O"]).toBe(1);
+  });
+
+  it("NaCl parses to Na=1, Cl=1 regardless of input order", () => {
+    const a = parseFormula("NaCl");
+    const b = parseFormula("ClNa");
+    expect(canonicalizeElements(a.elements)).toEqual(canonicalizeElements(b.elements));
+    expect(a.elements["Na"]).toBe(1);
+    expect(a.elements["Cl"]).toBe(1);
+  });
+
+  it("MgCl2 and Cl2Mg produce the same element counts", () => {
+    const a = parseFormula("MgCl2");
+    const b = parseFormula("Cl2Mg");
+    expect(canonicalizeElements(a.elements)).toEqual(canonicalizeElements(b.elements));
+    expect(a.elements["Mg"]).toBe(1);
+    expect(a.elements["Cl"]).toBe(2);
+  });
+
+  it("CaCO3 parses to the same element counts as its element-reversed form O3CCa", () => {
+    const a = parseFormula("CaCO3");
+    const b = parseFormula("O3CCa");
+    expect(canonicalizeElements(a.elements)).toEqual(canonicalizeElements(b.elements));
+    expect(a.elements["Ca"]).toBe(1);
+    expect(a.elements["C"]).toBe(1);
+    expect(a.elements["O"]).toBe(3);
+  });
+
+  it("Fe2O3 and O3Fe2 produce the same element counts", () => {
+    const a = parseFormula("Fe2O3");
+    const b = parseFormula("O3Fe2");
+    expect(canonicalizeElements(a.elements)).toEqual(canonicalizeElements(b.elements));
+    expect(a.elements["Fe"]).toBe(2);
+    expect(a.elements["O"]).toBe(3);
+  });
+
+  it("hydration notation ·, *, • all produce the same element counts for CuSO4·5H2O", () => {
+    const base = parseFormula("CuSO4·5H2O");
+    const star = parseFormula("CuSO4*5H2O");
+    const bullet = parseFormula("CuSO4•5H2O");
+    expect(canonicalizeElements(base.elements)).toEqual(canonicalizeElements(star.elements));
+    expect(canonicalizeElements(base.elements)).toEqual(canonicalizeElements(bullet.elements));
+    expect(base.elements["Cu"]).toBe(1);
+    expect(base.elements["S"]).toBe(1);
+    expect(base.elements["O"]).toBe(9);
+    expect(base.elements["H"]).toBe(10);
+  });
+});
