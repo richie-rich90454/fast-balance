@@ -59,3 +59,54 @@ describe("balance execution", () => {
     expect(c.products.length).toBeGreaterThan(0);
   });
 });
+
+describe("parseFormula execution", () => {
+  it("returns a ParsedUnit-shaped object", () => {
+    const parsed = parseFormula("H2O");
+    expect(parsed).toBeDefined();
+    expect(typeof parsed).toBe("object");
+    expect("elements" in parsed).toBe(true);
+    expect("charge" in parsed).toBe(true);
+  });
+
+  it("parseFormula.charge is a number", () => {
+    const parsed = parseFormula("H2O");
+    expect(typeof parsed.charge).toBe("number");
+  });
+
+  it("parseFormula.elements is a plain object", () => {
+    const parsed = parseFormula("H2O");
+    expect(typeof parsed.elements).toBe("object");
+    expect(parsed.elements).not.toBeNull();
+    expect(Array.isArray(parsed.elements)).toBe(false);
+  });
+
+  it("parseFormula.charge defaults to 0 for neutral species", () => {
+    expect(parseFormula("H2O").charge).toBe(0);
+    expect(parseFormula("NaCl").charge).toBe(0);
+    expect(parseFormula("Ca3(PO4)2").charge).toBe(0);
+  });
+
+  it("parseFormula handles common formulas", () => {
+    const water = parseFormula("H2O");
+    expect(water.elements.H).toBe(2);
+    expect(water.elements.O).toBe(1);
+
+    const salt = parseFormula("NaCl");
+    expect(salt.elements.Na).toBe(1);
+    expect(salt.elements.Cl).toBe(1);
+
+    const sulfate = parseFormula("SO4");
+    expect(sulfate.elements.S).toBe(1);
+    expect(sulfate.elements.O).toBe(4);
+
+    const ion = parseFormula("Fe3+");
+    expect(ion.charge).toBe(3);
+    expect(ion.elements.Fe).toBe(1);
+
+    const hydroxide = parseFormula("OH-");
+    expect(hydroxide.charge).toBe(-1);
+    expect(hydroxide.elements.O).toBe(1);
+    expect(hydroxide.elements.H).toBe(1);
+  });
+});
