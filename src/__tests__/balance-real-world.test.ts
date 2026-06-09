@@ -408,3 +408,45 @@ describe("nuclear decay and radioactive reactions", () => {
         expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
     });
 });
+
+describe("pharmaceutical and biological reactions", () => {
+    it("balances C6H12O6 + 6O2 -> 6CO2 + 6H2O (glucose metabolism)", () => {
+        const result = balance("C6H12O6 + 6O2 -> 6CO2 + 6H2O");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1, 6]);
+        expect(result.products.map(p => p.coefficient)).toEqual([6, 6]);
+    });
+
+    it("balances 2NH3 + CO2 -> NH2CONH2 + H2O (urea synthesis, Bosch-Meiser)", () => {
+        const result = balance("2NH3 + CO2 -> NH2CONH2 + H2O");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([2, 1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+    });
+
+    it("balances NH2CONH2 + H2O -> 2NH3 + CO2 (urea hydrolysis, positive check)", () => {
+        const result = balance("NH2CONH2 + H2O -> 2NH3 + CO2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances 2NH3 + CO2 -> NH2CONH2 + H2O (industrial urea process, positive check)", () => {
+        const result = balance("2NH3 + CO2 -> NH2CONH2 + H2O");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances C6H12O6 -> 2C2H5OH + 2CO2 (alcoholic fermentation)", () => {
+        const result = balance("C6H12O6 -> 2C2H5OH + 2CO2");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([2, 2]);
+    });
+
+    it("balances C6H12O6 + 6O2 -> 6CO2 + 6H2O (aerobic respiration)", () => {
+        const result = balance("C6H12O6 + 6O2 -> 6CO2 + 6H2O");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1, 6]);
+        expect(result.products.map(p => p.coefficient)).toEqual([6, 6]);
+    });
+});
