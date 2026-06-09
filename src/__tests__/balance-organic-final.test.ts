@@ -224,3 +224,35 @@ describe("dye and pigment tests", () => {
     expect(result.products.every(p => p.coefficient > 0)).toBe(true);
   });
 });
+
+describe("drug molecule tests", () => {
+  it("balances aspirin combustion: C9H8O4 + O2 -> CO2 + H2O", () => {
+    const result = balance("C9H8O4 + O2 -> CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances acetaminophen combustion: C8H9NO2 + O2 -> CO2 + H2O + N2", () => {
+    const result = balance("C8H9NO2 + O2 -> CO2 + H2O + N2");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances benzoic acid combustion: C7H6O2 + O2 -> CO2 + H2O", () => {
+    const result = balance("C7H6O2 + O2 -> CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances cocaine combustion: C17H21NO4 + O2 -> CO2 + H2O + N2", () => {
+    const result = balance("C17H21NO4 + O2 -> CO2 + H2O + N2");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances phenol combustion: C6H6O + O2 -> CO2 + H2O", () => {
+    const result = balance("C6H6O + O2 -> CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+});
