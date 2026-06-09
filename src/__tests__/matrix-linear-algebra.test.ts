@@ -307,3 +307,88 @@ describe("solveSystem error handling tests", () => {
     }
   });
 });
+
+describe("solveSystem linear algebra property tests", () => {
+  it("result[i] * A[j] summed over j equals 0 for every row i", () => {
+    const matrix = [
+      [new Fraction(2), new Fraction(0), new Fraction(-2)],
+      [new Fraction(0), new Fraction(2), new Fraction(-1)],
+    ];
+    const result = solveSystem(matrix, 3);
+    for (let i = 0; i < matrix.length; i++) {
+      let sum = new Fraction(0);
+      for (let j = 0; j < 3; j++) {
+        sum = sum.add(matrix[i]![j]!.mul(result[j]!));
+      }
+      expect(sum.isZero()).toBe(true);
+    }
+  });
+
+  it("result is always in the null space", () => {
+    const eq = splitEquation("CH4 + O2 -> CO2 + H2O");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const result = solveSystem(matrix, cols);
+    for (let i = 0; i < matrix.length; i++) {
+      let sum = new Fraction(0);
+      for (let j = 0; j < cols; j++) {
+        sum = sum.add(matrix[i]![j]!.mul(result[j]!));
+      }
+      expect(sum.isZero()).toBe(true);
+    }
+  });
+
+  it("scaling the result still satisfies the system", () => {
+    const matrix = [[new Fraction(3), new Fraction(0), new Fraction(-3)]];
+    const result = solveSystem(matrix, 3);
+    const scaled = result.map((f) => f.mul(new Fraction(7)));
+    for (let i = 0; i < matrix.length; i++) {
+      let sum = new Fraction(0);
+      for (let j = 0; j < 3; j++) {
+        sum = sum.add(matrix[i]![j]!.mul(scaled[j]!));
+      }
+      expect(sum.isZero()).toBe(true);
+    }
+  });
+
+  it("sign-flip of result still satisfies the system", () => {
+    const matrix = [[new Fraction(1), new Fraction(-1), new Fraction(0)]];
+    const result = solveSystem(matrix, 3);
+    const flipped = result.map((f) => f.neg());
+    for (let i = 0; i < matrix.length; i++) {
+      let sum = new Fraction(0);
+      for (let j = 0; j < 3; j++) {
+        sum = sum.add(matrix[i]![j]!.mul(flipped[j]!));
+      }
+      expect(sum.isZero()).toBe(true);
+    }
+  });
+
+  it("first non-pivot (free) column is set to 1 in the result", () => {
+    const matrix = [[new Fraction(0), new Fraction(0), new Fraction(0)]];
+    const result = solveSystem(matrix, 3);
+    expect(result[0]!.equals(new Fraction(1))).toBe(true);
+  });
+
+  it("pivot columns are determined by the leading non-zero entry in each row", () => {
+    const matrix = [
+      [new Fraction(2), new Fraction(0), new Fraction(-2)],
+      [new Fraction(0), new Fraction(2), new Fraction(-1)],
+    ];
+    const result = solveSystem(matrix, 3);
+    expect(result[0]!.equals(new Fraction(1))).toBe(true);
+    expect(result[1]!.equals(new Fraction(1, 2))).toBe(true);
+    expect(result[2]!.equals(new Fraction(1))).toBe(true);
+  });
+
+  it("result has at least one Fraction that is Fraction.one() in the free column", () => {
+    const matrix = [
+      [new Fraction(1), new Fraction(2), new Fraction(3), new Fraction(-6)],
+    ];
+    const result = solveSystem(matrix, 4);
+    let onesCount = 0;
+    for (const f of result) {
+      if (f.equals(new Fraction(1))) onesCount++;
+    }
+    expect(onesCount).toBeGreaterThanOrEqual(1);
+  });
+});
