@@ -146,3 +146,49 @@ describe("splitEquation execution", () => {
     expect(() => splitEquation("H2 + O2 ->")).toThrow();
   });
 });
+
+describe("Fraction class execution", () => {
+  it("new Fraction(1, 2) creates 1/2", () => {
+    const f = new Fraction(1, 2);
+    expect(f).toBeInstanceOf(Fraction);
+    expect(f.num).toBe(1);
+    expect(f.den).toBe(2);
+  });
+
+  it("new Fraction(1) creates 1/1", () => {
+    const f = new Fraction(1);
+    expect(f.num).toBe(1);
+    expect(f.den).toBe(1);
+  });
+
+  it("Fraction.zero() is 0/1", () => {
+    const f = Fraction.zero();
+    expect(f.num).toBe(0);
+    expect(f.den).toBe(1);
+    expect(f.isZero()).toBe(true);
+  });
+
+  it("Fraction.one() is 1/1", () => {
+    const f = Fraction.one();
+    expect(f.num).toBe(1);
+    expect(f.den).toBe(1);
+  });
+
+  it("arithmetic methods return new Fractions", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(1, 3);
+    const sum = a.add(b);
+    expect(sum).toBeInstanceOf(Fraction);
+    expect(sum).not.toBe(a);
+    const diff = a.sub(b);
+    expect(diff).toBeInstanceOf(Fraction);
+    const prod = a.mul(b);
+    expect(prod).toBeInstanceOf(Fraction);
+    const quot = a.div(b);
+    expect(quot).toBeInstanceOf(Fraction);
+    const neg = a.neg();
+    expect(neg).toBeInstanceOf(Fraction);
+    expect(neg.num).toBe(-1);
+    expect(neg.den).toBe(2);
+  });
+});
