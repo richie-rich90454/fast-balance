@@ -326,3 +326,45 @@ describe("Friedel-Crafts type reactions", () => {
         }
     });
 });
+
+describe("sulfur dioxide reactions", () => {
+    it("balances SO2 + H2O -> H2SO3", () => {
+        let result = balance("SO2 + H2O -> H2SO3");
+        for (let s of result.reactants) expect(s.coefficient).toBe(1);
+        for (let s of result.products) expect(s.coefficient).toBe(1);
+    });
+
+    it("balances SO2 + NaOH -> NaHSO3", () => {
+        let result = balance("SO2 + NaOH -> NaHSO3");
+        for (let s of result.reactants) expect(s.coefficient).toBe(1);
+        for (let s of result.products) expect(s.coefficient).toBe(1);
+    });
+
+    it("balances SO2 + NaOH -> Na2SO3", () => {
+        let result = balance("SO2 + NaOH -> Na2SO3 + H2O");
+        let all = [...result.reactants, ...result.products];
+        for (let s of all) {
+            expect(s.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(s.coefficient)).toBe(true);
+        }
+        expect(result.reactants[1]?.coefficient).toBe(2);
+        expect(result.products[0]?.coefficient).toBe(1);
+        expect(result.products[1]?.coefficient).toBe(1);
+    });
+
+    it("balances SO2 + O2 -> SO3", () => {
+        let result = balance("SO2 + O2 -> SO3");
+        expect(result.reactants[0]?.coefficient).toBe(2);
+        expect(result.reactants[1]?.coefficient).toBe(1);
+        expect(result.products[0]?.coefficient).toBe(2);
+    });
+
+    it("balances SO2 + Cl2 -> SO2Cl2", () => {
+        let result = balance("SO2 + Cl2 -> SO2Cl2");
+        let all = [...result.reactants, ...result.products];
+        for (let s of all) {
+            expect(s.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(s.coefficient)).toBe(true);
+        }
+    });
+});
