@@ -202,3 +202,57 @@ describe("return value validation", ()=>{
         }
     });
 });
+
+describe("parseFormula element type", ()=>{
+    it("parseFormula('H2O').elements is an object", ()=>{
+        let result=parseFormula("H2O");
+        expect(typeof result.elements).toBe("object");
+        expect(result.elements).not.toBeNull();
+        expect(Array.isArray(result.elements)).toBe(false);
+    });
+    it("parseFormula('H2O').elements.H is 2", ()=>{
+        let result=parseFormula("H2O");
+        expect(result.elements.H).toBe(2);
+    });
+    it("parseFormula('H2O').elements.O is 1", ()=>{
+        let result=parseFormula("H2O");
+        expect(result.elements.O).toBe(1);
+    });
+    it("parseFormula('NaCl').elements.Na is 1", ()=>{
+        let result=parseFormula("NaCl");
+        expect(result.elements.Na).toBe(1);
+    });
+    it("parseFormula('NaCl').elements.Cl is 1", ()=>{
+        let result=parseFormula("NaCl");
+        expect(result.elements.Cl).toBe(1);
+    });
+    it("parseFormula('CO2').elements.C is 1", ()=>{
+        let result=parseFormula("CO2");
+        expect(result.elements.C).toBe(1);
+        expect(result.elements.O).toBe(2);
+    });
+    it("parseFormula('C6H12O6') has all elements with correct counts", ()=>{
+        let result=parseFormula("C6H12O6");
+        expect(result.elements.C).toBe(6);
+        expect(result.elements.H).toBe(12);
+        expect(result.elements.O).toBe(6);
+    });
+    it("parseFormula('Ca(OH)2').elements values are correct", ()=>{
+        let result=parseFormula("Ca(OH)2");
+        expect(result.elements.Ca).toBe(1);
+        expect(result.elements.O).toBe(2);
+        expect(result.elements.H).toBe(2);
+    });
+    it("parseFormula('Fe2(SO4)3') has correct counts", ()=>{
+        let result=parseFormula("Fe2(SO4)3");
+        expect(result.elements.Fe).toBe(2);
+        expect(result.elements.S).toBe(3);
+        expect(result.elements.O).toBe(12);
+    });
+    it("parseFormula element values are numbers", ()=>{
+        let result=parseFormula("H2SO4");
+        for (let el in result.elements){
+            expect(typeof result.elements[el]).toBe("number");
+        }
+    });
+});
