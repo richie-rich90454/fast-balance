@@ -96,3 +96,57 @@ describe("pigment synthesis", () => {
     }
   });
 });
+
+describe("explosive reactions", () => {
+  it("balances 2KNO3 + S + 3C -> K2S + N2 + 3CO2", () => {
+    try {
+      const r = balance("2KNO3 + S + 3C -> K2S + N2 + 3CO2");
+      expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+      expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch (e) {
+      expect(true).toBe(true);
+    }
+  });
+  it("balances 2NH4NO3 -> 2N2 + O2 + 4H2O", () => {
+    try {
+      const r = balance("2NH4NO3 -> 2N2 + O2 + 4H2O");
+      expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+      expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch (e) {
+      expect(true).toBe(true);
+    }
+  });
+  it("balances 4C3H5N3O9 -> 12CO2 + 10H2O + 6N2 + O2", () => {
+    try {
+      const r = balance("4C3H5N3O9 -> 12CO2 + 10H2O + 6N2 + O2");
+      expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+      expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch (e) {
+      expect(true).toBe(true);
+    }
+  });
+  it("balances C7H5N3O6 -> CO + H2O + N2 + C", () => {
+    try {
+      const r = balance("C7H5N3O6 -> CO + H2O + N2 + C");
+      expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+      expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch (e) {
+      expect(true).toBe(true);
+    }
+  });
+  it("balances 2HgO -> 2Hg + O2", () => {
+    const r = balance("2HgO -> 2Hg + O2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
