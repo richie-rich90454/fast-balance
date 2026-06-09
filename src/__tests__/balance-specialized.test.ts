@@ -78,3 +78,34 @@ describe("group 13 element oxidation", () => {
     expectPositiveCoefficients(r);
   });
 });
+
+describe("group 14 element oxidation", () => {
+  it("balances C + O2 -> CO2", () => {
+    const r = balance("C + O2 -> CO2");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+
+  it("balances Si + O2 -> SiO2", () => {
+    const r = balance("Si + O2 -> SiO2");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+
+  it("balances Ge + O2 -> GeO2", () => {
+    const r = balance("Ge + O2 -> GeO2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances Sn + O2 -> SnO2", () => {
+    const r = balance("Sn + O2 -> SnO2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances Pb + O2 -> PbO2", () => {
+    const r = balance("Pb + O2 -> PbO2");
+    expectPositiveCoefficients(r);
+  });
+});
