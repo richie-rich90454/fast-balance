@@ -370,3 +370,48 @@ describe("catalysis tests", () => {
     expect(r.products[0].coefficient).toBe(1);
   });
 });
+
+describe("temperature effect tests", () => {
+  it("CaCO3 -> CaO + CO2 (heat)", () => {
+    const r = balance("CaCO3 -> CaO + CO2");
+    // CaCO3 -> CaO + CO2
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(1);
+  });
+
+  it("2NaHCO3 -> Na2CO3 + H2O + CO2 (heat)", () => {
+    const r = balance("NaHCO3 -> Na2CO3 + H2O + CO2");
+    // 2NaHCO3 -> Na2CO3 + H2O + CO2
+    expect(r.reactants[0].coefficient).toBe(2);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(1);
+    expect(r.products[2].coefficient).toBe(1);
+  });
+
+  it("2KClO3 -> 2KCl + 3O2 (heat)", () => {
+    const r = balance("KClO3 -> KCl + O2");
+    // 2KClO3 -> 2KCl + 3O2
+    expect(r.reactants[0].coefficient).toBe(2);
+    expect(r.products[0].coefficient).toBe(2);
+    expect(r.products[1].coefficient).toBe(3);
+  });
+
+  it("NH4HCO3 -> NH3 + H2O + CO2 positive check", () => {
+    const r = balance("NH4HCO3 -> NH3 + H2O + CO2");
+    // NH4HCO3 -> NH3 + H2O + CO2
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(1);
+    expect(r.products[2].coefficient).toBe(1);
+  });
+
+  it("(NH4)2Cr2O7 -> N2 + Cr2O3 + H2O positive check", () => {
+    const r = balance("(NH4)2Cr2O7 -> N2 + Cr2O3 + H2O");
+    // (NH4)2Cr2O7 -> N2 + Cr2O3 + 4H2O
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(1);
+    expect(r.products[2].coefficient).toBe(4);
+  });
+});
