@@ -200,7 +200,49 @@ describe("carbide tests", () => {
   });
 });
 
-describe("borohydride tests", () => {});
+describe("borohydride tests", () => {
+  it("should balance NaBH4 + H2O -> NaBO2 + H2", () => {
+    const r = balance("NaBH4 + H2O -> NaBO2 + H2");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(2);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(4);
+  });
+
+  it("should balance LiBH4 + H2O -> LiBO2 + H2", () => {
+    const r = balance("LiBH4 + H2O -> LiBO2 + H2");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(2);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(4);
+  });
+
+  it("should balance NaBH4 + O2 -> NaBO2 + H2O", () => {
+    const r = balance("NaBH4 + O2 -> NaBO2 + H2O");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(2);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(2);
+  });
+
+  it("should balance LiAlH4 + H2O -> LiOH + Al(OH)3 + H2", () => {
+    const r = balance("LiAlH4 + H2O -> LiOH + Al(OH)3 + H2");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(4);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(1);
+    expect(r.products[2].coefficient).toBe(4);
+  });
+
+  it("should balance NaBH4 + HCl -> NaCl + BCl3 + H2", () => {
+    const r = balance("NaBH4 + HCl -> NaCl + BCl3 + H2");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(4);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(1);
+    expect(r.products[2].coefficient).toBe(4);
+  });
+});
 
 describe("organometallic tests", () => {});
 
