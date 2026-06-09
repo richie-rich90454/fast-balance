@@ -321,3 +321,41 @@ describe("formula with mixed brackets and parens", () => {
     expect(result.charge).toBe(2);
   });
 });
+
+describe("formula with leading and trailing whitespace", () => {
+  it("parses ' H2O' with leading space", () => {
+    const result = parseFormula(" H2O");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses 'H2O ' with trailing space", () => {
+    const result = parseFormula("H2O ");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses '  H2O  ' with multiple leading and trailing spaces", () => {
+    const result = parseFormula("  H2O  ");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses '\\tH2O\\t' with tab characters", () => {
+    const result = parseFormula("\tH2O\t");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses 'H2O  (s)' with internal spaces before state symbol", () => {
+    const result = parseFormula("H2O  (s)");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses '  H2O(l)  ' with spaces around formula and state", () => {
+    const result = parseFormula("  H2O(l)  ");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+});
