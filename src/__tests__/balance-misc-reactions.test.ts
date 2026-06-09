@@ -134,3 +134,42 @@ describe("halogen compound tests", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([2, 3]);
   });
 });
+
+describe("oxidation state transition tests", () => {
+  it("balances MnO2 + HCl -> MnCl2 + Cl2 + H2O", () => {
+    const r = balance("MnO2 + HCl -> MnCl2 + Cl2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 4]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1, 2]);
+  });
+  it("balances K2Cr2O7 + HCl -> KCl + CrCl3 + Cl2 + H2O (positive check)", () => {
+    const r = balance("K2Cr2O7 + HCl -> KCl + CrCl3 + Cl2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances PbO2 + HCl -> PbCl2 + Cl2 + H2O (positive check)", () => {
+    const r = balance("PbO2 + HCl -> PbCl2 + Cl2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances Fe2O3 + CO -> Fe + CO2", () => {
+    const r = balance("Fe2O3 + CO -> Fe + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 3]);
+  });
+  it("balances CuO + CO -> Cu + CO2", () => {
+    const r = balance("CuO + CO -> Cu + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances SnO2 + C -> Sn + CO (positive check)", () => {
+    const r = balance("SnO2 + C -> Sn + CO");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
