@@ -81,3 +81,35 @@ describe("balance BalancedSpecies contract", ()=>{
         }
     });
 });
+
+describe("balance option defaults", ()=>{
+    it("no options uses showOne=true", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        // O2 has coefficient 1, so with showOne=true it should be present with "1 O2"
+        expect(result.equation).toContain("1 O2");
+    });
+    it("no options uses format=text", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        expect(result.equation).toContain("->");
+        expect(result.equation).not.toContain("&rarr;");
+        expect(result.equation).not.toContain("\\rightarrow");
+    });
+    it("empty options {} uses defaults", ()=>{
+        let result=balance("H2 + O2 -> H2O", {});
+        expect(result.equation).toContain("1 O2");
+        expect(result.equation).toContain("->");
+    });
+    it("options.showOne=true preserves", ()=>{
+        let result=balance("H2 + O2 -> H2O", {showOne: true});
+        expect(result.equation).toContain("1 O2");
+    });
+    it("options.showOne=false omits 1", ()=>{
+        let result=balance("H2 + O2 -> H2O", {showOne: false});
+        expect(result.equation).not.toContain("1 O2");
+        expect(result.equation).toContain("O2");
+    });
+    it("options.format=text uses ->", ()=>{
+        let result=balance("H2 + O2 -> H2O", {format: "text"});
+        expect(result.equation).toContain("->");
+    });
+});
