@@ -438,3 +438,77 @@ describe("Ammonia synthesis and oxidation", () => {
         expect(result.products.find(p => p.formula === "NH4NO3")?.coefficient).toBe(1);
     });
 });
+
+describe("Blast furnace iron production", () => {
+    it("balances Fe2O3 + CO -> Fe + CO2", () => {
+        const result = balance("Fe2O3 + CO -> Fe + CO2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "Fe2O3")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "CO")?.coefficient).toBe(3);
+        expect(result.products.find(p => p.formula === "Fe")?.coefficient).toBe(2);
+        expect(result.products.find(p => p.formula === "CO2")?.coefficient).toBe(3);
+    });
+
+    it("balances Fe3O4 + CO -> Fe + CO2 (positive check)", () => {
+        const result = balance("Fe3O4 + CO -> Fe + CO2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances FeO + CO -> Fe + CO2", () => {
+        const result = balance("FeO + CO -> Fe + CO2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "FeO")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "CO")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "Fe")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "CO2")?.coefficient).toBe(1);
+    });
+
+    it("balances C + O2 -> CO2", () => {
+        const result = balance("C + O2 -> CO2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "C")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "O2")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "CO2")?.coefficient).toBe(1);
+    });
+
+    it("balances C + CO2 -> 2CO", () => {
+        const result = balance("C + CO2 -> 2CO");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "C")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "CO2")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "CO")?.coefficient).toBe(2);
+    });
+
+    it("balances Fe2O3 + C -> Fe + CO (positive check)", () => {
+        const result = balance("Fe2O3 + C -> Fe + CO");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+});
