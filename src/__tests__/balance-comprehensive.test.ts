@@ -95,3 +95,90 @@ describe("stoichiometry verification tests", () => {
     expect(r.products[1].coefficient).toBe(3);
   });
 });
+
+describe("charge balance tests", () => {
+  it("Na+ + Cl- -> NaCl charge balanced", () => {
+    const r = balance("Na+ + Cl- -> NaCl");
+    // Verify charge: reactants = (+1) + (-1) = 0, products = 0
+    let reactantCharge = 0;
+    for (const sp of r.reactants) {
+      const p = parseFormula(sp.formula);
+      reactantCharge += p.charge * sp.coefficient;
+    }
+    let productCharge = 0;
+    for (const sp of r.products) {
+      const p = parseFormula(sp.formula);
+      productCharge += p.charge * sp.coefficient;
+    }
+    expect(reactantCharge).toBe(productCharge);
+  });
+
+  it("Ag+ + Cl- -> AgCl charge balanced", () => {
+    const r = balance("Ag+ + Cl- -> AgCl");
+    let reactantCharge = 0;
+    for (const sp of r.reactants) {
+      const p = parseFormula(sp.formula);
+      reactantCharge += p.charge * sp.coefficient;
+    }
+    let productCharge = 0;
+    for (const sp of r.products) {
+      const p = parseFormula(sp.formula);
+      productCharge += p.charge * sp.coefficient;
+    }
+    expect(reactantCharge).toBe(productCharge);
+  });
+
+  it("2Na+ + SO4^2- -> Na2SO4 charge balanced", () => {
+    const r = balance("Na+ + SO4^2- -> Na2SO4");
+    // 2Na+ + SO4^2- -> Na2SO4
+    expect(r.reactants[0].coefficient).toBe(2);
+    expect(r.reactants[1].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+    let reactantCharge = 0;
+    for (const sp of r.reactants) {
+      const p = parseFormula(sp.formula);
+      reactantCharge += p.charge * sp.coefficient;
+    }
+    let productCharge = 0;
+    for (const sp of r.products) {
+      const p = parseFormula(sp.formula);
+      productCharge += p.charge * sp.coefficient;
+    }
+    expect(reactantCharge).toBe(productCharge);
+  });
+
+  it("Ca2+ + 2OH- -> Ca(OH)2 charge balanced", () => {
+    const r = balance("Ca2+ + OH- -> Ca(OH)2");
+    // Ca2+ + 2OH- -> Ca(OH)2
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(2);
+    expect(r.products[0].coefficient).toBe(1);
+    let reactantCharge = 0;
+    for (const sp of r.reactants) {
+      const p = parseFormula(sp.formula);
+      reactantCharge += p.charge * sp.coefficient;
+    }
+    let productCharge = 0;
+    for (const sp of r.products) {
+      const p = parseFormula(sp.formula);
+      productCharge += p.charge * sp.coefficient;
+    }
+    expect(reactantCharge).toBe(productCharge);
+  });
+
+  it("3Al3+ + 2PO4^3- -> AlPO4 charge balanced", () => {
+    const r = balance("Al3+ + PO4^3- -> AlPO4");
+    // Al3+ + PO4^3- -> AlPO4 (1:1 ratio since +3 and -3 cancel)
+    let reactantCharge = 0;
+    for (const sp of r.reactants) {
+      const p = parseFormula(sp.formula);
+      reactantCharge += p.charge * sp.coefficient;
+    }
+    let productCharge = 0;
+    for (const sp of r.products) {
+      const p = parseFormula(sp.formula);
+      productCharge += p.charge * sp.coefficient;
+    }
+    expect(reactantCharge).toBe(productCharge);
+  });
+});
