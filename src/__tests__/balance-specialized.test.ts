@@ -109,3 +109,34 @@ describe("group 14 element oxidation", () => {
     expectPositiveCoefficients(r);
   });
 });
+
+describe("group 15 element oxidation", () => {
+  it("balances N2 + O2 -> 2NO", () => {
+    const r = balance("N2 + O2 -> NO");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+
+  it("balances P4 + 5O2 -> 2P2O5", () => {
+    const r = balance("P4 + O2 -> P2O5");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 5]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+
+  it("balances 4As + 3O2 -> 2As2O3", () => {
+    const r = balance("As + O2 -> As2O3");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances 4Sb + 3O2 -> 2Sb2O3", () => {
+    const r = balance("Sb + O2 -> Sb2O3");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances 4Bi + 3O2 -> 2Bi2O3", () => {
+    const r = balance("Bi + O2 -> Bi2O3");
+    expectPositiveCoefficients(r);
+  });
+});
