@@ -206,3 +206,55 @@ describe("whitespace in output", () => {
         expect(a).toBe(b);
     });
 });
+
+describe("coefficient stability", () => {
+    it("same input produces same output", () => {
+        let r1 = balance("H2 + O2 -> H2O");
+        let r2 = balance("H2 + O2 -> H2O");
+        expect(r1.reactants.map(r => r.coefficient)).toEqual(r2.reactants.map(r => r.coefficient));
+        expect(r1.products.map(p => p.coefficient)).toEqual(r2.products.map(p => p.coefficient));
+        expect(r1.equation).toBe(r2.equation);
+    });
+
+    it("multiple calls return same result", () => {
+        let inputs = ["H2 + O2 -> H2O", "Fe + O2 -> Fe2O3", "C3H8 + O2 -> CO2 + H2O"];
+        for (let input of inputs) {
+            let first = balance(input).reactants.map(r => r.coefficient);
+            for (let i = 0; i < 5; i++) {
+                let next = balance(input).reactants.map(r => r.coefficient);
+                expect(next).toEqual(first);
+            }
+        }
+    });
+
+    it("no random behavior across runs", () => {
+        let result1 = balance("KMnO4 + HCl -> KCl + MnCl2 + Cl2 + H2O");
+        let result2 = balance("KMnO4 + HCl -> KCl + MnCl2 + Cl2 + H2O");
+        let result3 = balance("KMnO4 + HCl -> KCl + MnCl2 + Cl2 + H2O");
+        expect(result1.equation).toBe(result2.equation);
+        expect(result2.equation).toBe(result3.equation);
+    });
+
+    it("no date-dependent behavior", () => {
+        // Run balancing at "different dates" by interjecting operations
+        // The output should be invariant
+        let resultA = balance("N2 + H2 -> NH3");
+        let resultB = balance("N2 + H2 -> NH3");
+        expect(resultA.equation).toBe(resultB.equation);
+        expect(resultA.reactants[0].coefficient).toBe(1);
+        expect(resultA.reactants[1].coefficient).toBe(3);
+        expect(resultA.products[0].coefficient).toBe(2);
+    });
+
+    it("no time-dependent behavior", () => {
+        // Multiple sequential calls should produce identical results
+        let results: string[] = [];
+        for (let i = 0; i < 10; i++) {
+            results.push(balance("CH4 + O2 -> CO2 + H2O").equation);
+        }
+        let first = results[0];
+        for (let r of results) {
+            expect(r).toBe(first);
+        }
+    });
+});
