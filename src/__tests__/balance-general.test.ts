@@ -305,6 +305,44 @@ describe("metal acid", () => {
   });
 });
 
+describe("oxide water", () => {
+  it("balances Na2O + H2O -> NaOH", () => {
+    const r = balance("Na2O + H2O -> NaOH");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances K2O + H2O -> KOH", () => {
+    const r = balance("K2O + H2O -> KOH");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances CaO + H2O -> Ca(OH)2", () => {
+    const r = balance("CaO + H2O -> Ca(OH)2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances BaO + H2O -> Ba(OH)2", () => {
+    const r = balance("BaO + H2O -> Ba(OH)2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances MgO + H2O -> Mg(OH)2", () => {
+    const r = balance("MgO + H2O -> Mg(OH)2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
+
 
 
 
