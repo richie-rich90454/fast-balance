@@ -47,3 +47,35 @@ describe("balanced equation string format", () => {
         expect(b).toBe(c);
     });
 });
+
+describe("html format detailed", () => {
+    it("html format uses &rarr;", () => {
+        let result = balance("H2 + O2 -> H2O", { format: "html" });
+        expect(result.equation).toContain("&rarr;");
+        expect(result.equation).not.toContain("->");
+    });
+
+    it("html with showOne true", () => {
+        let result = balance("H2 + O2 -> H2O", { format: "html", showOne: true });
+        expect(result.equation).toBe("2 H2 + 1 O2 &rarr; 2 H2O");
+    });
+
+    it("html with showOne false", () => {
+        let result = balance("H2 + O2 -> H2O", { format: "html", showOne: false });
+        expect(result.equation).toBe("2 H2 + O2 &rarr; 2 H2O");
+    });
+
+    it("html preserves all species", () => {
+        let result = balance("Fe + O2 -> Fe2O3", { format: "html" });
+        expect(result.equation).toContain("Fe");
+        expect(result.equation).toContain("O2");
+        expect(result.equation).toContain("Fe2O3");
+    });
+
+    it("html doesn't add extra spaces", () => {
+        let result = balance("H2 + O2 -> H2O", { format: "html" });
+        expect(result.equation).not.toMatch(/  /);
+        expect(result.equation.endsWith(" ")).toBe(false);
+        expect(result.equation.startsWith(" ")).toBe(false);
+    });
+});
