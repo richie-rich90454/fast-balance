@@ -171,3 +171,38 @@ describe("group 16 element oxidation", () => {
     expectPositiveCoefficients(r);
   });
 });
+
+describe("noble gas and halogen reactions", () => {
+  it("balances F2 + H2 -> 2HF", () => {
+    const r = balance("F2 + H2 -> HF");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+
+  it("balances Cl2 + H2 -> 2HCl", () => {
+    const r = balance("Cl2 + H2 -> HCl");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+
+  it("balances Br2 + H2 -> 2HBr", () => {
+    const r = balance("Br2 + H2 -> HBr");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+
+  it("balances I2 + H2 -> 2HI", () => {
+    const r = balance("I2 + H2 -> HI");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+
+  it("balances Xe + F2 -> XeF2", () => {
+    const r = balance("Xe + F2 -> XeF2");
+    expectPositiveCoefficients(r);
+  });
+});
