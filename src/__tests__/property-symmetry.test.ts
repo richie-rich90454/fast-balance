@@ -439,3 +439,95 @@ describe("electron balance in redox reactions", () => {
     expectPositiveIntegers(result);
   });
 });
+
+describe("fraction simplification", () => {
+  it("all coefficients are integers (no fractions in output) for many reactions", () => {
+    const equations = [
+      "H2 + O2 -> H2O",
+      "N2 + H2 -> NH3",
+      "Fe + Cl2 -> FeCl3",
+      "C2H6 + O2 -> CO2 + H2O",
+      "C3H8 + O2 -> CO2 + H2O",
+      "Fe2O3 + C -> Fe + CO2",
+      "Al + HCl -> AlCl3 + H2",
+      "Na + H2O -> NaOH + H2",
+      "CaCO3 + HCl -> CaCl2 + H2O + CO2",
+      "Al2O3 + HCl -> AlCl3 + H2O",
+    ];
+    for (const eq of equations) {
+      const result = balance(eq);
+      const coeffs = allCoefficients(result);
+      expect(coeffs.every((c) => Number.isInteger(c))).toBe(true);
+    }
+  });
+
+  it("GCD of all coefficients is 1 (fully reduced) for many reactions", () => {
+    const equations = [
+      "H2 + O2 -> H2O",
+      "N2 + H2 -> NH3",
+      "Fe + Cl2 -> FeCl3",
+      "C2H6 + O2 -> CO2 + H2O",
+      "Al + HCl -> AlCl3 + H2",
+      "Fe2O3 + C -> Fe + CO2",
+      "KClO3 -> KCl + O2",
+    ];
+    for (const eq of equations) {
+      const result = balance(eq);
+      const coeffs = allCoefficients(result);
+      expect(gcdOfList(coeffs)).toBe(1);
+    }
+  });
+
+  it("no common factor divides all coefficients for KClO3 -> KCl + O2", () => {
+    const result = balance("KClO3 -> KCl + O2");
+    const coeffs = allCoefficients(result);
+    expect(gcdOfList(coeffs)).toBe(1);
+    for (let k = 2; k <= 5; k++) {
+      const allDivisible = coeffs.every((c) => c % k === 0);
+      expect(allDivisible).toBe(false);
+    }
+  });
+
+  it("product side has at least one positive coefficient", () => {
+    const equations = [
+      "H2 + O2 -> H2O",
+      "CaCO3 -> CaO + CO2",
+      "Fe + Cl2 -> FeCl3",
+      "N2 + H2 -> NH3",
+    ];
+    for (const eq of equations) {
+      const result = balance(eq);
+      expect(result.products.some((p) => p.coefficient > 0)).toBe(true);
+    }
+  });
+
+  it("reactant side has at least one positive coefficient", () => {
+    const equations = [
+      "H2 + O2 -> H2O",
+      "CaCO3 -> CaO + CO2",
+      "Fe + Cl2 -> FeCl3",
+      "N2 + H2 -> NH3",
+    ];
+    for (const eq of equations) {
+      const result = balance(eq);
+      expect(result.reactants.some((r) => r.coefficient > 0)).toBe(true);
+    }
+  });
+
+  it("sum of coefficients on each side is positive", () => {
+    const equations = [
+      "H2 + O2 -> H2O",
+      "CaCO3 -> CaO + CO2",
+      "Fe + Cl2 -> FeCl3",
+      "C2H6 + O2 -> CO2 + H2O",
+      "Al + O2 -> Al2O3",
+    ];
+    for (const eq of equations) {
+      const result = balance(eq);
+      const reactantSum = result.reactants.reduce((acc, r) => acc + r.coefficient, 0);
+      const productSum = result.products.reduce((acc, p) => acc + p.coefficient, 0);
+      expect(reactantSum).toBeGreaterThan(0);
+      expect(productSum).toBeGreaterThan(0);
+    }
+  });
+});
