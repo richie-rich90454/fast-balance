@@ -79,3 +79,35 @@ describe("html format detailed", () => {
         expect(result.equation.startsWith(" ")).toBe(false);
     });
 });
+
+describe("latex format detailed", () => {
+    it("latex format uses \\rightarrow", () => {
+        let result = balance("H2 + O2 -> H2O", { format: "latex" });
+        expect(result.equation).toContain("\\rightarrow");
+        expect(result.equation).not.toContain("->");
+    });
+
+    it("latex with showOne true", () => {
+        let result = balance("H2 + O2 -> H2O", { format: "latex", showOne: true });
+        expect(result.equation).toBe("2 H2 + 1 O2 \\rightarrow 2 H2O");
+    });
+
+    it("latex with showOne false", () => {
+        let result = balance("H2 + O2 -> H2O", { format: "latex", showOne: false });
+        expect(result.equation).toBe("2 H2 + O2 \\rightarrow 2 H2O");
+    });
+
+    it("latex preserves all species", () => {
+        let result = balance("Fe + O2 -> Fe2O3", { format: "latex" });
+        expect(result.equation).toContain("Fe");
+        expect(result.equation).toContain("O2");
+        expect(result.equation).toContain("Fe2O3");
+    });
+
+    it("latex doesn't add extra spaces", () => {
+        let result = balance("H2 + O2 -> H2O", { format: "latex" });
+        expect(result.equation).not.toMatch(/  /);
+        expect(result.equation.endsWith(" ")).toBe(false);
+        expect(result.equation.startsWith(" ")).toBe(false);
+    });
+});
