@@ -266,3 +266,36 @@ describe("metal hydride hydrolysis", () => {
     expectPositiveCoefficients(r);
   });
 });
+
+describe("metal carbide hydrolysis and acid reaction", () => {
+  it("balances CaC2 + 2H2O -> Ca(OH)2 + C2H2", () => {
+    const r = balance("CaC2 + H2O -> Ca(OH)2 + C2H2");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances Al4C3 + 12H2O -> 4Al(OH)3 + 3CH4", () => {
+    const r = balance("Al4C3 + H2O -> Al(OH)3 + CH4");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 12]);
+    expect(r.products.map(x => x.coefficient)).toEqual([4, 3]);
+  });
+
+  it("balances Mg2C + 2H2O -> 2Mg(OH)2 + C2H2", () => {
+    const r = balance("Mg2C + H2O -> Mg(OH)2 + C2H2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances CaC2 + 2HCl -> CaCl2 + C2H2", () => {
+    const r = balance("CaC2 + HCl -> CaCl2 + C2H2");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances Al4C3 + 12HCl -> 4AlCl3 + 3CH4", () => {
+    const r = balance("Al4C3 + HCl -> AlCl3 + CH4");
+    expectPositiveCoefficients(r);
+  });
+});
