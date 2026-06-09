@@ -182,3 +182,66 @@ describe("split-balance consistency", ()=>{
     });
 });
 
+describe("matrix solution consistency", ()=>{
+    it("buildMatrix for split equation solves correctly for H2 + O2 -> H2O", ()=>{
+        const eq = "H2 + O2 -> H2O";
+        const split = splitEquation(eq);
+        const {matrix, cols} = buildMatrix(split.reactants, split.products);
+        expect(cols).toBe(3);
+        const nullVec = solveSystem(matrix, cols);
+        const coeffs = fractionsToIntegers(nullVec);
+        // Expected: 2, 1, 2
+        expect(coeffs).toEqual([2, 1, 2]);
+        // All coefficients must be positive
+        expect(coeffs.every(c=>c > 0)).toBe(true);
+    });
+
+    it("buildMatrix for split equation solves correctly for Fe + Cl2 -> FeCl3", ()=>{
+        const eq = "Fe + Cl2 -> FeCl3";
+        const split = splitEquation(eq);
+        const {matrix, cols} = buildMatrix(split.reactants, split.products);
+        expect(cols).toBe(3);
+        const nullVec = solveSystem(matrix, cols);
+        const coeffs = fractionsToIntegers(nullVec);
+        // Expected: 2, 3, 2
+        expect(coeffs).toEqual([2, 3, 2]);
+        expect(coeffs.every(c=>c > 0)).toBe(true);
+    });
+
+    it("buildMatrix for split equation solves correctly for N2 + H2 -> NH3", ()=>{
+        const eq = "N2 + H2 -> NH3";
+        const split = splitEquation(eq);
+        const {matrix, cols} = buildMatrix(split.reactants, split.products);
+        expect(cols).toBe(3);
+        const nullVec = solveSystem(matrix, cols);
+        const coeffs = fractionsToIntegers(nullVec);
+        // Expected: 1, 3, 2
+        expect(coeffs).toEqual([1, 3, 2]);
+        expect(coeffs.every(c=>c > 0)).toBe(true);
+    });
+
+    it("buildMatrix for split equation solves correctly for CH4 + O2 -> CO2 + H2O", ()=>{
+        const eq = "CH4 + O2 -> CO2 + H2O";
+        const split = splitEquation(eq);
+        const {matrix, cols} = buildMatrix(split.reactants, split.products);
+        expect(cols).toBe(4);
+        const nullVec = solveSystem(matrix, cols);
+        const coeffs = fractionsToIntegers(nullVec);
+        // Expected: 1, 2, 1, 2
+        expect(coeffs).toEqual([1, 2, 1, 2]);
+        expect(coeffs.every(c=>c > 0)).toBe(true);
+    });
+
+    it("buildMatrix for split equation solves correctly for Al + HCl -> AlCl3 + H2", ()=>{
+        const eq = "Al + HCl -> AlCl3 + H2";
+        const split = splitEquation(eq);
+        const {matrix, cols} = buildMatrix(split.reactants, split.products);
+        expect(cols).toBe(4);
+        const nullVec = solveSystem(matrix, cols);
+        const coeffs = fractionsToIntegers(nullVec);
+        // Expected: 2, 6, 2, 3
+        expect(coeffs).toEqual([2, 6, 2, 3]);
+        expect(coeffs.every(c=>c > 0)).toBe(true);
+    });
+});
+
