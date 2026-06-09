@@ -299,3 +299,36 @@ describe("metal carbide hydrolysis and acid reaction", () => {
     expectPositiveCoefficients(r);
   });
 });
+
+describe("superoxide and peroxide reactions", () => {
+  it("balances 2Na + O2 -> Na2O2", () => {
+    const r = balance("Na + O2 -> Na2O2");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+
+  it("balances K + O2 -> KO2", () => {
+    const r = balance("K + O2 -> KO2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances Ba + O2 -> BaO2", () => {
+    const r = balance("Ba + O2 -> BaO2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances 2Na2O2 + 2H2O -> 4NaOH + O2", () => {
+    const r = balance("Na2O2 + H2O -> NaOH + O2");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([4, 1]);
+  });
+
+  it("balances 2H2O2 -> 2H2O + O2", () => {
+    const r = balance("H2O2 -> H2O + O2");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1]);
+  });
+});
