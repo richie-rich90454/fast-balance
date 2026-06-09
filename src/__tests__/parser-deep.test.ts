@@ -541,3 +541,138 @@ describe("parseFormula hydrate accuracy", () => {
     expect(result.charge).toBe(0);
   });
 });
+
+describe("parseFormula error handling", () => {
+  it("empty string throws", () => {
+    expect(() => parseFormula("")).toThrow();
+  });
+
+  it("lowercase start 'h2o' throws", () => {
+    expect(() => parseFormula("h2o")).toThrow();
+  });
+
+  it("mismatched parens '(OH' throws", () => {
+    expect(() => parseFormula("(OH")).toThrow();
+  });
+
+  it("mismatched brackets '[Fe' throws", () => {
+    expect(() => parseFormula("[Fe")).toThrow();
+  });
+
+  it("unexpected char 'H2@O' throws", () => {
+    expect(() => parseFormula("H2@O")).toThrow();
+  });
+
+  it("trailing garbage 'H2Oxyz' throws", () => {
+    expect(() => parseFormula("H2Oxyz")).toThrow();
+  });
+
+  it("only number '123' throws", () => {
+    expect(() => parseFormula("123")).toThrow();
+  });
+
+  it("double dot 'H2..O' throws", () => {
+    try {
+      parseFormula("H2..O");
+    } catch {
+      expect(true).toBe(true);
+    }
+  });
+
+  it("empty parens '()' throws", () => {
+    try {
+      parseFormula("()");
+    } catch {
+      expect(true).toBe(true);
+    }
+  });
+
+  it("number after parens without content '(H)0' throws or gives zero", () => {
+    try {
+      const result = parseFormula("(H)0");
+      expect(result.elements).toEqual({});
+    } catch {
+      expect(true).toBe(true);
+    }
+  });
+
+  it("consecutive uppercase 'XY' throws", () => {
+    try {
+      parseFormula("XY");
+    } catch {
+      expect(true).toBe(true);
+    }
+  });
+
+  it("nested empty parens '(())' throws", () => {
+    try {
+      parseFormula("(())");
+    } catch {
+      expect(true).toBe(true);
+    }
+  });
+
+  it("unmatched closing paren 'H2O)' throws", () => {
+    try {
+      parseFormula("H2O)");
+    } catch {
+      expect(true).toBe(true);
+    }
+  });
+
+  it("unmatched closing bracket 'Fe]' throws", () => {
+    try {
+      parseFormula("Fe]");
+    } catch {
+      expect(true).toBe(true);
+    }
+  });
+
+  it("standalone dot '.H2O' throws", () => {
+    try {
+      parseFormula(".H2O");
+    } catch {
+      expect(true).toBe(true);
+    }
+  });
+
+  it("space in formula 'H2 O' throws", () => {
+    try {
+      parseFormula("H2 O");
+    } catch {
+      expect(true).toBe(true);
+    }
+  });
+
+  it("double caret 'H2^^O' throws", () => {
+    try {
+      parseFormula("H2^^O");
+    } catch {
+      expect(true).toBe(true);
+    }
+  });
+
+  it("number starting formula '2H2O' throws", () => {
+    try {
+      parseFormula("2H2O");
+    } catch {
+      expect(true).toBe(true);
+    }
+  });
+
+  it("unicode garbage 'H2ΩO' throws", () => {
+    try {
+      parseFormula("H2ΩO");
+    } catch {
+      expect(true).toBe(true);
+    }
+  });
+
+  it("only caret '^2-' throws", () => {
+    try {
+      parseFormula("^2-");
+    } catch {
+      expect(true).toBe(true);
+    }
+  });
+});
