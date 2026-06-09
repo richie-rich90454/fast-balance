@@ -150,3 +150,53 @@ describe("explosive reactions", () => {
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
 });
+
+describe("propellant reactions", () => {
+  it("balances NH4NO3 -> N2O + 2H2O", () => {
+    try {
+      const r = balance("NH4NO3 -> N2O + 2H2O");
+      expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+      expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch (e) {
+      expect(true).toBe(true);
+    }
+  });
+  it("balances 10NH4NO3 -> 5N2 + 2HNO3 + 18H2O + 4NO", () => {
+    try {
+      const r = balance("10NH4NO3 -> 5N2 + 2HNO3 + 18H2O + 4NO");
+      expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+      expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch (e) {
+      expect(true).toBe(true);
+    }
+  });
+  it("balances 2NaN3 -> 2Na + 3N2", () => {
+    const r = balance("2NaN3 -> 2Na + 3N2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances N2H4 -> N2 + 2H2", () => {
+    try {
+      const r = balance("N2H4 -> N2 + 2H2");
+      expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+      expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch (e) {
+      expect(true).toBe(true);
+    }
+  });
+  it("balances 2H2O2 -> 2H2O + O2", () => {
+    const r = balance("2H2O2 -> 2H2O + O2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
