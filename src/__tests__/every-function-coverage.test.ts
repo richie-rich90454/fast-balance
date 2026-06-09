@@ -358,3 +358,76 @@ describe("balance function exhaustive tests", () => {
     expect(latexFormat.equation).toContain("\\rightarrow");
   });
 });
+
+describe("end-to-end pipeline tests", () => {
+  it("full pipeline: splitEquation -> buildMatrix -> solveSystem -> fractionsToIntegers", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const fracs = solveSystem(matrix, cols);
+    const ints = fractionsToIntegers(fracs);
+    // Expect a 3-element integer array
+    expect(ints).toHaveLength(3);
+    for (const v of ints) {
+      expect(Number.isInteger(v)).toBe(true);
+      expect(v).toBeGreaterThan(0);
+    }
+  });
+
+  it("end-to-end for H2 + O2 -> H2O produces coefficients 2:1:2", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const fracs = solveSystem(matrix, cols);
+    const ints = fractionsToIntegers(fracs);
+    // Reduce by GCD to canonical form
+    const abs = ints.map((v) => Math.abs(v));
+    let g = 0;
+    for (const v of abs) g = gcd(g, v);
+    if (g === 0) g = 1;
+    const reduced = ints.map((v) => v / g);
+    expect(reduced).toEqual([2, 1, 2]);
+  });
+
+  it("end-to-end for Fe + Cl2 -> FeCl3 produces coefficients 2:3:2", () => {
+    const eq = splitEquation("Fe + Cl2 -> FeCl3");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const fracs = solveSystem(matrix, cols);
+    const ints = fractionsToIntegers(fracs);
+    const abs = ints.map((v) => Math.abs(v));
+    let g = 0;
+    for (const v of abs) g = gcd(g, v);
+    if (g === 0) g = 1;
+    const reduced = ints.map((v) => v / g);
+    expect(reduced).toEqual([2, 3, 2]);
+  });
+
+  it("end-to-end for ionic equation (Fe2+ + Cl- -> FeCl2) produces 1:2:1", () => {
+    const eq = splitEquation("Fe2+ + Cl- -> FeCl2");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const fracs = solveSystem(matrix, cols);
+    const ints = fractionsToIntegers(fracs);
+    const abs = ints.map((v) => Math.abs(v));
+    let g = 0;
+    for (const v of abs) g = gcd(g, v);
+    if (g === 0) g = 1;
+    const reduced = ints.map((v) => v / g);
+    expect(reduced).toEqual([1, 2, 1]);
+  });
+
+  it("all pipeline steps produce the expected results in sequence", () => {
+    // The entire pipeline: parse + split + matrix + solve + integers
+    const input = "C3H8 + O2 -> CO2 + H2O";
+    const eq = splitEquation(input);
+    expect(eq.reactants.length).toBeGreaterThan(0);
+    expect(eq.products.length).toBeGreaterThan(0);
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    expect(cols).toBe(eq.reactants.length + eq.products.length);
+    const fracs = solveSystem(matrix, cols);
+    expect(fracs).toHaveLength(cols);
+    const ints = fractionsToIntegers(fracs);
+    expect(ints).toHaveLength(cols);
+    // The final balance() call should match what we computed manually
+    const final = balance(input, { showOne: false });
+    expect(final.reactants.map((r) => r.coefficient)).toEqual(ints.slice(0, eq.reactants.length));
+    expect(final.products.map((p) => p.coefficient)).toEqual(ints.slice(eq.reactants.length));
+  });
+});
