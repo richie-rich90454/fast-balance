@@ -365,3 +365,76 @@ describe("Sulfuric acid production", () => {
         expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
     });
 });
+
+describe("Ammonia synthesis and oxidation", () => {
+    it("balances N2 + H2 -> NH3", () => {
+        const result = balance("N2 + H2 -> NH3");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "N2")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "H2")?.coefficient).toBe(3);
+        expect(result.products.find(p => p.formula === "NH3")?.coefficient).toBe(2);
+    });
+
+    it("balances NH3 + O2 -> NO + H2O", () => {
+        const result = balance("NH3 + O2 -> NO + H2O");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "NH3")?.coefficient).toBe(4);
+        expect(result.reactants.find(r => r.formula === "O2")?.coefficient).toBe(5);
+        expect(result.products.find(p => p.formula === "NO")?.coefficient).toBe(4);
+        expect(result.products.find(p => p.formula === "H2O")?.coefficient).toBe(6);
+    });
+
+    it("balances NH3 + O2 -> N2 + H2O (positive check)", () => {
+        const result = balance("NH3 + O2 -> N2 + H2O");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances NH3 + HCl -> NH4Cl", () => {
+        const result = balance("NH3 + HCl -> NH4Cl");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "NH3")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "HCl")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "NH4Cl")?.coefficient).toBe(1);
+    });
+
+    it("balances NH3 + H2SO4 -> (NH4)2SO4 (positive check)", () => {
+        const result = balance("NH3 + H2SO4 -> (NH4)2SO4");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances NH3 + HNO3 -> NH4NO3", () => {
+        const result = balance("NH3 + HNO3 -> NH4NO3");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "NH3")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "HNO3")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "NH4NO3")?.coefficient).toBe(1);
+    });
+});
