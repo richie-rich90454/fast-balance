@@ -8,6 +8,7 @@ import {
   buildMatrix,
   solveSystem,
   fractionsToIntegers,
+  balance,
   Fraction,
 } from "../index";
 
@@ -304,5 +305,56 @@ describe("fractionsToIntegers function exhaustive tests", () => {
     const fracs: Fraction[] = [new Fraction(2), new Fraction(1), new Fraction(2)];
     const result = fractionsToIntegers(fracs);
     expect(result).toHaveLength(fracs.length);
+  });
+});
+
+describe("balance function exhaustive tests", () => {
+  it("balance returns a BalanceResult shape (reactants, products, equation)", () => {
+    const result = balance("H2 + O2 -> H2O");
+    expect(result).toHaveProperty("reactants");
+    expect(result).toHaveProperty("products");
+    expect(result).toHaveProperty("equation");
+    expect(Array.isArray(result.reactants)).toBe(true);
+    expect(Array.isArray(result.products)).toBe(true);
+    expect(typeof result.equation).toBe("string");
+  });
+
+  it("balance returns all integer coefficients", () => {
+    const result = balance("H2 + O2 -> H2O");
+    for (const r of result.reactants) {
+      expect(Number.isInteger(r.coefficient)).toBe(true);
+    }
+    for (const p of result.products) {
+      expect(Number.isInteger(p.coefficient)).toBe(true);
+    }
+  });
+
+  it("balance returns all positive coefficients", () => {
+    const result = balance("H2 + O2 -> H2O");
+    expect(result.reactants.every((r) => r.coefficient > 0)).toBe(true);
+    expect(result.products.every((p) => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balance equation string format is correct (contains '->' by default)", () => {
+    const result = balance("H2 + O2 -> H2O");
+    expect(result.equation).toContain("->");
+    expect(result.equation).toContain("H2");
+    expect(result.equation).toContain("O2");
+    expect(result.equation).toContain("H2O");
+  });
+
+  it("balance default options work (no options argument)", () => {
+    const result = balance("H2 + O2 -> H2O");
+    // Default format is "text" and showOne is true
+    expect(result.equation).toBe("2 H2 + 1 O2 -> 2 H2O");
+  });
+
+  it("balance custom options work (showOne false, format html/latex)", () => {
+    const showOneFalse = balance("H2 + O2 -> H2O", { showOne: false });
+    expect(showOneFalse.equation).toBe("2 H2 + O2 -> 2 H2O");
+    const htmlFormat = balance("H2 + O2 -> H2O", { format: "html" });
+    expect(htmlFormat.equation).toContain("&rarr;");
+    const latexFormat = balance("H2 + O2 -> H2O", { format: "latex" });
+    expect(latexFormat.equation).toContain("\\rightarrow");
   });
 });
