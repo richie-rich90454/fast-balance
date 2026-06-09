@@ -123,3 +123,48 @@ describe("large matrix handling", () => {
         }
     });
 });
+
+describe("complex nested formulas", () => {
+    it("balances Ca3(PO4)2 + H2SO4 -> CaSO4 + H3PO4", () => {
+        let result = balance("Ca3(PO4)2 + H2SO4 -> CaSO4 + H3PO4");
+        expect(result.reactants[0]?.coefficient).toBe(1);
+        expect(result.reactants[1]?.coefficient).toBe(3);
+        expect(result.products[0]?.coefficient).toBe(3);
+        expect(result.products[1]?.coefficient).toBe(2);
+    });
+
+    it("balances Al2(SO4)3 + NaOH -> Al(OH)3 + Na2SO4", () => {
+        let result = balance("Al2(SO4)3 + NaOH -> Al(OH)3 + Na2SO4");
+        expect(result.reactants[0]?.coefficient).toBe(1);
+        expect(result.reactants[1]?.coefficient).toBe(6);
+        expect(result.products[0]?.coefficient).toBe(2);
+        expect(result.products[1]?.coefficient).toBe(3);
+    });
+
+    it("balances (NH4)2SO4 + NaOH -> NH3 + Na2SO4 + H2O", () => {
+        let result = balance("(NH4)2SO4 + NaOH -> NH3 + Na2SO4 + H2O");
+        let all = [...result.reactants, ...result.products];
+        for (let s of all) {
+            expect(s.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(s.coefficient)).toBe(true);
+        }
+    });
+
+    it("balances K4[Fe(CN)6] + 3 H2SO4 -> 2 K2SO4 + FeSO4 + 6 HCN", () => {
+        let result = balance("K4[Fe(CN)6] + 3 H2SO4 -> 2 K2SO4 + FeSO4 + 6 HCN");
+        let all = [...result.reactants, ...result.products];
+        for (let s of all) {
+            expect(s.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(s.coefficient)).toBe(true);
+        }
+    });
+
+    it("balances Fe4[Fe(CN)6]3 + NaOH -> Fe(OH)3 + Na4[Fe(CN)6]", () => {
+        let result = balance("Fe4[Fe(CN)6]3 + NaOH -> Fe(OH)3 + Na4[Fe(CN)6]");
+        let all = [...result.reactants, ...result.products];
+        for (let s of all) {
+            expect(s.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(s.coefficient)).toBe(true);
+        }
+    });
+});
