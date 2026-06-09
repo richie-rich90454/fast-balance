@@ -245,3 +245,65 @@ describe("Electrochemistry lab reactions", () => {
         expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
     });
 });
+
+describe("Water treatment reactions", () => {
+    it("balances Fe2+ + Cl2 -> Fe3+ + Cl- (positive check)", () => {
+        const r = balance("Fe2+ + Cl2 -> Fe3+ + Cl-");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances Mn2+ + Cl2 -> Mn4+ + Cl- (positive check)", () => {
+        const r = balance("Mn2+ + Cl2 -> Mn4+ + Cl-");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances Cl2 + H2O -> HCl + HClO", () => {
+        const r = balance("Cl2 + H2O -> HCl + HClO");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "Cl2")?.coefficient).toBe(1);
+        expect(r.reactants.find(x => x.formula === "H2O")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "HCl")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "HClO")?.coefficient).toBe(1);
+    });
+
+    it("balances SO2 + H2O -> H2SO3", () => {
+        const r = balance("SO2 + H2O -> H2SO3");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "SO2")?.coefficient).toBe(1);
+        expect(r.reactants.find(x => x.formula === "H2O")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "H2SO3")?.coefficient).toBe(1);
+    });
+
+    it("balances Ca(OH)2 + CO2 -> CaCO3 + H2O", () => {
+        const r = balance("Ca(OH)2 + CO2 -> CaCO3 + H2O");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "Ca(OH)2")?.coefficient).toBe(1);
+        expect(r.reactants.find(x => x.formula === "CO2")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "CaCO3")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "H2O")?.coefficient).toBe(1);
+    });
+});
