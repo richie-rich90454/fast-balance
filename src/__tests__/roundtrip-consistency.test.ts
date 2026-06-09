@@ -245,3 +245,63 @@ describe("matrix solution consistency", ()=>{
     });
 });
 
+describe("integer fraction consistency", ()=>{
+    it("fractionsToIntegers result is integer for H2 + O2 -> H2O", ()=>{
+        const eq = "H2 + O2 -> H2O";
+        const split = splitEquation(eq);
+        const {matrix, cols} = buildMatrix(split.reactants, split.products);
+        const nullVec = solveSystem(matrix, cols);
+        const ints = fractionsToIntegers(nullVec);
+        // All entries must be integers (Number.isInteger check)
+        expect(ints.every(v=>Number.isInteger(v))).toBe(true);
+        // All entries must be positive
+        expect(ints.every(v=>v > 0)).toBe(true);
+        // Known answer
+        expect(ints).toEqual([2, 1, 2]);
+    });
+
+    it("fractionsToIntegers result is integer for Fe + Cl2 -> FeCl3", ()=>{
+        const eq = "Fe + Cl2 -> FeCl3";
+        const split = splitEquation(eq);
+        const {matrix, cols} = buildMatrix(split.reactants, split.products);
+        const nullVec = solveSystem(matrix, cols);
+        const ints = fractionsToIntegers(nullVec);
+        expect(ints.every(v=>Number.isInteger(v))).toBe(true);
+        expect(ints.every(v=>v > 0)).toBe(true);
+        expect(ints).toEqual([2, 3, 2]);
+    });
+
+    it("fractionsToIntegers result is integer for N2 + H2 -> NH3", ()=>{
+        const eq = "N2 + H2 -> NH3";
+        const split = splitEquation(eq);
+        const {matrix, cols} = buildMatrix(split.reactants, split.products);
+        const nullVec = solveSystem(matrix, cols);
+        const ints = fractionsToIntegers(nullVec);
+        expect(ints.every(v=>Number.isInteger(v))).toBe(true);
+        expect(ints.every(v=>v > 0)).toBe(true);
+        expect(ints).toEqual([1, 3, 2]);
+    });
+
+    it("fractionsToIntegers result is integer for CH4 + O2 -> CO2 + H2O", ()=>{
+        const eq = "CH4 + O2 -> CO2 + H2O";
+        const split = splitEquation(eq);
+        const {matrix, cols} = buildMatrix(split.reactants, split.products);
+        const nullVec = solveSystem(matrix, cols);
+        const ints = fractionsToIntegers(nullVec);
+        expect(ints.every(v=>Number.isInteger(v))).toBe(true);
+        expect(ints.every(v=>v > 0)).toBe(true);
+        expect(ints).toEqual([1, 2, 1, 2]);
+    });
+
+    it("fractionsToIntegers result is integer for Na + Cl2 -> NaCl", ()=>{
+        const eq = "Na + Cl2 -> NaCl";
+        const split = splitEquation(eq);
+        const {matrix, cols} = buildMatrix(split.reactants, split.products);
+        const nullVec = solveSystem(matrix, cols);
+        const ints = fractionsToIntegers(nullVec);
+        expect(ints.every(v=>Number.isInteger(v))).toBe(true);
+        expect(ints.every(v=>v > 0)).toBe(true);
+        expect(ints).toEqual([2, 1, 2]);
+    });
+});
+
