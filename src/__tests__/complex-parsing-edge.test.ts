@@ -98,6 +98,43 @@ describe("organic formula parsing", () => {
   });
 });
 
+describe("state symbol removal exhaustive", () => {
+  it("strips (s) solid state symbol from H2O(s)", () => {
+    const result = parseFormula("H2O(s)");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("strips (l) liquid state symbol from H2O(l)", () => {
+    const result = parseFormula("H2O(l)");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("strips (g) gas state symbol from H2O(g)", () => {
+    const result = parseFormula("H2O(g)");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("strips (aq) aqueous state symbol from H2O(aq)", () => {
+    const result = parseFormula("H2O(aq)");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("strips (solid) long form solid state symbol from H2O(solid)", () => {
+    const result = parseFormula("H2O(solid)");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("strips (am) amorphous state symbol from H2O(am)", () => {
+    const result = parseFormula("H2O(am)");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+});
 describe("ionic species formula parsing", () => {
   it("parses Na+ sodium cation", () => {
     const result = parseFormula("Na+");
@@ -355,6 +392,44 @@ describe("formula with leading and trailing whitespace", () => {
 
   it("parses '  H2O(l)  ' with spaces around formula and state", () => {
     const result = parseFormula("  H2O(l)  ");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+});
+
+describe("state symbol removal exhaustive", () => {
+  it("strips (s) solid state symbol from H2O(s)", () => {
+    const result = parseFormula("H2O(s)");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("strips (l) liquid state symbol from H2O(l)", () => {
+    const result = parseFormula("H2O(l)");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("strips (g) gas state symbol from H2O(g)", () => {
+    const result = parseFormula("H2O(g)");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("strips (aq) aqueous state symbol from H2O(aq)", () => {
+    const result = parseFormula("H2O(aq)");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("strips (solid) long form solid state symbol from H2O(solid)", () => {
+    const result = parseFormula("H2O(solid)");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("strips (am) amorphous state symbol from H2O(am)", () => {
+    const result = parseFormula("H2O(am)");
     expect(result.elements).toEqual({ H: 2, O: 1 });
     expect(result.charge).toBe(0);
   });
