@@ -311,3 +311,34 @@ describe("water formation reaction tests", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([2]);
   });
 });
+
+describe("precipitation detail tests", () => {
+  it("balances AgNO3 + NaCl -> AgCl + NaNO3 (verify AgCl)", () => {
+    const r = balance("AgNO3 + NaCl -> AgCl + NaNO3");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products[0]!.formula).toBe("AgCl");
+  });
+  it("balances BaCl2 + H2SO4 -> BaSO4 + HCl", () => {
+    const r = balance("BaCl2 + H2SO4 -> BaSO4 + HCl");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+  it("balances AgNO3 + KBr -> AgBr + KNO3", () => {
+    const r = balance("AgNO3 + KBr -> AgBr + KNO3");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances AgNO3 + KI -> AgI + KNO3", () => {
+    const r = balance("AgNO3 + KI -> AgI + KNO3");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances Pb(NO3)2 + Na2CrO4 -> PbCrO4 + NaNO3 (positive check)", () => {
+    const r = balance("Pb(NO3)2 + Na2CrO4 -> PbCrO4 + NaNO3");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
