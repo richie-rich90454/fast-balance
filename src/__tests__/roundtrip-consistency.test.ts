@@ -491,3 +491,84 @@ describe("parse-side consistency", ()=>{
     });
 });
 
+describe("charge conservation consistency", ()=>{
+    // Helper: sum coefficient*charge on each side from a balanced result.
+    const totalCharge=(side: {coefficient: number; formula: string}[],
+                       charges: number[]): number=>{
+        let s = 0;
+        for (let i = 0; i < side.length; i++){
+            s += side[i]!.coefficient * charges[i]!;
+        }
+        return s;
+    };
+
+    it("Fe2+ + Cl- -> FeCl2 conserves charge", ()=>{
+        const result = balance("Fe2+ + Cl- -> FeCl2");
+        const split = splitEquation("Fe2+ + Cl- -> FeCl2");
+        const left = totalCharge(result.reactants, split.reactants.map(s=>s.charge));
+        const right = totalCharge(result.products, split.products.map(s=>s.charge));
+        expect(left).toBe(right);
+        // Both sides should sum to 0 for this neutral product
+        expect(left).toBe(0);
+        expect(right).toBe(0);
+        // The balanced result should be 1, 2, 1
+        expect(result.reactants[0]!.coefficient).toBe(1);
+        expect(result.reactants[1]!.coefficient).toBe(2);
+        expect(result.products[0]!.coefficient).toBe(1);
+    });
+
+    it("Ag+ + Cl- -> AgCl conserves charge", ()=>{
+        const result = balance("Ag+ + Cl- -> AgCl");
+        const split = splitEquation("Ag+ + Cl- -> AgCl");
+        const left = totalCharge(result.reactants, split.reactants.map(s=>s.charge));
+        const right = totalCharge(result.products, split.products.map(s=>s.charge));
+        expect(left).toBe(right);
+        expect(left).toBe(0);
+        expect(right).toBe(0);
+        expect(result.reactants[0]!.coefficient).toBe(1);
+        expect(result.reactants[1]!.coefficient).toBe(1);
+        expect(result.products[0]!.coefficient).toBe(1);
+    });
+
+    it("Na+ + OH- -> NaOH conserves charge", ()=>{
+        const result = balance("Na+ + OH- -> NaOH");
+        const split = splitEquation("Na+ + OH- -> NaOH");
+        const left = totalCharge(result.reactants, split.reactants.map(s=>s.charge));
+        const right = totalCharge(result.products, split.products.map(s=>s.charge));
+        expect(left).toBe(right);
+        expect(left).toBe(0);
+        expect(right).toBe(0);
+        expect(result.reactants[0]!.coefficient).toBe(1);
+        expect(result.reactants[1]!.coefficient).toBe(1);
+        expect(result.products[0]!.coefficient).toBe(1);
+    });
+
+    it("Ca2+ + Cl- -> CaCl2 conserves charge", ()=>{
+        const result = balance("Ca2+ + Cl- -> CaCl2");
+        const split = splitEquation("Ca2+ + Cl- -> CaCl2");
+        const left = totalCharge(result.reactants, split.reactants.map(s=>s.charge));
+        const right = totalCharge(result.products, split.products.map(s=>s.charge));
+        expect(left).toBe(right);
+        expect(left).toBe(0);
+        expect(right).toBe(0);
+        // Expected: 1, 2, 1
+        expect(result.reactants[0]!.coefficient).toBe(1);
+        expect(result.reactants[1]!.coefficient).toBe(2);
+        expect(result.products[0]!.coefficient).toBe(1);
+    });
+
+    it("Al3+ + OH- -> Al(OH)3 conserves charge", ()=>{
+        const result = balance("Al3+ + OH- -> Al(OH)3");
+        const split = splitEquation("Al3+ + OH- -> Al(OH)3");
+        const left = totalCharge(result.reactants, split.reactants.map(s=>s.charge));
+        const right = totalCharge(result.products, split.products.map(s=>s.charge));
+        expect(left).toBe(right);
+        expect(left).toBe(0);
+        expect(right).toBe(0);
+        // Expected: 1, 3, 1
+        expect(result.reactants[0]!.coefficient).toBe(1);
+        expect(result.reactants[1]!.coefficient).toBe(3);
+        expect(result.products[0]!.coefficient).toBe(1);
+    });
+});
+
