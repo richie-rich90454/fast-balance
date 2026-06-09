@@ -231,3 +231,55 @@ describe("equation with hydrate in balance", () => {
         expect(result.products[1]?.formula).toBe("H2O");
     });
 });
+
+describe("equation with charge in balance", () => {
+    it("Fe2+ + Cl- -> FeCl2 has positive integer coefficients", () => {
+        let result = balance("Fe2+ + Cl- -> FeCl2");
+        for (let r of result.reactants) {
+            expect(r.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(r.coefficient)).toBe(true);
+        }
+        for (let p of result.products) {
+            expect(p.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(p.coefficient)).toBe(true);
+        }
+    });
+    it("Ag+ + Cl- -> AgCl is balanced", () => {
+        let result = balance("Ag+ + Cl- -> AgCl");
+        expect(result.reactants).toHaveLength(2);
+        expect(result.products).toHaveLength(1);
+        expect(result.reactants[0]?.coefficient).toBeGreaterThan(0);
+        expect(result.reactants[1]?.coefficient).toBeGreaterThan(0);
+        expect(result.products[0]?.coefficient).toBeGreaterThan(0);
+        expect(result.products[0]?.formula).toBe("AgCl");
+    });
+    it("Na+ + OH- -> NaOH is balanced", () => {
+        let result = balance("Na+ + OH- -> NaOH");
+        expect(result.reactants).toHaveLength(2);
+        expect(result.products).toHaveLength(1);
+        expect(result.reactants[0]?.coefficient).toBeGreaterThan(0);
+        expect(result.reactants[1]?.coefficient).toBeGreaterThan(0);
+        expect(result.products[0]?.coefficient).toBeGreaterThan(0);
+        expect(result.products[0]?.formula).toBe("NaOH");
+    });
+    it("K+ + Br- -> KBr is balanced", () => {
+        let result = balance("K+ + Br- -> KBr");
+        expect(result.reactants).toHaveLength(2);
+        expect(result.products).toHaveLength(1);
+        expect(result.reactants[0]?.coefficient).toBeGreaterThan(0);
+        expect(result.reactants[1]?.coefficient).toBeGreaterThan(0);
+        expect(result.products[0]?.coefficient).toBeGreaterThan(0);
+        expect(result.products[0]?.formula).toBe("KBr");
+    });
+    it("Mg2+ + Cl- -> MgCl2 has positive integer coefficients", () => {
+        let result = balance("Mg2+ + Cl- -> MgCl2");
+        for (let r of result.reactants) {
+            expect(r.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(r.coefficient)).toBe(true);
+        }
+        for (let p of result.products) {
+            expect(p.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(p.coefficient)).toBe(true);
+        }
+    });
+});
