@@ -74,3 +74,46 @@ describe("weak acid-base neutralization", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1]);
   });
 });
+
+describe("polyprotic acid neutralization", () => {
+  it("balances H2SO4 + 2NaOH -> Na2SO4 + 2H2O", () => {
+    const r = balance("H2SO4 + NaOH -> Na2SO4 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances H2SO4 + NaOH -> NaHSO4 + H2O", () => {
+    const r = balance("H2SO4 + NaOH -> NaHSO4 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances H3PO4 + NaOH -> NaH2PO4 + H2O", () => {
+    const r = balance("H3PO4 + NaOH -> NaH2PO4 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances H2CO3 + NaOH -> NaHCO3 + H2O", () => {
+    const r = balance("H2CO3 + NaOH -> NaHCO3 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances H2CO3 + 2NaOH -> Na2CO3 + 2H2O", () => {
+    const r = balance("H2CO3 + NaOH -> Na2CO3 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances H3PO4 + 2NaOH -> Na2HPO4 + 2H2O", () => {
+    const r = balance("H3PO4 + NaOH -> Na2HPO4 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
