@@ -1,5 +1,5 @@
 import {describe, it, expect} from "vitest";
-import {balance} from "../index";
+import {balance, parseFormula} from "../index";
 
 describe("balance return type contract", ()=>{
     it("result has reactants array", ()=>{
@@ -191,5 +191,38 @@ describe("showOne option behavior", ()=>{
         expect(result.equation).toContain("2 H2O");
         // O2 has coefficient 1 - it should not have "1 " prefix
         expect(result.equation).not.toMatch(/1\s+O2/);
+    });
+});
+
+describe("parseFormula return type", ()=>{
+    it("returns object with elements", ()=>{
+        let result=parseFormula("H2O");
+        expect(result).toHaveProperty("elements");
+        expect(result.elements).toBeDefined();
+    });
+    it("returns object with charge", ()=>{
+        let result=parseFormula("H2O");
+        expect(result).toHaveProperty("charge");
+        expect(result.charge).toBeDefined();
+    });
+    it("elements is object", ()=>{
+        let result=parseFormula("H2O");
+        expect(typeof result.elements).toBe("object");
+        expect(result.elements).not.toBeNull();
+        expect(Array.isArray(result.elements)).toBe(false);
+    });
+    it("elements values are numbers", ()=>{
+        let result=parseFormula("H2O");
+        for (let el in result.elements){
+            expect(typeof result.elements[el]).toBe("number");
+        }
+    });
+    it("charge is number", ()=>{
+        let result=parseFormula("H2O");
+        expect(typeof result.charge).toBe("number");
+    });
+    it("charge defaults to 0", ()=>{
+        let result=parseFormula("H2O");
+        expect(result.charge).toBe(0);
     });
 });
