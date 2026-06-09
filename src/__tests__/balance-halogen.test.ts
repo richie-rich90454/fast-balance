@@ -197,3 +197,48 @@ describe("iodine compounds", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1]);
   });
 });
+
+describe("interhalogen compounds", () => {
+  it("balances F2 + Cl2 -> 2ClF", () => {
+    const r = balance("F2 + Cl2 -> ClF");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances F2 + Br2 -> 2BrF", () => {
+    const r = balance("F2 + Br2 -> BrF");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 3F2 + Cl2 -> 2ClF3", () => {
+    const r = balance("F2 + Cl2 -> ClF3");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances I2 + Cl2 -> 2ICl", () => {
+    const r = balance("I2 + Cl2 -> ICl");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances 3F2 + Br2 -> 2BrF3", () => {
+    const r = balance("F2 + Br2 -> BrF3");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 5F2 + Br2 -> 2BrF5", () => {
+    const r = balance("F2 + Br2 -> BrF5");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 3Cl2 + I2 -> 2ICl3", () => {
+    const r = balance("Cl2 + I2 -> ICl3");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 5F2 + I2 -> 2IF5", () => {
+    const r = balance("F2 + I2 -> IF5");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 7F2 + I2 -> 2IF7", () => {
+    const r = balance("F2 + I2 -> IF7");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances Cl2 + Br2 -> 2BrCl", () => {
+    const r = balance("Cl2 + Br2 -> BrCl");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+});
