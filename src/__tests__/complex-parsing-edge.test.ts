@@ -97,3 +97,65 @@ describe("organic formula parsing", () => {
     expect(result.charge).toBe(0);
   });
 });
+
+describe("ionic species formula parsing", () => {
+  it("parses Na+ sodium cation", () => {
+    const result = parseFormula("Na+");
+    expect(result.elements).toEqual({ Na: 1 });
+    expect(result.charge).toBe(1);
+  });
+
+  it("parses Ca2+ calcium cation", () => {
+    const result = parseFormula("Ca2+");
+    expect(result.elements).toEqual({ Ca: 1 });
+    expect(result.charge).toBe(2);
+  });
+
+  it("parses Al3+ aluminum cation", () => {
+    const result = parseFormula("Al3+");
+    expect(result.elements).toEqual({ Al: 1 });
+    expect(result.charge).toBe(3);
+  });
+
+  it("parses Fe3+ iron(III) cation", () => {
+    const result = parseFormula("Fe3+");
+    expect(result.elements).toEqual({ Fe: 1 });
+    expect(result.charge).toBe(3);
+  });
+
+  it("parses NH4+ ammonium cation", () => {
+    const result = parseFormula("NH4+");
+    expect(result.elements).toEqual({ N: 1, H: 4 });
+    expect(result.charge).toBe(1);
+  });
+
+  it("parses OH- hydroxide anion", () => {
+    const result = parseFormula("OH-");
+    expect(result.elements).toEqual({ O: 1, H: 1 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses Cl- chloride anion", () => {
+    const result = parseFormula("Cl-");
+    expect(result.elements).toEqual({ Cl: 1 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses S2- sulfide anion", () => {
+    const result = parseFormula("S2-");
+    expect(result.elements).toEqual({ S: 1 });
+    expect(result.charge).toBe(-2);
+  });
+
+  it("parses SO4^2- sulfate with caret notation", () => {
+    const result = parseFormula("SO4^2-");
+    expect(result.elements).toEqual({ S: 1, O: 4 });
+    expect(result.charge).toBe(-2);
+  });
+
+  it("parses PO4^3- phosphate with caret notation", () => {
+    const result = parseFormula("PO4^3-");
+    expect(result.elements).toEqual({ P: 1, O: 4 });
+    expect(result.charge).toBe(-3);
+  });
+});
