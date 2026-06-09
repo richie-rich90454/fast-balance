@@ -104,3 +104,47 @@ describe("glass and ceramic formation", () => {
         expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
     });
 });
+
+describe("cement and lime production", () => {
+    it("balances CaCO3 -> CaO + CO2 (limestone calcination)", () => {
+        const result = balance("CaCO3 -> CaO + CO2");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+    });
+
+    it("balances CaO + H2O -> Ca(OH)2 (slaking of lime)", () => {
+        const result = balance("CaO + H2O -> Ca(OH)2");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([1]);
+    });
+
+    it("balances Ca(OH)2 + CO2 -> CaCO3 + H2O (lime carbonation)", () => {
+        const result = balance("Ca(OH)2 + CO2 -> CaCO3 + H2O");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+    });
+
+    it("balances 2CaO + SiO2 -> Ca2SiO4 (dicalcium silicate, positive check)", () => {
+        const result = balance("2CaO + SiO2 -> Ca2SiO4");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances 3CaO + SiO2 -> Ca3SiO5 (tricalcium silicate, positive check)", () => {
+        const result = balance("3CaO + SiO2 -> Ca3SiO5");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances CaO + Al2O3 -> CaAl2O4 (calcium aluminate, positive check)", () => {
+        const result = balance("CaO + Al2O3 -> CaAl2O4");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+});
