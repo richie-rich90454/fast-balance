@@ -65,3 +65,60 @@ describe("Organic lab reactions", () => {
         expect(r.products.find(x => x.formula === "KCl")?.coefficient).toBe(1);
     });
 });
+
+describe("Oxidation and reduction lab reactions", () => {
+    it("balances CH3CH2OH + K2Cr2O7 + H2SO4 -> CH3COOH + K2SO4 + Cr2(SO4)3 + H2O (positive check)", () => {
+        const r = balance("CH3CH2OH + K2Cr2O7 + H2SO4 -> CH3COOH + K2SO4 + Cr2(SO4)3 + H2O");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances 2KMnO4 + 3H2SO4 + 5H2S -> K2SO4 + 2MnSO4 + 5S + 8H2O (positive check)", () => {
+        const r = balance("2KMnO4 + 3H2SO4 + 5H2S -> K2SO4 + 2MnSO4 + 5S + 8H2O");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances Fe2+ + MnO4- -> Fe3+ + Mn2+ (positive check)", () => {
+        const r = balance("Fe2+ + MnO4- -> Fe3+ + Mn2+");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances Sn2+ + Fe3+ -> Sn4+ + Fe2+ (positive check)", () => {
+        const r = balance("Sn2+ + Fe3+ -> Sn4+ + Fe2+");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances Cu + Ag+ -> Cu2+ + Ag (positive check)", () => {
+        const r = balance("Cu + Ag+ -> Cu2+ + Ag");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+});
