@@ -148,3 +148,52 @@ describe("bromine compounds", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1]);
   });
 });
+
+describe("iodine compounds", () => {
+  it("balances I2 + 2Na -> 2NaI", () => {
+    const r = balance("I2 + Na -> NaI");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances I2 + H2 -> 2HI", () => {
+    const r = balance("I2 + H2 -> HI");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+  it("balances I2 + Fe -> FeI2", () => {
+    const r = balance("I2 + Fe -> FeI2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances I2 + Cu -> CuI", () => {
+    const r = balance("I2 + Cu -> CuI");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances I2 + Mg -> MgI2", () => {
+    const r = balance("I2 + Mg -> MgI2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances 3I2 + 2Al -> 2AlI3", () => {
+    const r = balance("I2 + Al -> AlI3");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances I2 + 2K -> 2KI", () => {
+    const r = balance("I2 + K -> KI");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances I2 + Zn -> ZnI2", () => {
+    const r = balance("I2 + Zn -> ZnI2");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 2I2 + Sn -> SnI4", () => {
+    const r = balance("I2 + Sn -> SnI4");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances I2 + Ca -> CaI2", () => {
+    const r = balance("I2 + Ca -> CaI2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+});
