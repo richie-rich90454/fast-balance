@@ -173,3 +173,42 @@ describe("oxidation state transition tests", () => {
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
 });
+
+describe("double decomposition exchange tests", () => {
+  it("balances Na2SO4 + BaCl2 -> BaSO4 + NaCl", () => {
+    const r = balance("Na2SO4 + BaCl2 -> BaSO4 + NaCl");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+  it("balances AgNO3 + NaCl -> AgCl + NaNO3", () => {
+    const r = balance("AgNO3 + NaCl -> AgCl + NaNO3");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances BaCl2 + Na2CO3 -> BaCO3 + NaCl", () => {
+    const r = balance("BaCl2 + Na2CO3 -> BaCO3 + NaCl");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+  it("balances Pb(NO3)2 + Na2S -> PbS + NaNO3 (positive check)", () => {
+    const r = balance("Pb(NO3)2 + Na2S -> PbS + NaNO3");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances CuSO4 + Na2S -> CuS + Na2SO4 (positive check)", () => {
+    const r = balance("CuSO4 + Na2S -> CuS + Na2SO4");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances AgNO3 + NaBr -> AgBr + NaNO3 (positive check)", () => {
+    const r = balance("AgNO3 + NaBr -> AgBr + NaNO3");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
