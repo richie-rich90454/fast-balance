@@ -583,3 +583,75 @@ describe("Petroleum cracking", () => {
         expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
     });
 });
+
+describe("Electrolysis and industrial water", () => {
+    it("balances 2H2O -> 2H2 + O2", () => {
+        const result = balance("2H2O -> 2H2 + O2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "H2O")?.coefficient).toBe(2);
+        expect(result.products.find(p => p.formula === "H2")?.coefficient).toBe(2);
+        expect(result.products.find(p => p.formula === "O2")?.coefficient).toBe(1);
+    });
+
+    it("balances H2O -> H2 + O2 (positive check)", () => {
+        const result = balance("H2O -> H2 + O2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances NaCl + H2O -> NaOH + H2 + Cl2 (positive check)", () => {
+        const result = balance("NaCl + H2O -> NaOH + H2 + Cl2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances 2NaCl + 2H2O -> 2NaOH + H2 + Cl2", () => {
+        const result = balance("2NaCl + 2H2O -> 2NaOH + H2 + Cl2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "NaCl")?.coefficient).toBe(2);
+        expect(result.reactants.find(r => r.formula === "H2O")?.coefficient).toBe(2);
+        expect(result.products.find(p => p.formula === "NaOH")?.coefficient).toBe(2);
+        expect(result.products.find(p => p.formula === "H2")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "Cl2")?.coefficient).toBe(1);
+    });
+
+    it("balances Al2O3 -> Al + O2 (positive check)", () => {
+        const result = balance("Al2O3 -> Al + O2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances 2Al2O3 -> 4Al + 3O2 (positive check)", () => {
+        const result = balance("2Al2O3 -> 4Al + 3O2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+});
