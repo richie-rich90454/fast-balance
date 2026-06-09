@@ -245,3 +245,36 @@ describe("acid and metal oxide exchange tests", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
   });
 });
+
+describe("gas evolution reaction tests", () => {
+  it("balances Na2CO3 + HCl -> NaCl + H2O + CO2", () => {
+    const r = balance("Na2CO3 + HCl -> NaCl + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1, 1]);
+  });
+  it("balances Na2SO3 + HCl -> NaCl + H2O + SO2", () => {
+    const r = balance("Na2SO3 + HCl -> NaCl + H2O + SO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1, 1]);
+  });
+  it("balances Na2S + HCl -> NaCl + H2S", () => {
+    const r = balance("Na2S + HCl -> NaCl + H2S");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1]);
+  });
+  it("balances NaHCO3 + HCl -> NaCl + H2O + CO2", () => {
+    const r = balance("NaHCO3 + HCl -> NaCl + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1, 1]);
+  });
+  it("balances CaCO3 + HCl -> CaCl2 + H2O + CO2", () => {
+    const r = balance("CaCO3 + HCl -> CaCl2 + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1, 1]);
+  });
+  it("balances Mg + HCl -> MgCl2 + H2", () => {
+    const r = balance("Mg + HCl -> MgCl2 + H2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+});
