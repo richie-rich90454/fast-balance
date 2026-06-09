@@ -111,3 +111,56 @@ describe("latex format detailed", () => {
         expect(result.equation.startsWith(" ")).toBe(false);
     });
 });
+
+describe("multiple reactants and products format", () => {
+    it("3 reactants format correctly", () => {
+        let result = balance("Ca3(PO4)2 + SiO2 + C -> CaSiO3 + CO + P");
+        expect(result.reactants).toHaveLength(3);
+        expect(result.equation).toContain("Ca3(PO4)2");
+        expect(result.equation).toContain("SiO2");
+        expect(result.equation).toContain("C");
+        // The reactant part should have 2 " + " separators
+        let [left, right] = result.equation.split("->");
+        let plusCount = (left.match(/\+ /g) || []).length;
+        expect(plusCount).toBe(2);
+    });
+
+    it("4 reactants format correctly", () => {
+        let result = balance("KMnO4 + HCl -> KCl + MnCl2 + Cl2 + H2O");
+        expect(result.reactants).toHaveLength(2);
+        expect(result.products).toHaveLength(4);
+        let [left, right] = result.equation.split("->");
+        let plusCount = (right.match(/\+ /g) || []).length;
+        expect(plusCount).toBe(3);
+    });
+
+    it("3 products format correctly", () => {
+        let result = balance("Ca3(PO4)2 + SiO2 + C -> CaSiO3 + CO + P");
+        expect(result.products).toHaveLength(3);
+        let [left, right] = result.equation.split("->");
+        let plusCount = (right.match(/\+ /g) || []).length;
+        expect(plusCount).toBe(2);
+        expect(right).toContain("CaSiO3");
+        expect(right).toContain("CO");
+        expect(right).toContain("P");
+    });
+
+    it("4 products format correctly", () => {
+        let result = balance("Cu + HNO3 -> Cu(NO3)2 + NO + H2O");
+        expect(result.products).toHaveLength(3);
+        let [left, right] = result.equation.split("->");
+        let plusCount = (right.match(/\+ /g) || []).length;
+        expect(plusCount).toBe(2);
+        expect(right).toContain("Cu(NO3)2");
+        expect(right).toContain("NO");
+        expect(right).toContain("H2O");
+    });
+
+    it("all species appear in correct order", () => {
+        let result = balance("Fe + Cl2 -> FeCl3");
+        expect(result.equation).toBe("2 Fe + 3 Cl2 -> 2 FeCl3");
+        let [left, right] = result.equation.split("->");
+        expect(left.trim()).toBe("2 Fe + 3 Cl2");
+        expect(right.trim()).toBe("2 FeCl3");
+    });
+});
