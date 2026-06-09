@@ -435,3 +435,49 @@ describe("fractionsToIntegers rounding behavior tests", () => {
     expect(fractionsToIntegers([new Fraction(1, 2)])).toEqual([1]);
   });
 });
+
+describe("fractionsToIntegers sign normalization tests", () => {
+  it("flips all signs when negatives outnumber positives", () => {
+    expect(
+      fractionsToIntegers([
+        new Fraction(-1),
+        new Fraction(-2),
+        new Fraction(1),
+      ])
+    ).toEqual([1, 2, -1]);
+  });
+
+  it("keeps signs when positives equal negatives in count", () => {
+    expect(
+      fractionsToIntegers([
+        new Fraction(1),
+        new Fraction(-1),
+        new Fraction(2),
+        new Fraction(-2),
+      ])
+    ).toEqual([1, -1, 2, -2]);
+  });
+
+  it("keeps signs when positives outnumber negatives", () => {
+    expect(
+      fractionsToIntegers([
+        new Fraction(1),
+        new Fraction(2),
+        new Fraction(3),
+        new Fraction(-1),
+      ])
+    ).toEqual([1, 2, 3, -1]);
+  });
+
+  it("handles all-positive fractions without sign change", () => {
+    expect(
+      fractionsToIntegers([new Fraction(1, 2), new Fraction(3, 2)])
+    ).toEqual([1, 3]);
+  });
+
+  it("flips all-negative fractions to all-positive", () => {
+    expect(
+      fractionsToIntegers([new Fraction(-1, 2), new Fraction(-3, 2)])
+    ).toEqual([1, 3]);
+  });
+});
