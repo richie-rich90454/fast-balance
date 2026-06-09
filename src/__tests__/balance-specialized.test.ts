@@ -206,3 +206,30 @@ describe("noble gas and halogen reactions", () => {
     expectPositiveCoefficients(r);
   });
 });
+
+describe("lanthanide and actinide reactions", () => {
+  it("balances 4La + 3O2 -> 2La2O3", () => {
+    const r = balance("La + O2 -> La2O3");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances Ce + O2 -> CeO2", () => {
+    const r = balance("Ce + O2 -> CeO2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances U + O2 -> UO2", () => {
+    const r = balance("U + O2 -> UO2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances 3U + 4O2 -> U3O8", () => {
+    const r = balance("U + O2 -> U3O8");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances Th + O2 -> ThO2", () => {
+    const r = balance("Th + O2 -> ThO2");
+    expectPositiveCoefficients(r);
+  });
+});
