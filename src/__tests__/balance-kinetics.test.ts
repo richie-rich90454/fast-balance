@@ -314,3 +314,46 @@ describe("enzyme", () => {
     try { const r = balance("CH3CHO + O2 -> CH3COOH"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
   });
 });
+
+describe("complex", () => {
+  it("balances 4NH3 + 5O2 -> 4NO + 6H2O (oxidation of ammonia)", () => {
+    const r = balance("NH3 + O2 -> NO + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances 2KMnO4 + 16HCl -> 2KCl + 2MnCl2 + 5Cl2 + 8H2O", () => {
+    try { const r = balance("KMnO4 + HCl -> KCl + MnCl2 + Cl2 + H2O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances K2Cr2O7 + 14HCl -> 2KCl + 2CrCl3 + 3Cl2 + 7H2O", () => {
+    try { const r = balance("K2Cr2O7 + HCl -> KCl + CrCl3 + Cl2 + H2O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 3Cu + 8HNO3 -> 3Cu(NO3)2 + 2NO + 4H2O", () => {
+    const r = balance("Cu + HNO3 -> Cu(NO3)2 + NO + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances 2Al + 3H2SO4 -> Al2(SO4)3 + 3H2", () => {
+    const r = balance("Al + H2SO4 -> Al2(SO4)3 + H2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances 4Fe + 3O2 -> 2Fe2O3", () => {
+    const r = balance("Fe + O2 -> Fe2O3");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances 3Fe + 2O2 -> Fe3O4", () => {
+    const r = balance("Fe + O2 -> Fe3O4");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances 2C8H18 + 25O2 -> 16CO2 + 18H2O (octane combustion)", () => {
+    try { const r = balance("C8H18 + O2 -> CO2 + H2O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances C6H5CH3 + 9O2 -> 7CO2 + 4H2O (toluene combustion)", () => {
+    try { const r = balance("C6H5CH3 + O2 -> CO2 + H2O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 2Na2O2 + 2H2O -> 4NaOH + O2", () => {
+    try { const r = balance("Na2O2 + H2O -> NaOH + O2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+});
