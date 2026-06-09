@@ -67,3 +67,40 @@ describe("phosphorus compound tests", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([2]);
   });
 });
+
+describe("sulfur compound tests", () => {
+  it("balances S + O2 -> SO2", () => {
+    const r = balance("S + O2 -> SO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances SO2 + O2 -> SO3", () => {
+    const r = balance("SO2 + O2 -> SO3");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+  it("balances SO3 + H2O -> H2SO4", () => {
+    const r = balance("SO3 + H2O -> H2SO4");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances H2S + O2 -> SO2 + H2O", () => {
+    const r = balance("H2S + O2 -> SO2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 2]);
+  });
+  it("balances FeS + O2 -> Fe2O3 + SO2 (positive check)", () => {
+    const r = balance("FeS + O2 -> Fe2O3 + SO2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances CS2 + O2 -> CO2 + SO2 (positive check)", () => {
+    const r = balance("CS2 + O2 -> CO2 + SO2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
