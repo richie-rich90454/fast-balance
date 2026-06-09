@@ -395,3 +395,47 @@ describe("balance with state symbols", () => {
     expect(withState.products[1]?.formula).toBe("Cl-");
   });
 });
+
+describe("electron balance in redox reactions", () => {
+  it("conserves charge in MnO4- + H+ + e- -> Mn2+ + H2O", () => {
+    const result = balance("MnO4- + H+ + e- -> Mn2+ + H2O");
+    verifyConservation(result);
+    verifyChargeConservation(result);
+    expectPositiveIntegers(result);
+  });
+
+  it("conserves charge in Cr2O7^2- + H+ + e- -> Cr3+ + H2O", () => {
+    const result = balance("Cr2O7^2- + H+ + e- -> Cr3+ + H2O");
+    verifyConservation(result);
+    verifyChargeConservation(result);
+    expectPositiveIntegers(result);
+  });
+
+  it("conserves charge in Fe + Cu^2+ -> Fe^2+ + Cu", () => {
+    const result = balance("Fe + Cu^2+ -> Fe^2+ + Cu");
+    verifyConservation(result);
+    verifyChargeConservation(result);
+    expectPositiveIntegers(result);
+  });
+
+  it("conserves charge in Zn + 2H+ -> Zn^2+ + H2", () => {
+    const result = balance("Zn + 2H+ -> Zn^2+ + H2");
+    verifyConservation(result);
+    verifyChargeConservation(result);
+    expectPositiveIntegers(result);
+  });
+
+  it("conserves charge in 2Na + Cl2 -> 2Na+ + 2Cl-", () => {
+    const result = balance("2Na + Cl2 -> 2Na+ + 2Cl-");
+    verifyConservation(result);
+    verifyChargeConservation(result);
+    expectPositiveIntegers(result);
+  });
+
+  it("conserves charge in Mg + 2H+ -> Mg^2+ + H2", () => {
+    const result = balance("Mg + 2H+ -> Mg^2+ + H2");
+    verifyConservation(result);
+    verifyChargeConservation(result);
+    expectPositiveIntegers(result);
+  });
+});
