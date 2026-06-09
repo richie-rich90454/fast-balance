@@ -168,3 +168,40 @@ describe("complex nested formulas", () => {
         }
     });
 });
+
+describe("common ion effect", () => {
+    it("balances NaCl + AgNO3 -> AgCl + NaNO3", () => {
+        let result = balance("NaCl + AgNO3 -> AgCl + NaNO3");
+        for (let s of result.reactants) expect(s.coefficient).toBe(1);
+        for (let s of result.products) expect(s.coefficient).toBe(1);
+    });
+
+    it("balances KBr + AgNO3 -> AgBr + KNO3", () => {
+        let result = balance("KBr + AgNO3 -> AgBr + KNO3");
+        for (let s of result.reactants) expect(s.coefficient).toBe(1);
+        for (let s of result.products) expect(s.coefficient).toBe(1);
+    });
+
+    it("balances KI + AgNO3 -> AgI + KNO3", () => {
+        let result = balance("KI + AgNO3 -> AgI + KNO3");
+        for (let s of result.reactants) expect(s.coefficient).toBe(1);
+        for (let s of result.products) expect(s.coefficient).toBe(1);
+    });
+
+    it("balances Na2SO4 + BaCl2 -> BaSO4 + NaCl", () => {
+        let result = balance("Na2SO4 + BaCl2 -> BaSO4 + NaCl");
+        expect(result.reactants[0]?.coefficient).toBe(1);
+        expect(result.reactants[1]?.coefficient).toBe(1);
+        expect(result.products[0]?.coefficient).toBe(1);
+        expect(result.products[1]?.coefficient).toBe(2);
+    });
+
+    it("balances Na2CO3 + CaCl2 -> CaCO3 + NaCl", () => {
+        let result = balance("Na2CO3 + CaCl2 -> CaCO3 + NaCl");
+        let all = [...result.reactants, ...result.products];
+        for (let s of all) {
+            expect(s.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(s.coefficient)).toBe(true);
+        }
+    });
+});
