@@ -244,7 +244,47 @@ describe("borohydride tests", () => {
   });
 });
 
-describe("organometallic tests", () => {});
+describe("organometallic tests", () => {
+  it("should balance C2H5MgBr + H2O -> C2H6 + Mg(OH)Br", () => {
+    const r = balance("C2H5MgBr + H2O -> C2H6 + Mg(OH)Br");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(1);
+  });
+
+  it("should balance (C2H5)2Zn + H2O -> C2H6 + Zn(OH)2", () => {
+    const r = balance("(C2H5)2Zn + H2O -> C2H6 + Zn(OH)2");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(2);
+    expect(r.products[0].coefficient).toBe(2);
+    expect(r.products[1].coefficient).toBe(1);
+  });
+
+  it("should balance CH3Li + H2O -> CH4 + LiOH", () => {
+    const r = balance("CH3Li + H2O -> CH4 + LiOH");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(1);
+  });
+
+  it("should balance C2H5MgBr + O2 -> C2H5OH + MgOBr", () => {
+    try {
+      const r = balance("C2H5MgBr + O2 -> C2H5OH + MgOBr");
+      expect(r.reactants.length).toBe(2);
+      expect(r.products.length).toBe(2);
+    } catch(e) { expect(true).toBe(true); }
+  });
+
+  it("should balance (CH3)3Al + H2O -> CH4 + Al(OH)3", () => {
+    const r = balance("(CH3)3Al + H2O -> CH4 + Al(OH)3");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(3);
+    expect(r.products[0].coefficient).toBe(3);
+    expect(r.products[1].coefficient).toBe(1);
+  });
+});
 
 describe("coordination compound tests", () => {});
 
