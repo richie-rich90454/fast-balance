@@ -140,3 +140,34 @@ describe("group 15 element oxidation", () => {
     expectPositiveCoefficients(r);
   });
 });
+
+describe("group 16 element oxidation", () => {
+  it("balances 2H2 + O2 -> 2H2O", () => {
+    const r = balance("O2 + H2 -> H2O");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+
+  it("balances S + O2 -> SO2", () => {
+    const r = balance("S + O2 -> SO2");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+
+  it("balances Se + O2 -> SeO2", () => {
+    const r = balance("Se + O2 -> SeO2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances Te + O2 -> TeO2", () => {
+    const r = balance("Te + O2 -> TeO2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances Po + O2 -> PoO2", () => {
+    const r = balance("Po + O2 -> PoO2");
+    expectPositiveCoefficients(r);
+  });
+});
