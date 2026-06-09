@@ -152,3 +152,44 @@ describe("format option behavior", ()=>{
         expect(r2.products).toEqual(r3.products);
     });
 });
+
+describe("showOne option behavior", ()=>{
+    it("showOne=true shows '1 '", ()=>{
+        let result=balance("H2 + O2 -> H2O", {showOne: true});
+        // O2 coefficient is 1, so it should appear as "1 O2"
+        expect(result.equation).toMatch(/1\s+O2/);
+    });
+    it("showOne=false omits '1 '", ()=>{
+        let result=balance("H2 + O2 -> H2O", {showOne: false});
+        // O2 coefficient is 1, so it should appear without the leading "1 "
+        expect(result.equation).not.toMatch(/1\s+O2/);
+        expect(result.equation).toContain("O2");
+    });
+    it("showOne=true default", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        expect(result.equation).toMatch(/1\s+O2/);
+    });
+    it("showOne=false explicit", ()=>{
+        let result=balance("H2 + O2 -> H2O", {showOne: false});
+        expect(result.equation).not.toMatch(/1\s+O2/);
+    });
+    it("showOne with multiple species", ()=>{
+        let result=balance("CaCO3 -> CaO + CO2", {showOne: false});
+        // All coefficients are 1, so none should be displayed
+        expect(result.equation).not.toMatch(/1\s+CaCO3/);
+        expect(result.equation).not.toMatch(/1\s+CaO/);
+        expect(result.equation).not.toMatch(/1\s+CO2/);
+        expect(result.equation).toContain("CaCO3");
+        expect(result.equation).toContain("CaO");
+        expect(result.equation).toContain("CO2");
+    });
+    it("showOne affects only coefficient=1 terms", ()=>{
+        let result=balance("H2 + O2 -> H2O", {showOne: false});
+        // H2 has coefficient 2 - it must still be displayed
+        expect(result.equation).toContain("2 H2");
+        // H2O has coefficient 2 - it must still be displayed
+        expect(result.equation).toContain("2 H2O");
+        // O2 has coefficient 1 - it should not have "1 " prefix
+        expect(result.equation).not.toMatch(/1\s+O2/);
+    });
+});
