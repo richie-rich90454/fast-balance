@@ -182,3 +182,66 @@ describe("Combustion lab reactions", () => {
         expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
     });
 });
+
+describe("Electrochemistry lab reactions", () => {
+    it("balances Zn + Cu2+ -> Zn2+ + Cu", () => {
+        const r = balance("Zn + Cu2+ -> Zn2+ + Cu");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "Zn")?.coefficient).toBe(1);
+        expect(r.reactants.find(x => x.formula === "Cu2+")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "Zn2+")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "Cu")?.coefficient).toBe(1);
+    });
+
+    it("balances Mg + Zn2+ -> Mg2+ + Zn", () => {
+        const r = balance("Mg + Zn2+ -> Mg2+ + Zn");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "Mg")?.coefficient).toBe(1);
+        expect(r.reactants.find(x => x.formula === "Zn2+")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "Mg2+")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "Zn")?.coefficient).toBe(1);
+    });
+
+    it("balances Fe + Cu2+ -> Fe2+ + Cu", () => {
+        const r = balance("Fe + Cu2+ -> Fe2+ + Cu");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "Fe")?.coefficient).toBe(1);
+        expect(r.reactants.find(x => x.formula === "Cu2+")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "Fe2+")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "Cu")?.coefficient).toBe(1);
+    });
+
+    it("balances Al + Ag+ -> Al3+ + Ag (positive check)", () => {
+        const r = balance("Al + Ag+ -> Al3+ + Ag");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances Ni + Cu2+ -> Ni2+ + Cu (positive check)", () => {
+        const r = balance("Ni + Cu2+ -> Ni2+ + Cu");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+});
