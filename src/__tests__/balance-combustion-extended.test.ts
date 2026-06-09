@@ -312,3 +312,41 @@ describe("sulfur-containing combustion", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([2, 2]);
   });
 });
+
+describe("halogenated combustion", () => {
+  it("balances 2CHCl3 + O2 -> 2CO2 + 2H2O + 3Cl2 (positive check)", () => {
+    const r = balance("CHCl3 + O2 -> CO2 + H2O + Cl2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances CCl4 + O2 -> CO2 + 2Cl2 (positive check)", () => {
+    const r = balance("CCl4 + O2 -> CO2 + Cl2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances 2CH2Cl2 + O2 -> 2CO2 + 2H2O + 2Cl2 (positive check)", () => {
+    const r = balance("CH2Cl2 + O2 -> CO2 + H2O + Cl2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances C2Cl4 + O2 -> 2CO2 + 2Cl2 (positive check)", () => {
+    const r = balance("C2Cl4 + O2 -> CO2 + Cl2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances C2H4Cl2 + O2 -> CO2 + H2O + Cl2 (positive check)", () => {
+    const r = balance("C2H4Cl2 + O2 -> CO2 + H2O + Cl2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
