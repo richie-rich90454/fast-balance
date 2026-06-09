@@ -182,3 +182,44 @@ describe("metal sulfide and sulfite acid reactions", () => {
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
 });
+
+describe("amphoteric hydroxide reactions", () => {
+  it("balances Al(OH)3 + 3HCl -> AlCl3 + 3H2O", () => {
+    const r = balance("Al(OH)3 + HCl -> AlCl3 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 3]);
+  });
+  it("balances Al(OH)3 + NaOH -> NaAlO2 + 2H2O", () => {
+    const r = balance("Al(OH)3 + NaOH -> NaAlO2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances Zn(OH)2 + 2HCl -> ZnCl2 + 2H2O", () => {
+    const r = balance("Zn(OH)2 + HCl -> ZnCl2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+  it("balances Zn(OH)2 + 2NaOH -> Na2ZnO2 + 2H2O", () => {
+    const r = balance("Zn(OH)2 + NaOH -> Na2ZnO2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances Sn(OH)2 + 2HCl -> SnCl2 + 2H2O", () => {
+    const r = balance("Sn(OH)2 + HCl -> SnCl2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances Pb(OH)2 + 2NaOH -> Na2PbO2 + 2H2O", () => {
+    const r = balance("Pb(OH)2 + NaOH -> Na2PbO2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
