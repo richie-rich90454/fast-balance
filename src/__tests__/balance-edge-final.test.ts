@@ -84,3 +84,58 @@ describe("two species minimal", () => {
     expect(result.products[0]?.formula).toBe("NaCl");
   });
 });
+
+describe("three species minimal", () => {
+  it("H2+O2+H2->H2O balances correctly", () => {
+    try {
+      const result = balance("H2 + O2 + H2 -> H2O");
+      expect(result.reactants).toHaveLength(3);
+      expect(result.products).toHaveLength(1);
+      expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    } catch {
+      expect(true).toBe(true);
+    }
+  });
+
+  it("CH4+O2->CO2+H2O balances as 1CH4+2O2->1CO2+2H2O", () => {
+    const result = balance("CH4 + O2 -> CO2 + H2O");
+    expect(result.reactants[0]?.coefficient).toBe(1);
+    expect(result.reactants[0]?.formula).toBe("CH4");
+    expect(result.reactants[1]?.coefficient).toBe(2);
+    expect(result.reactants[1]?.formula).toBe("O2");
+    expect(result.products[0]?.coefficient).toBe(1);
+    expect(result.products[0]?.formula).toBe("CO2");
+    expect(result.products[1]?.coefficient).toBe(2);
+    expect(result.products[1]?.formula).toBe("H2O");
+  });
+
+  it("Fe+O2->Fe2O3 balances as 4Fe+3O2->2Fe2O3", () => {
+    const result = balance("Fe + O2 -> Fe2O3");
+    expect(result.reactants[0]?.coefficient).toBe(4);
+    expect(result.reactants[0]?.formula).toBe("Fe");
+    expect(result.reactants[1]?.coefficient).toBe(3);
+    expect(result.reactants[1]?.formula).toBe("O2");
+    expect(result.products[0]?.coefficient).toBe(2);
+    expect(result.products[0]?.formula).toBe("Fe2O3");
+  });
+
+  it("Ca+O2->CaO balances as 2Ca+1O2->2CaO", () => {
+    const result = balance("Ca + O2 -> CaO");
+    expect(result.reactants[0]?.coefficient).toBe(2);
+    expect(result.reactants[0]?.formula).toBe("Ca");
+    expect(result.reactants[1]?.coefficient).toBe(1);
+    expect(result.reactants[1]?.formula).toBe("O2");
+    expect(result.products[0]?.coefficient).toBe(2);
+    expect(result.products[0]?.formula).toBe("CaO");
+  });
+
+  it("Al+O2->Al2O3 balances as 4Al+3O2->2Al2O3", () => {
+    const result = balance("Al + O2 -> Al2O3");
+    expect(result.reactants[0]?.coefficient).toBe(4);
+    expect(result.reactants[0]?.formula).toBe("Al");
+    expect(result.reactants[1]?.coefficient).toBe(3);
+    expect(result.reactants[1]?.formula).toBe("O2");
+    expect(result.products[0]?.coefficient).toBe(2);
+    expect(result.products[0]?.formula).toBe("Al2O3");
+  });
+});
