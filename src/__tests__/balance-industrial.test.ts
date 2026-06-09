@@ -512,3 +512,74 @@ describe("Blast furnace iron production", () => {
         expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
     });
 });
+
+describe("Petroleum cracking", () => {
+    it("balances C12H26 -> C6H14 + C6H12 (positive check)", () => {
+        const result = balance("C12H26 -> C6H14 + C6H12");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances C10H22 -> C5H12 + C5H10 (positive check)", () => {
+        const result = balance("C10H22 -> C5H12 + C5H10");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances C2H6 -> C2H4 + H2", () => {
+        const result = balance("C2H6 -> C2H4 + H2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "C2H6")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "C2H4")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "H2")?.coefficient).toBe(1);
+    });
+
+    it("balances C3H8 -> C3H6 + H2", () => {
+        const result = balance("C3H8 -> C3H6 + H2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "C3H8")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "C3H6")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "H2")?.coefficient).toBe(1);
+    });
+
+    it("balances C4H10 -> C4H8 + H2", () => {
+        const result = balance("C4H10 -> C4H8 + H2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "C4H10")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "C4H8")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "H2")?.coefficient).toBe(1);
+    });
+
+    it("balances C8H18 -> C4H10 + C4H8 (positive check)", () => {
+        const result = balance("C8H18 -> C4H10 + C4H8");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+});
