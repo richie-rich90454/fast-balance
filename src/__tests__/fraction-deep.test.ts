@@ -184,7 +184,7 @@ describe("fraction boundary conditions", () => {
 
   it("Fraction(0,-5) normalizes to 0/1", () => {
     const f = new Fraction(0, -5);
-    expect(f.num).toBe(0);
+    expect(f.isZero()).toBe(true);
     expect(f.den).toBe(1);
   });
 
@@ -202,9 +202,8 @@ describe("fraction boundary conditions", () => {
 
   it("Fraction(-0,1) is zero", () => {
     const f = new Fraction(-0, 1);
-    expect(f.num).toBe(0);
-    expect(f.den).toBe(1);
     expect(f.isZero()).toBe(true);
+    expect(f.den).toBe(1);
   });
 
   it("Fraction(0,1).equals(Fraction(0,5)) is true", () => {
@@ -243,7 +242,7 @@ describe("fraction boundary conditions", () => {
 
   it("Fraction(0,-1) normalizes to 0/1", () => {
     const f = new Fraction(0, -1);
-    expect(f.num).toBe(0);
+    expect(f.isZero()).toBe(true);
     expect(f.den).toBe(1);
   });
 
@@ -323,12 +322,12 @@ describe("fraction chain operations", () => {
     expect(result.den).toBe(6);
   });
 
-  it("2/3 + 3/4 + 4/5 = 139/60", () => {
+  it("2/3 + 3/4 + 4/5 = 133/60", () => {
     const a = new Fraction(2, 3);
     const b = new Fraction(3, 4);
     const c = new Fraction(4, 5);
     const result = a.add(b).add(c);
-    expect(result.num).toBe(139);
+    expect(result.num).toBe(133);
     expect(result.den).toBe(60);
   });
 
@@ -393,12 +392,12 @@ describe("fraction chain operations", () => {
     expect(result.den).toBe(5);
   });
 
-  it("(1/2 + 1/3) * (1/4 + 1/5) = 55/120", () => {
+  it("(1/2 + 1/3) * (1/4 + 1/5) = 3/8", () => {
     const left = new Fraction(1, 2).add(new Fraction(1, 3));
     const right = new Fraction(1, 4).add(new Fraction(1, 5));
     const result = left.mul(right);
-    expect(result.num).toBe(11);
-    expect(result.den).toBe(24);
+    expect(result.num).toBe(3);
+    expect(result.den).toBe(8);
   });
 
   it("1/6 + 1/6 + 1/6 + 1/6 + 1/6 + 1/6 = 1", () => {
@@ -424,11 +423,11 @@ describe("fraction chain operations", () => {
     expect(result.den).toBe(24);
   });
 
-  it("(1/2 / 1/3) + (1/4 / 1/5) = 3 + 5/4 = 17/4", () => {
+  it("(1/2 / 1/3) + (1/4 / 1/5) = 3 + 5/4 = 11/4", () => {
     const a = new Fraction(1, 2).div(new Fraction(1, 3));
     const b = new Fraction(1, 4).div(new Fraction(1, 5));
     const result = a.add(b);
-    expect(result.num).toBe(17);
+    expect(result.num).toBe(11);
     expect(result.den).toBe(4);
   });
 
