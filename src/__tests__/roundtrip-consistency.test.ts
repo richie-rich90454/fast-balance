@@ -446,3 +446,48 @@ describe("format roundtrip", ()=>{
     });
 });
 
+describe("parse-side consistency", ()=>{
+    it("splitEquation returns same species order as input (CH4 + O2 -> CO2 + H2O)", ()=>{
+        const eq = "CH4 + O2 -> CO2 + H2O";
+        const split = splitEquation(eq);
+        // The order of species must match the textual order in the input.
+        expect(split.reactants[0]!.formula).toBe("CH4");
+        expect(split.reactants[1]!.formula).toBe("O2");
+        expect(split.products[0]!.formula).toBe("CO2");
+        expect(split.products[1]!.formula).toBe("H2O");
+    });
+
+    it("reactant order is preserved (Al + HCl -> AlCl3 + H2)", ()=>{
+        const split = splitEquation("Al + HCl -> AlCl3 + H2");
+        expect(split.reactants.map(s=>s.formula)).toEqual(["Al", "HCl"]);
+    });
+
+    it("product order is preserved (Fe2O3 + CO -> Fe + CO2)", ()=>{
+        const split = splitEquation("Fe2O3 + CO -> Fe + CO2");
+        expect(split.products.map(s=>s.formula)).toEqual(["Fe", "CO2"]);
+    });
+
+    it("formula text matches input (H2 + O2 -> H2O)", ()=>{
+        const split = splitEquation("H2 + O2 -> H2O");
+        // Formula text on each side should match the input exactly.
+        expect(split.reactants[0]!.formula).toBe("H2");
+        expect(split.reactants[1]!.formula).toBe("O2");
+        expect(split.products[0]!.formula).toBe("H2O");
+        // Length of the species array matches the number of '+' delimited tokens.
+        expect(split.reactants.length).toBe(2);
+        expect(split.products.length).toBe(1);
+    });
+
+    it("elements maps match expectations (Fe2O3 + CO -> Fe + CO2)", ()=>{
+        const split = splitEquation("Fe2O3 + CO -> Fe + CO2");
+        expect(split.reactants[0]!.elements).toEqual({Fe: 2, O: 3});
+        expect(split.reactants[1]!.elements).toEqual({C: 1, O: 1});
+        expect(split.products[0]!.elements).toEqual({Fe: 1});
+        expect(split.products[1]!.elements).toEqual({C: 1, O: 2});
+        // All charges should be zero for this neutral equation.
+        for (const sp of [...split.reactants, ...split.products]){
+            expect(sp.charge).toBe(0);
+        }
+    });
+});
+
