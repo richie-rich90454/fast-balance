@@ -83,3 +83,110 @@ describe("buildMatrix dimension tests", () => {
     );
   });
 });
+
+describe("buildMatrix sign convention tests", () => {
+  it("reactant entries for elements are positive", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix } = buildMatrix(eq.reactants, eq.products);
+    const reactantsCount = eq.reactants.length;
+    for (let j = 0; j < reactantsCount; j++) {
+      for (let i = 0; i < matrix.length; i++) {
+        if (!matrix[i]![j]!.isZero()) {
+          expect(matrix[i]![j]!.num).toBeGreaterThan(0);
+        }
+      }
+    }
+  });
+
+  it("reactant entries for charge are positive", () => {
+    const eq = splitEquation("Fe2+ + Cl- -> FeCl2");
+    const { matrix } = buildMatrix(eq.reactants, eq.products);
+    const lastRow = matrix[matrix.length - 1]!;
+    expect(lastRow[0]!.num).toBeGreaterThan(0);
+    expect(lastRow[1]!.num).toBeLessThan(0);
+  });
+
+  it("product entries for elements are negative", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix } = buildMatrix(eq.reactants, eq.products);
+    const reactantsCount = eq.reactants.length;
+    for (let j = reactantsCount; j < matrix[0]!.length; j++) {
+      for (let i = 0; i < matrix.length - 0; i++) {
+        const v = matrix[i]![j]!;
+        if (v.num !== 0) {
+          expect(v.num).toBeLessThan(0);
+        }
+      }
+    }
+  });
+
+  it("product entries for charge are negative", () => {
+    const eq = splitEquation("Fe2+ + Cl- -> FeCl2");
+    const { matrix } = buildMatrix(eq.reactants, eq.products);
+    const lastRow = matrix[matrix.length - 1]!;
+    for (let j = 2; j < lastRow.length; j++) {
+      if (!lastRow[j]!.isZero()) {
+        expect(lastRow[j]!.num).toBeLessThan(0);
+      }
+    }
+  });
+
+  it("zero element count produces Fraction.zero() in matrix", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix } = buildMatrix(eq.reactants, eq.products);
+    let foundZero = false;
+    for (const row of matrix) {
+      for (const cell of row) {
+        if (cell.isZero()) {
+          expect(cell).toBeInstanceOf(Fraction);
+          expect(cell.num).toBe(0);
+          foundZero = true;
+        }
+      }
+    }
+    expect(foundZero).toBe(true);
+  });
+
+  it("zero charge produces Fraction.zero() in charge row", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix } = buildMatrix(eq.reactants, eq.products);
+    const chargeRow = matrix[matrix.length - 1]!;
+    for (const cell of chargeRow) {
+      expect(cell).toBeInstanceOf(Fraction);
+    }
+  });
+
+  it("sign for H2O in reactants is H=+2, O=+1", () => {
+    const eq = splitEquation("H2O -> H2 + O2");
+    const { matrix } = buildMatrix(eq.reactants, eq.products);
+    let hRow = -1;
+    let oRow = -1;
+    for (let i = 0; i < matrix.length; i++) {
+      const row = matrix[i]!;
+      const allZero = row.every((c) => c.isZero());
+      if (allZero) continue;
+      if (!row[0]!.isZero() && row[0]!.num > 0) {
+        const hColVal = matrix[i]![0]!;
+        if (hColVal.num === 2) hRow = i;
+        if (hColVal.num === 1) oRow = i;
+      }
+    }
+    expect(matrix[hRow]![0]!.num).toBe(2);
+    expect(matrix[oRow]![0]!.num).toBe(1);
+  });
+
+  it("sign for H2O in products is H=-2, O=-1", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix } = buildMatrix(eq.reactants, eq.products);
+    const lastCol = eq.reactants.length;
+    let hRow = -1;
+    let oRow = -1;
+    for (let i = 0; i < matrix.length; i++) {
+      const v = matrix[i]![lastCol]!;
+      if (v.num === -2) hRow = i;
+      if (v.num === -1) oRow = i;
+    }
+    expect(hRow).toBeGreaterThanOrEqual(0);
+    expect(oRow).toBeGreaterThanOrEqual(0);
+  });
+});
