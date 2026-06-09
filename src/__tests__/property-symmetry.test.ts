@@ -117,3 +117,57 @@ describe("element conservation property", () => {
     }
   });
 });
+
+function getChargeTotal(result: BalanceResult, side: "reactants" | "products"): number {
+  const species = side === "reactants" ? result.reactants : result.products;
+  let total = 0;
+  for (const s of species) {
+    const parsed = parseFormula(s.formula);
+    total += s.coefficient * parsed.charge;
+  }
+  return total;
+}
+
+function verifyChargeConservation(result: BalanceResult): void {
+  const r = getChargeTotal(result, "reactants");
+  const p = getChargeTotal(result, "products");
+  expect(r).toBe(p);
+}
+
+describe("charge conservation property", () => {
+  it("conserves charge in Na+ + Cl- -> NaCl", () => {
+    const result = balance("Na+ + Cl- -> NaCl");
+    verifyChargeConservation(result);
+    expectPositiveIntegers(result);
+  });
+
+  it("conserves charge in Fe2+ + 2Cl- -> FeCl2", () => {
+    const result = balance("Fe2+ + 2Cl- -> FeCl2");
+    verifyChargeConservation(result);
+    expectPositiveIntegers(result);
+  });
+
+  it("conserves charge in Ag+ + Cl- -> AgCl", () => {
+    const result = balance("Ag+ + Cl- -> AgCl");
+    verifyChargeConservation(result);
+    expectPositiveIntegers(result);
+  });
+
+  it("conserves charge in Ba2+ + SO4^2- -> BaSO4", () => {
+    const result = balance("Ba2+ + SO4^2- -> BaSO4");
+    verifyChargeConservation(result);
+    expectPositiveIntegers(result);
+  });
+
+  it("conserves charge in Al3+ + 3Cl- -> AlCl3", () => {
+    const result = balance("Al3+ + 3Cl- -> AlCl3");
+    verifyChargeConservation(result);
+    expectPositiveIntegers(result);
+  });
+
+  it("conserves charge in Na+ + OH- -> NaOH", () => {
+    const result = balance("Na+ + OH- -> NaOH");
+    verifyChargeConservation(result);
+    expectPositiveIntegers(result);
+  });
+});
