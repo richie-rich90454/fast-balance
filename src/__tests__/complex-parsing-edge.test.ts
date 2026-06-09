@@ -159,3 +159,71 @@ describe("ionic species formula parsing", () => {
     expect(result.charge).toBe(-3);
   });
 });
+
+describe("polyatomic ion formula parsing", () => {
+  it("parses SO4^2- sulfate with caret notation", () => {
+    const result = parseFormula("SO4^2-");
+    expect(result.elements).toEqual({ S: 1, O: 4 });
+    expect(result.charge).toBe(-2);
+  });
+
+  it("parses NO3- nitrate", () => {
+    const result = parseFormula("NO3-");
+    expect(result.elements).toEqual({ N: 1, O: 3 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses CO3^2- carbonate with caret notation", () => {
+    const result = parseFormula("CO3^2-");
+    expect(result.elements).toEqual({ C: 1, O: 3 });
+    expect(result.charge).toBe(-2);
+  });
+
+  it("parses PO4^3- phosphate", () => {
+    const result = parseFormula("PO4^3-");
+    expect(result.elements).toEqual({ P: 1, O: 4 });
+    expect(result.charge).toBe(-3);
+  });
+
+  it("parses OH- hydroxide", () => {
+    const result = parseFormula("OH-");
+    expect(result.elements).toEqual({ O: 1, H: 1 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses CN- cyanide", () => {
+    const result = parseFormula("CN-");
+    expect(result.elements).toEqual({ C: 1, N: 1 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses MnO4- permanganate", () => {
+    const result = parseFormula("MnO4-");
+    expect(result.elements).toEqual({ Mn: 1, O: 4 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses CrO4^2- chromate", () => {
+    const result = parseFormula("CrO4^2-");
+    expect(result.elements).toEqual({ Cr: 1, O: 4 });
+    expect(result.charge).toBe(-2);
+  });
+
+  it("parses Cr2O7^2- dichromate", () => {
+    const result = parseFormula("Cr2O7^2-");
+    expect(result.elements).toEqual({ Cr: 2, O: 7 });
+    expect(result.charge).toBe(-2);
+  });
+
+  it("parses ClO3- chlorate", () => {
+    const result = parseFormula("ClO3-");
+    expect(result.elements).toEqual({ Cl: 1, O: 3 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses ClO4- perchlorate", () => {
+    const result = parseFormula("ClO4-");
+    expect(result.elements).toEqual({ Cl: 1, O: 4 });
+    expect(result.charge).toBe(-1);
+  });
+});
