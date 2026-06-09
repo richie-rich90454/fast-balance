@@ -158,7 +158,47 @@ describe("nitride tests", () => {
   });
 });
 
-describe("carbide tests", () => {});
+describe("carbide tests", () => {
+  it("should balance CaC2 + H2O -> Ca(OH)2 + C2H2", () => {
+    const r = balance("CaC2 + H2O -> Ca(OH)2 + C2H2");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(2);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(1);
+  });
+
+  it("should balance Al4C3 + H2O -> Al(OH)3 + CH4", () => {
+    const r = balance("Al4C3 + H2O -> Al(OH)3 + CH4");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(12);
+    expect(r.products[0].coefficient).toBe(4);
+    expect(r.products[1].coefficient).toBe(3);
+  });
+
+  it("should balance CaC2 + O2 -> CaO + CO2", () => {
+    const r = balance("CaC2 + O2 -> CaO + CO2");
+    expect(r.reactants[0].coefficient).toBe(2);
+    expect(r.reactants[1].coefficient).toBe(5);
+    expect(r.products[0].coefficient).toBe(2);
+    expect(r.products[1].coefficient).toBe(4);
+  });
+
+  it("should balance CaC2 + N2 -> CaCN2 + C", () => {
+    const r = balance("CaC2 + N2 -> CaCN2 + C");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(1);
+  });
+
+  it("should balance Mg2C3 + H2O -> Mg(OH)2 + C3H4", () => {
+    const r = balance("Mg2C3 + H2O -> Mg(OH)2 + C3H4");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(4);
+    expect(r.products[0].coefficient).toBe(2);
+    expect(r.products[1].coefficient).toBe(1);
+  });
+});
 
 describe("borohydride tests", () => {});
 
