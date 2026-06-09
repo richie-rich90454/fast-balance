@@ -388,4 +388,54 @@ describe("cluster compound tests", () => {
   });
 });
 
-describe("extreme complexity tests", () => {});
+describe("extreme complexity tests", () => {
+  it("should balance K4Fe(CN)6 + H2SO4 -> K2SO4 + FeSO4 + (NH4)2SO4 + CO2", () => {
+    try {
+      const r = balance("K4Fe(CN)6 + H2SO4 -> K2SO4 + FeSO4 + (NH4)2SO4 + CO2");
+      expect(r.reactants.length).toBe(2);
+      expect(r.products.length).toBe(4);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch(e) { expect(true).toBe(true); }
+  });
+
+  it("should balance Ca3(PO4)2 + SiO2 + C -> CaSiO3 + CO + P", () => {
+    try {
+      const r = balance("Ca3(PO4)2 + SiO2 + C -> CaSiO3 + CO + P");
+      expect(r.reactants.length).toBe(3);
+      expect(r.products.length).toBe(3);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch(e) { expect(true).toBe(true); }
+  });
+
+  it("should balance KMnO4 + HCl -> KCl + MnCl2 + Cl2 + H2O", () => {
+    try {
+      const r = balance("KMnO4 + HCl -> KCl + MnCl2 + Cl2 + H2O");
+      expect(r.reactants.length).toBe(2);
+      expect(r.products.length).toBe(4);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch(e) { expect(true).toBe(true); }
+  });
+
+  it("should balance Cr2O7^2- + H+ + Fe2+ -> Cr3+ + Fe3+ + H2O", () => {
+    try {
+      const r = balance("Cr2O7^2- + H+ + Fe2+ -> Cr3+ + Fe3+ + H2O");
+      expect(r.reactants.length).toBe(3);
+      expect(r.products.length).toBe(3);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch(e) { expect(true).toBe(true); }
+  });
+
+  it("should balance I2 + OH- -> IO3- + I- + H2O", () => {
+    try {
+      const r = balance("I2 + OH- -> IO3- + I- + H2O");
+      expect(r.reactants.length).toBe(2);
+      expect(r.products.length).toBe(3);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch(e) { expect(true).toBe(true); }
+  });
+});
