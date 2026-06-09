@@ -110,3 +110,39 @@ describe("parseFormula execution", () => {
     expect(hydroxide.elements.H).toBe(1);
   });
 });
+
+describe("splitEquation execution", () => {
+  it("returns an Equation object", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    expect(eq).toBeDefined();
+    expect(typeof eq).toBe("object");
+    expect("reactants" in eq).toBe(true);
+    expect("products" in eq).toBe(true);
+  });
+
+  it("splitEquation.reactants is an array", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    expect(Array.isArray(eq.reactants)).toBe(true);
+    expect(eq.reactants.length).toBe(2);
+  });
+
+  it("splitEquation.products is an array", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    expect(Array.isArray(eq.products)).toBe(true);
+    expect(eq.products.length).toBe(1);
+  });
+
+  it("each species has formula, elements, and charge", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    for (const s of [...eq.reactants, ...eq.products]) {
+      expect(typeof s.formula).toBe("string");
+      expect(typeof s.elements).toBe("object");
+      expect(typeof s.charge).toBe("number");
+    }
+  });
+
+  it("empty side throws", () => {
+    expect(() => splitEquation("-> H2O")).toThrow();
+    expect(() => splitEquation("H2 + O2 ->")).toThrow();
+  });
+});
