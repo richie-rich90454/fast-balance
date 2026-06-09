@@ -278,3 +278,36 @@ describe("gas evolution reaction tests", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
   });
 });
+
+describe("water formation reaction tests", () => {
+  it("balances NaOH + HCl -> NaCl + H2O", () => {
+    const r = balance("NaOH + HCl -> NaCl + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances KOH + HNO3 -> KNO3 + H2O", () => {
+    const r = balance("KOH + HNO3 -> KNO3 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances Ca(OH)2 + HCl -> CaCl2 + H2O", () => {
+    const r = balance("Ca(OH)2 + HCl -> CaCl2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+  it("balances Ba(OH)2 + HNO3 -> Ba(NO3)2 + H2O", () => {
+    const r = balance("Ba(OH)2 + HNO3 -> Ba(NO3)2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+  it("balances NH3 + HCl -> NH4Cl", () => {
+    const r = balance("NH3 + HCl -> NH4Cl");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances 2H2 + O2 -> 2H2O", () => {
+    const r = balance("2H2 + O2 -> 2H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+});
