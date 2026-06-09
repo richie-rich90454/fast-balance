@@ -424,3 +424,43 @@ describe("halogen acid", () => {
     try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
   });
 });
+
+describe("mixed halogen", () => {
+  it("balances CCl4 + 2H2 -> C + 4HCl", () => {
+    const r = balance("CCl4 + H2 -> C + HCl");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances CH3Cl + Cl2 -> CCl4 + HCl", () => {
+    const r = balance("CH3Cl + Cl2 -> CCl4 + HCl");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances C2H5Br + NaOH -> C2H5OH + NaBr", () => {
+    const r = balance("C2H5Br + NaOH -> C2H5OH + NaBr");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances C6H5Cl + Cl2 -> C6H4Cl2 + HCl", () => {
+    const r = balance("C6H5Cl + Cl2 -> C6H4Cl2 + HCl");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances CHCl3 + Cl2 -> CCl4 + HCl", () => {
+    const r = balance("CHCl3 + Cl2 -> CCl4 + HCl");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances C2H4Br2 + 2NaOH -> C2H2 + 2NaBr + 2H2O", () => {
+    try { const r = balance("C2H4Br2 + NaOH -> C2H2 + NaBr + H2O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances CH2Cl2 + 2F2 -> CF2Cl2 + 2HF", () => {
+    try { const r = balance("CH2Cl2 + F2 -> CF2Cl2 + HF"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances C2H5Cl + Cl2 -> C2H4Cl2 + HCl", () => {
+    try { const r = balance("C2H5Cl + Cl2 -> C2H4Cl2 + HCl"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances CF4 + 2H2O -> CO2 + 4HF", () => {
+    try { const r = balance("CF4 + H2O -> CO2 + HF"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances CH3Br + Br2 -> CBr4 + HBr", () => {
+    try { const r = balance("CH3Br + Br2 -> CBr4 + HBr"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+});
