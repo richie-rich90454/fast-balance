@@ -104,3 +104,33 @@ describe("sulfur compound tests", () => {
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
 });
+
+describe("halogen compound tests", () => {
+  it("balances NaBr + Cl2 -> NaCl + Br2", () => {
+    const r = balance("NaBr + Cl2 -> NaCl + Br2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1]);
+  });
+  it("balances NaI + Cl2 -> NaCl + I2", () => {
+    const r = balance("NaI + Cl2 -> NaCl + I2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1]);
+  });
+  it("balances KBr + Cl2 -> KCl + Br2", () => {
+    const r = balance("KBr + Cl2 -> KCl + Br2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1]);
+  });
+  it("balances KI + Br2 -> KBr + I2 (positive check)", () => {
+    const r = balance("KI + Br2 -> KBr + I2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances KClO3 -> KCl + O2", () => {
+    const r = balance("KClO3 -> KCl + O2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 3]);
+  });
+});
