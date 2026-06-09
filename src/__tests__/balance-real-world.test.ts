@@ -192,3 +192,47 @@ describe("metallurgy reactions", () => {
         expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
     });
 });
+
+describe("petroleum refining reactions", () => {
+    it("balances C12H26 -> C6H14 + C6H12 (dodecane cracking, positive check)", () => {
+        const result = balance("C12H26 -> C6H14 + C6H12");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances C8H18 -> C4H10 + C4H8 (octane cracking, positive check)", () => {
+        const result = balance("C8H18 -> C4H10 + C4H8");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances C2H4 + H2 -> C2H6 (ethylene hydrogenation)", () => {
+        const result = balance("C2H4 + H2 -> C2H6");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([1]);
+    });
+
+    it("balances C3H6 + H2 -> C3H8 (propylene hydrogenation)", () => {
+        const result = balance("C3H6 + H2 -> C3H8");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([1]);
+    });
+
+    it("balances C2H4 + H2O -> C2H5OH (ethanol hydration, positive check)", () => {
+        const result = balance("C2H4 + H2O -> C2H5OH");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances C2H6 -> C2H4 + H2 (ethane dehydrogenation/cracking)", () => {
+        const result = balance("C2H6 -> C2H4 + H2");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+    });
+});
