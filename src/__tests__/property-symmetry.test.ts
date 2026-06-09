@@ -171,3 +171,52 @@ describe("charge conservation property", () => {
     expectPositiveIntegers(result);
   });
 });
+
+function reverseEquation(eq: string): string {
+  const arrow = "->";
+  const parts = eq.split(arrow);
+  if (parts.length !== 2) throw new Error("expected single '->' in input");
+  const left = parts[0]!.trim();
+  const right = parts[1]!.trim();
+  const leftTerms = left.split("+").map((s) => s.trim());
+  const rightTerms = right.split("+").map((s) => s.trim());
+  return rightTerms.join(" + ") + " -> " + leftTerms.join(" + ");
+}
+
+describe("reverse equation property", () => {
+  it("reverses H2 + O2 -> H2O as H2O -> H2 + O2 with positive integer coefficients", () => {
+    const result = balance(reverseEquation("H2 + O2 -> H2O"));
+    expectPositiveIntegers(result);
+    verifyConservation(result);
+  });
+
+  it("reverses Fe + Cl2 -> FeCl3 as FeCl3 -> Fe + Cl2 with positive integer coefficients", () => {
+    const result = balance(reverseEquation("Fe + Cl2 -> FeCl3"));
+    expectPositiveIntegers(result);
+    verifyConservation(result);
+  });
+
+  it("reverses N2 + H2 -> NH3 as NH3 -> N2 + H2 with positive integer coefficients", () => {
+    const result = balance(reverseEquation("N2 + H2 -> NH3"));
+    expectPositiveIntegers(result);
+    verifyConservation(result);
+  });
+
+  it("reverses CO2 + H2O -> C6H12O6 + O2 with positive integer coefficients", () => {
+    const result = balance(reverseEquation("CO2 + H2O -> C6H12O6 + O2"));
+    expectPositiveIntegers(result);
+    verifyConservation(result);
+  });
+
+  it("reverses Al2O3 -> Al + O2 with positive integer coefficients", () => {
+    const result = balance(reverseEquation("Al2O3 -> Al + O2"));
+    expectPositiveIntegers(result);
+    verifyConservation(result);
+  });
+
+  it("reverses CaCO3 -> CaO + CO2 with positive integer coefficients", () => {
+    const result = balance(reverseEquation("CaCO3 -> CaO + CO2"));
+    expectPositiveIntegers(result);
+    verifyConservation(result);
+  });
+});
