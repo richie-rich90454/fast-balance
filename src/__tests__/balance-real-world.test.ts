@@ -236,3 +236,41 @@ describe("petroleum refining reactions", () => {
         expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
     });
 });
+
+describe("atmospheric and environmental reactions", () => {
+    it("balances 2NO + O2 -> 2NO2 (nitric oxide oxidation)", () => {
+        const result = balance("2NO + O2 -> 2NO2");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([2, 1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([2]);
+    });
+
+    it("balances 2NO2 -> N2O4 (dimerization)", () => {
+        const result = balance("2NO2 -> N2O4");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([2]);
+        expect(result.products.map(p => p.coefficient)).toEqual([1]);
+    });
+
+    it("balances 3NO2 + H2O -> 2HNO3 + NO (nitrogen dioxide disproportionation)", () => {
+        const result = balance("3NO2 + H2O -> 2HNO3 + NO");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([3, 1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([2, 1]);
+    });
+
+    it("balances SO2 + H2O -> H2SO3 (sulfurous acid formation)", () => {
+        const result = balance("SO2 + H2O -> H2SO3");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([1]);
+    });
+
+    it("balances SO3 + H2O -> H2SO4 (sulfuric acid formation)", () => {
+        const result = balance("SO3 + H2O -> H2SO4");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([1]);
+    });
+
+    it("balances 2SO2 + O2 -> 2SO3 (sulfur dioxide oxidation)", () => {
+        const result = balance("2SO2 + O2 -> 2SO3");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([2, 1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([2]);
+    });
+});
