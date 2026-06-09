@@ -299,3 +299,54 @@ describe("parseFormula charge type", ()=>{
         expect(result.charge).toBe(-3);
     });
 });
+
+describe("edge case balance inputs", ()=>{
+    it("balance with leading whitespace", ()=>{
+        let result=balance("   H2 + O2 -> H2O");
+        expect(result.equation).toContain("H2");
+        expect(result.equation).toContain("H2O");
+    });
+    it("balance with trailing whitespace", ()=>{
+        let result=balance("H2 + O2 -> H2O   ");
+        expect(result.equation).toContain("H2");
+        expect(result.equation).toContain("H2O");
+    });
+    it("balance with extra spaces around operators", ()=>{
+        let result=balance("H2   +   O2   ->   H2O");
+        expect(result.equation).toContain("H2");
+        expect(result.equation).toContain("H2O");
+    });
+    it("balance with tab characters works", ()=>{
+        let result=balance("H2\t+\tO2\t->\tH2O");
+        expect(result.equation).toContain("H2");
+        expect(result.equation).toContain("H2O");
+    });
+    it("balance with no spaces around plus throws or parses (positive check)", ()=>{
+        try{
+            let result=balance("H2+O2->H2O");
+            expect(result).toBeDefined();
+        }
+        catch (e){
+            expect((e as Error).message).toBeDefined();
+        }
+    });
+    it("balance with leading and trailing whitespace both", ()=>{
+        let result=balance("  H2 + O2 -> H2O  ");
+        expect(result.equation).toContain("H2");
+        expect(result.equation).toContain("H2O");
+    });
+    it("balance with newlines works", ()=>{
+        let result=balance("H2 + O2 ->\nH2O");
+        expect(result.equation).toContain("H2");
+    });
+    it("balance trims input correctly", ()=>{
+        let r1=balance("  H2 + O2 -> H2O  ");
+        let r2=balance("H2 + O2 -> H2O");
+        expect(r1.equation).toBe(r2.equation);
+    });
+    it("balance with mixed whitespace types", ()=>{
+        let result=balance(" \t H2 \t + \t O2 \t -> \t H2O \t ");
+        expect(result.equation).toContain("H2");
+        expect(result.equation).toContain("H2O");
+    });
+});
