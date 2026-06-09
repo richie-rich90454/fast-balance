@@ -423,3 +423,62 @@ describe("Pyrometallurgy reactions", () => {
         expect(r.products.find(x => x.formula === "Al2O3")?.coefficient).toBe(1);
     });
 });
+
+describe("Hydrometallurgy reactions", () => {
+    it("balances Au + CN- + O2 -> Au(CN)2- + OH- (positive check)", () => {
+        const r = balance("Au + CN- + O2 -> Au(CN)2- + OH-");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances Ag + CN- + O2 -> Ag(CN)2- + OH- (positive check)", () => {
+        const r = balance("Ag + CN- + O2 -> Ag(CN)2- + OH-");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances Cu + H2SO4 + O2 -> CuSO4 + H2O (positive check)", () => {
+        const r = balance("Cu + H2SO4 + O2 -> CuSO4 + H2O");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances Zn + H2SO4 -> ZnSO4 + H2", () => {
+        const r = balance("Zn + H2SO4 -> ZnSO4 + H2");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "Zn")?.coefficient).toBe(1);
+        expect(r.reactants.find(x => x.formula === "H2SO4")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "ZnSO4")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "H2")?.coefficient).toBe(1);
+    });
+
+    it("balances Al + NaOH + H2O -> NaAlO2 + H2 (positive check)", () => {
+        const r = balance("Al + NaOH + H2O -> NaAlO2 + H2");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+});
