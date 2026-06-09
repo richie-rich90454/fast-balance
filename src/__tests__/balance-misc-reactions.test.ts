@@ -34,3 +34,36 @@ describe("silane and boron reaction tests", () => {
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
 });
+
+describe("phosphorus compound tests", () => {
+  it("balances P4 + O2 -> P2O5", () => {
+    const r = balance("P4 + O2 -> P2O5");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 5]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+  it("balances P + O2 -> P2O5", () => {
+    const r = balance("P + O2 -> P2O5");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([4, 5]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+  it("balances P2O5 + H2O -> H3PO4", () => {
+    const r = balance("P2O5 + H2O -> H3PO4");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+  it("balances PCl3 + H2O -> H3PO3 + HCl", () => {
+    const r = balance("PCl3 + H2O -> H3PO3 + HCl");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 3]);
+  });
+  it("balances PCl5 + H2O -> H3PO4 + HCl", () => {
+    const r = balance("PCl5 + H2O -> H3PO4 + HCl");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 4]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 5]);
+  });
+  it("balances P + Cl2 -> PCl3", () => {
+    const r = balance("P + Cl2 -> PCl3");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+});
