@@ -375,3 +375,74 @@ describe("deterministic output", ()=>{
     });
 });
 
+describe("format roundtrip", ()=>{
+    it("text format gives the expected equation string (H2 + O2 -> H2O)", ()=>{
+        const result = balance("H2 + O2 -> H2O", {format: "text", showOne: false});
+        expect(result.equation).toBe("2 H2 + O2 -> 2 H2O");
+    });
+
+    it("html format gives the expected equation string (H2 + O2 -> H2O)", ()=>{
+        const result = balance("H2 + O2 -> H2O", {format: "html", showOne: false});
+        expect(result.equation).toBe("2 H2 + O2 &rarr; 2 H2O");
+    });
+
+    it("latex format gives the expected equation string (H2 + O2 -> H2O)", ()=>{
+        const result = balance("H2 + O2 -> H2O", {format: "latex", showOne: false});
+        expect(result.equation).toBe("2 H2 + O2 \\rightarrow 2 H2O");
+    });
+
+    it("all formats give same coefficients and array structure (CH4 + O2 -> CO2 + H2O)", ()=>{
+        const text = balance("CH4 + O2 -> CO2 + H2O", {format: "text"});
+        const html = balance("CH4 + O2 -> CO2 + H2O", {format: "html"});
+        const latex = balance("CH4 + O2 -> CO2 + H2O", {format: "latex"});
+        // Coefficients must be identical across formats
+        expect(text.reactants.map(r=>r.coefficient))
+            .toEqual(html.reactants.map(r=>r.coefficient));
+        expect(text.reactants.map(r=>r.coefficient))
+            .toEqual(latex.reactants.map(r=>r.coefficient));
+        expect(text.products.map(r=>r.coefficient))
+            .toEqual(html.products.map(r=>r.coefficient));
+        expect(text.products.map(r=>r.coefficient))
+            .toEqual(latex.products.map(r=>r.coefficient));
+        // Formulas must be identical across formats
+        expect(text.reactants.map(r=>r.formula))
+            .toEqual(html.reactants.map(r=>r.formula));
+        expect(text.reactants.map(r=>r.formula))
+            .toEqual(latex.reactants.map(r=>r.formula));
+        // The strings must be different (each format has its own arrow)
+        expect(text.equation).not.toBe(html.equation);
+        expect(text.equation).not.toBe(latex.equation);
+        expect(html.equation).not.toBe(latex.equation);
+    });
+
+    it("format does not change array structure (Fe2O3 + CO -> Fe + CO2)", ()=>{
+        const text = balance("Fe2O3 + CO -> Fe + CO2", {format: "text"});
+        const html = balance("Fe2O3 + CO -> Fe + CO2", {format: "html"});
+        const latex = balance("Fe2O3 + CO -> Fe + CO2", {format: "latex"});
+        // Array lengths must match
+        expect(text.reactants.length).toBe(html.reactants.length);
+        expect(text.reactants.length).toBe(latex.reactants.length);
+        expect(text.products.length).toBe(html.products.length);
+        expect(text.products.length).toBe(latex.products.length);
+        // Array entries must be plain objects with coefficient and formula
+        for (const r of [...text.reactants, ...html.reactants, ...latex.reactants,
+                          ...text.products, ...html.products, ...latex.products]){
+            expect(typeof r.coefficient).toBe("number");
+            expect(typeof r.formula).toBe("string");
+        }
+    });
+
+    it("all formats are deterministic (N2 + H2 -> NH3)", ()=>{
+        const eq = "N2 + H2 -> NH3";
+        const t1 = balance(eq, {format: "text"}).equation;
+        const t2 = balance(eq, {format: "text"}).equation;
+        const h1 = balance(eq, {format: "html"}).equation;
+        const h2 = balance(eq, {format: "html"}).equation;
+        const l1 = balance(eq, {format: "latex"}).equation;
+        const l2 = balance(eq, {format: "latex"}).equation;
+        expect(t1).toBe(t2);
+        expect(h1).toBe(h2);
+        expect(l1).toBe(l2);
+    });
+});
+
