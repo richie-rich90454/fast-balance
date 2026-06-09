@@ -1,0 +1,67 @@
+import {describe, it, expect} from "vitest";
+import {balance} from "../index";
+
+describe("Organic lab reactions", () => {
+    it("balances CH3COOH + C2H5OH -> CH3COOC2H5 + H2O", () => {
+        const r = balance("CH3COOH + C2H5OH -> CH3COOC2H5 + H2O");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "CH3COOH")?.coefficient).toBe(1);
+        expect(r.reactants.find(x => x.formula === "C2H5OH")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "CH3COOC2H5")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "H2O")?.coefficient).toBe(1);
+    });
+
+    it("balances C6H5OH + NaOH -> C6H5ONa + H2O (positive check)", () => {
+        const r = balance("C6H5OH + NaOH -> C6H5ONa + H2O");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances C2H5Br + NaOH -> C2H5OH + NaBr", () => {
+        const r = balance("C2H5Br + NaOH -> C2H5OH + NaBr");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "C2H5Br")?.coefficient).toBe(1);
+        expect(r.reactants.find(x => x.formula === "NaOH")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "C2H5OH")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "NaBr")?.coefficient).toBe(1);
+    });
+
+    it("balances CH3Cl + NaOH -> CH3OH + NaCl", () => {
+        const r = balance("CH3Cl + NaOH -> CH3OH + NaCl");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "CH3Cl")?.coefficient).toBe(1);
+        expect(r.reactants.find(x => x.formula === "NaOH")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "CH3OH")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "NaCl")?.coefficient).toBe(1);
+    });
+
+    it("balances C2H5Cl + KOH -> C2H5OH + KCl", () => {
+        const r = balance("C2H5Cl + KOH -> C2H5OH + KCl");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "C2H5Cl")?.coefficient).toBe(1);
+        expect(r.reactants.find(x => x.formula === "KOH")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "C2H5OH")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "KCl")?.coefficient).toBe(1);
+    });
+});
