@@ -64,3 +64,30 @@ describe("fraction arithmetic edge cases", () => {
     expect(result.den).toBe(1);
   });
 });
+
+describe("fraction identity and inverse", () => {
+  it("Fraction.zero().add(x) = x", () => {
+    const x = new Fraction(3, 7);
+    const result = Fraction.zero().add(x);
+    expect(result.equals(x)).toBe(true);
+  });
+
+  it("Fraction.one().mul(x) = x", () => {
+    const x = new Fraction(5, 8);
+    const result = Fraction.one().mul(x);
+    expect(result.equals(x)).toBe(true);
+  });
+
+  it("x.add(x.neg()).isZero() = true", () => {
+    const x = new Fraction(4, 9);
+    expect(x.add(x.neg()).isZero()).toBe(true);
+  });
+
+  it("Fraction.zero().isZero() = true", () => {
+    expect(Fraction.zero().isZero()).toBe(true);
+  });
+
+  it("Fraction.zero().equals(new Fraction(0)) = true", () => {
+    expect(Fraction.zero().equals(new Fraction(0))).toBe(true);
+  });
+});
