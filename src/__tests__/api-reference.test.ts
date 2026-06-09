@@ -256,3 +256,46 @@ describe("parseFormula element type", ()=>{
         }
     });
 });
+
+describe("parseFormula charge type", ()=>{
+    it("parseFormula('Na+').charge is 1", ()=>{
+        let result=parseFormula("Na+");
+        expect(result.charge).toBe(1);
+    });
+    it("parseFormula('Cl-').charge is -1", ()=>{
+        let result=parseFormula("Cl-");
+        expect(result.charge).toBe(-1);
+    });
+    it("parseFormula('H2O').charge is 0", ()=>{
+        let result=parseFormula("H2O");
+        expect(result.charge).toBe(0);
+    });
+    it("parseFormula('e-').charge is -1", ()=>{
+        let result=parseFormula("e-");
+        expect(result.charge).toBe(-1);
+    });
+    it("parseFormula('SO4^2-').charge is -2", ()=>{
+        let result=parseFormula("SO4^2-");
+        expect(result.charge).toBe(-2);
+    });
+    it("parseFormula('Fe3+').charge is 3", ()=>{
+        let result=parseFormula("Fe3+");
+        expect(result.charge).toBe(3);
+    });
+    it("parseFormula('Ca2+').charge is 2", ()=>{
+        let result=parseFormula("Ca2+");
+        expect(result.charge).toBe(2);
+    });
+    it("parseFormula('OH-').charge is -1", ()=>{
+        let result=parseFormula("OH-");
+        expect(result.charge).toBe(-1);
+    });
+    it("parseFormula('Al3+').charge is 3", ()=>{
+        let result=parseFormula("Al3+");
+        expect(result.charge).toBe(3);
+    });
+    it("parseFormula('PO4^3-').charge is -3", ()=>{
+        let result=parseFormula("PO4^3-");
+        expect(result.charge).toBe(-3);
+    });
+});
