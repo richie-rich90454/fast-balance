@@ -283,3 +283,41 @@ describe("unusual charge notation", () => {
     }
   });
 });
+
+describe("formula with mixed brackets and parens", () => {
+  it("parses [Fe(CN)6]3- ferricyanide with mixed brackets", () => {
+    const result = parseFormula("[Fe(CN)6]3-");
+    expect(result.elements).toEqual({ Fe: 1, C: 6, N: 6 });
+    expect(result.charge).toBe(-3);
+  });
+
+  it("parses [Al(OH)4]- tetrahydroxoaluminate with mixed brackets", () => {
+    const result = parseFormula("[Al(OH)4]-");
+    expect(result.elements).toEqual({ Al: 1, O: 4, H: 4 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parses [Zn(OH)4]^2- tetrahydroxozincate with caret charge", () => {
+    const result = parseFormula("[Zn(OH)4]^2-");
+    expect(result.elements).toEqual({ Zn: 1, O: 4, H: 4 });
+    expect(result.charge).toBe(-2);
+  });
+
+  it("parses [Co(NH3)6]3+ hexaamminecobalt(III) with mixed brackets", () => {
+    const result = parseFormula("[Co(NH3)6]3+");
+    expect(result.elements).toEqual({ Co: 1, N: 6, H: 18 });
+    expect(result.charge).toBe(3);
+  });
+
+  it("parses [Cr(NH3)6]3+ hexaamminechromium(III) with mixed brackets", () => {
+    const result = parseFormula("[Cr(NH3)6]3+");
+    expect(result.elements).toEqual({ Cr: 1, N: 6, H: 18 });
+    expect(result.charge).toBe(3);
+  });
+
+  it("parses [Ni(NH3)6]2+ hexaamminenickel(II) with mixed brackets", () => {
+    const result = parseFormula("[Ni(NH3)6]2+");
+    expect(result.elements).toEqual({ Ni: 1, N: 6, H: 18 });
+    expect(result.charge).toBe(2);
+  });
+});
