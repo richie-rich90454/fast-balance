@@ -349,3 +349,49 @@ describe("formula parsing symmetry", () => {
     expect(base.elements["H"]).toBe(10);
   });
 });
+
+describe("balance with state symbols", () => {
+  it("balances H2(g) + O2(g) -> H2O(l) with positive integer coefficients", () => {
+    const result = balance("H2(g) + O2(g) -> H2O(l)");
+    expectPositiveIntegers(result);
+    verifyConservation(result);
+    expect(result.reactants[0]?.coefficient).toBe(2);
+    expect(result.reactants[1]?.coefficient).toBe(1);
+    expect(result.products[0]?.coefficient).toBe(2);
+  });
+
+  it("balances NaCl(s) -> Na+(aq) + Cl-(aq) with positive integer coefficients", () => {
+    const result = balance("NaCl(s) -> Na+(aq) + Cl-(aq)");
+    expectPositiveIntegers(result);
+    verifyConservation(result);
+    verifyChargeConservation(result);
+  });
+
+  it("balances CaCO3(s) -> CaO(s) + CO2(g) with positive integer coefficients", () => {
+    const result = balance("CaCO3(s) -> CaO(s) + CO2(g)");
+    expectPositiveIntegers(result);
+    verifyConservation(result);
+  });
+
+  it("state symbols do not change the coefficients of a balanced equation", () => {
+    const noState = balance("H2 + O2 -> H2O");
+    const withState = balance("H2(g) + O2(g) -> H2O(l)");
+    expect(allCoefficients(noState)).toEqual(allCoefficients(withState));
+  });
+
+  it("state symbols do not change the formula content (element counts match)", () => {
+    const noState = balance("H2 + O2 -> H2O");
+    const withState = balance("H2(g) + O2(g) -> H2O(l)");
+    const a = getElementCounts(noState);
+    const b = getElementCounts(withState);
+    expect(a.reactants).toEqual(b.reactants);
+    expect(a.products).toEqual(b.products);
+  });
+
+  it("state symbols are stripped before parsing (same reactant and product formulas)", () => {
+    const withState = balance("NaCl(s) -> Na+(aq) + Cl-(aq)");
+    expect(withState.reactants[0]?.formula).toBe("NaCl");
+    expect(withState.products[0]?.formula).toBe("Na+");
+    expect(withState.products[1]?.formula).toBe("Cl-");
+  });
+});
