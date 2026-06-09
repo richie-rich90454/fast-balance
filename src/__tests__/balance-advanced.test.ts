@@ -150,3 +150,47 @@ describe("balance coefficient properties", () => {
   });
 });
 
+describe("balance multiple equation consistency", () => {
+  it("balance H2+O2->H2O always returns same result", () => {
+    const results = Array.from({ length: 5 }, () => balance("H2 + O2 -> H2O"));
+    const first = results[0]!;
+    for (const r of results) {
+      expect(r.equation).toBe(first.equation);
+      expect(r.reactants.map(s => s.coefficient)).toEqual(first.reactants.map(s => s.coefficient));
+      expect(r.products.map(s => s.coefficient)).toEqual(first.products.map(s => s.coefficient));
+    }
+  });
+
+  it("balance Fe+Cl2->FeCl3 always returns same result", () => {
+    const results = Array.from({ length: 5 }, () => balance("Fe + Cl2 -> FeCl3"));
+    const first = results[0]!;
+    for (const r of results) {
+      expect(r.equation).toBe(first.equation);
+    }
+  });
+
+  it("balance N2+H2->NH3 always returns same result", () => {
+    const results = Array.from({ length: 5 }, () => balance("N2 + H2 -> NH3"));
+    const first = results[0]!;
+    for (const r of results) {
+      expect(r.equation).toBe(first.equation);
+    }
+  });
+
+  it("balance CH4+O2->CO2+H2O always returns same result", () => {
+    const results = Array.from({ length: 5 }, () => balance("CH4 + O2 -> CO2 + H2O"));
+    const first = results[0]!;
+    for (const r of results) {
+      expect(r.equation).toBe(first.equation);
+    }
+  });
+
+  it("balance Fe2O3+CO->Fe+CO2 always returns same result", () => {
+    const results = Array.from({ length: 5 }, () => balance("Fe2O3 + CO -> Fe + CO2"));
+    const first = results[0]!;
+    for (const r of results) {
+      expect(r.equation).toBe(first.equation);
+    }
+  });
+});
+
