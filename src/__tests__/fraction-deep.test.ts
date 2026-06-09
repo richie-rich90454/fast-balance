@@ -279,3 +279,175 @@ describe("fraction boundary conditions", () => {
     expect(f.den).toBe(1);
   });
 });
+
+describe("fraction chain operations", () => {
+  it("1/2 + 1/3 + 1/6 = 1", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(1, 3);
+    const c = new Fraction(1, 6);
+    const result = a.add(b).add(c);
+    expect(result.equals(new Fraction(1, 1))).toBe(true);
+  });
+
+  it("1/2 * 1/3 * 1/4 = 1/24", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(1, 3);
+    const c = new Fraction(1, 4);
+    const result = a.mul(b).mul(c);
+    expect(result.num).toBe(1);
+    expect(result.den).toBe(24);
+  });
+
+  it("1/2 - 1/3 - 1/6 = 0", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(1, 3);
+    const c = new Fraction(1, 6);
+    const result = a.sub(b).sub(c);
+    expect(result.isZero()).toBe(true);
+  });
+
+  it("(1/2) / (1/3) / (1/4) = 6", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(1, 3);
+    const c = new Fraction(1, 4);
+    const result = a.div(b).div(c);
+    expect(result.equals(new Fraction(6, 1))).toBe(true);
+  });
+
+  it("1 + 1/2 + 1/3 = 11/6", () => {
+    const a = Fraction.one();
+    const b = new Fraction(1, 2);
+    const c = new Fraction(1, 3);
+    const result = a.add(b).add(c);
+    expect(result.num).toBe(11);
+    expect(result.den).toBe(6);
+  });
+
+  it("2/3 + 3/4 + 4/5 = 139/60", () => {
+    const a = new Fraction(2, 3);
+    const b = new Fraction(3, 4);
+    const c = new Fraction(4, 5);
+    const result = a.add(b).add(c);
+    expect(result.num).toBe(139);
+    expect(result.den).toBe(60);
+  });
+
+  it("3/4 - 1/2 - 1/8 = 1/8", () => {
+    const a = new Fraction(3, 4);
+    const b = new Fraction(1, 2);
+    const c = new Fraction(1, 8);
+    const result = a.sub(b).sub(c);
+    expect(result.num).toBe(1);
+    expect(result.den).toBe(8);
+  });
+
+  it("2/3 * 3/4 * 4/5 = 2/5", () => {
+    const a = new Fraction(2, 3);
+    const b = new Fraction(3, 4);
+    const c = new Fraction(4, 5);
+    const result = a.mul(b).mul(c);
+    expect(result.num).toBe(2);
+    expect(result.den).toBe(5);
+  });
+
+  it("(3/4) / (2/3) / (1/2) = 9/4", () => {
+    const a = new Fraction(3, 4);
+    const b = new Fraction(2, 3);
+    const c = new Fraction(1, 2);
+    const result = a.div(b).div(c);
+    expect(result.num).toBe(9);
+    expect(result.den).toBe(4);
+  });
+
+  it("1/2 + 1/4 + 1/8 + 1/8 = 1", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(1, 4);
+    const c = new Fraction(1, 8);
+    const d = new Fraction(1, 8);
+    const result = a.add(b).add(c).add(d);
+    expect(result.equals(Fraction.one())).toBe(true);
+  });
+
+  it("1/3 + 1/3 + 1/3 = 1", () => {
+    const a = new Fraction(1, 3);
+    const result = a.add(a).add(a);
+    expect(result.equals(Fraction.one())).toBe(true);
+  });
+
+  it("5/6 - 1/3 - 1/6 = 1/3", () => {
+    const a = new Fraction(5, 6);
+    const b = new Fraction(1, 3);
+    const c = new Fraction(1, 6);
+    const result = a.sub(b).sub(c);
+    expect(result.num).toBe(1);
+    expect(result.den).toBe(3);
+  });
+
+  it("1/2 * 2/3 * 3/4 * 4/5 = 1/5", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(2, 3);
+    const c = new Fraction(3, 4);
+    const d = new Fraction(4, 5);
+    const result = a.mul(b).mul(c).mul(d);
+    expect(result.num).toBe(1);
+    expect(result.den).toBe(5);
+  });
+
+  it("(1/2 + 1/3) * (1/4 + 1/5) = 55/120", () => {
+    const left = new Fraction(1, 2).add(new Fraction(1, 3));
+    const right = new Fraction(1, 4).add(new Fraction(1, 5));
+    const result = left.mul(right);
+    expect(result.num).toBe(11);
+    expect(result.den).toBe(24);
+  });
+
+  it("1/6 + 1/6 + 1/6 + 1/6 + 1/6 + 1/6 = 1", () => {
+    const a = new Fraction(1, 6);
+    const result = a.add(a).add(a).add(a).add(a).add(a);
+    expect(result.equals(Fraction.one())).toBe(true);
+  });
+
+  it("7/8 - 1/4 - 1/8 = 1/2", () => {
+    const a = new Fraction(7, 8);
+    const b = new Fraction(1, 4);
+    const c = new Fraction(1, 8);
+    const result = a.sub(b).sub(c);
+    expect(result.num).toBe(1);
+    expect(result.den).toBe(2);
+  });
+
+  it("1/2 * (2/3 + 3/4) = 17/24", () => {
+    const a = new Fraction(1, 2);
+    const sum = new Fraction(2, 3).add(new Fraction(3, 4));
+    const result = a.mul(sum);
+    expect(result.num).toBe(17);
+    expect(result.den).toBe(24);
+  });
+
+  it("(1/2 / 1/3) + (1/4 / 1/5) = 3 + 5/4 = 17/4", () => {
+    const a = new Fraction(1, 2).div(new Fraction(1, 3));
+    const b = new Fraction(1, 4).div(new Fraction(1, 5));
+    const result = a.add(b);
+    expect(result.num).toBe(17);
+    expect(result.den).toBe(4);
+  });
+
+  it("1 - 1/2 - 1/4 - 1/8 - 1/8 = 0", () => {
+    const a = Fraction.one();
+    const b = new Fraction(1, 2);
+    const c = new Fraction(1, 4);
+    const d = new Fraction(1, 8);
+    const e = new Fraction(1, 8);
+    const result = a.sub(b).sub(c).sub(d).sub(e);
+    expect(result.isZero()).toBe(true);
+  });
+
+  it("1/10 + 2/10 + 3/10 + 4/10 = 1", () => {
+    const a = new Fraction(1, 10);
+    const b = new Fraction(2, 10);
+    const c = new Fraction(3, 10);
+    const d = new Fraction(4, 10);
+    const result = a.add(b).add(c).add(d);
+    expect(result.equals(Fraction.one())).toBe(true);
+  });
+});
