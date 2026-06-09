@@ -419,3 +419,125 @@ describe("parseFormula charge accuracy", () => {
     expect(result.charge).toBe(0);
   });
 });
+
+describe("parseFormula hydrate accuracy", () => {
+  it("CuSO4·5H2O has Cu=1,S=1,O=9,H=10", () => {
+    const result = parseFormula("CuSO4·5H2O");
+    expect(result.elements).toEqual({ Cu: 1, S: 1, O: 9, H: 10 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("BaCl2·2H2O has Ba=1,Cl=2,O=2,H=4", () => {
+    const result = parseFormula("BaCl2·2H2O");
+    expect(result.elements).toEqual({ Ba: 1, Cl: 2, O: 2, H: 4 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("Na2CO3·10H2O has Na=2,C=1,O=13,H=20", () => {
+    const result = parseFormula("Na2CO3·10H2O");
+    expect(result.elements).toEqual({ Na: 2, C: 1, O: 13, H: 20 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("MgSO4·7H2O has Mg=1,S=1,O=11,H=14", () => {
+    const result = parseFormula("MgSO4·7H2O");
+    expect(result.elements).toEqual({ Mg: 1, S: 1, O: 11, H: 14 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("FeSO4·7H2O has Fe=1,S=1,O=11,H=14", () => {
+    const result = parseFormula("FeSO4·7H2O");
+    expect(result.elements).toEqual({ Fe: 1, S: 1, O: 11, H: 14 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("CaSO4·2H2O has Ca=1,S=1,O=6,H=4", () => {
+    const result = parseFormula("CaSO4·2H2O");
+    expect(result.elements).toEqual({ Ca: 1, S: 1, O: 6, H: 4 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("CoCl2·6H2O has Co=1,Cl=2,O=6,H=12", () => {
+    const result = parseFormula("CoCl2·6H2O");
+    expect(result.elements).toEqual({ Co: 1, Cl: 2, O: 6, H: 12 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("KAl(SO4)2·12H2O has K=1,Al=1,S=2,O=20,H=24", () => {
+    const result = parseFormula("KAl(SO4)2·12H2O");
+    expect(result.elements).toEqual({ K: 1, Al: 1, S: 2, O: 20, H: 24 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("CuSO4·H2O has Cu=1,S=1,O=5,H=2", () => {
+    const result = parseFormula("CuSO4·H2O");
+    expect(result.elements).toEqual({ Cu: 1, S: 1, O: 5, H: 2 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("Na2SO4·10H2O has Na=2,S=1,O=14,H=20", () => {
+    const result = parseFormula("Na2SO4·10H2O");
+    expect(result.elements).toEqual({ Na: 2, S: 1, O: 14, H: 20 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("ZnSO4·7H2O has Zn=1,S=1,O=11,H=14", () => {
+    const result = parseFormula("ZnSO4·7H2O");
+    expect(result.elements).toEqual({ Zn: 1, S: 1, O: 11, H: 14 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("NiCl2·6H2O has Ni=1,Cl=2,O=6,H=12", () => {
+    const result = parseFormula("NiCl2·6H2O");
+    expect(result.elements).toEqual({ Ni: 1, Cl: 2, O: 6, H: 12 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("CaCl2·2H2O has Ca=1,Cl=2,O=2,H=4", () => {
+    const result = parseFormula("CaCl2·2H2O");
+    expect(result.elements).toEqual({ Ca: 1, Cl: 2, O: 2, H: 4 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("FeC2O4·2H2O has Fe=1,C=2,O=6,H=4", () => {
+    const result = parseFormula("FeC2O4·2H2O");
+    expect(result.elements).toEqual({ Fe: 1, C: 2, O: 6, H: 4 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("Al2(SO4)3·18H2O has Al=2,S=3,O=30,H=36", () => {
+    const result = parseFormula("Al2(SO4)3·18H2O");
+    expect(result.elements).toEqual({ Al: 2, S: 3, O: 30, H: 36 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("MnSO4·H2O has Mn=1,S=1,O=5,H=2", () => {
+    const result = parseFormula("MnSO4·H2O");
+    expect(result.elements).toEqual({ Mn: 1, S: 1, O: 5, H: 2 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("CrCl3·6H2O has Cr=1,Cl=3,O=6,H=12", () => {
+    const result = parseFormula("CrCl3·6H2O");
+    expect(result.elements).toEqual({ Cr: 1, Cl: 3, O: 6, H: 12 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("LiCl·H2O has Li=1,Cl=1,O=1,H=2", () => {
+    const result = parseFormula("LiCl·H2O");
+    expect(result.elements).toEqual({ Li: 1, Cl: 1, O: 1, H: 2 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("SrCl2·6H2O has Sr=1,Cl=2,O=6,H=12", () => {
+    const result = parseFormula("SrCl2·6H2O");
+    expect(result.elements).toEqual({ Sr: 1, Cl: 2, O: 6, H: 12 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("MgCl2·6H2O has Mg=1,Cl=2,O=6,H=12", () => {
+    const result = parseFormula("MgCl2·6H2O");
+    expect(result.elements).toEqual({ Mg: 1, Cl: 2, O: 6, H: 12 });
+    expect(result.charge).toBe(0);
+  });
+});
