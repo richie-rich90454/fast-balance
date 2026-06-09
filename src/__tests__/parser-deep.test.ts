@@ -242,3 +242,180 @@ describe("parseFormula element count accuracy", () => {
     expect(result.charge).toBe(0);
   });
 });
+
+describe("parseFormula charge accuracy", () => {
+  it("Na+ has charge=1", () => {
+    const result = parseFormula("Na+");
+    expect(result.elements).toEqual({ Na: 1 });
+    expect(result.charge).toBe(1);
+  });
+
+  it("Cl- has charge=-1", () => {
+    const result = parseFormula("Cl-");
+    expect(result.elements).toEqual({ Cl: 1 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("SO4^2- has charge=-2", () => {
+    const result = parseFormula("SO4^2-");
+    expect(result.elements).toEqual({ S: 1, O: 4 });
+    expect(result.charge).toBe(-2);
+  });
+
+  it("PO4^3- has charge=-3", () => {
+    const result = parseFormula("PO4^3-");
+    expect(result.elements).toEqual({ P: 1, O: 4 });
+    expect(result.charge).toBe(-3);
+  });
+
+  it("e- has charge=-1", () => {
+    const result = parseFormula("e-");
+    expect(result.elements).toEqual({ e: 1 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("Ca2+ has charge=2", () => {
+    const result = parseFormula("Ca2+");
+    expect(result.elements).toEqual({ Ca: 1 });
+    expect(result.charge).toBe(2);
+  });
+
+  it("Fe3+ has charge=3", () => {
+    const result = parseFormula("Fe3+");
+    expect(result.elements).toEqual({ Fe: 1 });
+    expect(result.charge).toBe(3);
+  });
+
+  it("OH- has charge=-1", () => {
+    const result = parseFormula("OH-");
+    expect(result.elements).toEqual({ O: 1, H: 1 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("NH4+ has charge=1", () => {
+    const result = parseFormula("NH4+");
+    expect(result.elements).toEqual({ N: 1, H: 4 });
+    expect(result.charge).toBe(1);
+  });
+
+  it("CO3^2- has charge=-2", () => {
+    const result = parseFormula("CO3^2-");
+    expect(result.elements).toEqual({ C: 1, O: 3 });
+    expect(result.charge).toBe(-2);
+  });
+
+  it("MnO4- has charge=-1", () => {
+    const result = parseFormula("MnO4-");
+    expect(result.elements).toEqual({ Mn: 1, O: 4 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("Cr2O7^2- has charge=-2", () => {
+    const result = parseFormula("Cr2O7^2-");
+    expect(result.elements).toEqual({ Cr: 2, O: 7 });
+    expect(result.charge).toBe(-2);
+  });
+
+  it("Cu2+ has charge=2", () => {
+    const result = parseFormula("Cu2+");
+    expect(result.elements).toEqual({ Cu: 1 });
+    expect(result.charge).toBe(2);
+  });
+
+  it("Ag+ has charge=1", () => {
+    const result = parseFormula("Ag+");
+    expect(result.elements).toEqual({ Ag: 1 });
+    expect(result.charge).toBe(1);
+  });
+
+  it("Al3+ has charge=3", () => {
+    const result = parseFormula("Al3+");
+    expect(result.elements).toEqual({ Al: 1 });
+    expect(result.charge).toBe(3);
+  });
+
+  it("Zn2+ has charge=2", () => {
+    const result = parseFormula("Zn2+");
+    expect(result.elements).toEqual({ Zn: 1 });
+    expect(result.charge).toBe(2);
+  });
+
+  it("Fe2+ has charge=2", () => {
+    const result = parseFormula("Fe2+");
+    expect(result.elements).toEqual({ Fe: 1 });
+    expect(result.charge).toBe(2);
+  });
+
+  it("H+ has charge=1", () => {
+    const result = parseFormula("H+");
+    expect(result.elements).toEqual({ H: 1 });
+    expect(result.charge).toBe(1);
+  });
+
+  it("S^2- has charge=-2", () => {
+    const result = parseFormula("S^2-");
+    expect(result.elements).toEqual({ S: 1 });
+    expect(result.charge).toBe(-2);
+  });
+
+  it("NO3- has charge=-1", () => {
+    const result = parseFormula("NO3-");
+    expect(result.elements).toEqual({ N: 1, O: 3 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("HCO3- has charge=-1", () => {
+    const result = parseFormula("HCO3-");
+    expect(result.elements).toEqual({ H: 1, C: 1, O: 3 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("H3O+ has charge=1", () => {
+    const result = parseFormula("H3O+");
+    expect(result.elements).toEqual({ H: 3, O: 1 });
+    expect(result.charge).toBe(1);
+  });
+
+  it("SO3^2- has charge=-2", () => {
+    const result = parseFormula("SO3^2-");
+    expect(result.elements).toEqual({ S: 1, O: 3 });
+    expect(result.charge).toBe(-2);
+  });
+
+  it("NO2- has charge=-1", () => {
+    const result = parseFormula("NO2-");
+    expect(result.elements).toEqual({ N: 1, O: 2 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("CH3COO- has charge=-1", () => {
+    const result = parseFormula("CH3COO-");
+    expect(result.elements).toEqual({ C: 2, H: 3, O: 2 });
+    expect(result.charge).toBe(-1);
+  });
+
+  it("neutral formula H2O has charge=0", () => {
+    const result = parseFormula("H2O");
+    expect(result.charge).toBe(0);
+  });
+
+  it("neutral formula NaCl has charge=0", () => {
+    const result = parseFormula("NaCl");
+    expect(result.charge).toBe(0);
+  });
+
+  it("neutral formula CO2 has charge=0", () => {
+    const result = parseFormula("CO2");
+    expect(result.charge).toBe(0);
+  });
+
+  it("neutral formula Fe2O3 has charge=0", () => {
+    const result = parseFormula("Fe2O3");
+    expect(result.charge).toBe(0);
+  });
+
+  it("neutral formula Ca(OH)2 has charge=0", () => {
+    const result = parseFormula("Ca(OH)2");
+    expect(result.charge).toBe(0);
+  });
+});
