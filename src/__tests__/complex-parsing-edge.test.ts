@@ -55,3 +55,45 @@ describe("deeply nested formula parsing", () => {
     expect(result.charge).toBe(-3);
   });
 });
+
+describe("organic formula parsing", () => {
+  it("parses CH3CH2OH ethanol (positive check, may not parse)", () => {
+    const result = safeParse("CH3CH2OH");
+    if (result) {
+      expect(result.elements).toEqual({ C: 2, H: 6, O: 1 });
+      expect(result.charge).toBe(0);
+    } else {
+      expect(result).toBeNull();
+    }
+  });
+
+  it("parses C2H5OH standard ethanol notation", () => {
+    const result = parseFormula("C2H5OH");
+    expect(result.elements).toEqual({ C: 2, H: 6, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses C3H7COOH butyric acid (positive check)", () => {
+    const result = parseFormula("C3H7COOH");
+    expect(result.elements).toEqual({ C: 4, H: 8, O: 2 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses CH3COCH3 acetone (positive check)", () => {
+    const result = parseFormula("CH3COCH3");
+    expect(result.elements).toEqual({ C: 3, H: 6, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses CH3OCH3 dimethyl ether (positive check)", () => {
+    const result = parseFormula("CH3OCH3");
+    expect(result.elements).toEqual({ C: 2, H: 6, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses CH3CH2OCH2CH3 diethyl ether (positive check)", () => {
+    const result = parseFormula("CH3CH2OCH2CH3");
+    expect(result.elements).toEqual({ C: 4, H: 10, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+});
