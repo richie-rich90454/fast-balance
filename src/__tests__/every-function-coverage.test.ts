@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { gcd, lcm, stripStateSymbols } from "../index";
+import { gcd, lcm, stripStateSymbols, parseFormula } from "../index";
 
 describe("gcd function exhaustive tests", () => {
   it("gcd(1, 1) returns 1", () => {
@@ -72,5 +72,37 @@ describe("stripStateSymbols function exhaustive tests", () => {
 
   it("stripStateSymbols('Fe2O3(s)') returns 'Fe2O3'", () => {
     expect(stripStateSymbols("Fe2O3(s)")).toBe("Fe2O3");
+  });
+});
+
+describe("parseFormula function exhaustive tests", () => {
+  it("parseFormula('H2O').elements equals {H: 2, O: 1}", () => {
+    const result = parseFormula("H2O");
+    expect(result.elements).toEqual({ H: 2, O: 1 });
+  });
+
+  it("parseFormula('H2O').charge equals 0", () => {
+    const result = parseFormula("H2O");
+    expect(result.charge).toBe(0);
+  });
+
+  it("parseFormula('Na+').charge equals 1", () => {
+    const result = parseFormula("Na+");
+    expect(result.charge).toBe(1);
+  });
+
+  it("parseFormula('Cl-').charge equals -1", () => {
+    const result = parseFormula("Cl-");
+    expect(result.charge).toBe(-1);
+  });
+
+  it("parseFormula('SO4^2-').charge equals -2", () => {
+    const result = parseFormula("SO4^2-");
+    expect(result.charge).toBe(-2);
+  });
+
+  it("parseFormula('e-').charge equals -1", () => {
+    const result = parseFormula("e-");
+    expect(result.charge).toBe(-1);
   });
 });
