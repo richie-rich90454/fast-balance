@@ -205,3 +205,38 @@ describe("common ion effect", () => {
         }
     });
 });
+
+describe("thermal decomposition", () => {
+    it("balances CaCO3 -> CaO + CO2", () => {
+        let result = balance("CaCO3 -> CaO + CO2");
+        for (let s of result.reactants) expect(s.coefficient).toBe(1);
+        for (let s of result.products) expect(s.coefficient).toBe(1);
+    });
+
+    it("balances 2 KClO3 -> 2 KCl + 3 O2", () => {
+        let result = balance("2 KClO3 -> 2 KCl + 3 O2");
+        expect(result.reactants[0]?.coefficient).toBe(2);
+        expect(result.products[0]?.coefficient).toBe(2);
+        expect(result.products[1]?.coefficient).toBe(3);
+    });
+
+    it("balances 2 NaNO3 -> 2 NaNO2 + O2", () => {
+        let result = balance("2 NaNO3 -> 2 NaNO2 + O2");
+        expect(result.reactants[0]?.coefficient).toBe(2);
+        expect(result.products[0]?.coefficient).toBe(2);
+        expect(result.products[1]?.coefficient).toBe(1);
+    });
+
+    it("balances Cu(OH)2 -> CuO + H2O", () => {
+        let result = balance("Cu(OH)2 -> CuO + H2O");
+        for (let s of result.reactants) expect(s.coefficient).toBe(1);
+        for (let s of result.products) expect(s.coefficient).toBe(1);
+    });
+
+    it("balances 2 Fe(OH)3 -> Fe2O3 + 3 H2O", () => {
+        let result = balance("2 Fe(OH)3 -> Fe2O3 + 3 H2O");
+        expect(result.reactants[0]?.coefficient).toBe(2);
+        expect(result.products[0]?.coefficient).toBe(1);
+        expect(result.products[1]?.coefficient).toBe(3);
+    });
+});
