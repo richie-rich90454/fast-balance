@@ -496,3 +496,61 @@ describe("Nitrogen dioxide and lead chamber", () => {
         expect(result.products.find(p => p.formula === "H2SO4")?.coefficient).toBe(1);
     });
 });
+
+describe("Lead and mercury compounds", () => {
+    it("balances 2Pb(NO3)2 -> 2PbO + 4NO2 + O2 (positive check)", () => {
+        const result = balance("2Pb(NO3)2 -> 2PbO + 4NO2 + O2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances PbO + C -> Pb + CO (positive check)", () => {
+        const result = balance("PbO + C -> Pb + CO");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances Hg(OH)2 -> HgO + H2O (positive check)", () => {
+        const result = balance("Hg(OH)2 -> HgO + H2O");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances 2HgO -> 2Hg + O2", () => {
+        const result = balance("2HgO -> 2Hg + O2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "HgO")?.coefficient).toBe(2);
+        expect(result.products.find(p => p.formula === "Hg")?.coefficient).toBe(2);
+        expect(result.products.find(p => p.formula === "O2")?.coefficient).toBe(1);
+    });
+
+    it("balances HgS + O2 -> Hg + SO2 (positive check)", () => {
+        const result = balance("HgS + O2 -> Hg + SO2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+});
