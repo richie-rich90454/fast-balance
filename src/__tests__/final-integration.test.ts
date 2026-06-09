@@ -343,3 +343,43 @@ describe("balance function idempotency", () => {
         }
     });
 });
+
+describe("special character handling", () => {
+    it("Greek letters in formulas throw or skip", () => {
+        // Greek letters are not valid element symbols; balancer should throw
+        expect(() => balance("α + β -> γ")).toThrow();
+    });
+
+    it("non-ASCII arrow unicode is accepted", () => {
+        let result = balance("H2 + O2 → H2O");
+        // All coefficients should be positive
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+    });
+
+    it("mixed case in element symbols works", () => {
+        // Lowercase element symbols are valid (e.g., He, h would not be a real element but the parser uses uppercase)
+        // He is a real element, so this should work fine
+        let result = balance("He -> He");
+        expect(result.reactants[0].coefficient).toBe(1);
+        expect(result.products[0].coefficient).toBe(1);
+    });
+
+    it("multiple spaces between terms are handled", () => {
+        let result = balance("H2   +   O2   ->   H2O");
+        expect(result.reactants).toHaveLength(2);
+        expect(result.products).toHaveLength(1);
+        // Coefficients should be positive
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+    });
+
+    it("tabs in input are handled like spaces", () => {
+        let result = balance("H2\t+\tO2\t->\tH2O");
+        expect(result.reactants).toHaveLength(2);
+        expect(result.products).toHaveLength(1);
+        // Coefficients should be positive integers
+        expect(result.reactants.every(r => Number.isInteger(r.coefficient) && r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => Number.isInteger(p.coefficient) && p.coefficient > 0)).toBe(true);
+    });
+});
