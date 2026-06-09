@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { gcd } from "../index";
+import { gcd, lcm } from "../index";
 
 describe("gcd function exhaustive tests", () => {
   it("gcd(1, 1) returns 1", () => {
@@ -24,5 +24,27 @@ describe("gcd function exhaustive tests", () => {
 
   it("gcd(-12, 8) returns 4 (uses absolute value)", () => {
     expect(gcd(-12, 8)).toBe(4);
+  });
+});
+
+describe("lcm function exhaustive tests", () => {
+  it("lcm(4, 6) returns 12", () => {
+    expect(lcm(4, 6)).toBe(12);
+  });
+
+  it("lcm(3, 5) returns 15 (coprime numbers)", () => {
+    expect(lcm(3, 5)).toBe(15);
+  });
+
+  it("lcm(1, 1) returns 1", () => {
+    expect(lcm(1, 1)).toBe(1);
+  });
+
+  it("lcm(0, 5) returns 0", () => {
+    expect(lcm(0, 5)).toBe(0);
+  });
+
+  it("lcm(10, 15) returns 30", () => {
+    expect(lcm(10, 15)).toBe(30);
   });
 });
