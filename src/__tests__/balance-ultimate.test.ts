@@ -1,4 +1,5 @@
 import { balance, parseFormula } from "../index";
+import { describe, it, expect } from "vitest";
 
 describe("rare earth element tests", () => {
   it("should balance La + O2 -> La2O3", () => {
@@ -41,7 +42,7 @@ describe("actinide tests", () => {
   it("should balance UO2 + O2 -> U3O8", () => {
     const r = balance("UO2 + O2 -> U3O8");
     expect(r.reactants[0].coefficient).toBe(3);
-    expect(r.reactants[1].coefficient).toBe(2);
+    expect(r.reactants[1].coefficient).toBe(1);
     expect(r.products[0].coefficient).toBe(1);
   });
 
