@@ -224,3 +224,40 @@ describe("hydration state tests", () => {
     expect(r.products[1].coefficient).toBe(6);
   });
 });
+
+describe("electrolyte tests", () => {
+  it("NaCl -> Na+ + Cl- positive check", () => {
+    const r = balance("NaCl -> Na+ + Cl-");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(1);
+  });
+
+  it("HCl -> H+ + Cl- positive check", () => {
+    const r = balance("HCl -> H+ + Cl-");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(1);
+  });
+
+  it("H2SO4 -> 2H+ + SO4^2- positive check", () => {
+    const r = balance("H2SO4 -> H+ + SO4^2-");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(2);
+    expect(r.products[1].coefficient).toBe(1);
+  });
+
+  it("NaOH -> Na+ + OH- positive check", () => {
+    const r = balance("NaOH -> Na+ + OH-");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(1);
+  });
+
+  it("CaCl2 -> Ca2+ + Cl- positive check", () => {
+    const r = balance("CaCl2 -> Ca2+ + Cl-");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(2);
+  });
+});
