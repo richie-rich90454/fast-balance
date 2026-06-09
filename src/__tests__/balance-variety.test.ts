@@ -554,3 +554,62 @@ describe("Lead and mercury compounds", () => {
         expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
     });
 });
+
+describe("Additional processes", () => {
+    it("balances 2N2O -> 2N2 + O2 (positive check)", () => {
+        const result = balance("2N2O -> 2N2 + O2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances 2H2O2 -> 2H2O + O2", () => {
+        const result = balance("2H2O2 -> 2H2O + O2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "H2O2")?.coefficient).toBe(2);
+        expect(result.products.find(p => p.formula === "H2O")?.coefficient).toBe(2);
+        expect(result.products.find(p => p.formula === "O2")?.coefficient).toBe(1);
+    });
+
+    it("balances 2KMnO4 -> K2MnO4 + MnO2 + O2 (positive check)", () => {
+        const result = balance("2KMnO4 -> K2MnO4 + MnO2 + O2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances 4KClO3 -> 3KClO4 + KCl (positive check)", () => {
+        const result = balance("4KClO3 -> 3KClO4 + KCl");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances 2KClO3 -> 2KCl + 3O2", () => {
+        const result = balance("2KClO3 -> 2KCl + 3O2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "KClO3")?.coefficient).toBe(2);
+        expect(result.products.find(p => p.formula === "KCl")?.coefficient).toBe(2);
+        expect(result.products.find(p => p.formula === "O2")?.coefficient).toBe(3);
+    });
+});
