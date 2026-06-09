@@ -153,3 +153,129 @@ describe("fraction algebraic properties", () => {
     expect(a.add(Fraction.zero()).equals(a)).toBe(true);
   });
 });
+
+describe("fraction boundary conditions", () => {
+  it("Fraction(0,1) is zero", () => {
+    const f = new Fraction(0, 1);
+    expect(f.num).toBe(0);
+    expect(f.den).toBe(1);
+    expect(f.isZero()).toBe(true);
+  });
+
+  it("Fraction(1,1) is one", () => {
+    const f = new Fraction(1, 1);
+    expect(f.num).toBe(1);
+    expect(f.den).toBe(1);
+    expect(f.equals(Fraction.one())).toBe(true);
+  });
+
+  it("Fraction(-1,1) is negative one", () => {
+    const f = new Fraction(-1, 1);
+    expect(f.num).toBe(-1);
+    expect(f.den).toBe(1);
+    expect(f.add(Fraction.one()).isZero()).toBe(true);
+  });
+
+  it("Fraction(0,5) normalizes to 0/1", () => {
+    const f = new Fraction(0, 5);
+    expect(f.num).toBe(0);
+    expect(f.den).toBe(1);
+  });
+
+  it("Fraction(0,-5) normalizes to 0/1", () => {
+    const f = new Fraction(0, -5);
+    expect(f.num).toBe(0);
+    expect(f.den).toBe(1);
+  });
+
+  it("Fraction(1000000,1) handles large numerator", () => {
+    const f = new Fraction(1000000, 1);
+    expect(f.num).toBe(1000000);
+    expect(f.den).toBe(1);
+  });
+
+  it("Fraction(1,1000000) handles large denominator", () => {
+    const f = new Fraction(1, 1000000);
+    expect(f.num).toBe(1);
+    expect(f.den).toBe(1000000);
+  });
+
+  it("Fraction(-0,1) is zero", () => {
+    const f = new Fraction(-0, 1);
+    expect(f.num).toBe(0);
+    expect(f.den).toBe(1);
+    expect(f.isZero()).toBe(true);
+  });
+
+  it("Fraction(0,1).equals(Fraction(0,5)) is true", () => {
+    const a = new Fraction(0, 1);
+    const b = new Fraction(0, 5);
+    expect(a.equals(b)).toBe(true);
+  });
+
+  it("Fraction(1,1).add(Fraction.zero()) equals Fraction(1,1)", () => {
+    const a = new Fraction(1, 1);
+    expect(a.add(Fraction.zero()).equals(a)).toBe(true);
+  });
+
+  it("Fraction(-1,1).add(Fraction(1,1)) is zero", () => {
+    const a = new Fraction(-1, 1);
+    const b = new Fraction(1, 1);
+    expect(a.add(b).isZero()).toBe(true);
+  });
+
+  it("Fraction(0,1).mul(Fraction(1000000,1)) is zero", () => {
+    const a = new Fraction(0, 1);
+    const b = new Fraction(1000000, 1);
+    expect(a.mul(b).isZero()).toBe(true);
+  });
+
+  it("Fraction(1,1000000).mul(Fraction(1000000,1)) is one", () => {
+    const a = new Fraction(1, 1000000);
+    const b = new Fraction(1000000, 1);
+    expect(a.mul(b).equals(Fraction.one())).toBe(true);
+  });
+
+  it("Fraction(-1,1).neg() equals Fraction(1,1)", () => {
+    const a = new Fraction(-1, 1);
+    expect(a.neg().equals(new Fraction(1, 1))).toBe(true);
+  });
+
+  it("Fraction(0,-1) normalizes to 0/1", () => {
+    const f = new Fraction(0, -1);
+    expect(f.num).toBe(0);
+    expect(f.den).toBe(1);
+  });
+
+  it("Fraction(1000000,1000000) normalizes to 1/1", () => {
+    const f = new Fraction(1000000, 1000000);
+    expect(f.num).toBe(1);
+    expect(f.den).toBe(1);
+    expect(f.equals(Fraction.one())).toBe(true);
+  });
+
+  it("Fraction(-1000000,1) negated equals Fraction(1000000,1)", () => {
+    const a = new Fraction(-1000000, 1);
+    expect(a.neg().equals(new Fraction(1000000, 1))).toBe(true);
+  });
+
+  it("Fraction(1,1000000) + Fraction(1,1000000) = 1/500000", () => {
+    const a = new Fraction(1, 1000000);
+    const result = a.add(a);
+    expect(result.num).toBe(1);
+    expect(result.den).toBe(500000);
+  });
+
+  it("Fraction(-1,-1) normalizes to 1/1", () => {
+    const f = new Fraction(-1, -1);
+    expect(f.num).toBe(1);
+    expect(f.den).toBe(1);
+    expect(f.equals(Fraction.one())).toBe(true);
+  });
+
+  it("Fraction(0,1000000) normalizes to 0/1", () => {
+    const f = new Fraction(0, 1000000);
+    expect(f.num).toBe(0);
+    expect(f.den).toBe(1);
+  });
+});
