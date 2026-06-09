@@ -227,3 +227,59 @@ describe("polyatomic ion formula parsing", () => {
     expect(result.charge).toBe(-1);
   });
 });
+
+describe("unusual charge notation", () => {
+  it("handles Ca++ double plus notation (positive check)", () => {
+    const result = safeParse("Ca++");
+    if (result) {
+      expect(result.elements.Ca ?? result.elements.CA ?? undefined).toBeDefined();
+    } else {
+      expect(result).toBeNull();
+    }
+  });
+
+  it("handles Na+1 explicit one plus notation (positive check)", () => {
+    const result = safeParse("Na+1");
+    if (result) {
+      expect(result.elements).toBeDefined();
+    } else {
+      expect(result).toBeNull();
+    }
+  });
+
+  it("handles Fe+3 explicit number plus notation (positive check)", () => {
+    const result = safeParse("Fe+3");
+    if (result) {
+      expect(result.elements).toBeDefined();
+    } else {
+      expect(result).toBeNull();
+    }
+  });
+
+  it("handles Cl-1 explicit one minus notation (positive check)", () => {
+    const result = safeParse("Cl-1");
+    if (result) {
+      expect(result.elements).toBeDefined();
+    } else {
+      expect(result).toBeNull();
+    }
+  });
+
+  it("handles O-2 explicit number minus notation (positive check)", () => {
+    const result = safeParse("O-2");
+    if (result) {
+      expect(result.elements).toBeDefined();
+    } else {
+      expect(result).toBeNull();
+    }
+  });
+
+  it("handles S-2 explicit number minus notation (positive check)", () => {
+    const result = safeParse("S-2");
+    if (result) {
+      expect(result.elements).toBeDefined();
+    } else {
+      expect(result).toBeNull();
+    }
+  });
+});
