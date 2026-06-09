@@ -285,3 +285,44 @@ describe("metal carbonyls", () => {
         }
     });
 });
+
+describe("Friedel-Crafts type reactions", () => {
+    it("balances C6H6 + Cl2 -> C6H5Cl + HCl", () => {
+        let result = balance("C6H6 + Cl2 -> C6H5Cl + HCl");
+        for (let s of result.reactants) expect(s.coefficient).toBe(1);
+        for (let s of result.products) expect(s.coefficient).toBe(1);
+    });
+
+    it("balances C6H6 + C2H4 -> C6H5C2H5", () => {
+        let result = balance("C6H6 + C2H4 -> C6H5C2H5");
+        let all = [...result.reactants, ...result.products];
+        for (let s of all) {
+            expect(s.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(s.coefficient)).toBe(true);
+        }
+    });
+
+    it("balances C6H6 + HNO3 -> C6H5NO2 + H2O", () => {
+        let result = balance("C6H6 + HNO3 -> C6H5NO2 + H2O");
+        for (let s of result.reactants) expect(s.coefficient).toBe(1);
+        for (let s of result.products) expect(s.coefficient).toBe(1);
+    });
+
+    it("balances C6H5Cl + HNO3 -> C6H4ClNO2 + H2O", () => {
+        let result = balance("C6H5Cl + HNO3 -> C6H4ClNO2 + H2O");
+        let all = [...result.reactants, ...result.products];
+        for (let s of all) {
+            expect(s.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(s.coefficient)).toBe(true);
+        }
+    });
+
+    it("balances C6H5CH3 + HNO3 -> C6H4CH3NO2 + H2O", () => {
+        let result = balance("C6H5CH3 + HNO3 -> C6H4CH3NO2 + H2O");
+        let all = [...result.reactants, ...result.products];
+        for (let s of all) {
+            expect(s.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(s.coefficient)).toBe(true);
+        }
+    });
+});
