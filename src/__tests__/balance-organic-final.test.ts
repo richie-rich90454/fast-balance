@@ -96,3 +96,35 @@ describe("amino acid tests", () => {
     expect(result.products.every(p => p.coefficient > 0)).toBe(true);
   });
 });
+
+describe("nucleotide tests", () => {
+  it("balances ribose combustion: C5H10O4 + O2 -> CO2 + H2O", () => {
+    const result = balance("C5H10O4 + O2 -> CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances adenine combustion: C5H5N5 + O2 -> CO2 + H2O + N2", () => {
+    const result = balance("C5H5N5 + O2 -> CO2 + H2O + N2");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances cytosine base combustion: C4H5N3O + O2 -> CO2 + H2O + N2", () => {
+    const result = balance("C4H5N3O + O2 -> CO2 + H2O + N2");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances uracil combustion: C5H6N2O2 + O2 -> CO2 + H2O + N2", () => {
+    const result = balance("C5H6N2O2 + O2 -> CO2 + H2O + N2");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances thymine combustion: C6H6N2O2 + O2 -> CO2 + H2O + N2", () => {
+    const result = balance("C6H6N2O2 + O2 -> CO2 + H2O + N2");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+});
