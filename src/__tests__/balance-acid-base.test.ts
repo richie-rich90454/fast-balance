@@ -223,3 +223,36 @@ describe("amphoteric hydroxide reactions", () => {
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
 });
+
+describe("oxide acid-base reactions", () => {
+  it("balances CaO + H2O -> Ca(OH)2", () => {
+    const r = balance("CaO + H2O -> Ca(OH)2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances Na2O + H2O -> 2NaOH", () => {
+    const r = balance("Na2O + H2O -> NaOH");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+  it("balances SO3 + H2O -> H2SO4", () => {
+    const r = balance("SO3 + H2O -> H2SO4");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances CO2 + H2O -> H2CO3", () => {
+    const r = balance("CO2 + H2O -> H2CO3");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances N2O5 + H2O -> 2HNO3", () => {
+    const r = balance("N2O5 + H2O -> HNO3");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+  it("balances P2O5 + 3H2O -> 2H3PO4", () => {
+    const r = balance("P2O5 + H2O -> H3PO4");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+});
