@@ -54,3 +54,26 @@ describe("exact coefficient match", () => {
         expect(result.products[0]?.formula).toBe("NaCl");
     });
 });
+
+describe("element count extraction", () => {
+    it("extracts H count of 2 from H2O", () => {
+        let parsed = parseFormula("H2O");
+        expect(parsed.elements["H"]).toBe(2);
+    });
+    it("extracts O count of 1 from H2O", () => {
+        let parsed = parseFormula("H2O");
+        expect(parsed.elements["O"]).toBe(1);
+    });
+    it("extracts Na count of 1 from NaCl", () => {
+        let parsed = parseFormula("NaCl");
+        expect(parsed.elements["Na"]).toBe(1);
+    });
+    it("extracts Cl count of 1 from NaCl", () => {
+        let parsed = parseFormula("NaCl");
+        expect(parsed.elements["Cl"]).toBe(1);
+    });
+    it("extracts Fe count of 2 from Fe2O3", () => {
+        let parsed = parseFormula("Fe2O3");
+        expect(parsed.elements["Fe"]).toBe(2);
+    });
+});
