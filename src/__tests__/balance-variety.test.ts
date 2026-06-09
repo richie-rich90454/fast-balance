@@ -432,3 +432,67 @@ describe("Deacon process", () => {
         expect(result.products.find(p => p.formula === "Cl2")?.coefficient).toBe(1);
     });
 });
+
+describe("Nitrogen dioxide and lead chamber", () => {
+    it("balances 3NO2 + H2O -> 2HNO3 + NO (positive check)", () => {
+        const result = balance("3NO2 + H2O -> 2HNO3 + NO");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances 2NO2 + H2O -> HNO3 + HNO2", () => {
+        const result = balance("2NO2 + H2O -> HNO3 + HNO2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "NO2")?.coefficient).toBe(2);
+        expect(result.reactants.find(r => r.formula === "H2O")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "HNO3")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "HNO2")?.coefficient).toBe(1);
+    });
+
+    it("balances 4NO2 + O2 + 2H2O -> 4HNO3", () => {
+        const result = balance("4NO2 + O2 + 2H2O -> 4HNO3");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "NO2")?.coefficient).toBe(4);
+        expect(result.reactants.find(r => r.formula === "O2")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "H2O")?.coefficient).toBe(2);
+        expect(result.products.find(p => p.formula === "HNO3")?.coefficient).toBe(4);
+    });
+
+    it("balances SO2 + NO2 -> SO3 + NO", () => {
+        const result = balance("SO2 + NO2 -> SO3 + NO");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "SO2")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "NO2")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "SO3")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "NO")?.coefficient).toBe(1);
+    });
+
+    it("balances SO3 + H2O -> H2SO4", () => {
+        const result = balance("SO3 + H2O -> H2SO4");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "SO3")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "H2O")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "H2SO4")?.coefficient).toBe(1);
+    });
+});
