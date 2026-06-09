@@ -119,7 +119,6 @@ describe("multiple reactants and products format", () => {
         expect(result.equation).toContain("Ca3(PO4)2");
         expect(result.equation).toContain("SiO2");
         expect(result.equation).toContain("C");
-        // The reactant part should have 2 " + " separators
         let [left, right] = result.equation.split("->");
         let plusCount = (left.match(/\+ /g) || []).length;
         expect(plusCount).toBe(2);
@@ -162,5 +161,44 @@ describe("multiple reactants and products format", () => {
         let [left, right] = result.equation.split("->");
         expect(left.trim()).toBe("2 Fe + 3 Cl2");
         expect(right.trim()).toBe("2 FeCl3");
+    });
+});
+
+describe("whitespace in output", () => {
+    it("no extra trailing spaces", () => {
+        let result = balance("H2 + O2 -> H2O", { showOne: true });
+        expect(result.equation).toBe("2 H2 + 1 O2 -> 2 H2O");
+        expect(result.equation.endsWith(" ")).toBe(false);
+        expect(result.equation.startsWith(" ")).toBe(false);
+    });
+
+    it("single spaces between terms", () => {
+        let result = balance("H2 + O2 -> H2O", { showOne: false });
+        expect(result.equation).not.toMatch(/  /);
+        expect(result.equation).toBe("2 H2 + O2 -> 2 H2O");
+    });
+
+    it("single space around arrow", () => {
+        let result = balance("H2 + O2 -> H2O");
+        expect(result.equation).toContain(" -> ");
+        expect(result.equation).not.toContain("-> ");
+        expect(result.equation).not.toContain(" ->");
+    });
+
+    it("consistent formatting across equations", () => {
+        let a = balance("H2 + O2 -> H2O", { showOne: false }).equation;
+        let b = balance("Fe + Cl2 -> FeCl3", { showOne: false }).equation;
+        let c = balance("N2 + H2 -> NH3", { showOne: false }).equation;
+        for (let eq of [a, b, c]) {
+            expect(eq).not.toMatch(/  /);
+            expect(eq).toMatch(/ -> /);
+            expect(eq.endsWith(" ")).toBe(false);
+        }
+    });
+
+    it("deterministic output", () => {
+        let a = balance("H2 + O2 -> H2O").equation;
+        let b = balance("H2 + O2 -> H2O").equation;
+        expect(a).toBe(b);
     });
 });
