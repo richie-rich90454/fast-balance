@@ -350,3 +350,65 @@ describe("edge case balance inputs", ()=>{
         expect(result.equation).toContain("H2O");
     });
 });
+
+describe("multiple arrow styles", ()=>{
+    it("-> arrow works", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        expect(result.equation).toContain("H2");
+        expect(result.equation).toContain("H2O");
+        expect(result.reactants.length).toBe(2);
+        expect(result.products.length).toBe(1);
+    });
+    it("→ arrow works (positive check)", ()=>{
+        let result=balance("H2 + O2 → H2O");
+        expect(result.equation).toContain("H2");
+        expect(result.equation).toContain("H2O");
+        expect(result.reactants.length).toBe(2);
+        expect(result.products.length).toBe(1);
+    });
+    it("= arrow works", ()=>{
+        let result=balance("H2 + O2 = H2O");
+        expect(result.equation).toContain("H2");
+        expect(result.equation).toContain("H2O");
+        expect(result.reactants.length).toBe(2);
+        expect(result.products.length).toBe(1);
+    });
+    it("⇌ arrow works (positive check)", ()=>{
+        let result=balance("H2 + O2 ⇌ H2O");
+        expect(result.equation).toContain("H2");
+        expect(result.equation).toContain("H2O");
+        expect(result.reactants.length).toBe(2);
+        expect(result.products.length).toBe(1);
+    });
+    it("<-> arrow works", ()=>{
+        let result=balance("H2 + O2 <-> H2O");
+        expect(result.equation).toContain("H2");
+        expect(result.equation).toContain("H2O");
+        expect(result.reactants.length).toBe(2);
+        expect(result.products.length).toBe(1);
+    });
+    it("==> arrow works", ()=>{
+        let result=balance("H2 + O2 --> H2O");
+        expect(result.equation).toContain("H2");
+        expect(result.equation).toContain("H2O");
+    });
+    it("<= => arrow works", ()=>{
+        let result=balance("H2 + O2 <=> H2O");
+        expect(result.equation).toContain("H2");
+        expect(result.equation).toContain("H2O");
+    });
+    it("⇒ arrow works", ()=>{
+        let result=balance("H2 + O2 ⇒ H2O");
+        expect(result.equation).toContain("H2");
+        expect(result.equation).toContain("H2O");
+    });
+    it("different arrows give same coefficients", ()=>{
+        let r1=balance("H2 + O2 -> H2O");
+        let r2=balance("H2 + O2 = H2O");
+        let r3=balance("H2 + O2 → H2O");
+        expect(r1.reactants).toEqual(r2.reactants);
+        expect(r2.reactants).toEqual(r3.reactants);
+        expect(r1.products).toEqual(r2.products);
+        expect(r2.products).toEqual(r3.products);
+    });
+});
