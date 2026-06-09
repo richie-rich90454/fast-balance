@@ -114,3 +114,71 @@ describe("balance-parse-balance roundtrip", ()=>{
         expect(result.products[1]!.coefficient).toBe(3);
     });
 });
+
+describe("split-balance consistency", ()=>{
+    it("splitEquation output can be balanced manually (H2 + O2 -> H2O)", ()=>{
+        const eq = "H2 + O2 -> H2O";
+        const split = splitEquation(eq);
+        const {matrix, cols} = buildMatrix(split.reactants, split.products);
+        const nullVec = solveSystem(matrix, cols);
+        const coeffs = fractionsToIntegers(nullVec);
+        // The known solution: 2,1,2
+        expect(coeffs).toEqual([2, 1, 2]);
+    });
+
+    it("splitEquation preserves formula content (CH4 + O2 -> CO2 + H2O)", ()=>{
+        const eq = "CH4 + O2 -> CO2 + H2O";
+        const split = splitEquation(eq);
+        // Formula strings must match input (without leading coefficient stripping)
+        expect(split.reactants.map(s=>s.formula)).toEqual(["CH4", "O2"]);
+        expect(split.products.map(s=>s.formula)).toEqual(["CO2", "H2O"]);
+    });
+
+    it("splitEquation formulas are parseable (Fe2O3 + CO -> Fe + CO2)", ()=>{
+        const eq = "Fe2O3 + CO -> Fe + CO2";
+        const split = splitEquation(eq);
+        // parseFormula on each species formula should not throw
+        for (const sp of split.reactants){
+            expect(()=>parseFormula(sp.formula)).not.toThrow();
+        }
+        for (const sp of split.products){
+            expect(()=>parseFormula(sp.formula)).not.toThrow();
+        }
+        // Element maps match the expected composition
+        expect(split.reactants[0]!.elements).toEqual({Fe: 2, O: 3});
+        expect(split.reactants[1]!.elements).toEqual({C: 1, O: 1});
+        expect(split.products[0]!.elements).toEqual({Fe: 1});
+        expect(split.products[1]!.elements).toEqual({C: 1, O: 2});
+    });
+
+    it("splitEquation works with state symbols (NaCl(aq) + AgNO3(aq) -> AgCl(s) + NaNO3(aq))", ()=>{
+        const eq = "NaCl(aq) + AgNO3(aq) -> AgCl(s) + NaNO3(aq)";
+        const split = splitEquation(eq);
+        // State symbols should be stripped from formula text
+        expect(split.reactants[0]!.formula).toBe("NaCl");
+        expect(split.reactants[1]!.formula).toBe("AgNO3");
+        expect(split.products[0]!.formula).toBe("AgCl");
+        expect(split.products[1]!.formula).toBe("NaNO3");
+        // Elements should be correctly parsed
+        expect(split.products[0]!.elements).toEqual({Ag: 1, Cl: 1});
+    });
+
+    it("splitEquation works with leading coefficients (3 H2 + N2 -> 2 NH3)", ()=>{
+        const eq = "3 H2 + N2 -> 2 NH3";
+        const split = splitEquation(eq);
+        // Leading coefficients should be stripped from the formula text
+        expect(split.reactants[0]!.formula).toBe("H2");
+        expect(split.reactants[1]!.formula).toBe("N2");
+        expect(split.products[0]!.formula).toBe("NH3");
+        // The split output should be balanceable to (3,1,2) and the result
+        // should be a positive integer multiple of the expected.
+        const {matrix, cols} = buildMatrix(split.reactants, split.products);
+        const nullVec = solveSystem(matrix, cols);
+        const coeffs = fractionsToIntegers(nullVec);
+        // Accept any positive integer multiple of (3,1,2)
+        expect(coeffs[0]! % 3).toBe(0);
+        expect(coeffs[1]!).toBe(coeffs[0]! / 3);
+        expect(coeffs[2]!).toBe(2 * (coeffs[0]! / 3));
+    });
+});
+
