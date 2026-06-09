@@ -6,6 +6,7 @@ import {
   parseFormula,
   splitEquation,
   buildMatrix,
+  solveSystem,
   Fraction,
 } from "../index";
 
@@ -203,5 +204,65 @@ describe("buildMatrix function exhaustive tests", () => {
       if (hasNonZero) break;
     }
     expect(hasNonZero).toBe(true);
+  });
+});
+
+describe("solveSystem function exhaustive tests", () => {
+  it("solveSystem returns an array of Fractions", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const result = solveSystem(matrix, cols);
+    expect(Array.isArray(result)).toBe(true);
+    for (const f of result) {
+      expect(f).toBeInstanceOf(Fraction);
+    }
+  });
+
+  it("solveSystem result lies in the null space of the matrix (M*v = 0)", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const v = solveSystem(matrix, cols);
+    for (const row of matrix) {
+      let sum = Fraction.zero();
+      for (let j = 0; j < cols; j++) {
+        sum = sum.add(row[j]!.mul(v[j]!));
+      }
+      expect(sum.isZero()).toBe(true);
+    }
+  });
+
+  it("solveSystem result has the correct length (matches total species count)", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const result = solveSystem(matrix, cols);
+    expect(result).toHaveLength(cols);
+  });
+
+  it("solveSystem result is non-trivial (not all zeros)", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const result = solveSystem(matrix, cols);
+    const hasNonZero = result.some((f) => !f.isZero());
+    expect(hasNonZero).toBe(true);
+  });
+
+  it("solveSystem passes null space test for H2 + O2 -> H2O with correct ratios", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const v = solveSystem(matrix, cols);
+    // Convert to numbers for ratio check
+    const nums = v.map((f) => f.num / f.den);
+    // Expected ratios are 2 : 1 : 2 (in some consistent sign).
+    // Normalize: divide by GCD to get smallest integer ratio.
+    const absNums = nums.map((x) => Math.abs(x)).filter((x) => x > 0);
+    let g = 0;
+    // Compute a rough integer GCD from values
+    const scaled = absNums.map((x) => Math.round(x * 1e9));
+    for (const s of scaled) g = gcd(g, s);
+    if (g === 0) g = 1;
+    const ints = scaled.map((s) => s / g);
+    expect(ints[0]).toBeCloseTo(2, 0);
+    expect(ints[1]).toBeCloseTo(1, 0);
+    expect(ints[2]).toBeCloseTo(2, 0);
   });
 });
