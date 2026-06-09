@@ -98,43 +98,6 @@ describe("organic formula parsing", () => {
   });
 });
 
-describe("state symbol removal exhaustive", () => {
-  it("strips (s) solid state symbol from H2O(s)", () => {
-    const result = parseFormula("H2O(s)");
-    expect(result.elements).toEqual({ H: 2, O: 1 });
-    expect(result.charge).toBe(0);
-  });
-
-  it("strips (l) liquid state symbol from H2O(l)", () => {
-    const result = parseFormula("H2O(l)");
-    expect(result.elements).toEqual({ H: 2, O: 1 });
-    expect(result.charge).toBe(0);
-  });
-
-  it("strips (g) gas state symbol from H2O(g)", () => {
-    const result = parseFormula("H2O(g)");
-    expect(result.elements).toEqual({ H: 2, O: 1 });
-    expect(result.charge).toBe(0);
-  });
-
-  it("strips (aq) aqueous state symbol from H2O(aq)", () => {
-    const result = parseFormula("H2O(aq)");
-    expect(result.elements).toEqual({ H: 2, O: 1 });
-    expect(result.charge).toBe(0);
-  });
-
-  it("strips (solid) long form solid state symbol from H2O(solid)", () => {
-    const result = parseFormula("H2O(solid)");
-    expect(result.elements).toEqual({ H: 2, O: 1 });
-    expect(result.charge).toBe(0);
-  });
-
-  it("strips (am) amorphous state symbol from H2O(am)", () => {
-    const result = parseFormula("H2O(am)");
-    expect(result.elements).toEqual({ H: 2, O: 1 });
-    expect(result.charge).toBe(0);
-  });
-});
 describe("ionic species formula parsing", () => {
   it("parses Na+ sodium cation", () => {
     const result = parseFormula("Na+");
@@ -431,6 +394,62 @@ describe("state symbol removal exhaustive", () => {
   it("strips (am) amorphous state symbol from H2O(am)", () => {
     const result = parseFormula("H2O(am)");
     expect(result.elements).toEqual({ H: 2, O: 1 });
+    expect(result.charge).toBe(0);
+  });
+});
+
+describe("formula with multiple element occurrences", () => {
+  it("parses H2SO4 sulfuric acid with H, S, O", () => {
+    const result = parseFormula("H2SO4");
+    expect(result.elements).toEqual({ H: 2, S: 1, O: 4 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses H3PO4 phosphoric acid with H, P, O", () => {
+    const result = parseFormula("H3PO4");
+    expect(result.elements).toEqual({ H: 3, P: 1, O: 4 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses HNO3 nitric acid with H, N, O", () => {
+    const result = parseFormula("HNO3");
+    expect(result.elements).toEqual({ H: 1, N: 1, O: 3 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses HClO4 perchloric acid with H, Cl, O", () => {
+    const result = parseFormula("HClO4");
+    expect(result.elements).toEqual({ H: 1, Cl: 1, O: 4 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses H2CrO4 chromic acid with H, Cr, O", () => {
+    const result = parseFormula("H2CrO4");
+    expect(result.elements).toEqual({ H: 2, Cr: 1, O: 4 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses HMnO4 permanganic acid (positive check)", () => {
+    const result = parseFormula("HMnO4");
+    expect(result.elements).toEqual({ H: 1, Mn: 1, O: 4 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses CCl4 carbon tetrachloride", () => {
+    const result = parseFormula("CCl4");
+    expect(result.elements).toEqual({ C: 1, Cl: 4 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses CHCl3 chloroform with H and Cl", () => {
+    const result = parseFormula("CHCl3");
+    expect(result.elements).toEqual({ C: 1, H: 1, Cl: 3 });
+    expect(result.charge).toBe(0);
+  });
+
+  it("parses CH2Cl2 dichloromethane with H and Cl", () => {
+    const result = parseFormula("CH2Cl2");
+    expect(result.elements).toEqual({ C: 1, H: 2, Cl: 2 });
     expect(result.charge).toBe(0);
   });
 });
