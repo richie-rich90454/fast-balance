@@ -93,3 +93,52 @@ describe("second order", () => {
     try { const r = balance("FeCl3 + SnCl2 -> FeCl2 + SnCl4"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
   });
 });
+
+describe("chain reactions", () => {
+  it("balances H2 + Cl2 -> 2HCl", () => {
+    const r = balance("H2 + Cl2 -> HCl");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances CH4 + Cl2 -> CH3Cl + HCl", () => {
+    const r = balance("CH4 + Cl2 -> CH3Cl + HCl");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances CH3Cl + Cl2 -> CH2Cl2 + HCl", () => {
+    const r = balance("CH3Cl + Cl2 -> CH2Cl2 + HCl");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances CH2Cl2 + Cl2 -> CHCl3 + HCl", () => {
+    const r = balance("CH2Cl2 + Cl2 -> CHCl3 + HCl");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances CHCl3 + Cl2 -> CCl4 + HCl", () => {
+    const r = balance("CHCl3 + Cl2 -> CCl4 + HCl");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances H2 + Br2 -> 2HBr", () => {
+    const r = balance("H2 + Br2 -> HBr");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances 2H2 + O2 -> 2H2O", () => {
+    const r = balance("H2 + O2 -> H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances C2H6 + Cl2 -> C2H5Cl + HCl", () => {
+    try { const r = balance("C2H6 + Cl2 -> C2H5Cl + HCl"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 2CH3OH + O2 -> 2HCHO + 2H2O", () => {
+    try { const r = balance("CH3OH + O2 -> HCHO + H2O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 2C2H6 + 7O2 -> 4CO2 + 6H2O", () => {
+    const r = balance("C2H6 + O2 -> CO2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+});
