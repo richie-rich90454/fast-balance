@@ -47,3 +47,34 @@ describe("coordination complex formation", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1]);
   });
 });
+
+describe("group 13 element oxidation", () => {
+  it("balances 4B + 3O2 -> 2B2O3", () => {
+    const r = balance("B + O2 -> B2O3");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([4, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+
+  it("balances 4Al + 3O2 -> 2Al2O3", () => {
+    const r = balance("Al + O2 -> Al2O3");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([4, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+
+  it("balances 4Ga + 3O2 -> 2Ga2O3", () => {
+    const r = balance("Ga + O2 -> Ga2O3");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances 4In + 3O2 -> 2In2O3", () => {
+    const r = balance("In + O2 -> In2O3");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances 4Tl + 3O2 -> 2Tl2O3", () => {
+    const r = balance("Tl + O2 -> Tl2O3");
+    expectPositiveCoefficients(r);
+  });
+});
