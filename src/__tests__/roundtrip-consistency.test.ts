@@ -670,3 +670,98 @@ describe("element count consistency", ()=>{
     });
 });
 
+describe("mass balance consistency", ()=>{
+    // Approximate atomic masses (g/mol) for elements that appear in our tests.
+    const ATOMIC_MASS: Record<string, number> = {
+        H: 1.008,
+        O: 15.999,
+        C: 12.011,
+        N: 14.007,
+        Na: 22.990,
+        Cl: 35.453,
+        Fe: 55.845,
+        S: 32.065,
+        Al: 26.982,
+        Ca: 40.078
+    };
+
+    // Compute the molecular mass of a single species (sum of element count * mass).
+    const molecularMass=(elements: Record<string, number>): number=>{
+        let m = 0;
+        for (const el in elements){
+            m += (elements[el] ?? 0) * (ATOMIC_MASS[el] ?? 0);
+        }
+        return m;
+    };
+
+    // Compute the total mass contribution of a side given balanced species and
+    // their original (un-coefficient-ed) element maps.
+    const sideMass=(species: {coefficient: number; formula: string}[],
+                    elementMaps: Record<string, number>[]): number=>{
+        let total = 0;
+        for (let i = 0; i < species.length; i++){
+            total += species[i]!.coefficient * molecularMass(elementMaps[i]!);
+        }
+        return total;
+    };
+
+    it("H2 + O2 -> H2O mass is balanced on both sides", ()=>{
+        const result = balance("H2 + O2 -> H2O");
+        const split = splitEquation("H2 + O2 -> H2O");
+        const left = sideMass(result.reactants, split.reactants.map(s=>s.elements));
+        const right = sideMass(result.products, split.products.map(s=>s.elements));
+        // Mass should be conserved to within float precision
+        expect(Math.abs(left - right)).toBeLessThan(1e-9);
+        // The mass should be positive on each side
+        expect(left).toBeGreaterThan(0);
+        expect(right).toBeGreaterThan(0);
+    });
+
+    it("Fe + Cl2 -> FeCl3 mass is balanced on both sides", ()=>{
+        const result = balance("Fe + Cl2 -> FeCl3");
+        const split = splitEquation("Fe + Cl2 -> FeCl3");
+        const left = sideMass(result.reactants, split.reactants.map(s=>s.elements));
+        const right = sideMass(result.products, split.products.map(s=>s.elements));
+        expect(Math.abs(left - right)).toBeLessThan(1e-9);
+        expect(left).toBeGreaterThan(0);
+        expect(right).toBeGreaterThan(0);
+    });
+
+    it("N2 + H2 -> NH3 mass is balanced on both sides", ()=>{
+        const result = balance("N2 + H2 -> NH3");
+        const split = splitEquation("N2 + H2 -> NH3");
+        const left = sideMass(result.reactants, split.reactants.map(s=>s.elements));
+        const right = sideMass(result.products, split.products.map(s=>s.elements));
+        expect(Math.abs(left - right)).toBeLessThan(1e-9);
+        expect(left).toBeGreaterThan(0);
+        expect(right).toBeGreaterThan(0);
+    });
+
+    it("CH4 + O2 -> CO2 + H2O mass is balanced on both sides", ()=>{
+        const result = balance("CH4 + O2 -> CO2 + H2O");
+        const split = splitEquation("CH4 + O2 -> CO2 + H2O");
+        const left = sideMass(result.reactants, split.reactants.map(s=>s.elements));
+        const right = sideMass(result.products, split.products.map(s=>s.elements));
+        expect(Math.abs(left - right)).toBeLessThan(1e-9);
+        expect(left).toBeGreaterThan(0);
+        expect(right).toBeGreaterThan(0);
+    });
+
+    it("total mass on each side is equal for a 5-reaction sweep", ()=>{
+        const equations = [
+            "H2 + O2 -> H2O",
+            "Fe + Cl2 -> FeCl3",
+            "N2 + H2 -> NH3",
+            "CH4 + O2 -> CO2 + H2O",
+            "Fe2O3 + CO -> Fe + CO2"
+        ];
+        for (const eq of equations){
+            const result = balance(eq);
+            const split = splitEquation(eq);
+            const left = sideMass(result.reactants, split.reactants.map(s=>s.elements));
+            const right = sideMass(result.products, split.products.map(s=>s.elements));
+            expect(Math.abs(left - right)).toBeLessThan(1e-9);
+        }
+    });
+});
+
