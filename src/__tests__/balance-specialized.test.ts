@@ -233,3 +233,36 @@ describe("lanthanide and actinide reactions", () => {
     expectPositiveCoefficients(r);
   });
 });
+
+describe("metal hydride hydrolysis", () => {
+  it("balances NaH + H2O -> NaOH + H2", () => {
+    const r = balance("NaH + H2O -> NaOH + H2");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances CaH2 + 2H2O -> Ca(OH)2 + 2H2", () => {
+    const r = balance("CaH2 + H2O -> Ca(OH)2 + H2");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+
+  it("balances LiH + H2O -> LiOH + H2", () => {
+    const r = balance("LiH + H2O -> LiOH + H2");
+    expectPositiveCoefficients(r);
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+
+  it("balances KH + H2O -> KOH + H2", () => {
+    const r = balance("KH + H2O -> KOH + H2");
+    expectPositiveCoefficients(r);
+  });
+
+  it("balances BaH2 + 2H2O -> Ba(OH)2 + 2H2", () => {
+    const r = balance("BaH2 + H2O -> Ba(OH)2 + H2");
+    expectPositiveCoefficients(r);
+  });
+});
