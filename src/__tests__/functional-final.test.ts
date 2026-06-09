@@ -112,3 +112,46 @@ describe("Species interface shape", () => {
         expect(typeof species.charge).toBe("number");
     });
 });
+
+describe("charge totals in balance", () => {
+    it("Na+ + Cl- -> NaCl has net charge 0 on product side", () => {
+        let eq = splitEquation("Na+ + Cl- -> NaCl");
+        let result = balance("Na+ + Cl- -> NaCl");
+        for (let i = 0; i < result.products.length; i++) {
+            let productCharge = eq.products[i]!.charge;
+            expect(productCharge).toBe(0);
+        }
+    });
+    it("Fe2+ + 2Cl- -> FeCl2 has net charge 0 on product side", () => {
+        let eq = splitEquation("Fe2+ + Cl- -> FeCl2");
+        let result = balance("Fe2+ + Cl- -> FeCl2");
+        for (let i = 0; i < result.products.length; i++) {
+            let productCharge = eq.products[i]!.charge;
+            expect(productCharge).toBe(0);
+        }
+    });
+    it("2Na+ + SO4^2- -> Na2SO4 has net charge 0 on product side", () => {
+        let eq = splitEquation("Na+ + SO4^2- -> Na2SO4");
+        let result = balance("Na+ + SO4^2- -> Na2SO4");
+        for (let i = 0; i < result.products.length; i++) {
+            let productCharge = eq.products[i]!.charge;
+            expect(productCharge).toBe(0);
+        }
+    });
+    it("3Na+ + PO4^3- -> Na3PO4 has net charge 0 on product side", () => {
+        let eq = splitEquation("Na+ + PO4^3- -> Na3PO4");
+        let result = balance("Na+ + PO4^3- -> Na3PO4");
+        for (let i = 0; i < result.products.length; i++) {
+            let productCharge = eq.products[i]!.charge;
+            expect(productCharge).toBe(0);
+        }
+    });
+    it("Ca2+ + 2Cl- -> CaCl2 has net charge 0 on product side", () => {
+        let eq = splitEquation("Ca2+ + Cl- -> CaCl2");
+        let result = balance("Ca2+ + Cl- -> CaCl2");
+        for (let i = 0; i < result.products.length; i++) {
+            let productCharge = eq.products[i]!.charge;
+            expect(productCharge).toBe(0);
+        }
+    });
+});
