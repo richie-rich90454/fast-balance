@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { gcd, lcm } from "../index";
+import { gcd, lcm, stripStateSymbols } from "../index";
 
 describe("gcd function exhaustive tests", () => {
   it("gcd(1, 1) returns 1", () => {
@@ -46,5 +46,31 @@ describe("lcm function exhaustive tests", () => {
 
   it("lcm(10, 15) returns 30", () => {
     expect(lcm(10, 15)).toBe(30);
+  });
+});
+
+describe("stripStateSymbols function exhaustive tests", () => {
+  it("stripStateSymbols('H2O(s)') returns 'H2O'", () => {
+    expect(stripStateSymbols("H2O(s)")).toBe("H2O");
+  });
+
+  it("stripStateSymbols('H2O(g)') returns 'H2O'", () => {
+    expect(stripStateSymbols("H2O(g)")).toBe("H2O");
+  });
+
+  it("stripStateSymbols('H2O(l)') returns 'H2O'", () => {
+    expect(stripStateSymbols("H2O(l)")).toBe("H2O");
+  });
+
+  it("stripStateSymbols('H2O(aq)') returns 'H2O'", () => {
+    expect(stripStateSymbols("H2O(aq)")).toBe("H2O");
+  });
+
+  it("stripStateSymbols('H2O') returns 'H2O' (no state symbol)", () => {
+    expect(stripStateSymbols("H2O")).toBe("H2O");
+  });
+
+  it("stripStateSymbols('Fe2O3(s)') returns 'Fe2O3'", () => {
+    expect(stripStateSymbols("Fe2O3(s)")).toBe("Fe2O3");
   });
 });
