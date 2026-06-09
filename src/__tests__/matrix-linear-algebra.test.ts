@@ -3,6 +3,7 @@ import {
   Fraction,
   buildMatrix,
   splitEquation,
+  solveSystem,
   type Species,
 } from "../index";
 
@@ -188,5 +189,73 @@ describe("buildMatrix sign convention tests", () => {
     }
     expect(hRow).toBeGreaterThanOrEqual(0);
     expect(oRow).toBeGreaterThanOrEqual(0);
+  });
+});
+
+describe("solveSystem simple system tests", () => {
+  it("solves 1 equation 1 unknown trivial system", () => {
+    const matrix = [[new Fraction(0)]];
+    const result = solveSystem(matrix, 1);
+    expect(result.length).toBe(1);
+    expect(result[0]!.equals(new Fraction(1))).toBe(true);
+  });
+
+  it("solves 2 equations 2 unknowns with unique solution", () => {
+    const matrix = [
+      [new Fraction(1), new Fraction(2)],
+      [new Fraction(2), new Fraction(4)],
+    ];
+    const result = solveSystem(matrix, 2);
+    for (let i = 0; i < matrix.length; i++) {
+      let sum = new Fraction(0);
+      for (let j = 0; j < 2; j++) {
+        sum = sum.add(matrix[i]![j]!.mul(result[j]!));
+      }
+      expect(sum.isZero()).toBe(true);
+    }
+  });
+
+  it("solves 2 equations 2 unknowns with free variable", () => {
+    const matrix = [[new Fraction(2), new Fraction(-2)]];
+    const result = solveSystem(matrix, 2);
+    expect(result[0]!.equals(new Fraction(1))).toBe(true);
+    expect(result[1]!.equals(new Fraction(1))).toBe(true);
+  });
+
+  it("solves 3 equations 3 unknowns with one free variable", () => {
+    const matrix = [
+      [new Fraction(2), new Fraction(0), new Fraction(-2)],
+      [new Fraction(0), new Fraction(2), new Fraction(-1)],
+      [new Fraction(0), new Fraction(0), new Fraction(0)],
+    ];
+    const result = solveSystem(matrix, 3);
+    expect(result[0]!.equals(new Fraction(1))).toBe(true);
+    expect(result[1]!.equals(new Fraction(1, 2))).toBe(true);
+    expect(result[2]!.equals(new Fraction(1))).toBe(true);
+  });
+
+  it("returns all-ones for an all-zero matrix system", () => {
+    const matrix = [[new Fraction(0), new Fraction(0), new Fraction(0)]];
+    const result = solveSystem(matrix, 3);
+    for (let i = 0; i < matrix.length; i++) {
+      let sum = new Fraction(0);
+      for (let j = 0; j < 3; j++) {
+        sum = sum.add(matrix[i]![j]!.mul(result[j]!));
+      }
+      expect(sum.isZero()).toBe(true);
+    }
+  });
+
+  it("system from H2 + O2 -> H2O gives correct null space", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const result = solveSystem(matrix, cols);
+    for (let i = 0; i < matrix.length; i++) {
+      let sum = new Fraction(0);
+      for (let j = 0; j < cols; j++) {
+        sum = sum.add(matrix[i]![j]!.mul(result[j]!));
+      }
+      expect(sum.isZero()).toBe(true);
+    }
   });
 });
