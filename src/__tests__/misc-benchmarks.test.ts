@@ -409,3 +409,86 @@ describe("nitrogen dioxide reactions", () => {
         expect(result.products[0]?.coefficient).toBe(2);
     });
 });
+
+describe("benchmark summary", () => {
+    let organicEquations = [
+        "CH4 + O2 -> CO2 + H2O",
+        "C2H6 + O2 -> CO2 + H2O",
+        "C3H8 + O2 -> CO2 + H2O",
+        "C2H4 + O2 -> CO2 + H2O",
+        "C2H2 + O2 -> CO2 + H2O",
+        "C6H6 + O2 -> CO2 + H2O",
+        "CH3OH + O2 -> CO2 + H2O",
+        "C2H5OH + O2 -> CO2 + H2O",
+        "CH3COOH + O2 -> CO2 + H2O",
+        "C6H12O6 + O2 -> CO2 + H2O"
+    ];
+
+    let ionicEquations = [
+        "Fe2+ + Cr2O7^2- + H+ -> Fe3+ + Cr3+ + H2O",
+        "MnO4- + Fe2+ + H+ -> Mn2+ + Fe3+ + H2O",
+        "Cu + Ag+ -> Cu2+ + Ag",
+        "Zn + Cu2+ -> Zn2+ + Cu",
+        "Fe + Ag+ -> Fe2+ + Ag"
+    ];
+
+    let mixedNotation = [
+        "H2 + O2 -> H2O",
+        "H2 + O2 --> H2O",
+        "H2 + O2 = H2O",
+        "H2 + O2 <=> H2O"
+    ];
+
+    it("completes 100 balance calls in under 5s", () => {
+        let start = performance.now();
+        for (let i = 0; i < 100; i++) {
+            let eq = organicEquations[i % organicEquations.length]!;
+            balance(eq);
+        }
+        let duration = performance.now() - start;
+        expect(duration).toBeLessThan(5000);
+    });
+
+    it("all complex ionic equations balance", () => {
+        for (let eq of ionicEquations) {
+            let result = balance(eq);
+            let all = [...result.reactants, ...result.products];
+            for (let s of all) {
+                expect(s.coefficient).toBeGreaterThan(0);
+            }
+        }
+    });
+
+    it("all organic combustion-style equations balance", () => {
+        for (let eq of organicEquations) {
+            let result = balance(eq);
+            let all = [...result.reactants, ...result.products];
+            for (let s of all) {
+                expect(s.coefficient).toBeGreaterThan(0);
+                expect(Number.isInteger(s.coefficient)).toBe(true);
+            }
+        }
+    });
+
+    it("all mixed-notation equations balance", () => {
+        for (let eq of mixedNotation) {
+            let result = balance(eq);
+            let all = [...result.reactants, ...result.products];
+            for (let s of all) {
+                expect(s.coefficient).toBeGreaterThan(0);
+            }
+        }
+    });
+
+    it("all benchmark equations produce positive integer coefficients", () => {
+        let all = [...organicEquations, ...ionicEquations];
+        for (let eq of all) {
+            let result = balance(eq);
+            let species = [...result.reactants, ...result.products];
+            for (let s of species) {
+                expect(Number.isInteger(s.coefficient)).toBe(true);
+                expect(s.coefficient).toBeGreaterThan(0);
+            }
+        }
+    });
+});
