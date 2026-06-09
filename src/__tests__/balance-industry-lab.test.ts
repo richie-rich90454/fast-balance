@@ -307,3 +307,60 @@ describe("Water treatment reactions", () => {
         expect(r.products.find(x => x.formula === "H2O")?.coefficient).toBe(1);
     });
 });
+
+describe("Ore processing reactions", () => {
+    it("balances ZnS + O2 -> ZnO + SO2 (positive check)", () => {
+        const r = balance("ZnS + O2 -> ZnO + SO2");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances CuFeS2 + O2 -> Cu2S + FeS + SO2 (positive check)", () => {
+        const r = balance("CuFeS2 + O2 -> Cu2S + FeS + SO2");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances PbS + O2 -> PbO + SO2 (positive check)", () => {
+        const r = balance("PbS + O2 -> PbO + SO2");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances FeCr2O4 + O2 -> Fe2O3 + Cr2O3 (positive check)", () => {
+        const r = balance("FeCr2O4 + O2 -> Fe2O3 + Cr2O3");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances MnO2 + C -> Mn + CO2 (positive check)", () => {
+        const r = balance("MnO2 + C -> Mn + CO2");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+});
