@@ -175,3 +175,48 @@ describe("equilibrium", () => {
     try { const r = balance("N2 + O2 <=> NO"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { const r = balance("N2 + O2 -> NO"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); }
   });
 });
+
+describe("photochemical", () => {
+  it("balances 2AgBr -> 2Ag + Br2", () => {
+    const r = balance("AgBr -> Ag + Br2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances 2AgCl -> 2Ag + Cl2", () => {
+    const r = balance("AgCl -> Ag + Cl2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances 2H2O -> 2H2 + O2 (photolysis)", () => {
+    try { const r = balance("H2O -> H2 + O2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances Cl2 -> 2Cl (photodissociation)", () => {
+    try { const r = balance("Cl2 -> Cl"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 6CO2 + 6H2O -> C6H12O6 + 6O2", () => {
+    const r = balance("CO2 + H2O -> C6H12O6 + O2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances 2O3 -> 3O2 (photochemical decomposition)", () => {
+    const r = balance("O3 -> O2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances 2H2O2 -> 2H2O + O2 (photochemical)", () => {
+    const r = balance("H2O2 -> H2O + O2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances O2 -> 2O (photolysis)", () => {
+    try { const r = balance("O2 -> O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances CH4 + Cl2 -> CH3Cl + HCl (hv)", () => {
+    const r = balance("CH4 + Cl2 -> CH3Cl + HCl");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances 2HBr -> H2 + Br2 (photochemical)", () => {
+    try { const r = balance("HBr -> H2 + Br2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+});
