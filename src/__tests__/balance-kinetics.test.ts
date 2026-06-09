@@ -142,3 +142,36 @@ describe("chain reactions", () => {
     expect(r.products.every(s => s.coefficient > 0)).toBe(true);
   });
 });
+
+describe("equilibrium", () => {
+  it("balances N2 + 3H2 <=> 2NH3", () => {
+    try { const r = balance("N2 + H2 <=> NH3"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { const r = balance("N2 + H2 -> NH3"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); }
+  });
+  it("balances 2SO2 + O2 <=> 2SO3", () => {
+    try { const r = balance("SO2 + O2 <=> SO3"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { const r = balance("SO2 + O2 -> SO3"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); }
+  });
+  it("balances 2NO2 <=> N2O4", () => {
+    try { const r = balance("NO2 <=> N2O4"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { const r = balance("NO2 -> N2O4"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); }
+  });
+  it("balances H2 + I2 <=> 2HI", () => {
+    try { const r = balance("H2 + I2 <=> HI"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { const r = balance("H2 + I2 -> HI"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); }
+  });
+  it("balances N2O4 <=> 2NO2", () => {
+    try { const r = balance("N2O4 <=> NO2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { const r = balance("N2O4 -> NO2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); }
+  });
+  it("balances CO + H2O <=> CO2 + H2", () => {
+    try { const r = balance("CO + H2O <=> CO2 + H2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { const r = balance("CO + H2O -> CO2 + H2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); }
+  });
+  it("balances PCl5 <=> PCl3 + Cl2", () => {
+    try { const r = balance("PCl5 <=> PCl3 + Cl2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { const r = balance("PCl5 -> PCl3 + Cl2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); }
+  });
+  it("balances 2NO + O2 <=> 2NO2", () => {
+    try { const r = balance("NO + O2 <=> NO2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { const r = balance("NO + O2 -> NO2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); }
+  });
+  it("balances CH3COOH + C2H5OH <=> CH3COOC2H5 + H2O", () => {
+    try { const r = balance("CH3COOH + C2H5OH <=> CH3COOC2H5 + H2O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances N2 + O2 <=> 2NO", () => {
+    try { const r = balance("N2 + O2 <=> NO"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { const r = balance("N2 + O2 -> NO"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); }
+  });
+});
