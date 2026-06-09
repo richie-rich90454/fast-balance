@@ -62,3 +62,61 @@ describe("Wacker process", () => {
         expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
     });
 });
+
+describe("Monsanto process", () => {
+    it("balances CH3OH + CO -> CH3COOH (positive check)", () => {
+        const result = balance("CH3OH + CO -> CH3COOH");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances CH3I + CO + H2O -> CH3COOH + HI (positive check)", () => {
+        const result = balance("CH3I + CO + H2O -> CH3COOH + HI");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances CH3OH + CO -> CH3COOH", () => {
+        const result = balance("CH3OH + CO -> CH3COOH");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "CH3OH")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "CO")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "CH3COOH")?.coefficient).toBe(1);
+    });
+
+    it("balances 2CH3OH + CO -> CH3COOCH3 + H2O (positive check)", () => {
+        const result = balance("2CH3OH + CO -> CH3COOCH3 + H2O");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances CH3I + CO -> CH3COI (positive check)", () => {
+        const result = balance("CH3I + CO -> CH3COI");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+});
