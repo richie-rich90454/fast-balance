@@ -364,3 +364,62 @@ describe("Ore processing reactions", () => {
         expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
     });
 });
+
+describe("Pyrometallurgy reactions", () => {
+    it("balances Fe2O3 + C -> Fe + CO2 (positive check)", () => {
+        const r = balance("Fe2O3 + C -> Fe + CO2");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances Fe3O4 + C -> Fe + CO2 (positive check)", () => {
+        const r = balance("Fe3O4 + C -> Fe + CO2");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances FeO + C -> Fe + CO (positive check)", () => {
+        const r = balance("FeO + C -> Fe + CO");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances SnO2 + C -> Sn + CO (positive check)", () => {
+        const r = balance("SnO2 + C -> Sn + CO");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances Cr2O3 + Al -> Cr + Al2O3", () => {
+        const r = balance("Cr2O3 + Al -> Cr + Al2O3");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "Cr2O3")?.coefficient).toBe(1);
+        expect(r.reactants.find(x => x.formula === "Al")?.coefficient).toBe(2);
+        expect(r.products.find(x => x.formula === "Cr")?.coefficient).toBe(2);
+        expect(r.products.find(x => x.formula === "Al2O3")?.coefficient).toBe(1);
+    });
+});
