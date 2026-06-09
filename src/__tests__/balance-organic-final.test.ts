@@ -256,3 +256,35 @@ describe("drug molecule tests", () => {
     expect(result.products.every(p => p.coefficient > 0)).toBe(true);
   });
 });
+
+describe("essential oil tests", () => {
+  it("balances C10H16O + O2 -> CO2 + H2O", () => {
+    const result = balance("C10H16O + O2 -> CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances C15H20O + O2 -> CO2 + H2O", () => {
+    const result = balance("C15H20O + O2 -> CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances C12H16O + O2 -> CO2 + H2O", () => {
+    const result = balance("C12H16O + O2 -> CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances C8H8O + O2 -> CO2 + H2O", () => {
+    const result = balance("C8H8O + O2 -> CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances C9H10O2 + O2 -> CO2 + H2O", () => {
+    const result = balance("C9H10O2 + O2 -> CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+});
