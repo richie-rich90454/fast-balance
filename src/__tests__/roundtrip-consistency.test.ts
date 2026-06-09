@@ -572,3 +572,101 @@ describe("charge conservation consistency", ()=>{
     });
 });
 
+describe("element count consistency", ()=>{
+    it("H2O formula parse and balance agree on H=2,O=1", ()=>{
+        const parsed = parseFormula("H2O");
+        expect(parsed.elements).toEqual({H: 2, O: 1});
+        // Build a tiny equation that uses H2O and ensure the matrix row for H is 2 and for O is 1.
+        const split = splitEquation("H2 + O2 -> H2O");
+        const {matrix} = buildMatrix(split.reactants, split.products);
+        const elements = Array.from(new Set([
+            ...Object.keys(split.reactants[0]!.elements),
+            ...Object.keys(split.reactants[1]!.elements),
+            ...Object.keys(split.products[0]!.elements)
+        ])).sort();
+        const hIdx = elements.indexOf("H");
+        const oIdx = elements.indexOf("O");
+        // Column 2 corresponds to H2O (third species in the equation)
+        expect(matrix[hIdx]![2]!.num).toBe(-2);
+        expect(matrix[oIdx]![2]!.num).toBe(-1);
+    });
+
+    it("NaCl formula parse and balance agree on Na=1,Cl=1", ()=>{
+        const parsed = parseFormula("NaCl");
+        expect(parsed.elements).toEqual({Na: 1, Cl: 1});
+        // Use Na + Cl2 -> NaCl to verify the matrix values.
+        const split = splitEquation("Na + Cl2 -> NaCl");
+        const {matrix} = buildMatrix(split.reactants, split.products);
+        const elements = Array.from(new Set([
+            ...Object.keys(split.reactants[0]!.elements),
+            ...Object.keys(split.reactants[1]!.elements),
+            ...Object.keys(split.products[0]!.elements)
+        ])).sort();
+        const naIdx = elements.indexOf("Na");
+        const clIdx = elements.indexOf("Cl");
+        // Column 2 corresponds to NaCl
+        expect(matrix[naIdx]![2]!.num).toBe(-1);
+        expect(matrix[clIdx]![2]!.num).toBe(-1);
+    });
+
+    it("Fe2O3 formula parse and balance agree on Fe=2,O=3", ()=>{
+        const parsed = parseFormula("Fe2O3");
+        expect(parsed.elements).toEqual({Fe: 2, O: 3});
+        // Use Fe2O3 + CO -> Fe + CO2 to verify.
+        const split = splitEquation("Fe2O3 + CO -> Fe + CO2");
+        const {matrix} = buildMatrix(split.reactants, split.products);
+        const elements = Array.from(new Set([
+            ...Object.keys(split.reactants[0]!.elements),
+            ...Object.keys(split.reactants[1]!.elements),
+            ...Object.keys(split.products[0]!.elements),
+            ...Object.keys(split.products[1]!.elements)
+        ])).sort();
+        const feIdx = elements.indexOf("Fe");
+        const oIdx = elements.indexOf("O");
+        // Column 0 corresponds to Fe2O3 (first reactant)
+        expect(matrix[feIdx]![0]!.num).toBe(2);
+        expect(matrix[oIdx]![0]!.num).toBe(3);
+    });
+
+    it("CaCO3 formula parse and balance agree on Ca=1,C=1,O=3", ()=>{
+        const parsed = parseFormula("CaCO3");
+        expect(parsed.elements).toEqual({Ca: 1, C: 1, O: 3});
+        // Use CaCO3 -> CaO + CO2 to verify.
+        const split = splitEquation("CaCO3 -> CaO + CO2");
+        const {matrix} = buildMatrix(split.reactants, split.products);
+        const elements = Array.from(new Set([
+            ...Object.keys(split.reactants[0]!.elements),
+            ...Object.keys(split.products[0]!.elements),
+            ...Object.keys(split.products[1]!.elements)
+        ])).sort();
+        const caIdx = elements.indexOf("Ca");
+        const cIdx = elements.indexOf("C");
+        const oIdx = elements.indexOf("O");
+        // Column 0 corresponds to CaCO3
+        expect(matrix[caIdx]![0]!.num).toBe(1);
+        expect(matrix[cIdx]![0]!.num).toBe(1);
+        expect(matrix[oIdx]![0]!.num).toBe(3);
+    });
+
+    it("H2SO4 formula parse and balance agree on H=2,S=1,O=4", ()=>{
+        const parsed = parseFormula("H2SO4");
+        expect(parsed.elements).toEqual({H: 2, S: 1, O: 4});
+        // Use H2SO4 + NaOH -> Na2SO4 + H2O to verify.
+        const split = splitEquation("H2SO4 + NaOH -> Na2SO4 + H2O");
+        const {matrix} = buildMatrix(split.reactants, split.products);
+        const elements = Array.from(new Set([
+            ...Object.keys(split.reactants[0]!.elements),
+            ...Object.keys(split.reactants[1]!.elements),
+            ...Object.keys(split.products[0]!.elements),
+            ...Object.keys(split.products[1]!.elements)
+        ])).sort();
+        const hIdx = elements.indexOf("H");
+        const sIdx = elements.indexOf("S");
+        const oIdx = elements.indexOf("O");
+        // Column 0 corresponds to H2SO4
+        expect(matrix[hIdx]![0]!.num).toBe(2);
+        expect(matrix[sIdx]![0]!.num).toBe(1);
+        expect(matrix[oIdx]![0]!.num).toBe(4);
+    });
+});
+
