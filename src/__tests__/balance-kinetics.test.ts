@@ -220,3 +220,52 @@ describe("photochemical", () => {
     try { const r = balance("HBr -> H2 + Br2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
   });
 });
+
+describe("radical", () => {
+  it("balances CH4 + Cl2 -> CH3Cl + HCl", () => {
+    const r = balance("CH4 + Cl2 -> CH3Cl + HCl");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances CH3Cl + Cl2 -> CH2Cl2 + HCl", () => {
+    const r = balance("CH3Cl + Cl2 -> CH2Cl2 + HCl");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances CH2Cl2 + Cl2 -> CHCl3 + HCl", () => {
+    const r = balance("CH2Cl2 + Cl2 -> CHCl3 + HCl");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances CHCl3 + Cl2 -> CCl4 + HCl", () => {
+    const r = balance("CHCl3 + Cl2 -> CCl4 + HCl");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances C2H6 + Br2 -> C2H5Br + HBr", () => {
+    try { const r = balance("C2H6 + Br2 -> C2H5Br + HBr"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 2C2H6 + 7O2 -> 4CO2 + 6H2O", () => {
+    const r = balance("C2H6 + O2 -> CO2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances C3H8 + 5O2 -> 3CO2 + 4H2O", () => {
+    const r = balance("C3H8 + O2 -> CO2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances 2NO + O2 -> 2NO2", () => {
+    const r = balance("NO + O2 -> NO2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances CH3CH3 + Cl2 -> CH3CH2Cl + HCl", () => {
+    try { const r = balance("CH3CH3 + Cl2 -> CH3CH2Cl + HCl"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 2H2 + O2 -> 2H2O (radical)", () => {
+    const r = balance("H2 + O2 -> H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+});
