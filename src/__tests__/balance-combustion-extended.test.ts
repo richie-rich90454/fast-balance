@@ -152,3 +152,39 @@ describe("aromatic combustion", () => {
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
 });
+
+describe("large hydrocarbon combustion", () => {
+  it("balances 2C8H18 + 25O2 -> 16CO2 + 18H2O", () => {
+    const r = balance("C8H18 + O2 -> CO2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 25]);
+    expect(r.products.map(x => x.coefficient)).toEqual([16, 18]);
+  });
+  it("balances 2C10H22 + 31O2 -> 20CO2 + 22H2O (positive check)", () => {
+    const r = balance("C10H22 + O2 -> CO2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances C12H26 combustion (positive check)", () => {
+    const r = balance("C12H26 + O2 -> CO2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances C14H30 combustion (positive check)", () => {
+    const r = balance("C14H30 + O2 -> CO2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances C16H34 combustion (positive check)", () => {
+    const r = balance("C16H34 + O2 -> CO2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
