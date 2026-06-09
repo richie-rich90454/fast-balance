@@ -254,3 +254,45 @@ describe("equation parsing roundtrip", () => {
   });
 });
 
+describe("stress and limits", () => {
+  it("balance 50 times quickly for H2+O2->H2O", () => {
+    const start = Date.now();
+    for (let i = 0; i < 50; i++) {
+      const result = balance("H2 + O2 -> H2O");
+      expect(result.reactants[0]?.coefficient).toBe(2);
+      expect(result.products[0]?.coefficient).toBe(2);
+    }
+    const elapsed = Date.now() - start;
+    expect(elapsed).toBeLessThan(5000);
+  });
+
+  it("balance C16H34+O2->CO2+H2O (large hydrocarbon combustion)", () => {
+    const result = balance("C16H34 + O2 -> CO2 + H2O");
+    expect(result.reactants[0]?.coefficient).toBe(2);
+    expect(result.reactants[1]?.coefficient).toBe(49);
+    expect(result.products[0]?.coefficient).toBe(32);
+    expect(result.products[1]?.coefficient).toBe(34);
+  });
+
+  it("balance with complex nested parentheses", () => {
+    const result = balance("Ca3(PO4)2 + H2SO4 -> Ca(H2PO4)2 + CaSO4");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balance with 6+ species", () => {
+    const result = balance("KMnO4 + HCl -> KCl + MnCl2 + Cl2 + H2O");
+    expect([...result.reactants, ...result.products].length).toBeGreaterThanOrEqual(6);
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balance with charges and brackets", () => {
+    const result = balance("MnO4- + H+ + e- -> Mn2+ + H2O");
+    expect(result.reactants.length).toBe(3);
+    expect(result.products.length).toBe(2);
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+});
+
