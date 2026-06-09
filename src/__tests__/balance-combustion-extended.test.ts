@@ -276,3 +276,39 @@ describe("nitrogenous organic combustion", () => {
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
 });
+
+describe("sulfur-containing combustion", () => {
+  it("balances CH3SH combustion (positive check)", () => {
+    const r = balance("CH3SH + O2 -> CO2 + H2O + SO2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances C2H5SH combustion (positive check)", () => {
+    const r = balance("C2H5SH + O2 -> CO2 + H2O + SO2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances C4H4S combustion (positive check)", () => {
+    const r = balance("C4H4S + O2 -> CO2 + H2O + SO2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances 2(CH3)2S + 9O2 -> 4CO2 + 6H2O + 2SO2 (positive check)", () => {
+    const r = balance("(CH3)2S + O2 -> CO2 + H2O + SO2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances 2H2S + 3O2 -> 2SO2 + 2H2O", () => {
+    const r = balance("H2S + O2 -> SO2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 2]);
+  });
+});
