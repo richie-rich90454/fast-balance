@@ -1,5 +1,5 @@
 import {describe, it, expect} from "vitest";
-import {balance, parseFormula} from "../index";
+import {balance, parseFormula, splitEquation} from "../index";
 
 describe("balance return type contract", ()=>{
     it("result has reactants array", ()=>{
@@ -224,5 +224,48 @@ describe("parseFormula return type", ()=>{
     it("charge defaults to 0", ()=>{
         let result=parseFormula("H2O");
         expect(result.charge).toBe(0);
+    });
+});
+
+describe("splitEquation return type", ()=>{
+    it("returns object with reactants", ()=>{
+        let result=splitEquation("H2 + O2 -> H2O");
+        expect(result).toHaveProperty("reactants");
+        expect(result.reactants).toBeDefined();
+    });
+    it("returns object with products", ()=>{
+        let result=splitEquation("H2 + O2 -> H2O");
+        expect(result).toHaveProperty("products");
+        expect(result.products).toBeDefined();
+    });
+    it("reactants is array", ()=>{
+        let result=splitEquation("H2 + O2 -> H2O");
+        expect(Array.isArray(result.reactants)).toBe(true);
+    });
+    it("products is array", ()=>{
+        let result=splitEquation("H2 + O2 -> H2O");
+        expect(Array.isArray(result.products)).toBe(true);
+    });
+    it("each has formula/elements/charge", ()=>{
+        let result=splitEquation("H2 + O2 -> H2O");
+        for (let r of result.reactants){
+            expect(r).toHaveProperty("formula");
+            expect(r).toHaveProperty("elements");
+            expect(r).toHaveProperty("charge");
+        }
+        for (let p of result.products){
+            expect(p).toHaveProperty("formula");
+            expect(p).toHaveProperty("elements");
+            expect(p).toHaveProperty("charge");
+        }
+    });
+    it("formula is string", ()=>{
+        let result=splitEquation("H2 + O2 -> H2O");
+        for (let r of result.reactants){
+            expect(typeof r.formula).toBe("string");
+        }
+        for (let p of result.products){
+            expect(typeof p.formula).toBe("string");
+        }
     });
 });
