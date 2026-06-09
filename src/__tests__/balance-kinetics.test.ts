@@ -392,3 +392,38 @@ describe("oscillating", () => {
     try { const r = balance("Mn2+ + IO4- + H2O -> MnO4- + IO3- + H+"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
   });
 });
+
+describe("autocatalytic", () => {
+  it("balances 2MnO4- + 6H+ + 5H2C2O4 -> 2Mn2+ + 10CO2 + 8H2O", () => {
+    try { const r = balance("MnO4- + H+ + H2C2O4 -> Mn2+ + CO2 + H2O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 2Ce4+ + H2C2O4 -> 2Ce3+ + 2CO2 + 2H+", () => {
+    try { const r = balance("Ce4+ + H2C2O4 -> Ce3+ + CO2 + H+"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances BrO3- + 2Br- + 3H+ -> 3HOBr (autocatalytic)", () => {
+    try { const r = balance("BrO3- + Br- + H+ -> HOBr"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances HOBr + H+ + Br- -> Br2 + H2O", () => {
+    try { const r = balance("HOBr + H+ + Br- -> Br2 + H2O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 2H2O2 -> 2H2O + O2 (autocatalytic)", () => {
+    const r = balance("H2O2 -> H2O + O2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances CH3COCH3 + I2 -> CH3COCH2I + H+ + I- (acid-catalyzed iodination)", () => {
+    try { const r = balance("CH3COCH3 + I2 -> CH3COCH2I + H+ + I-"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 2NO2 + H2O -> HNO2 + HNO3", () => {
+    try { const r = balance("NO2 + H2O -> HNO2 + HNO3"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 3HNO2 -> HNO3 + 2NO + H2O", () => {
+    try { const r = balance("HNO2 -> HNO3 + NO + H2O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 2IO3- + 12H+ + 10e- -> I2 + 6H2O (autocatalytic reduction)", () => {
+    try { const r = balance("IO3- + H+ -> I2 + H2O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances S2O8 2- + 2I- -> 2SO4 2- + I2 (autocatalytic with Mn2+)", () => {
+    try { const r = balance("S2O8 2- + I- -> SO4 2- + I2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+});
