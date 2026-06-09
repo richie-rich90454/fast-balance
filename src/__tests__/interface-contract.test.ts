@@ -113,3 +113,42 @@ describe("balance option defaults", ()=>{
         expect(result.equation).toContain("->");
     });
 });
+
+describe("format option behavior", ()=>{
+    it("format=text uses '->'", ()=>{
+        let result=balance("H2 + O2 -> H2O", {format: "text"});
+        expect(result.equation).toContain(" -> ");
+    });
+    it("format=html uses '&rarr;'", ()=>{
+        let result=balance("H2 + O2 -> H2O", {format: "html"});
+        expect(result.equation).toContain("&rarr;");
+        expect(result.equation).not.toContain(" -> ");
+    });
+    it("format=latex uses '\\\\rightarrow'", ()=>{
+        let result=balance("H2 + O2 -> H2O", {format: "latex"});
+        expect(result.equation).toContain("\\rightarrow");
+        expect(result.equation).not.toContain(" -> ");
+    });
+    it("format=text default", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        expect(result.equation).toContain(" -> ");
+    });
+    it("all formats produce same coefficients", ()=>{
+        let textResult=balance("H2 + O2 -> H2O", {format: "text"});
+        let htmlResult=balance("H2 + O2 -> H2O", {format: "html"});
+        let latexResult=balance("H2 + O2 -> H2O", {format: "latex"});
+        expect(textResult.reactants).toEqual(htmlResult.reactants);
+        expect(htmlResult.reactants).toEqual(latexResult.reactants);
+        expect(textResult.products).toEqual(htmlResult.products);
+        expect(htmlResult.products).toEqual(latexResult.products);
+    });
+    it("format option doesn't change coefficients", ()=>{
+        let r1=balance("CH4 + O2 -> CO2 + H2O");
+        let r2=balance("CH4 + O2 -> CO2 + H2O", {format: "html"});
+        let r3=balance("CH4 + O2 -> CO2 + H2O", {format: "latex"});
+        expect(r1.reactants).toEqual(r2.reactants);
+        expect(r2.reactants).toEqual(r3.reactants);
+        expect(r1.products).toEqual(r2.products);
+        expect(r2.products).toEqual(r3.products);
+    });
+});
