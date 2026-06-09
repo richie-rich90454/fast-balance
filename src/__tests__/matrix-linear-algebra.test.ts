@@ -519,3 +519,93 @@ describe("fractionsToIntegers GCD reduction tests", () => {
     ]);
   });
 });
+
+describe("combined pipeline integration tests", () => {
+  it("H2 + O2 -> H2O produces 2:1:2 coefficients", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const result = solveSystem(matrix, cols);
+    const coeffs = fractionsToIntegers(result);
+    const h2 = coeffs[0]!;
+    const o2 = coeffs[1]!;
+    const h2o = coeffs[2]!;
+    expect(h2 / o2).toBe(2);
+    expect(h2o / o2).toBe(2);
+    expect(h2 * o2 !== 0).toBe(true);
+  });
+
+  it("Fe + Cl2 -> FeCl3 produces 2:3:2 coefficients", () => {
+    const eq = splitEquation("Fe + Cl2 -> FeCl3");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const result = solveSystem(matrix, cols);
+    const coeffs = fractionsToIntegers(result);
+    const fe = coeffs[0]!;
+    const cl2 = coeffs[1]!;
+    const fecl3 = coeffs[2]!;
+    expect(fe / fecl3).toBe(1);
+    expect(cl2 / fecl3).toBe(3 / 2);
+    expect(fe / cl2).toBe(2 / 3);
+  });
+
+  it("N2 + H2 -> NH3 produces 1:3:2 coefficients", () => {
+    const eq = splitEquation("N2 + H2 -> NH3");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const result = solveSystem(matrix, cols);
+    const coeffs = fractionsToIntegers(result);
+    const n2 = coeffs[0]!;
+    const h2 = coeffs[1]!;
+    const nh3 = coeffs[2]!;
+    expect(n2 / nh3).toBe(1 / 2);
+    expect(h2 / nh3).toBe(3 / 2);
+  });
+
+  it("CH4 + O2 -> CO2 + H2O produces 1:2:1:2 coefficients", () => {
+    const eq = splitEquation("CH4 + O2 -> CO2 + H2O");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const result = solveSystem(matrix, cols);
+    const coeffs = fractionsToIntegers(result);
+    const ch4 = coeffs[0]!;
+    const o2 = coeffs[1]!;
+    const co2 = coeffs[2]!;
+    const h2o = coeffs[3]!;
+    expect(ch4).toBe(1);
+    expect(co2).toBe(1);
+    expect(o2).toBe(2);
+    expect(h2o).toBe(2);
+  });
+
+  it("Fe2O3 + CO -> Fe + CO2 produces 1:3:2:3 coefficients", () => {
+    const eq = splitEquation("Fe2O3 + CO -> Fe + CO2");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const result = solveSystem(matrix, cols);
+    const coeffs = fractionsToIntegers(result);
+    const fe2o3 = coeffs[0]!;
+    const co = coeffs[1]!;
+    const fe = coeffs[2]!;
+    const co2 = coeffs[3]!;
+    expect(fe2o3).toBe(1);
+    expect(fe / fe2o3).toBe(2);
+    expect(co / fe2o3).toBe(3);
+    expect(co2 / fe2o3).toBe(3);
+  });
+
+  it("ionic equation Ag+ + Cl- -> AgCl balances correctly", () => {
+    const eq = splitEquation("Ag+ + Cl- -> AgCl");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    const result = solveSystem(matrix, cols);
+    const coeffs = fractionsToIntegers(result);
+    const ag = coeffs[0]!;
+    const cl = coeffs[1]!;
+    const agcl = coeffs[2]!;
+    expect(ag).toBe(1);
+    expect(cl).toBe(1);
+    expect(agcl).toBe(1);
+    for (let i = 0; i < matrix.length; i++) {
+      let sum = new Fraction(0);
+      for (let j = 0; j < cols; j++) {
+        sum = sum.add(matrix[i]![j]!.mul(result[j]!));
+      }
+      expect(sum.isZero()).toBe(true);
+    }
+  });
+});
