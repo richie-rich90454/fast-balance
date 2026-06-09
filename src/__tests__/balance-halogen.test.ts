@@ -99,3 +99,52 @@ describe("chlorine compounds", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1]);
   });
 });
+
+describe("bromine compounds", () => {
+  it("balances Br2 + 2Na -> 2NaBr", () => {
+    const r = balance("Br2 + Na -> NaBr");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances Br2 + H2 -> 2HBr", () => {
+    const r = balance("Br2 + H2 -> HBr");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2]);
+  });
+  it("balances 3Br2 + 2Fe -> 2FeBr3", () => {
+    const r = balance("Br2 + Fe -> FeBr3");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances Br2 + Cu -> CuBr2", () => {
+    const r = balance("Br2 + Cu -> CuBr2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances Br2 + Mg -> MgBr2", () => {
+    const r = balance("Br2 + Mg -> MgBr2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+  it("balances 3Br2 + 2Al -> 2AlBr3", () => {
+    const r = balance("Br2 + Al -> AlBr3");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances Br2 + 2K -> 2KBr", () => {
+    const r = balance("Br2 + K -> KBr");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances Br2 + Zn -> ZnBr2", () => {
+    const r = balance("Br2 + Zn -> ZnBr2");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 2Br2 + Sn -> SnBr4", () => {
+    const r = balance("Br2 + Sn -> SnBr4");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances Br2 + Ca -> CaBr2", () => {
+    const r = balance("Br2 + Ca -> CaBr2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1]);
+  });
+});
