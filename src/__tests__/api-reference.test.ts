@@ -412,3 +412,53 @@ describe("multiple arrow styles", ()=>{
         expect(r2.products).toEqual(r3.products);
     });
 });
+
+describe("edge case input handling", ()=>{
+    it("empty string throws", ()=>{
+        expect(()=>balance("")).toThrow();
+    });
+    it("single species only (H2 -> H2) works", ()=>{
+        let result=balance("H2 -> H2");
+        expect(result).toBeDefined();
+        expect(result.reactants.length).toBe(1);
+        expect(result.products.length).toBe(1);
+        expect(result.reactants[0]!.formula).toBe("H2");
+        expect(result.products[0]!.formula).toBe("H2");
+    });
+    it("multiple species single side works", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        expect(result).toBeDefined();
+        expect(result.reactants.length).toBe(2);
+        expect(result.products.length).toBe(1);
+    });
+    it("single species on both sides (different species) - throws if unbalanceable", ()=>{
+        // H2 -> O2 is not balanceable (different elements), should throw
+        expect(()=>balance("H2 -> O2")).toThrow();
+    });
+    it("no plus separator (single species each side)", ()=>{
+        let result=balance("H2 -> H2");
+        expect(result).toBeDefined();
+        expect(result.reactants.length).toBe(1);
+        expect(result.products.length).toBe(1);
+    });
+    it("empty input throws with message", ()=>{
+        let threw=false;
+        try{
+            balance("");
+        }
+        catch (e){
+            threw=true;
+            expect((e as Error).message).toBeDefined();
+        }
+        expect(threw).toBe(true);
+    });
+    it("whitespace-only input throws", ()=>{
+        expect(()=>balance("   ")).toThrow();
+    });
+    it("missing arrow throws", ()=>{
+        expect(()=>balance("H2 + O2 H2O")).toThrow();
+    });
+    it("single species with no arrow throws", ()=>{
+        expect(()=>balance("H2 O2")).toThrow();
+    });
+});
