@@ -52,3 +52,46 @@ describe("gas law related tests", () => {
     expect(r.products[1].coefficient).toBe(4);
   });
 });
+
+describe("stoichiometry verification tests", () => {
+  it("coefficients match expected ratios for H2+O2->H2O", () => {
+    const r = balance("H2 + O2 -> H2O");
+    // 2:1:2 ratio
+    expect(r.reactants[0].coefficient * 2).toBe(r.products[0].coefficient * 2);
+    expect(r.reactants[1].coefficient).toBe(1);
+  });
+
+  it("coefficients match expected ratios for N2+H2->NH3", () => {
+    const r = balance("N2 + H2 -> NH3");
+    // 1:3:2 ratio
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(3);
+    expect(r.products[0].coefficient).toBe(2);
+  });
+
+  it("coefficients match expected ratios for CH4+O2->CO2+H2O", () => {
+    const r = balance("CH4 + O2 -> CO2 + H2O");
+    // 1:2:1:2 ratio
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(2);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(2);
+  });
+
+  it("coefficients match expected ratios for Fe+Cl2->FeCl3", () => {
+    const r = balance("Fe + Cl2 -> FeCl3");
+    // 2Fe + 3Cl2 -> 2FeCl3
+    expect(r.reactants[0].coefficient).toBe(2);
+    expect(r.reactants[1].coefficient).toBe(3);
+    expect(r.products[0].coefficient).toBe(2);
+  });
+
+  it("coefficients match expected ratios for Fe2O3+CO->Fe+CO2", () => {
+    const r = balance("Fe2O3 + CO -> Fe + CO2");
+    // Fe2O3 + 3CO -> 2Fe + 3CO2
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(3);
+    expect(r.products[0].coefficient).toBe(2);
+    expect(r.products[1].coefficient).toBe(3);
+  });
+});
