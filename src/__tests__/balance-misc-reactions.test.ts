@@ -212,3 +212,36 @@ describe("double decomposition exchange tests", () => {
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
 });
+
+describe("acid and metal oxide exchange tests", () => {
+  it("balances CuO + H2SO4 -> CuSO4 + H2O", () => {
+    const r = balance("CuO + H2SO4 -> CuSO4 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances MgO + H2SO4 -> MgSO4 + H2O", () => {
+    const r = balance("MgO + H2SO4 -> MgSO4 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances ZnO + H2SO4 -> ZnSO4 + H2O", () => {
+    const r = balance("ZnO + H2SO4 -> ZnSO4 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+  it("balances Fe2O3 + H2SO4 -> Fe2(SO4)3 + H2O", () => {
+    const r = balance("Fe2O3 + H2SO4 -> Fe2(SO4)3 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 3]);
+  });
+  it("balances Al2O3 + H2SO4 -> Al2(SO4)3 + H2O", () => {
+    const r = balance("Al2O3 + H2SO4 -> Al2(SO4)3 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 3]);
+  });
+  it("balances CaO + H2SO4 -> CaSO4 + H2O", () => {
+    const r = balance("CaO + H2SO4 -> CaSO4 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
+  });
+});
