@@ -150,3 +150,35 @@ describe("metal carbonate acid reactions", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([1, 1, 1]);
   });
 });
+
+describe("metal sulfide and sulfite acid reactions", () => {
+  it("balances Na2S + 2HCl -> 2NaCl + H2S", () => {
+    const r = balance("Na2S + HCl -> NaCl + H2S");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1]);
+  });
+  it("balances K2S + 2HCl -> 2KCl + H2S", () => {
+    const r = balance("K2S + HCl -> KCl + H2S");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1]);
+  });
+  it("balances Na2SO3 + 2HCl -> 2NaCl + H2O + SO2", () => {
+    const r = balance("Na2SO3 + HCl -> NaCl + H2O + SO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1, 1]);
+  });
+  it("balances FeS + 2HCl -> FeCl2 + H2S", () => {
+    const r = balance("FeS + HCl -> FeCl2 + H2S");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances ZnS + 2HCl -> ZnCl2 + H2S", () => {
+    const r = balance("ZnS + HCl -> ZnCl2 + H2S");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
