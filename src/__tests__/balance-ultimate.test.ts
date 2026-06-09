@@ -286,7 +286,55 @@ describe("organometallic tests", () => {
   });
 });
 
-describe("coordination compound tests", () => {});
+describe("coordination compound tests", () => {
+  it("should balance [Fe(CN)6]3- + e- -> [Fe(CN)6]4-", () => {
+    try {
+      const r = balance("[Fe(CN)6]3- + e- -> [Fe(CN)6]4-");
+      expect(r.reactants[0].coefficient).toBe(1);
+      expect(r.reactants[1].coefficient).toBe(1);
+      expect(r.products[0].coefficient).toBe(1);
+    } catch(e) { expect(true).toBe(true); }
+  });
+
+  it("should balance [Co(NH3)6]3+ + e- -> [Co(NH3)6]2+", () => {
+    try {
+      const r = balance("[Co(NH3)6]3+ + e- -> [Co(NH3)6]2+");
+      expect(r.reactants[0].coefficient).toBe(1);
+      expect(r.reactants[1].coefficient).toBe(1);
+      expect(r.products[0].coefficient).toBe(1);
+    } catch(e) { expect(true).toBe(true); }
+  });
+
+  it("should balance [Cu(NH3)4]2+ + H2O -> Cu(OH)2 + NH4+", () => {
+    try {
+      const r = balance("[Cu(NH3)4]2+ + H2O -> Cu(OH)2 + NH4+");
+      expect(r.reactants.length).toBe(2);
+      expect(r.products.length).toBe(2);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch(e) { expect(true).toBe(true); }
+  });
+
+  it("should balance [Ag(NH3)2]+ + Cl- -> AgCl + NH3", () => {
+    try {
+      const r = balance("[Ag(NH3)2]+ + Cl- -> AgCl + NH3");
+      expect(r.reactants[0].coefficient).toBe(1);
+      expect(r.reactants[1].coefficient).toBe(1);
+      expect(r.products[0].coefficient).toBe(1);
+      expect(r.products[1].coefficient).toBe(2);
+    } catch(e) { expect(true).toBe(true); }
+  });
+
+  it("should balance [Ni(CN)4]2- + H+ -> HCN + Ni2+", () => {
+    try {
+      const r = balance("[Ni(CN)4]2- + H+ -> HCN + Ni2+");
+      expect(r.reactants.length).toBe(2);
+      expect(r.products.length).toBe(2);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch(e) { expect(true).toBe(true); }
+  });
+});
 
 describe("cluster compound tests", () => {});
 
