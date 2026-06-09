@@ -98,3 +98,53 @@ describe("function call signature", ()=>{
         expect(result).toBe(12);
     });
 });
+
+describe("options object validation", ()=>{
+    it("options can be undefined (omitted)", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        expect(result).toBeDefined();
+        expect(result.equation).toContain("->");
+    });
+    it("options can be an empty object", ()=>{
+        let result=balance("H2 + O2 -> H2O", {});
+        expect(result).toBeDefined();
+        expect(result.equation).toContain("->");
+    });
+    it("options.showOne is a boolean or undefined", ()=>{
+        // True case
+        let r1=balance("H2 + O2 -> H2O", {showOne: true});
+        expect(typeof r1.equation).toBe("string");
+        // False case
+        let r2=balance("H2 + O2 -> H2O", {showOne: false});
+        expect(typeof r2.equation).toBe("string");
+        // Undefined case
+        let r3=balance("H2 + O2 -> H2O", {showOne: undefined});
+        expect(typeof r3.equation).toBe("string");
+    });
+    it("options.format is a string or undefined", ()=>{
+        let r1=balance("H2 + O2 -> H2O", {format: "text"});
+        expect(typeof r1.equation).toBe("string");
+        let r2=balance("H2 + O2 -> H2O", {format: "html"});
+        expect(typeof r2.equation).toBe("string");
+        let r3=balance("H2 + O2 -> H2O", {format: "latex"});
+        expect(typeof r3.equation).toBe("string");
+        let r4=balance("H2 + O2 -> H2O", {format: undefined});
+        expect(typeof r4.equation).toBe("string");
+    });
+    it("options.format values are restricted to text/html/latex", ()=>{
+        // text
+        let textRes=balance("H2 + O2 -> H2O", {format: "text"});
+        expect(textRes.equation).toContain(" -> ");
+        // html
+        let htmlRes=balance("H2 + O2 -> H2O", {format: "html"});
+        expect(htmlRes.equation).toContain("&rarr;");
+        // latex
+        let latexRes=balance("H2 + O2 -> H2O", {format: "latex"});
+        expect(latexRes.equation).toContain("\\rightarrow");
+    });
+    it("options with showOne and format together work", ()=>{
+        let r=balance("H2 + O2 -> H2O", {showOne: false, format: "html"});
+        expect(r.equation).toContain("&rarr;");
+        expect(r.equation).not.toContain("1 O2");
+    });
+});
