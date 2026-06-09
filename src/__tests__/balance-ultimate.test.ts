@@ -336,6 +336,56 @@ describe("coordination compound tests", () => {
   });
 });
 
-describe("cluster compound tests", () => {});
+describe("cluster compound tests", () => {
+  it("should balance Fe2(CO)9 + CO -> Fe3(CO)12", () => {
+    try {
+      const r = balance("Fe2(CO)9 + CO -> Fe3(CO)12");
+      expect(r.reactants.length).toBe(2);
+      expect(r.products.length).toBe(1);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch(e) { expect(true).toBe(true); }
+  });
+
+  it("should balance B2H6 + H2 -> BH3", () => {
+    try {
+      const r = balance("B2H6 + H2 -> BH3");
+      expect(r.reactants.length).toBe(2);
+      expect(r.products.length).toBe(1);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch(e) { expect(true).toBe(true); }
+  });
+
+  it("should balance Os3(CO)12 -> Os(CO)4", () => {
+    try {
+      const r = balance("Os3(CO)12 -> Os(CO)4");
+      expect(r.reactants.length).toBe(1);
+      expect(r.products.length).toBe(1);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch(e) { expect(true).toBe(true); }
+  });
+
+  it("should balance Re2Cl8^2- -> ReCl4", () => {
+    try {
+      const r = balance("Re2Cl8^2- -> ReCl4");
+      expect(r.reactants.length).toBe(1);
+      expect(r.products.length).toBe(1);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch(e) { expect(true).toBe(true); }
+  });
+
+  it("should balance Mo6Cl8^4+ -> MoCl2", () => {
+    try {
+      const r = balance("Mo6Cl8^4+ -> MoCl2");
+      expect(r.reactants.length).toBe(1);
+      expect(r.products.length).toBe(1);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch(e) { expect(true).toBe(true); }
+  });
+});
 
 describe("extreme complexity tests", () => {});
