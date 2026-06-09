@@ -182,3 +182,45 @@ describe("charge balance tests", () => {
     expect(reactantCharge).toBe(productCharge);
   });
 });
+
+describe("hydration state tests", () => {
+  it("CuSO4·5H2O -> CuSO4 + H2O", () => {
+    const r = balance("CuSO4·5H2O -> CuSO4 + H2O");
+    // CuSO4·5H2O -> CuSO4 + 5H2O
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(5);
+  });
+
+  it("Na2CO3·10H2O -> Na2CO3 + H2O", () => {
+    const r = balance("Na2CO3·10H2O -> Na2CO3 + H2O");
+    // Na2CO3·10H2O -> Na2CO3 + 10H2O
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(10);
+  });
+
+  it("MgSO4·7H2O -> MgSO4 + H2O", () => {
+    const r = balance("MgSO4·7H2O -> MgSO4 + H2O");
+    // MgSO4·7H2O -> MgSO4 + 7H2O
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(7);
+  });
+
+  it("BaCl2·2H2O -> BaCl2 + H2O", () => {
+    const r = balance("BaCl2·2H2O -> BaCl2 + H2O");
+    // BaCl2·2H2O -> BaCl2 + 2H2O
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(2);
+  });
+
+  it("CaCl2·6H2O -> CaCl2 + H2O", () => {
+    const r = balance("CaCl2·6H2O -> CaCl2 + H2O");
+    // CaCl2·6H2O -> CaCl2 + 6H2O
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(6);
+  });
+});
