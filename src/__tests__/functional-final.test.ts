@@ -321,3 +321,71 @@ describe("equation with bracket ion", () => {
         expect(parsed.charge).toBe(-2);
     });
 });
+
+describe("final integration", () => {
+    it("balances a 5-species reaction", () => {
+        let result = balance("Cu + HNO3 -> Cu(NO3)2 + NO + H2O");
+        let totalSpecies = result.reactants.length + result.products.length;
+        expect(totalSpecies).toBe(5);
+        for (let r of result.reactants) {
+            expect(r.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(r.coefficient)).toBe(true);
+        }
+        for (let p of result.products) {
+            expect(p.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(p.coefficient)).toBe(true);
+        }
+    });
+    it("balances a 6-species reaction", () => {
+        let result = balance("KMnO4 + HCl -> KCl + MnCl2 + H2O + Cl2");
+        let totalSpecies = result.reactants.length + result.products.length;
+        expect(totalSpecies).toBe(6);
+        for (let r of result.reactants) {
+            expect(r.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(r.coefficient)).toBe(true);
+        }
+        for (let p of result.products) {
+            expect(p.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(p.coefficient)).toBe(true);
+        }
+    });
+    it("balances an ionic equation with charges", () => {
+        let result = balance("Fe2+ + MnO4- + H+ -> Fe3+ + Mn2+ + H2O");
+        expect(result.reactants.length).toBeGreaterThan(0);
+        expect(result.products.length).toBeGreaterThan(0);
+        for (let r of result.reactants) {
+            expect(r.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(r.coefficient)).toBe(true);
+        }
+        for (let p of result.products) {
+            expect(p.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(p.coefficient)).toBe(true);
+        }
+    });
+    it("balances a reaction with state symbols", () => {
+        let result = balance("2Na(s) + 2H2O(l) -> 2NaOH(aq) + H2(g)");
+        expect(result.reactants).toHaveLength(2);
+        expect(result.products).toHaveLength(2);
+        for (let r of result.reactants) {
+            expect(r.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(r.coefficient)).toBe(true);
+        }
+        for (let p of result.products) {
+            expect(p.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(p.coefficient)).toBe(true);
+        }
+    });
+    it("balances a reaction with hydrates", () => {
+        let result = balance("CuSO4·5H2O(s) -> CuSO4(s) + H2O(g)");
+        expect(result.reactants).toHaveLength(1);
+        expect(result.products).toHaveLength(2);
+        for (let r of result.reactants) {
+            expect(r.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(r.coefficient)).toBe(true);
+        }
+        for (let p of result.products) {
+            expect(p.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(p.coefficient)).toBe(true);
+        }
+    });
+});
