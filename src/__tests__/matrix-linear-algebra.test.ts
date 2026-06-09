@@ -4,6 +4,7 @@ import {
   buildMatrix,
   splitEquation,
   solveSystem,
+  fractionsToIntegers,
   type Species,
 } from "../index";
 
@@ -390,5 +391,47 @@ describe("solveSystem linear algebra property tests", () => {
       if (f.equals(new Fraction(1))) onesCount++;
     }
     expect(onesCount).toBeGreaterThanOrEqual(1);
+  });
+});
+
+describe("fractionsToIntegers rounding behavior tests", () => {
+  it("converts [1/2, 1/2] to [1, 1]", () => {
+    expect(
+      fractionsToIntegers([new Fraction(1, 2), new Fraction(1, 2)])
+    ).toEqual([1, 1]);
+  });
+
+  it("converts [1/3, 2/3] to [1, 2]", () => {
+    expect(
+      fractionsToIntegers([new Fraction(1, 3), new Fraction(2, 3)])
+    ).toEqual([1, 2]);
+  });
+
+  it("converts [2/3, 4/3] to [1, 2] (after GCD)", () => {
+    expect(
+      fractionsToIntegers([new Fraction(2, 3), new Fraction(4, 3)])
+    ).toEqual([1, 2]);
+  });
+
+  it("converts [1/4, 1/2] to [1, 2]", () => {
+    expect(
+      fractionsToIntegers([new Fraction(1, 4), new Fraction(1, 2)])
+    ).toEqual([1, 2]);
+  });
+
+  it("converts [3/2, 1/2] to [3, 1]", () => {
+    expect(
+      fractionsToIntegers([new Fraction(3, 2), new Fraction(1, 2)])
+    ).toEqual([3, 1]);
+  });
+
+  it("all-zero fractions return [0, 0]", () => {
+    expect(
+      fractionsToIntegers([new Fraction(0), new Fraction(0)])
+    ).toEqual([0, 0]);
+  });
+
+  it("single fraction [1/2] returns [1]", () => {
+    expect(fractionsToIntegers([new Fraction(1, 2)])).toEqual([1]);
   });
 });
