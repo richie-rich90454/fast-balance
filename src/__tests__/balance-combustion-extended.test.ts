@@ -188,3 +188,46 @@ describe("large hydrocarbon combustion", () => {
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
 });
+
+describe("oxygenated hydrocarbon combustion", () => {
+  it("balances C6H12O6 + 6O2 -> 6CO2 + 6H2O", () => {
+    const r = balance("C6H12O6 + O2 -> CO2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 6]);
+    expect(r.products.map(x => x.coefficient)).toEqual([6, 6]);
+  });
+  it("balances CH2O combustion (positive check)", () => {
+    const r = balance("CH2O + O2 -> CO2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances 2CH3CHO + 5O2 -> 4CO2 + 4H2O (positive check)", () => {
+    const r = balance("CH3CHO + O2 -> CO2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances C2H4O combustion (positive check)", () => {
+    const r = balance("C2H4O + O2 -> CO2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances CH3COCH3 combustion (positive check)", () => {
+    const r = balance("CH3COCH3 + O2 -> CO2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances HCOOH combustion (positive check)", () => {
+    const r = balance("HCOOH + O2 -> CO2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
