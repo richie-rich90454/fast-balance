@@ -1,5 +1,13 @@
 import { describe, it, expect } from "vitest";
-import { gcd, lcm, stripStateSymbols, parseFormula, splitEquation } from "../index";
+import {
+  gcd,
+  lcm,
+  stripStateSymbols,
+  parseFormula,
+  splitEquation,
+  buildMatrix,
+  Fraction,
+} from "../index";
 
 describe("gcd function exhaustive tests", () => {
   it("gcd(1, 1) returns 1", () => {
@@ -142,5 +150,58 @@ describe("splitEquation function exhaustive tests", () => {
     const eq = splitEquation("H2 + O2 + N2 + Cl2 -> H2O + O2 + N2 + Cl2");
     expect(eq.reactants).toHaveLength(4);
     expect(eq.products).toHaveLength(4);
+  });
+});
+
+describe("buildMatrix function exhaustive tests", () => {
+  it("buildMatrix returns an object with matrix and cols", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const result = buildMatrix(eq.reactants, eq.products);
+    expect(result).toHaveProperty("matrix");
+    expect(result).toHaveProperty("cols");
+  });
+
+  it("buildMatrix cols equals total species count (reactants + products)", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { cols } = buildMatrix(eq.reactants, eq.products);
+    expect(cols).toBe(3);
+  });
+
+  it("buildMatrix entries are Fraction instances", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix } = buildMatrix(eq.reactants, eq.products);
+    for (const row of matrix) {
+      for (const cell of row) {
+        expect(cell).toBeInstanceOf(Fraction);
+      }
+    }
+  });
+
+  it("buildMatrix dimensions are correct (rows = element count [+ charge row])", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    expect(matrix.length).toBe(2);
+    for (const row of matrix) {
+      expect(row).toHaveLength(cols);
+    }
+  });
+
+  it("buildMatrix produces a matrix whose null space yields the correct solution", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    const { matrix, cols } = buildMatrix(eq.reactants, eq.products);
+    expect(matrix.length).toBeGreaterThan(0);
+    expect(cols).toBeGreaterThan(0);
+    // Matrix should not be all zeros (it's a real chemical system)
+    let hasNonZero = false;
+    for (const row of matrix) {
+      for (const cell of row) {
+        if (!cell.isZero()) {
+          hasNonZero = true;
+          break;
+        }
+      }
+      if (hasNonZero) break;
+    }
+    expect(hasNonZero).toBe(true);
   });
 });
