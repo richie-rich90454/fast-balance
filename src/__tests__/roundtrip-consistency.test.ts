@@ -305,3 +305,73 @@ describe("integer fraction consistency", ()=>{
     });
 });
 
+describe("deterministic output", ()=>{
+    it("multiple calls with same input produce same result (H2 + O2 -> H2O)", ()=>{
+        const eq = "H2 + O2 -> H2O";
+        const a = balance(eq);
+        const b = balance(eq);
+        const c = balance(eq);
+        expect(a.equation).toBe(b.equation);
+        expect(b.equation).toBe(c.equation);
+        expect(a.reactants.map(r=>r.coefficient)).toEqual(b.reactants.map(r=>r.coefficient));
+        expect(b.reactants.map(r=>r.coefficient)).toEqual(c.reactants.map(r=>r.coefficient));
+    });
+
+    it("no random behavior across many calls (CH4 + O2 -> CO2 + H2O)", ()=>{
+        const eq = "CH4 + O2 -> CO2 + H2O";
+        const reference = balance(eq);
+        for (let i = 0; i < 25; i++){
+            const result = balance(eq);
+            expect(result.equation).toBe(reference.equation);
+            expect(result.reactants.map(r=>r.coefficient))
+                .toEqual(reference.reactants.map(r=>r.coefficient));
+            expect(result.products.map(r=>r.coefficient))
+                .toEqual(reference.products.map(r=>r.coefficient));
+        }
+    });
+
+    it("same coefficients every time (Fe2O3 + CO -> Fe + CO2)", ()=>{
+        const eq = "Fe2O3 + CO -> Fe + CO2";
+        const first = balance(eq);
+        for (let i = 0; i < 10; i++){
+            const next = balance(eq);
+            const flat1 = [
+                ...first.reactants.map(r=>r.coefficient),
+                ...first.products.map(r=>r.coefficient)
+            ];
+            const flat2 = [
+                ...next.reactants.map(r=>r.coefficient),
+                ...next.products.map(r=>r.coefficient)
+            ];
+            expect(flat2).toEqual(flat1);
+        }
+    });
+
+    it("same string every time (N2 + H2 -> NH3)", ()=>{
+        const eq = "N2 + H2 -> NH3";
+        const reference = balance(eq).equation;
+        for (let i = 0; i < 10; i++){
+            expect(balance(eq).equation).toBe(reference);
+        }
+    });
+
+    it("consistent across runs (Fe + Cl2 -> FeCl3)", ()=>{
+        const eq = "Fe + Cl2 -> FeCl3";
+        const r1 = balance(eq);
+        const r2 = balance(eq);
+        // Reactant coefficients must be identical arrays
+        expect(r2.reactants.map(r=>r.coefficient))
+            .toEqual(r1.reactants.map(r=>r.coefficient));
+        // Product coefficients must be identical arrays
+        expect(r2.products.map(r=>r.coefficient))
+            .toEqual(r1.products.map(r=>r.coefficient));
+        // Equation strings must be identical
+        expect(r2.equation).toBe(r1.equation);
+        // Formulas must be identical
+        expect(r2.reactants.map(r=>r.formula))
+            .toEqual(r1.reactants.map(r=>r.formula));
+        expect(r2.products.map(r=>r.formula))
+            .toEqual(r1.products.map(r=>r.formula));
+    });
+});
+
