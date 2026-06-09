@@ -244,3 +244,68 @@ describe("Fischer-Tropsch process", () => {
         expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
     });
 });
+
+describe("Steam reforming", () => {
+    it("balances CH4 + H2O -> CO + H2", () => {
+        const result = balance("CH4 + H2O -> CO + H2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "CH4")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "H2O")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "CO")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "H2")?.coefficient).toBe(3);
+    });
+
+    it("balances C2H6 + H2O -> CO + H2", () => {
+        const result = balance("C2H6 + H2O -> CO + H2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "C2H6")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "H2O")?.coefficient).toBe(2);
+        expect(result.products.find(p => p.formula === "CO")?.coefficient).toBe(2);
+        expect(result.products.find(p => p.formula === "H2")?.coefficient).toBe(5);
+    });
+
+    it("balances C3H8 + H2O -> CO + H2", () => {
+        const result = balance("C3H8 + H2O -> CO + H2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "C3H8")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "H2O")?.coefficient).toBe(3);
+        expect(result.products.find(p => p.formula === "CO")?.coefficient).toBe(3);
+        expect(result.products.find(p => p.formula === "H2")?.coefficient).toBe(7);
+    });
+
+    it("balances C + H2O -> CO + H2", () => {
+        const result = balance("C + H2O -> CO + H2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "C")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "H2O")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "CO")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "H2")?.coefficient).toBe(1);
+    });
+
+    it("balances C8H18 + H2O -> CO + H2 (positive check)", () => {
+        const result = balance("C8H18 + H2O -> CO + H2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+});
