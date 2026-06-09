@@ -274,3 +274,49 @@ describe("atmospheric and environmental reactions", () => {
         expect(result.products.map(p => p.coefficient)).toEqual([2]);
     });
 });
+
+describe("battery and electrochemical reactions", () => {
+    it("balances Pb + PbO2 + H2SO4 -> PbSO4 + H2O (lead-acid battery, positive check)", () => {
+        const result = balance("Pb + PbO2 + H2SO4 -> PbSO4 + H2O");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances Zn + CuSO4 -> ZnSO4 + Cu (Daniell cell)", () => {
+        const result = balance("Zn + CuSO4 -> ZnSO4 + Cu");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+    });
+
+    it("balances Fe + 2NiOOH + 2H2O -> Fe(OH)2 + 2Ni(OH)2 (Edison cell, positive check)", () => {
+        const result = balance("Fe + 2NiOOH + 2H2O -> Fe(OH)2 + 2Ni(OH)2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances PbSO4 -> Pb + SO4 (lead sulfate breakdown, positive check)", () => {
+        const result = balance("PbSO4 -> Pb + SO4");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances Li + MnO2 -> LiMnO2 (lithium battery, positive check)", () => {
+        const result = balance("Li + MnO2 -> LiMnO2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances 2H2 + O2 -> 2H2O (hydrogen fuel cell)", () => {
+        const result = balance("2H2 + O2 -> 2H2O");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([2, 1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([2]);
+    });
+});
