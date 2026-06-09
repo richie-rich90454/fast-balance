@@ -7,6 +7,7 @@ import {
   splitEquation,
   buildMatrix,
   solveSystem,
+  fractionsToIntegers,
   Fraction,
 } from "../index";
 
@@ -264,5 +265,44 @@ describe("solveSystem function exhaustive tests", () => {
     expect(ints[0]).toBeCloseTo(2, 0);
     expect(ints[1]).toBeCloseTo(1, 0);
     expect(ints[2]).toBeCloseTo(2, 0);
+  });
+});
+
+describe("fractionsToIntegers function exhaustive tests", () => {
+  it("fractionsToIntegers returns an array of integers", () => {
+    const fracs: Fraction[] = [new Fraction(2), new Fraction(1), new Fraction(2)];
+    const result = fractionsToIntegers(fracs);
+    for (const v of result) {
+      expect(Number.isInteger(v)).toBe(true);
+    }
+  });
+
+  it("fractionsToIntegers result has GCD 1 (fully reduced)", () => {
+    const fracs: Fraction[] = [new Fraction(2), new Fraction(1), new Fraction(2)];
+    const result = fractionsToIntegers(fracs);
+    const absVals = result.map((v) => Math.abs(v));
+    let g = 0;
+    for (const v of absVals) g = gcd(g, v);
+    expect(g).toBe(1);
+  });
+
+  it("fractionsToIntegers result is all positive (or all negative flipped to positive)", () => {
+    const fracs: Fraction[] = [new Fraction(1), new Fraction(1, 2), new Fraction(1)];
+    const result = fractionsToIntegers(fracs);
+    expect(result.every((v) => v > 0)).toBe(true);
+  });
+
+  it("fractionsToIntegers preserves relative ratios (scaled by integer)", () => {
+    const fracs: Fraction[] = [new Fraction(2), new Fraction(1), new Fraction(2)];
+    const result = fractionsToIntegers(fracs);
+    // Ratios should be 2:1:2 (or 1:0.5:1 scaled)
+    expect(result[0]! / result[1]!).toBeCloseTo(2, 6);
+    expect(result[2]! / result[1]!).toBeCloseTo(2, 6);
+  });
+
+  it("fractionsToIntegers result has the same length as the input array", () => {
+    const fracs: Fraction[] = [new Fraction(2), new Fraction(1), new Fraction(2)];
+    const result = fractionsToIntegers(fracs);
+    expect(result).toHaveLength(fracs.length);
   });
 });
