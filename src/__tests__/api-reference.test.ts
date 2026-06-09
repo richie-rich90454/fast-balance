@@ -148,3 +148,57 @@ describe("options object validation", ()=>{
         expect(r.equation).not.toContain("1 O2");
     });
 });
+
+describe("return value validation", ()=>{
+    it("result.reactants is an array", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        expect(Array.isArray(result.reactants)).toBe(true);
+    });
+    it("result.products is an array", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        expect(Array.isArray(result.products)).toBe(true);
+    });
+    it("result.equation is a string", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        expect(typeof result.equation).toBe("string");
+        expect(result.equation.length).toBeGreaterThan(0);
+    });
+    it("result.reactants[0] has coefficient", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        expect(result.reactants[0]).toHaveProperty("coefficient");
+        expect(typeof result.reactants[0]!.coefficient).toBe("number");
+    });
+    it("result.reactants[0] has formula", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        expect(result.reactants[0]).toHaveProperty("formula");
+        expect(typeof result.reactants[0]!.formula).toBe("string");
+    });
+    it("result.products[0] has coefficient", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        expect(result.products[0]).toHaveProperty("coefficient");
+        expect(typeof result.products[0]!.coefficient).toBe("number");
+    });
+    it("result.products[0] has formula", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        expect(result.products[0]).toHaveProperty("formula");
+        expect(typeof result.products[0]!.formula).toBe("string");
+    });
+    it("all reactant entries have coefficient and formula", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        for (let r of result.reactants){
+            expect(r).toHaveProperty("coefficient");
+            expect(r).toHaveProperty("formula");
+            expect(typeof r.coefficient).toBe("number");
+            expect(typeof r.formula).toBe("string");
+        }
+    });
+    it("all product entries have coefficient and formula", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        for (let p of result.products){
+            expect(p).toHaveProperty("coefficient");
+            expect(p).toHaveProperty("formula");
+            expect(typeof p.coefficient).toBe("number");
+            expect(typeof p.formula).toBe("string");
+        }
+    });
+});
