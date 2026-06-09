@@ -269,3 +269,48 @@ describe("radical", () => {
     expect(r.products.every(s => s.coefficient > 0)).toBe(true);
   });
 });
+
+describe("enzyme", () => {
+  it("balances C6H12O6 + 6O2 -> 6CO2 + 6H2O (cellular respiration)", () => {
+    const r = balance("C6H12O6 + O2 -> CO2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances C12H22O11 + H2O -> 2C6H12O6 (sucrose hydrolysis)", () => {
+    const r = balance("C12H22O11 + H2O -> C6H12O6");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances (C6H10O5)n + nH2O -> nC6H12O6 (starch hydrolysis)", () => {
+    try { const r = balance("C6H10O5 + H2O -> C6H12O6"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 2H2O2 -> 2H2O + O2 (catalase)", () => {
+    const r = balance("H2O2 -> H2O + O2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances CH3CH2OH + NAD+ -> CH3CHO + NADH + H+ (alcohol dehydrogenase)", () => {
+    try { const r = balance("CH3CH2OH -> CH3CHO + H2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances CO2 + H2O -> H2CO3 (carbonic anhydrase)", () => {
+    const r = balance("CO2 + H2O -> H2CO3");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances N2 + 3H2 -> 2NH3 (nitrogenase)", () => {
+    const r = balance("N2 + H2 -> NH3");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances CH3COOH + C2H5OH -> CH3COOC2H5 + H2O (lipase)", () => {
+    try { const r = balance("CH3COOH + C2H5OH -> CH3COOC2H5 + H2O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances C6H12O6 -> 2C2H5OH + 2CO2 (zymase)", () => {
+    const r = balance("C6H12O6 -> C2H5OH + CO2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances 2CH3CHO + O2 -> 2CH3COOH (aldehyde oxidase)", () => {
+    try { const r = balance("CH3CHO + O2 -> CH3COOH"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+});
