@@ -259,3 +259,51 @@ describe("solveSystem simple system tests", () => {
     }
   });
 });
+
+describe("solveSystem error handling tests", () => {
+  it("throws on system with no free variables (full rank)", () => {
+    const matrix = [
+      [new Fraction(1), new Fraction(0)],
+      [new Fraction(0), new Fraction(1)],
+    ];
+    expect(() => solveSystem(matrix, 2)).toThrow("Unbalanceable equation");
+  });
+
+  it("returns array of correct length equal to cols", () => {
+    const matrix = [
+      [new Fraction(2), new Fraction(0), new Fraction(-2)],
+      [new Fraction(0), new Fraction(2), new Fraction(-1)],
+    ];
+    const result = solveSystem(matrix, 3);
+    expect(result.length).toBe(3);
+  });
+
+  it("solution is in null space of the matrix", () => {
+    const matrix = [
+      [new Fraction(1), new Fraction(-1)],
+    ];
+    const result = solveSystem(matrix, 2);
+    let sum = new Fraction(0);
+    for (let j = 0; j < 2; j++) sum = sum.add(matrix[0]![j]!.mul(result[j]!));
+    expect(sum.isZero()).toBe(true);
+  });
+
+  it("scaled solution still satisfies the system", () => {
+    const matrix = [[new Fraction(2), new Fraction(-2)]];
+    const result = solveSystem(matrix, 2);
+    const scaled = result.map((f) => f.mul(new Fraction(3)));
+    let sum = new Fraction(0);
+    for (let j = 0; j < 2; j++)
+      sum = sum.add(matrix[0]![j]!.mul(scaled[j]!));
+    expect(sum.isZero()).toBe(true);
+  });
+
+  it("uses the first free variable when multiple free variables exist", () => {
+    const matrix = [[new Fraction(0), new Fraction(0), new Fraction(0)]];
+    const result = solveSystem(matrix, 3);
+    expect(result[0]!.equals(new Fraction(1))).toBe(true);
+    for (let j = 1; j < 3; j++) {
+      expect(result[j]!.isZero()).toBe(true);
+    }
+  });
+});
