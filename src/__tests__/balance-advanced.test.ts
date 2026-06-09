@@ -95,7 +95,7 @@ describe("fraction identity and inverse", () => {
 describe("balance with all output options", () => {
   it("balance with showOne: true shows coefficient 1", () => {
     const result = balance("H2 + O2 -> H2O", { showOne: true });
-    expect(result.equation).toContain("1 H2");
+    expect(result.equation).toContain("1 O2");
     expect(result.reactants[0]?.coefficient).toBe(2);
     expect(result.reactants[1]?.coefficient).toBe(1);
     expect(result.products[0]?.coefficient).toBe(2);
