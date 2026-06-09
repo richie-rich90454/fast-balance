@@ -334,3 +334,40 @@ describe("buffer and conjugate base reactions", () => {
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
 });
+
+describe("acid-base stoichiometry with multiple products", () => {
+  it("balances Ca(OH)2 + H2SO4 -> CaSO4 + 2H2O", () => {
+    const r = balance("Ca(OH)2 + H2SO4 -> CaSO4 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+  it("balances 2Al(OH)3 + 3H2SO4 -> Al2(SO4)3 + 6H2O", () => {
+    const r = balance("Al(OH)3 + H2SO4 -> Al2(SO4)3 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances Fe(OH)3 + 3HNO3 -> Fe(NO3)3 + 3H2O", () => {
+    const r = balance("Fe(OH)3 + HNO3 -> Fe(NO3)3 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 3]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 3]);
+  });
+  it("balances Ba(OH)2 + H2SO4 -> BaSO4 + 2H2O", () => {
+    const r = balance("Ba(OH)2 + H2SO4 -> BaSO4 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+  it("balances Ba(OH)2 + 2HNO3 -> Ba(NO3)2 + 2H2O", () => {
+    const r = balance("Ba(OH)2 + HNO3 -> Ba(NO3)2 + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances Cu(OH)2 + 2HCl -> CuCl2 + 2H2O", () => {
+    const r = balance("Cu(OH)2 + HCl -> CuCl2 + H2O");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
+  });
+});
