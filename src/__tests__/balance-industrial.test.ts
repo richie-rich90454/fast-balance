@@ -216,3 +216,81 @@ describe("Ostwald process", () => {
         expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
     });
 });
+
+describe("Solvay process", () => {
+    it("balances NaCl + NH3 + CO2 + H2O -> NaHCO3 + NH4Cl", () => {
+        const result = balance("NaCl + NH3 + CO2 + H2O -> NaHCO3 + NH4Cl");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "NaCl")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "NH3")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "CO2")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "H2O")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "NaHCO3")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "NH4Cl")?.coefficient).toBe(1);
+    });
+
+    it("balances 2NaHCO3 -> Na2CO3 + H2O + CO2", () => {
+        const result = balance("2NaHCO3 -> Na2CO3 + H2O + CO2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "NaHCO3")?.coefficient).toBe(2);
+        expect(result.products.find(p => p.formula === "Na2CO3")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "H2O")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "CO2")?.coefficient).toBe(1);
+    });
+
+    it("balances Na2CO3 + CO2 + H2O -> 2NaHCO3", () => {
+        const result = balance("Na2CO3 + CO2 + H2O -> 2NaHCO3");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "Na2CO3")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "CO2")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "H2O")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "NaHCO3")?.coefficient).toBe(2);
+    });
+
+    it("balances CaCO3 -> CaO + CO2", () => {
+        const result = balance("CaCO3 -> CaO + CO2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "CaCO3")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "CaO")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "CO2")?.coefficient).toBe(1);
+    });
+
+    it("balances CaO + H2O -> Ca(OH)2", () => {
+        const result = balance("CaO + H2O -> Ca(OH)2");
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(result.reactants.find(r => r.formula === "CaO")?.coefficient).toBe(1);
+        expect(result.reactants.find(r => r.formula === "H2O")?.coefficient).toBe(1);
+        expect(result.products.find(p => p.formula === "Ca(OH)2")?.coefficient).toBe(1);
+    });
+
+    it("balances Ca(OH)2 + 2NH4Cl -> CaCl2 + 2NH3 + 2H2O (positive check)", () => {
+        const result = balance("Ca(OH)2 + 2NH4Cl -> CaCl2 + 2NH3 + 2H2O");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [
+            ...result.reactants.map(r => r.coefficient),
+            ...result.products.map(p => p.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+});
