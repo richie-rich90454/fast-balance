@@ -364,3 +364,47 @@ describe("photosynthesis and respiration", () => {
         expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
     });
 });
+
+describe("nuclear decay and radioactive reactions", () => {
+    it("balances UO2 -> U + O2 (uranium dioxide decomposition)", () => {
+        const result = balance("UO2 -> U + O2");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+    });
+
+    it("balances ThO2 -> Th + O2 (thorium dioxide decomposition)", () => {
+        const result = balance("ThO2 -> Th + O2");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+    });
+
+    it("balances U3O8 -> U + O2 (triuranium octoxide, positive check)", () => {
+        const result = balance("U3O8 -> U + O2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances RaCl2 -> Ra + Cl2 (radium chloride decomposition)", () => {
+        const result = balance("RaCl2 -> Ra + Cl2");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+    });
+
+    it("balances UO2 + C -> U + CO2 (carbothermic reduction, positive check)", () => {
+        const result = balance("UO2 + C -> U + CO2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances Na+ + e -> Na (sodium ion reduction, positive check)", () => {
+        const result = balance("Na+ + e -> Na");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+});
