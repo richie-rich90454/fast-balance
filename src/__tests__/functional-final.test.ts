@@ -283,3 +283,41 @@ describe("equation with charge in balance", () => {
         }
     });
 });
+
+describe("equation with bracket ion", () => {
+    it("[Fe(CN)6]4- parses in equation (positive check)", () => {
+        let parsed = parseFormula("[Fe(CN)6]4-");
+        expect(parsed.elements["Fe"]).toBe(1);
+        expect(parsed.elements["C"]).toBe(6);
+        expect(parsed.elements["N"]).toBe(6);
+        expect(parsed.charge).toBe(-4);
+    });
+    it("[Cu(NH3)4]2+ parses in equation (positive check)", () => {
+        let parsed = parseFormula("[Cu(NH3)4]2+");
+        expect(parsed.elements["Cu"]).toBe(1);
+        expect(parsed.elements["N"]).toBe(4);
+        expect(parsed.elements["H"]).toBe(12);
+        expect(parsed.charge).toBe(2);
+    });
+    it("[Ag(NH3)2]+ parses in equation (positive check)", () => {
+        let parsed = parseFormula("[Ag(NH3)2]+");
+        expect(parsed.elements["Ag"]).toBe(1);
+        expect(parsed.elements["N"]).toBe(2);
+        expect(parsed.elements["H"]).toBe(6);
+        expect(parsed.charge).toBe(1);
+    });
+    it("[Co(NH3)6]3+ parses in equation (positive check)", () => {
+        let parsed = parseFormula("[Co(NH3)6]3+");
+        expect(parsed.elements["Co"]).toBe(1);
+        expect(parsed.elements["N"]).toBe(6);
+        expect(parsed.elements["H"]).toBe(18);
+        expect(parsed.charge).toBe(3);
+    });
+    it("[Ni(CN)4]2- parses in equation (positive check)", () => {
+        let parsed = parseFormula("[Ni(CN)4]2-");
+        expect(parsed.elements["Ni"]).toBe(1);
+        expect(parsed.elements["C"]).toBe(4);
+        expect(parsed.elements["N"]).toBe(4);
+        expect(parsed.charge).toBe(-2);
+    });
+});
