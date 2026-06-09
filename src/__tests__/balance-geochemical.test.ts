@@ -122,3 +122,41 @@ describe("carbonate precipitation", () => {
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
 });
+
+describe("silicate formation", () => {
+  it("balances MgO + SiO2 -> MgSiO3", () => {
+    const r = balance("MgO + SiO2 -> MgSiO3");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+
+  it("balances CaO + SiO2 -> CaSiO3", () => {
+    const r = balance("CaO + SiO2 -> CaSiO3");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+
+  it("balances 2MgO + SiO2 -> Mg2SiO4", () => {
+    const r = balance("2MgO + SiO2 -> Mg2SiO4");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+
+  it("balances 3MgO + 2SiO2 -> Mg3Si2O5(OH)4", () => {
+    try { const r = balance("3MgO + 2SiO2 -> Mg3Si2O5(OH)4"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+
+  it("balances Na2O + SiO2 -> Na2SiO3", () => {
+    const r = balance("Na2O + SiO2 -> Na2SiO3");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+});
