@@ -186,3 +186,48 @@ describe("compound naming convention", () => {
         expect(productFormulas).toContain("Ca(OH)2");
     });
 });
+
+describe("equation with hydrate in balance", () => {
+    it("CuSO4·5H2O -> CuSO4 + H2O is balanced", () => {
+        let result = balance("CuSO4·5H2O -> CuSO4 + H2O");
+        expect(result.reactants).toHaveLength(1);
+        expect(result.products).toHaveLength(2);
+        expect(result.reactants[0]?.coefficient).toBeGreaterThan(0);
+        expect(result.products[0]?.coefficient).toBeGreaterThan(0);
+        expect(result.products[1]?.coefficient).toBeGreaterThan(0);
+        expect(result.reactants[0]?.formula).toContain("CuSO4");
+        expect(result.reactants[0]?.formula).toContain("H2O");
+    });
+    it("Na2CO3·10H2O -> Na2CO3 + H2O is balanced", () => {
+        let result = balance("Na2CO3·10H2O -> Na2CO3 + H2O");
+        expect(result.reactants).toHaveLength(1);
+        expect(result.products).toHaveLength(2);
+        expect(result.reactants[0]?.coefficient).toBeGreaterThan(0);
+        expect(result.products[0]?.formula).toBe("Na2CO3");
+        expect(result.products[1]?.formula).toBe("H2O");
+    });
+    it("MgSO4·7H2O -> MgSO4 + H2O is balanced", () => {
+        let result = balance("MgSO4·7H2O -> MgSO4 + H2O");
+        expect(result.reactants).toHaveLength(1);
+        expect(result.products).toHaveLength(2);
+        expect(result.reactants[0]?.coefficient).toBeGreaterThan(0);
+        expect(result.products[0]?.formula).toBe("MgSO4");
+        expect(result.products[1]?.formula).toBe("H2O");
+    });
+    it("BaCl2·2H2O -> BaCl2 + H2O is balanced", () => {
+        let result = balance("BaCl2·2H2O -> BaCl2 + H2O");
+        expect(result.reactants).toHaveLength(1);
+        expect(result.products).toHaveLength(2);
+        expect(result.reactants[0]?.coefficient).toBeGreaterThan(0);
+        expect(result.products[0]?.formula).toBe("BaCl2");
+        expect(result.products[1]?.formula).toBe("H2O");
+    });
+    it("FeSO4·7H2O -> FeSO4 + H2O is balanced", () => {
+        let result = balance("FeSO4·7H2O -> FeSO4 + H2O");
+        expect(result.reactants).toHaveLength(1);
+        expect(result.products).toHaveLength(2);
+        expect(result.reactants[0]?.coefficient).toBeGreaterThan(0);
+        expect(result.products[0]?.formula).toBe("FeSO4");
+        expect(result.products[1]?.formula).toBe("H2O");
+    });
+});
