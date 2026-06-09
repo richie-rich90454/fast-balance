@@ -220,3 +220,71 @@ describe("reverse equation property", () => {
     verifyConservation(result);
   });
 });
+
+function allCoefficients(result: BalanceResult): number[] {
+  return [
+    ...result.reactants.map((r) => r.coefficient),
+    ...result.products.map((p) => p.coefficient),
+  ];
+}
+
+function gcdOfList(arr: number[]): number {
+  if (arr.length === 0) return 0;
+  return arr.reduce((acc, n) => gcd(acc, Math.abs(n)), arr[0]!);
+}
+
+describe("multiplication symmetry", () => {
+  it("returns canonical 2/1/2 for H2 + O2 -> H2O coefficients", () => {
+    const result = balance("H2 + O2 -> H2O");
+    expect(result.reactants.map((r) => r.coefficient)).toEqual([2, 1]);
+    expect(result.products.map((p) => p.coefficient)).toEqual([2]);
+  });
+
+  it("GCD of coefficients is 1 for H2 + O2 -> H2O (no spurious common factor)", () => {
+    const result = balance("H2 + O2 -> H2O");
+    expect(gcdOfList(allCoefficients(result))).toBe(1);
+  });
+
+  it("GCD of coefficients is 1 for N2 + H2 -> NH3", () => {
+    const result = balance("N2 + H2 -> NH3");
+    expect(gcdOfList(allCoefficients(result))).toBe(1);
+  });
+
+  it("GCD of coefficients is 1 for Fe + Cl2 -> FeCl3", () => {
+    const result = balance("Fe + Cl2 -> FeCl3");
+    expect(gcdOfList(allCoefficients(result))).toBe(1);
+  });
+
+  it("GCD of coefficients is 1 for C2H6 + O2 -> CO2 + H2O", () => {
+    const result = balance("C2H6 + O2 -> CO2 + H2O");
+    expect(gcdOfList(allCoefficients(result))).toBe(1);
+  });
+
+  it("all coefficients are positive integers for various reactions", () => {
+    const equations = [
+      "H2 + O2 -> H2O",
+      "N2 + H2 -> NH3",
+      "Fe + Cl2 -> FeCl3",
+      "CH4 + O2 -> CO2 + H2O",
+      "Al + O2 -> Al2O3",
+    ];
+    for (const eq of equations) {
+      const result = balance(eq);
+      const coeffs = allCoefficients(result);
+      expect(coeffs.every((c) => Number.isInteger(c) && c > 0)).toBe(true);
+    }
+  });
+
+  it("balance gives deterministic output for the same equation", () => {
+    const equations = [
+      "H2 + O2 -> H2O",
+      "N2 + H2 -> NH3",
+      "CH4 + O2 -> CO2 + H2O",
+    ];
+    for (const eq of equations) {
+      const a = balance(eq);
+      const b = balance(eq);
+      expect(allCoefficients(a)).toEqual(allCoefficients(b));
+    }
+  });
+});
