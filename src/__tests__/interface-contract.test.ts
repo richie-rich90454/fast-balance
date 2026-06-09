@@ -269,3 +269,33 @@ describe("splitEquation return type", ()=>{
         }
     });
 });
+
+describe("equation string structure", ()=>{
+    it("contains '->' by default", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        expect(result.equation).toContain("->");
+    });
+    it("contains reactant formulas", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        expect(result.equation).toContain("H2");
+        expect(result.equation).toContain("O2");
+    });
+    it("contains product formulas", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        expect(result.equation).toContain("H2O");
+    });
+    it("uses '+' separator", ()=>{
+        let result=balance("CaCO3 -> CaO + CO2", {showOne: false});
+        expect(result.equation).toContain(" + ");
+    });
+    it("no extra whitespace", ()=>{
+        let result=balance("H2 + O2 -> H2O", {showOne: false});
+        // Should not have double spaces
+        expect(result.equation).not.toMatch(/\s{2,}/);
+    });
+    it("equals 'reactants -> products'", ()=>{
+        let result=balance("H2 + O2 -> H2O", {showOne: false});
+        // Equation should be exactly "2 H2 + O2 -> 2 H2O"
+        expect(result.equation).toBe("2 H2 + O2 -> 2 H2O");
+    });
+});
