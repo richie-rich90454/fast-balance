@@ -282,8 +282,8 @@ describe("metal carbide hydrolysis and acid reaction", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([4, 3]);
   });
 
-  it("balances Mg2C + 2H2O -> 2Mg(OH)2 + C2H2", () => {
-    const r = balance("Mg2C + H2O -> Mg(OH)2 + C2H2");
+  it("balances Mg2C + 4H2O -> 2Mg(OH)2 + CH4", () => {
+    const r = balance("Mg2C + H2O -> Mg(OH)2 + CH4");
     expectPositiveCoefficients(r);
   });
 
