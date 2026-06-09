@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { gcd, lcm, stripStateSymbols, parseFormula } from "../index";
+import { gcd, lcm, stripStateSymbols, parseFormula, splitEquation } from "../index";
 
 describe("gcd function exhaustive tests", () => {
   it("gcd(1, 1) returns 1", () => {
@@ -104,5 +104,43 @@ describe("parseFormula function exhaustive tests", () => {
   it("parseFormula('e-').charge equals -1", () => {
     const result = parseFormula("e-");
     expect(result.charge).toBe(-1);
+  });
+});
+
+describe("splitEquation function exhaustive tests", () => {
+  it("splitEquation('H2 + O2 -> H2O').reactants has length 2", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    expect(eq.reactants).toHaveLength(2);
+  });
+
+  it("splitEquation('H2 + O2 -> H2O').products has length 1", () => {
+    const eq = splitEquation("H2 + O2 -> H2O");
+    expect(eq.products).toHaveLength(1);
+  });
+
+  it("splitEquation('H2 -> H2O + O2') works correctly", () => {
+    const eq = splitEquation("H2 -> H2O + O2");
+    expect(eq.reactants).toHaveLength(1);
+    expect(eq.products).toHaveLength(2);
+    expect(eq.reactants[0].formula).toBe("H2");
+  });
+
+  it("splitEquation('Fe + Cl2 -> FeCl3') works correctly", () => {
+    const eq = splitEquation("Fe + Cl2 -> FeCl3");
+    expect(eq.reactants).toHaveLength(2);
+    expect(eq.products).toHaveLength(1);
+    expect(eq.products[0].formula).toBe("FeCl3");
+  });
+
+  it("splitEquation('A -> B') minimal case works", () => {
+    const eq = splitEquation("H2O -> H2O");
+    expect(eq.reactants).toHaveLength(1);
+    expect(eq.products).toHaveLength(1);
+  });
+
+  it("splitEquation('A + B + C -> D + E + F + G') complex case works", () => {
+    const eq = splitEquation("H2 + O2 + N2 + Cl2 -> H2O + O2 + N2 + Cl2");
+    expect(eq.reactants).toHaveLength(4);
+    expect(eq.products).toHaveLength(4);
   });
 });
