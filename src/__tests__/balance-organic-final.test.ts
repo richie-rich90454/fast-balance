@@ -160,3 +160,35 @@ describe("terpene tests", () => {
     expect(result.products.every(p => p.coefficient > 0)).toBe(true);
   });
 });
+
+describe("polymer monomer tests", () => {
+  it("balances ethylene polymerization: C2H4 -> (C2H4)", () => {
+    const result = balance("C2H4 -> (C2H4)");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances propylene polymerization: C3H6 -> (C3H6)", () => {
+    const result = balance("C3H6 -> (C3H6)");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances butadiene polymerization: C4H6 -> (C4H6)", () => {
+    const result = balance("C4H6 -> (C4H6)");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances styrene polymerization: C8H8 -> (C8H8)", () => {
+    const result = balance("C8H8 -> (C8H8)");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances acetylene polymerization: C2H2 -> (C2H2)", () => {
+    const result = balance("C2H2 -> (C2H2)");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+});
