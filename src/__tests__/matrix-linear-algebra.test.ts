@@ -481,3 +481,41 @@ describe("fractionsToIntegers sign normalization tests", () => {
     ).toEqual([1, 3]);
   });
 });
+
+describe("fractionsToIntegers GCD reduction tests", () => {
+  it("[2, 2] reduces to [1, 1] (GCD=2)", () => {
+    expect(fractionsToIntegers([new Fraction(2), new Fraction(2)])).toEqual([
+      1, 1,
+    ]);
+  });
+
+  it("[4, 6] reduces to [2, 3] (GCD=2)", () => {
+    expect(fractionsToIntegers([new Fraction(4), new Fraction(6)])).toEqual([
+      2, 3,
+    ]);
+  });
+
+  it("[6, 4] reduces to [3, 2]", () => {
+    expect(fractionsToIntegers([new Fraction(6), new Fraction(4)])).toEqual([
+      3, 2,
+    ]);
+  });
+
+  it("[10, 15] reduces to [2, 3]", () => {
+    expect(fractionsToIntegers([new Fraction(10), new Fraction(15)])).toEqual([
+      2, 3,
+    ]);
+  });
+
+  it("[100, 50] reduces to [2, 1]", () => {
+    expect(fractionsToIntegers([new Fraction(100), new Fraction(50)])).toEqual([
+      2, 1,
+    ]);
+  });
+
+  it("[7, 7] reduces to [1, 1] (already coprime after GCD)", () => {
+    expect(fractionsToIntegers([new Fraction(7), new Fraction(7)])).toEqual([
+      1, 1,
+    ]);
+  });
+});
