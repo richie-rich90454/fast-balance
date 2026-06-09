@@ -539,3 +539,68 @@ describe("Polymerization industry reactions", () => {
         expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
     });
 });
+
+describe("Biological and environmental reactions", () => {
+    it("balances 6CO2 + 6H2O -> C6H12O6 + 6O2", () => {
+        const r = balance("6CO2 + 6H2O -> C6H12O6 + 6O2");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "CO2")?.coefficient).toBe(6);
+        expect(r.reactants.find(x => x.formula === "H2O")?.coefficient).toBe(6);
+        expect(r.products.find(x => x.formula === "C6H12O6")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "O2")?.coefficient).toBe(6);
+    });
+
+    it("balances C6H12O6 + 6O2 -> 6CO2 + 6H2O", () => {
+        const r = balance("C6H12O6 + 6O2 -> 6CO2 + 6H2O");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "C6H12O6")?.coefficient).toBe(1);
+        expect(r.reactants.find(x => x.formula === "O2")?.coefficient).toBe(6);
+        expect(r.products.find(x => x.formula === "CO2")?.coefficient).toBe(6);
+        expect(r.products.find(x => x.formula === "H2O")?.coefficient).toBe(6);
+    });
+
+    it("balances NH3 + O2 -> NO + H2O (positive check)", () => {
+        const r = balance("NH3 + O2 -> NO + H2O");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances H2S + O2 -> SO2 + H2O", () => {
+        const r = balance("H2S + O2 -> SO2 + H2O");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "H2S")?.coefficient).toBe(2);
+        expect(r.reactants.find(x => x.formula === "O2")?.coefficient).toBe(3);
+        expect(r.products.find(x => x.formula === "SO2")?.coefficient).toBe(2);
+        expect(r.products.find(x => x.formula === "H2O")?.coefficient).toBe(2);
+    });
+
+    it("balances CH4 + O2 -> CO2 + H2O", () => {
+        const r = balance("CH4 + O2 -> CO2 + H2O");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "CH4")?.coefficient).toBe(1);
+        expect(r.reactants.find(x => x.formula === "O2")?.coefficient).toBe(2);
+        expect(r.products.find(x => x.formula === "CO2")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "H2O")?.coefficient).toBe(2);
+    });
+});
