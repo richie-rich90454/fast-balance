@@ -328,3 +328,45 @@ describe("oxidation state verification tests", () => {
     expect(cuProduct.elements["Cu"]).toBe(1);
   });
 });
+
+describe("catalysis tests", () => {
+  it("2H2O2 -> 2H2O + O2", () => {
+    const r = balance("H2O2 -> H2O + O2");
+    // 2H2O2 -> 2H2O + O2
+    expect(r.reactants[0].coefficient).toBe(2);
+    expect(r.products[0].coefficient).toBe(2);
+    expect(r.products[1].coefficient).toBe(1);
+  });
+
+  it("N2 + H2 -> NH3 positive check", () => {
+    const r = balance("N2 + H2 -> NH3");
+    // N2 + 3H2 -> 2NH3
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(3);
+    expect(r.products[0].coefficient).toBe(2);
+  });
+
+  it("SO2 + O2 -> SO3 positive check", () => {
+    const r = balance("SO2 + O2 -> SO3");
+    // 2SO2 + O2 -> 2SO3
+    expect(r.reactants[0].coefficient).toBe(2);
+    expect(r.reactants[1].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(2);
+  });
+
+  it("H2 + O2 -> H2O positive check", () => {
+    const r = balance("H2 + O2 -> H2O");
+    // 2H2 + O2 -> 2H2O
+    expect(r.reactants[0].coefficient).toBe(2);
+    expect(r.reactants[1].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(2);
+  });
+
+  it("C2H4 + H2 -> C2H6 positive check", () => {
+    const r = balance("C2H4 + H2 -> C2H6");
+    // C2H4 + H2 -> C2H6
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+  });
+});
