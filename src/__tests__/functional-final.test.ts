@@ -1,5 +1,5 @@
 import {describe, it, expect} from "vitest";
-import {balance, parseFormula} from "../index";
+import {balance, parseFormula, splitEquation} from "../index";
 
 describe("exact coefficient match", () => {
     it("matches CH4 + 2O2 -> CO2 + 2H2O exactly", () => {
@@ -75,5 +75,40 @@ describe("element count extraction", () => {
     it("extracts Fe count of 2 from Fe2O3", () => {
         let parsed = parseFormula("Fe2O3");
         expect(parsed.elements["Fe"]).toBe(2);
+    });
+});
+
+describe("Species interface shape", () => {
+    it("Species has formula, elements, and charge fields", () => {
+        let eq = splitEquation("H2 + O2 -> H2O");
+        let species = eq.reactants[0]!;
+        expect(species).toHaveProperty("formula");
+        expect(species).toHaveProperty("elements");
+        expect(species).toHaveProperty("charge");
+    });
+    it("Species formula is a string", () => {
+        let eq = splitEquation("NaCl -> Na + Cl2");
+        let species = eq.reactants[0]!;
+        expect(typeof species.formula).toBe("string");
+        expect(species.formula).toBe("NaCl");
+    });
+    it("Species charge is a number", () => {
+        let eq = splitEquation("Fe2+ + Cl- -> FeCl2");
+        let species = eq.reactants[0]!;
+        expect(typeof species.charge).toBe("number");
+        expect(species.charge).toBe(2);
+    });
+    it("Species elements is a record of counts", () => {
+        let eq = splitEquation("Fe2O3 -> Fe + O2");
+        let species = eq.reactants[0]!;
+        expect(typeof species.elements).toBe("object");
+        expect(species.elements["Fe"]).toBe(2);
+        expect(species.elements["O"]).toBe(3);
+    });
+    it("Species from splitEquation has charge of 0 for neutral species", () => {
+        let eq = splitEquation("H2 + O2 -> H2O");
+        let species = eq.reactants[0]!;
+        expect(species.charge).toBe(0);
+        expect(typeof species.charge).toBe("number");
     });
 });
