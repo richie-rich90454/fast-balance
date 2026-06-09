@@ -368,3 +368,44 @@ describe("sulfur dioxide reactions", () => {
         }
     });
 });
+
+describe("nitrogen dioxide reactions", () => {
+    it("balances NO2 + H2O -> HNO3 + NO", () => {
+        let result = balance("NO2 + H2O -> HNO3 + NO");
+        expect(result.reactants[0]?.coefficient).toBe(3);
+        expect(result.reactants[1]?.coefficient).toBe(1);
+        expect(result.products[0]?.coefficient).toBe(2);
+        expect(result.products[1]?.coefficient).toBe(1);
+    });
+
+    it("balances 2 NO2 + H2O -> HNO3 + HNO2", () => {
+        let result = balance("2 NO2 + H2O -> HNO3 + HNO2");
+        expect(result.reactants[0]?.coefficient).toBe(2);
+        expect(result.reactants[1]?.coefficient).toBe(1);
+        expect(result.products[0]?.coefficient).toBe(1);
+        expect(result.products[1]?.coefficient).toBe(1);
+    });
+
+    it("balances 4 NO2 + O2 + 2 H2O -> 4 HNO3", () => {
+        let result = balance("4 NO2 + O2 + 2 H2O -> 4 HNO3");
+        expect(result.reactants[0]?.coefficient).toBe(4);
+        expect(result.reactants[1]?.coefficient).toBe(1);
+        expect(result.reactants[2]?.coefficient).toBe(2);
+        expect(result.products[0]?.coefficient).toBe(4);
+    });
+
+    it("balances NO2 + NaOH -> NaNO3 + NaNO2 + H2O", () => {
+        let result = balance("NO2 + NaOH -> NaNO3 + NaNO2 + H2O");
+        let all = [...result.reactants, ...result.products];
+        for (let s of all) {
+            expect(s.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(s.coefficient)).toBe(true);
+        }
+    });
+
+    it("balances N2O4 -> 2 NO2", () => {
+        let result = balance("N2O4 -> 2 NO2");
+        expect(result.reactants[0]?.coefficient).toBe(1);
+        expect(result.products[0]?.coefficient).toBe(2);
+    });
+});
