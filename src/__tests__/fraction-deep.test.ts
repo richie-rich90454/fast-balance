@@ -451,3 +451,156 @@ describe("fraction chain operations", () => {
     expect(result.equals(Fraction.one())).toBe(true);
   });
 });
+
+describe("fraction clone and equality", () => {
+  it("clone produces independent copy", () => {
+    const f = new Fraction(3, 4);
+    const c = f.clone();
+    expect(c.num).toBe(3);
+    expect(c.den).toBe(4);
+    expect(c).not.toBe(f);
+  });
+
+  it("clone equals original", () => {
+    const f = new Fraction(5, 7);
+    const c = f.clone();
+    expect(c.equals(f)).toBe(true);
+  });
+
+  it("modifying clone doesn't affect original", () => {
+    const f = new Fraction(2, 3);
+    const c = f.clone();
+    c.num = 10;
+    c.den = 11;
+    expect(f.num).toBe(2);
+    expect(f.den).toBe(3);
+    expect(c.num).toBe(10);
+    expect(c.den).toBe(11);
+  });
+
+  it("equals is symmetric: a.equals(b) implies b.equals(a)", () => {
+    const a = new Fraction(2, 4);
+    const b = new Fraction(1, 2);
+    expect(a.equals(b)).toBe(true);
+    expect(b.equals(a)).toBe(true);
+  });
+
+  it("equals is transitive: a=b and b=c implies a=c", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(2, 4);
+    const c = new Fraction(3, 6);
+    expect(a.equals(b)).toBe(true);
+    expect(b.equals(c)).toBe(true);
+    expect(a.equals(c)).toBe(true);
+  });
+
+  it("equals works after arithmetic: a.add(b).equals(b.add(a))", () => {
+    const a = new Fraction(1, 3);
+    const b = new Fraction(2, 5);
+    const r1 = a.add(b);
+    const r2 = b.add(a);
+    expect(r1.equals(r2)).toBe(true);
+  });
+
+  it("equals works after mul: (a*b).equals(b*a)", () => {
+    const a = new Fraction(3, 7);
+    const b = new Fraction(4, 9);
+    expect(a.mul(b).equals(b.mul(a))).toBe(true);
+  });
+
+  it("equals works after sub: (a-a).equals(zero)", () => {
+    const a = new Fraction(5, 8);
+    expect(a.sub(a).equals(Fraction.zero())).toBe(true);
+  });
+
+  it("equals works after div: (a/b).equals(a.div(b))", () => {
+    const a = new Fraction(3, 4);
+    const b = new Fraction(2, 5);
+    const result = a.div(b);
+    expect(result.equals(new Fraction(15, 8))).toBe(true);
+  });
+
+  it("clone of zero equals zero", () => {
+    const f = Fraction.zero();
+    const c = f.clone();
+    expect(c.isZero()).toBe(true);
+    expect(c.equals(f)).toBe(true);
+  });
+
+  it("clone of one equals one", () => {
+    const f = Fraction.one();
+    const c = f.clone();
+    expect(c.equals(f)).toBe(true);
+    expect(c.equals(new Fraction(1, 1))).toBe(true);
+  });
+
+  it("clone of negative fraction", () => {
+    const f = new Fraction(-3, 5);
+    const c = f.clone();
+    expect(c.equals(f)).toBe(true);
+    expect(c.num).toBe(-3);
+    expect(c.den).toBe(5);
+  });
+
+  it("equals returns false for different values", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(2, 3);
+    expect(a.equals(b)).toBe(false);
+    expect(b.equals(a)).toBe(false);
+  });
+
+  it("clone after complex chain: ((a+b)*c).clone() equals original", () => {
+    const a = new Fraction(1, 2);
+    const b = new Fraction(1, 3);
+    const c = new Fraction(3, 4);
+    const result = a.add(b).mul(c);
+    const cloned = result.clone();
+    expect(cloned.equals(result)).toBe(true);
+  });
+
+  it("equals after negation: a.neg().equals(b.neg()) when a.equals(b)", () => {
+    const a = new Fraction(2, 3);
+    const b = new Fraction(4, 6);
+    expect(a.neg().equals(b.neg())).toBe(true);
+  });
+
+  it("equals transitive with negatives: -1/2 = -2/4 = -3/6", () => {
+    const a = new Fraction(-1, 2);
+    const b = new Fraction(-2, 4);
+    const c = new Fraction(-3, 6);
+    expect(a.equals(b)).toBe(true);
+    expect(b.equals(c)).toBe(true);
+    expect(a.equals(c)).toBe(true);
+  });
+
+  it("clone after negation preserves value", () => {
+    const f = new Fraction(5, 6);
+    const negated = f.neg();
+    const cloned = negated.clone();
+    expect(cloned.equals(negated)).toBe(true);
+    expect(cloned.num).toBe(-5);
+    expect(cloned.den).toBe(6);
+  });
+
+  it("equals with fractions created from arithmetic", () => {
+    const a = new Fraction(1, 2).add(new Fraction(1, 4));
+    const b = new Fraction(3, 4);
+    expect(a.equals(b)).toBe(true);
+  });
+
+  it("modifying clone den doesn't affect original", () => {
+    const f = new Fraction(7, 9);
+    const c = f.clone();
+    c.den = 13;
+    expect(f.den).toBe(9);
+    expect(c.den).toBe(13);
+    expect(f.equals(c)).toBe(false);
+  });
+
+  it("equals symmetric with zero fractions", () => {
+    const a = Fraction.zero();
+    const b = new Fraction(0, 100);
+    expect(a.equals(b)).toBe(true);
+    expect(b.equals(a)).toBe(true);
+  });
+});
