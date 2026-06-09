@@ -139,3 +139,67 @@ describe("three species minimal", () => {
     expect(result.products[0]?.formula).toBe("Al2O3");
   });
 });
+
+describe("four species minimal", () => {
+  it("Fe2O3+CO->Fe+CO2 balances as 1Fe2O3+3CO->2Fe+3CO2", () => {
+    const result = balance("Fe2O3 + CO -> Fe + CO2");
+    expect(result.reactants[0]?.coefficient).toBe(1);
+    expect(result.reactants[0]?.formula).toBe("Fe2O3");
+    expect(result.reactants[1]?.coefficient).toBe(3);
+    expect(result.reactants[1]?.formula).toBe("CO");
+    expect(result.products[0]?.coefficient).toBe(2);
+    expect(result.products[0]?.formula).toBe("Fe");
+    expect(result.products[1]?.coefficient).toBe(3);
+    expect(result.products[1]?.formula).toBe("CO2");
+  });
+
+  it("CuO+H2->Cu+H2O balances as 1CuO+1H2->1Cu+1H2O", () => {
+    const result = balance("CuO + H2 -> Cu + H2O");
+    expect(result.reactants[0]?.coefficient).toBe(1);
+    expect(result.reactants[0]?.formula).toBe("CuO");
+    expect(result.reactants[1]?.coefficient).toBe(1);
+    expect(result.reactants[1]?.formula).toBe("H2");
+    expect(result.products[0]?.coefficient).toBe(1);
+    expect(result.products[0]?.formula).toBe("Cu");
+    expect(result.products[1]?.coefficient).toBe(1);
+    expect(result.products[1]?.formula).toBe("H2O");
+  });
+
+  it("NaOH+HCl->NaCl+H2O balances as 1NaOH+1HCl->1NaCl+1H2O", () => {
+    const result = balance("NaOH + HCl -> NaCl + H2O");
+    expect(result.reactants[0]?.coefficient).toBe(1);
+    expect(result.reactants[0]?.formula).toBe("NaOH");
+    expect(result.reactants[1]?.coefficient).toBe(1);
+    expect(result.reactants[1]?.formula).toBe("HCl");
+    expect(result.products[0]?.coefficient).toBe(1);
+    expect(result.products[0]?.formula).toBe("NaCl");
+    expect(result.products[1]?.coefficient).toBe(1);
+    expect(result.products[1]?.formula).toBe("H2O");
+  });
+
+  it("CaCO3+HCl->CaCl2+H2O+CO2 balances as 1CaCO3+2HCl->1CaCl2+1H2O+1CO2", () => {
+    const result = balance("CaCO3 + HCl -> CaCl2 + H2O + CO2");
+    expect(result.reactants[0]?.coefficient).toBe(1);
+    expect(result.reactants[0]?.formula).toBe("CaCO3");
+    expect(result.reactants[1]?.coefficient).toBe(2);
+    expect(result.reactants[1]?.formula).toBe("HCl");
+    expect(result.products[0]?.coefficient).toBe(1);
+    expect(result.products[0]?.formula).toBe("CaCl2");
+    expect(result.products[1]?.coefficient).toBe(1);
+    expect(result.products[1]?.formula).toBe("H2O");
+    expect(result.products[2]?.coefficient).toBe(1);
+    expect(result.products[2]?.formula).toBe("CO2");
+  });
+
+  it("BaCl2+Na2SO4->BaSO4+NaCl balances as 1BaCl2+1Na2SO4->1BaSO4+2NaCl", () => {
+    const result = balance("BaCl2 + Na2SO4 -> BaSO4 + NaCl");
+    expect(result.reactants[0]?.coefficient).toBe(1);
+    expect(result.reactants[0]?.formula).toBe("BaCl2");
+    expect(result.reactants[1]?.coefficient).toBe(1);
+    expect(result.reactants[1]?.formula).toBe("Na2SO4");
+    expect(result.products[0]?.coefficient).toBe(1);
+    expect(result.products[0]?.formula).toBe("BaSO4");
+    expect(result.products[1]?.coefficient).toBe(2);
+    expect(result.products[1]?.formula).toBe("NaCl");
+  });
+});
