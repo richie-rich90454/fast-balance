@@ -148,3 +148,47 @@ describe("cement and lime production", () => {
         expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
     });
 });
+
+describe("metallurgy reactions", () => {
+    it("balances Fe2O3 + CO -> Fe + CO2 (blast furnace reduction)", () => {
+        const result = balance("Fe2O3 + CO -> Fe + CO2");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1, 3]);
+        expect(result.products.map(p => p.coefficient)).toEqual([2, 3]);
+    });
+
+    it("balances Fe3O4 + CO -> Fe + CO2 (magnetite reduction, positive check)", () => {
+        const result = balance("Fe3O4 + CO -> Fe + CO2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances ZnO + C -> Zn + CO (zinc smelting)", () => {
+        const result = balance("ZnO + C -> Zn + CO");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+    });
+
+    it("balances Fe2O3 + C -> Fe + CO2 (carbothemic reduction, positive check)", () => {
+        const result = balance("Fe2O3 + C -> Fe + CO2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances CuO + H2 -> Cu + H2O (copper oxide reduction)", () => {
+        const result = balance("CuO + H2 -> Cu + H2O");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
+    });
+
+    it("balances Cu2S + O2 -> Cu + SO2 (copper matte conversion, positive check)", () => {
+        const result = balance("Cu2S + O2 -> Cu + SO2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+});
