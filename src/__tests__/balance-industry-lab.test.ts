@@ -122,3 +122,63 @@ describe("Oxidation and reduction lab reactions", () => {
         expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
     });
 });
+
+describe("Combustion lab reactions", () => {
+    it("balances C2H6O + O2 -> CO2 + H2O", () => {
+        const r = balance("C2H6O + O2 -> CO2 + H2O");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "C2H6O")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "CO2")?.coefficient).toBe(2);
+        expect(r.products.find(x => x.formula === "H2O")?.coefficient).toBe(3);
+    });
+
+    it("balances C3H8O + O2 -> CO2 + H2O", () => {
+        const r = balance("C3H8O + O2 -> CO2 + H2O");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "C3H8O")?.coefficient).toBe(2);
+        expect(r.products.find(x => x.formula === "CO2")?.coefficient).toBe(6);
+        expect(r.products.find(x => x.formula === "H2O")?.coefficient).toBe(8);
+    });
+
+    it("balances C4H10O + O2 -> CO2 + H2O (positive check)", () => {
+        const r = balance("C4H10O + O2 -> CO2 + H2O");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances C7H8 + O2 -> CO2 + H2O", () => {
+        const r = balance("C7H8 + O2 -> CO2 + H2O");
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        expect(r.reactants.find(x => x.formula === "C7H8")?.coefficient).toBe(1);
+        expect(r.products.find(x => x.formula === "CO2")?.coefficient).toBe(7);
+        expect(r.products.find(x => x.formula === "H2O")?.coefficient).toBe(4);
+    });
+
+    it("balances C10H8 + O2 -> CO2 + H2O (positive check)", () => {
+        const r = balance("C10H8 + O2 -> CO2 + H2O");
+        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+        const all = [
+            ...r.reactants.map(x => x.coefficient),
+            ...r.products.map(x => x.coefficient),
+        ];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+});
