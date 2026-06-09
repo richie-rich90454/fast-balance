@@ -192,3 +192,35 @@ describe("polymer monomer tests", () => {
     expect(result.products.every(p => p.coefficient > 0)).toBe(true);
   });
 });
+
+describe("dye and pigment tests", () => {
+  it("balances pentacene combustion: C20H12 + O2 -> CO2 + H2O", () => {
+    const result = balance("C20H12 + O2 -> CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances anthracene combustion: C14H10 + O2 -> CO2 + H2O", () => {
+    const result = balance("C14H10 + O2 -> CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances pyrene combustion: C16H10 + O2 -> CO2 + H2O", () => {
+    const result = balance("C16H10 + O2 -> CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances dinitrobenzene combustion: C6H4N2O4 + O2 -> CO2 + H2O + N2", () => {
+    const result = balance("C6H4N2O4 + O2 -> CO2 + H2O + N2");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances trinitrotoluene combustion: C7H5N3O6 + O2 -> CO2 + H2O + N2", () => {
+    const result = balance("C7H5N3O6 + O2 -> CO2 + H2O + N2");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+});
