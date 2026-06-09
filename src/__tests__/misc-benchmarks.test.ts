@@ -68,3 +68,58 @@ describe("performance benchmarks", () => {
         expect(result.products[1]?.coefficient).toBe(18);
     });
 });
+
+describe("large matrix handling", () => {
+    let fiveSpecies = "KClO3 + HCl -> KCl + Cl2 + H2O";
+    let sixSpecies = "KMnO4 + HCl -> KCl + MnCl2 + Cl2 + H2O";
+    let sevenSpecies = "KMnO4 + FeSO4 + H2SO4 -> K2SO4 + MnSO4 + Fe2(SO4)3 + H2O";
+
+    it("balances a 5-species reaction", () => {
+        let result = balance(fiveSpecies);
+        expect(result.reactants.length + result.products.length).toBe(5);
+        let allCoeffs = [...result.reactants, ...result.products].map(s => s.coefficient);
+        for (let c of allCoeffs) {
+            expect(c).toBeGreaterThan(0);
+        }
+    });
+
+    it("balances a 6-species reaction", () => {
+        let result = balance(sixSpecies);
+        expect(result.reactants.length + result.products.length).toBe(6);
+        let allCoeffs = [...result.reactants, ...result.products].map(s => s.coefficient);
+        for (let c of allCoeffs) {
+            expect(c).toBeGreaterThan(0);
+        }
+    });
+
+    it("balances a 7-species reaction", () => {
+        let result = balance(sevenSpecies);
+        expect(result.reactants.length + result.products.length).toBe(7);
+        let allCoeffs = [...result.reactants, ...result.products].map(s => s.coefficient);
+        for (let c of allCoeffs) {
+            expect(c).toBeGreaterThan(0);
+        }
+    });
+
+    it("all large equations complete quickly", () => {
+        let equations = [fiveSpecies, sixSpecies, sevenSpecies];
+        for (let eq of equations) {
+            let start = performance.now();
+            balance(eq);
+            let duration = performance.now() - start;
+            expect(duration).toBeLessThan(100);
+        }
+    });
+
+    it("all large equations produce positive integer coefficients", () => {
+        let equations = [fiveSpecies, sixSpecies, sevenSpecies];
+        for (let eq of equations) {
+            let result = balance(eq);
+            let all = [...result.reactants, ...result.products];
+            for (let s of all) {
+                expect(Number.isInteger(s.coefficient)).toBe(true);
+                expect(s.coefficient).toBeGreaterThan(0);
+            }
+        }
+    });
+});
