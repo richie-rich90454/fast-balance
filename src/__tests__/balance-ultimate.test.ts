@@ -37,7 +37,42 @@ describe("rare earth element tests", () => {
   });
 });
 
-describe("actinide tests", () => {});
+describe("actinide tests", () => {
+  it("should balance UO2 + O2 -> U3O8", () => {
+    const r = balance("UO2 + O2 -> U3O8");
+    expect(r.reactants[0].coefficient).toBe(3);
+    expect(r.reactants[1].coefficient).toBe(2);
+    expect(r.products[0].coefficient).toBe(1);
+  });
+
+  it("should balance Th + O2 -> ThO2", () => {
+    const r = balance("Th + O2 -> ThO2");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+  });
+
+  it("should balance Pu + O2 -> PuO2", () => {
+    const r = balance("Pu + O2 -> PuO2");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+  });
+
+  it("should balance U + O2 -> UO2", () => {
+    const r = balance("U + O2 -> UO2");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+  });
+
+  it("should balance Np + O2 -> NpO2", () => {
+    const r = balance("Np + O2 -> NpO2");
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(1);
+  });
+});
 
 describe("phosphide tests", () => {});
 
