@@ -117,3 +117,36 @@ describe("polyprotic acid neutralization", () => {
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
 });
+
+describe("metal carbonate acid reactions", () => {
+  it("balances Na2CO3 + 2HCl -> 2NaCl + H2O + CO2", () => {
+    const r = balance("Na2CO3 + HCl -> NaCl + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1, 1]);
+  });
+  it("balances K2CO3 + 2HCl -> 2KCl + H2O + CO2", () => {
+    const r = balance("K2CO3 + HCl -> KCl + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([2, 1, 1]);
+  });
+  it("balances CaCO3 + 2HCl -> CaCl2 + H2O + CO2", () => {
+    const r = balance("CaCO3 + HCl -> CaCl2 + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1, 1]);
+  });
+  it("balances MgCO3 + 2HCl -> MgCl2 + H2O + CO2", () => {
+    const r = balance("MgCO3 + HCl -> MgCl2 + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1, 1]);
+  });
+  it("balances NaHCO3 + HCl -> NaCl + H2O + CO2", () => {
+    const r = balance("NaHCO3 + HCl -> NaCl + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1, 1]);
+  });
+  it("balances KHCO3 + HCl -> KCl + H2O + CO2", () => {
+    const r = balance("KHCO3 + HCl -> KCl + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1, 1]);
+  });
+});
