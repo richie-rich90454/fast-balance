@@ -320,3 +320,47 @@ describe("battery and electrochemical reactions", () => {
         expect(result.products.map(p => p.coefficient)).toEqual([2]);
     });
 });
+
+describe("photosynthesis and respiration", () => {
+    it("balances 6CO2 + 6H2O -> C6H12O6 + 6O2 (photosynthesis)", () => {
+        const result = balance("6CO2 + 6H2O -> C6H12O6 + 6O2");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([6, 6]);
+        expect(result.products.map(p => p.coefficient)).toEqual([1, 6]);
+    });
+
+    it("balances C6H12O6 + 6O2 -> 6CO2 + 6H2O (cellular respiration)", () => {
+        const result = balance("C6H12O6 + 6O2 -> 6CO2 + 6H2O");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1, 6]);
+        expect(result.products.map(p => p.coefficient)).toEqual([6, 6]);
+    });
+
+    it("balances 6CO2 + 6H2O -> C6H12O6 + 6O2 (verify positive integers)", () => {
+        const result = balance("6CO2 + 6H2O -> C6H12O6 + 6O2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances C6H12O6 -> 2C2H5OH + 2CO2 (alcoholic fermentation)", () => {
+        const result = balance("C6H12O6 -> 2C2H5OH + 2CO2");
+        expect(result.reactants.map(r => r.coefficient)).toEqual([1]);
+        expect(result.products.map(p => p.coefficient)).toEqual([2, 2]);
+    });
+
+    it("balances C3H6O3 + 3O2 -> 3CO2 + 3H2O (lactate oxidation, positive check)", () => {
+        const result = balance("C3H6O3 + 3O2 -> 3CO2 + 3H2O");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+
+    it("balances 6CO2 + 6H2O -> C6H12O6 + 6O2 (overall photosynthesis equation)", () => {
+        const result = balance("6CO2 + 6H2O -> C6H12O6 + 6O2");
+        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        const all = [...result.reactants.map(r => r.coefficient), ...result.products.map(p => p.coefficient)];
+        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    });
+});
