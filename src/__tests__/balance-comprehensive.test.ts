@@ -415,3 +415,46 @@ describe("temperature effect tests", () => {
     expect(r.products[2].coefficient).toBe(4);
   });
 });
+
+describe("light catalysis tests", () => {
+  it("2AgBr -> 2Ag + Br2", () => {
+    const r = balance("AgBr -> Ag + Br2");
+    // 2AgBr -> 2Ag + Br2
+    expect(r.reactants[0].coefficient).toBe(2);
+    expect(r.products[0].coefficient).toBe(2);
+    expect(r.products[1].coefficient).toBe(1);
+  });
+
+  it("2AgCl -> 2Ag + Cl2", () => {
+    const r = balance("AgCl -> Ag + Cl2");
+    // 2AgCl -> 2Ag + Cl2
+    expect(r.reactants[0].coefficient).toBe(2);
+    expect(r.products[0].coefficient).toBe(2);
+    expect(r.products[1].coefficient).toBe(1);
+  });
+
+  it("H2 + Cl2 -> 2HCl positive check", () => {
+    const r = balance("H2 + Cl2 -> HCl");
+    // H2 + Cl2 -> 2HCl
+    expect(r.reactants[0].coefficient).toBe(1);
+    expect(r.reactants[1].coefficient).toBe(1);
+    expect(r.products[0].coefficient).toBe(2);
+  });
+
+  it("2AgI -> 2Ag + I2", () => {
+    const r = balance("AgI -> Ag + I2");
+    // 2AgI -> 2Ag + I2
+    expect(r.reactants[0].coefficient).toBe(2);
+    expect(r.products[0].coefficient).toBe(2);
+    expect(r.products[1].coefficient).toBe(1);
+  });
+
+  it("6CO2 + H2O -> C6H12O6 + O2 positive check photosynthesis", () => {
+    const r = balance("CO2 + H2O -> C6H12O6 + O2");
+    // 6CO2 + 6H2O -> C6H12O6 + 6O2
+    expect(r.reactants[0].coefficient).toBe(6);
+    expect(r.reactants[1].coefficient).toBe(6);
+    expect(r.products[0].coefficient).toBe(1);
+    expect(r.products[1].coefficient).toBe(6);
+  });
+});
