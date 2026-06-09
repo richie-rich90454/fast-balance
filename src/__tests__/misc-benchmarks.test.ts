@@ -240,3 +240,48 @@ describe("thermal decomposition", () => {
         expect(result.products[1]?.coefficient).toBe(3);
     });
 });
+
+describe("metal carbonyls", () => {
+    it("balances Ni + CO -> Ni(CO)4", () => {
+        let result = balance("Ni + CO -> Ni(CO)4");
+        expect(result.reactants[0]?.coefficient).toBe(1);
+        expect(result.reactants[1]?.coefficient).toBe(4);
+        expect(result.products[0]?.coefficient).toBe(1);
+    });
+
+    it("balances Fe + CO -> Fe(CO)5", () => {
+        let result = balance("Fe + CO -> Fe(CO)5");
+        let all = [...result.reactants, ...result.products];
+        for (let s of all) {
+            expect(s.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(s.coefficient)).toBe(true);
+        }
+    });
+
+    it("balances Mo + CO -> Mo(CO)6", () => {
+        let result = balance("Mo + CO -> Mo(CO)6");
+        let all = [...result.reactants, ...result.products];
+        for (let s of all) {
+            expect(s.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(s.coefficient)).toBe(true);
+        }
+    });
+
+    it("balances W + CO -> W(CO)6", () => {
+        let result = balance("W + CO -> W(CO)6");
+        let all = [...result.reactants, ...result.products];
+        for (let s of all) {
+            expect(s.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(s.coefficient)).toBe(true);
+        }
+    });
+
+    it("balances Co + CO -> Co2(CO)8", () => {
+        let result = balance("Co + CO -> Co2(CO)8");
+        let all = [...result.reactants, ...result.products];
+        for (let s of all) {
+            expect(s.coefficient).toBeGreaterThan(0);
+            expect(Number.isInteger(s.coefficient)).toBe(true);
+        }
+    });
+});
