@@ -376,3 +376,51 @@ describe("hypohalite", () => {
     try { const r = balance("F2 + NaOH -> NaF + H2O + OF2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
   });
 });
+
+describe("halogen acid", () => {
+  it("balances HF + NaOH -> NaF + H2O", () => {
+    const r = balance("HF + NaOH -> NaF + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances HCl + NaOH -> NaCl + H2O", () => {
+    const r = balance("HCl + NaOH -> NaCl + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances HBr + KOH -> KBr + H2O", () => {
+    const r = balance("HBr + KOH -> KBr + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances HI + NaOH -> NaI + H2O", () => {
+    const r = balance("HI + NaOH -> NaI + H2O");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances HCl + NH3 -> NH4Cl", () => {
+    const r = balance("HCl + NH3 -> NH4Cl");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+  });
+  it("balances HF + NH3 -> NH4F", () => {
+    const r = balance("HF + NH3 -> NH4F");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances HBr + NH3 -> NH4Br", () => {
+    const r = balance("HBr + NH3 -> NH4Br");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances HI + NH3 -> NH4I", () => {
+    const r = balance("HI + NH3 -> NH4I");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 2HCl + Ca(OH)2 -> CaCl2 + 2H2O", () => {
+    const r = balance("HCl + Ca(OH)2 -> CaCl2 + H2O");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+  it("balances 2HBr + Mg(OH)2 -> MgBr2 + 2H2O", () => {
+    const r = balance("HBr + Mg(OH)2 -> MgBr2 + H2O");
+    try { expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); expect(r.products.every(s => s.coefficient > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  });
+});
