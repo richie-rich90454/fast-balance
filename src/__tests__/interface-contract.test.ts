@@ -299,3 +299,56 @@ describe("equation string structure", ()=>{
         expect(result.equation).toBe("2 H2 + O2 -> 2 H2O");
     });
 });
+
+describe("coefficient data type", ()=>{
+    it("coefficient is number type", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        for (let r of result.reactants){
+            expect(typeof r.coefficient).toBe("number");
+        }
+        for (let p of result.products){
+            expect(typeof p.coefficient).toBe("number");
+        }
+    });
+    it("coefficient is integer", ()=>{
+        let result=balance("CH4 + O2 -> CO2 + H2O");
+        for (let r of result.reactants){
+            expect(Number.isInteger(r.coefficient)).toBe(true);
+        }
+        for (let p of result.products){
+            expect(Number.isInteger(p.coefficient)).toBe(true);
+        }
+    });
+    it("coefficient is positive", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        for (let r of result.reactants){
+            expect(r.coefficient).toBeGreaterThan(0);
+        }
+        for (let p of result.products){
+            expect(p.coefficient).toBeGreaterThan(0);
+        }
+    });
+    it("coefficient fits in safe integer range", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        let maxSafe=Number.MAX_SAFE_INTEGER;
+        for (let r of result.reactants){
+            expect(r.coefficient).toBeLessThanOrEqual(maxSafe);
+            expect(r.coefficient).toBeGreaterThanOrEqual(-maxSafe);
+        }
+        for (let p of result.products){
+            expect(p.coefficient).toBeLessThanOrEqual(maxSafe);
+            expect(p.coefficient).toBeGreaterThanOrEqual(-maxSafe);
+        }
+    });
+    it("no NaN or Infinity", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        for (let r of result.reactants){
+            expect(Number.isNaN(r.coefficient)).toBe(false);
+            expect(Number.isFinite(r.coefficient)).toBe(true);
+        }
+        for (let p of result.products){
+            expect(Number.isNaN(p.coefficient)).toBe(false);
+            expect(Number.isFinite(p.coefficient)).toBe(true);
+        }
+    });
+});
