@@ -128,3 +128,35 @@ describe("nucleotide tests", () => {
     expect(result.products.every(p => p.coefficient > 0)).toBe(true);
   });
 });
+
+describe("terpene tests", () => {
+  it("balances limonene combustion: C10H16 + O2 -> CO2 + H2O", () => {
+    const result = balance("C10H16 + O2 -> CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances farnesene combustion: C15H24 + O2 -> CO2 + H2O", () => {
+    const result = balance("C15H24 + O2 -> CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances geranylgeraniol backbone combustion: C20H32 + O2 -> CO2 + H2O", () => {
+    const result = balance("C20H32 + O2 -> CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances isoprene combustion: C5H8 + O2 -> CO2 + H2O", () => {
+    const result = balance("C5H8 + O2 -> CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+
+  it("balances menthol combustion: C10H18O + O2 -> CO2 + H2O", () => {
+    const result = balance("C10H18O + O2 -> CO2 + H2O");
+    expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
+    expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+  });
+});
