@@ -256,3 +256,40 @@ describe("oxide acid-base reactions", () => {
     expect(r.products.map(x => x.coefficient)).toEqual([2]);
   });
 });
+
+describe("bicarbonate and carbonate decomposition", () => {
+  it("balances 2NaHCO3 -> Na2CO3 + H2O + CO2", () => {
+    const r = balance("NaHCO3 -> Na2CO3 + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1, 1]);
+  });
+  it("balances Ca(HCO3)2 -> CaCO3 + H2O + CO2", () => {
+    const r = balance("Ca(HCO3)2 -> CaCO3 + H2O + CO2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances Mg(HCO3)2 -> MgCO3 + H2O + CO2", () => {
+    const r = balance("Mg(HCO3)2 -> MgCO3 + H2O + CO2");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances 2KHCO3 -> K2CO3 + H2O + CO2", () => {
+    const r = balance("KHCO3 -> K2CO3 + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1, 1]);
+  });
+  it("balances 2NaHCO3 + heat -> Na2CO3 + H2O + CO2", () => {
+    const r = balance("NaHCO3 -> Na2CO3 + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([2]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1, 1]);
+  });
+  it("balances NaHCO3 + HCl -> NaCl + H2O + CO2", () => {
+    const r = balance("NaHCO3 + HCl -> NaCl + H2O + CO2");
+    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
+    expect(r.products.map(x => x.coefficient)).toEqual([1, 1, 1]);
+  });
+});
