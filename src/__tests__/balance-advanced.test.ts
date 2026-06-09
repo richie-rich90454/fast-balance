@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { Fraction } from "../index";
+import { Fraction, balance, splitEquation, parseFormula, gcd } from "../index";
 
 describe("fraction constructor edge cases", () => {
   it("new Fraction(0, 1) creates zero", () => {
@@ -91,3 +91,62 @@ describe("fraction identity and inverse", () => {
     expect(Fraction.zero().equals(new Fraction(0))).toBe(true);
   });
 });
+
+describe("balance with all output options", () => {
+  it("balance with showOne: true shows coefficient 1", () => {
+    const result = balance("H2 + O2 -> H2O", { showOne: true });
+    expect(result.equation).toContain("1 H2");
+    expect(result.reactants[0]?.coefficient).toBe(2);
+    expect(result.reactants[1]?.coefficient).toBe(1);
+    expect(result.products[0]?.coefficient).toBe(2);
+  });
+
+  it("balance with showOne: false omits coefficient 1", () => {
+    const result = balance("H2 + O2 -> H2O", { showOne: false });
+    expect(result.equation).not.toContain("1 ");
+    expect(result.equation).toBe("2 H2 + O2 -> 2 H2O");
+  });
+
+  it("balance with format: text uses -> arrow", () => {
+    const result = balance("H2 + O2 -> H2O", { format: "text" });
+    expect(result.equation).toContain(" -> ");
+  });
+
+  it("balance with format: html uses &rarr; arrow", () => {
+    const result = balance("H2 + O2 -> H2O", { format: "html" });
+    expect(result.equation).toContain(" &rarr; ");
+  });
+
+  it("balance with format: latex uses \\rightarrow arrow", () => {
+    const result = balance("H2 + O2 -> H2O", { format: "latex" });
+    expect(result.equation).toContain(" \\rightarrow ");
+  });
+});
+
+describe("balance coefficient properties", () => {
+  const result = balance("H2 + O2 -> H2O");
+  const allCoeffs = [...result.reactants, ...result.products].map(s => s.coefficient);
+
+  it("all coefficients > 0 for H2+O2->H2O", () => {
+    expect(allCoeffs.every(c => c > 0)).toBe(true);
+  });
+
+  it("all coefficients are integers for H2+O2->H2O", () => {
+    expect(allCoeffs.every(c => Number.isInteger(c))).toBe(true);
+  });
+
+  it("GCD of coefficients = 1 for H2+O2->H2O", () => {
+    const g = allCoeffs.reduce((acc, v) => gcd(Math.abs(v), acc), 0);
+    expect(g).toBe(1);
+  });
+
+  it("sum of coefficients > 0 for H2+O2->H2O", () => {
+    const sum = allCoeffs.reduce((a, b) => a + b, 0);
+    expect(sum).toBeGreaterThan(0);
+  });
+
+  it("min coefficient >= 1 for H2+O2->H2O", () => {
+    expect(Math.min(...allCoeffs)).toBeGreaterThanOrEqual(1);
+  });
+});
+
