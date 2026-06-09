@@ -46,3 +46,55 @@ describe("API export verification", ()=>{
         expect(typeof fractionsToIntegers).toBe("function");
     });
 });
+
+describe("function call signature", ()=>{
+    it("balance takes a string input", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        expect(result).toBeDefined();
+    });
+    it("balance accepts an optional options argument", ()=>{
+        let r1=balance("H2 + O2 -> H2O");
+        let r2=balance("H2 + O2 -> H2O", {showOne: false});
+        expect(r1).toBeDefined();
+        expect(r2).toBeDefined();
+    });
+    it("balance returns object with reactants and products", ()=>{
+        let result=balance("H2 + O2 -> H2O");
+        expect(result).toHaveProperty("reactants");
+        expect(result).toHaveProperty("products");
+    });
+    it("parseFormula takes a string", ()=>{
+        let result=parseFormula("H2O");
+        expect(result).toBeDefined();
+    });
+    it("parseFormula returns object with elements and charge", ()=>{
+        let result=parseFormula("H2O");
+        expect(result).toHaveProperty("elements");
+        expect(result).toHaveProperty("charge");
+    });
+    it("splitEquation takes a string", ()=>{
+        let result=splitEquation("H2 + O2 -> H2O");
+        expect(result).toBeDefined();
+    });
+    it("splitEquation returns object with reactants and products", ()=>{
+        let result=splitEquation("H2 + O2 -> H2O");
+        expect(result).toHaveProperty("reactants");
+        expect(result).toHaveProperty("products");
+    });
+    it("Fraction constructor accepts num and optional den", ()=>{
+        let f1=new Fraction(3);
+        let f2=new Fraction(3, 4);
+        expect(f1.num).toBe(3);
+        expect(f1.den).toBe(1);
+        expect(f2.num).toBe(3);
+        expect(f2.den).toBe(4);
+    });
+    it("gcd takes two numbers", ()=>{
+        let result=gcd(12, 8);
+        expect(result).toBe(4);
+    });
+    it("lcm takes two numbers", ()=>{
+        let result=lcm(4, 6);
+        expect(result).toBe(12);
+    });
+});
