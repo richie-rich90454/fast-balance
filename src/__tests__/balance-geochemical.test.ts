@@ -47,8 +47,7 @@ describe("acid mine drainage", () => {
     const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
-  it("balances Fe2+ + O2 + H2O -> Fe(OH)3", () => {
-    try { const r = balance("Fe2+ + O2 + H2O -> Fe(OH)3"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances Fe2+ + O2 + H2O -> Fe(OH)3", () => { try { const r = balance("Fe2+ + O2 + H2O -> Fe(OH)3"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
   it("balances FeS2 + H2O + O2 -> FeSO4 + H2SO4", () => {
     const r = balance("FeS2 + H2O + O2 -> FeSO4 + H2SO4");
@@ -133,8 +132,7 @@ describe("silicate formation", () => {
     const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
-  it("balances 3MgO + 2SiO2 -> Mg3Si2O5(OH)4", () => {
-    try { const r = balance("3MgO + 2SiO2 -> Mg3Si2O5(OH)4"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances 3MgO + 2SiO2 -> Mg3Si2O5(OH)4", () => { try { const r = balance("3MgO + 2SiO2 -> Mg3Si2O5(OH)4"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
   it("balances Na2O + SiO2 -> Na2SiO3", () => {
     const r = balance("Na2O + SiO2 -> Na2SiO3");
@@ -146,20 +144,15 @@ describe("silicate formation", () => {
 });
 
 describe("sulfate reduction", () => {
-  it("balances SO4^2- + H+ -> H2S + H2O", () => {
-    try { const r = balance("SO4^2- + H+ -> H2S + H2O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances SO4^2- + H+ -> H2S + H2O", () => { try { const r = balance("SO4^2- + H+ -> H2S + H2O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
-  it("balances SO4^2- + H+ + e- -> H2S + H2O", () => {
-    try { const r = balance("SO4^2- + H+ + e- -> H2S + H2O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances SO4^2- + H+ + e- -> H2S + H2O", () => { const r = balance("SO4^2- + H+ + e- -> H2S + H2O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
-  it("balances SO4^2- + organic -> H2S + CO2", () => {
-    try { const r = balance("SO4^2- + CH2O -> H2S + CO2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances SO4^2- + organic -> H2S + CO2", () => { try { const r = balance("SO4^2- + CH2O -> H2S + CO2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
-  it("balances H2S + O2 -> SO4^2- + H+", () => {
-    try { const r = balance("H2S + O2 -> SO4^2- + H+"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances H2S + O2 -> SO4^2- + H+", () => { const r = balance("H2S + O2 -> SO4^2- + H+"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
-  it("balances FeS + O2 -> Fe2O3 + SO4^2-", () => {
-    try { const r = balance("FeS + O2 -> Fe2O3 + SO4^2-"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances FeS + O2 -> Fe2O3 + SO4^2-", () => { try { const r = balance("FeS + O2 -> Fe2O3 + SO4^2-"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 });
 
@@ -171,17 +164,13 @@ describe("iron oxidation", () => {
     const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
-  it("balances 4Fe2+ + O2 + H2O -> 4Fe3+ + 4OH-", () => {
-    try { const r = balance("4Fe2+ + O2 + H2O -> 4Fe3+ + 4OH-"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances 4Fe2+ + O2 + H2O -> 4Fe3+ + 4OH-", () => { const r = balance("4Fe2+ + O2 + H2O -> 4Fe3+ + 4OH-"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
-  it("balances Fe2+ + H2O + O2 -> Fe(OH)3", () => {
-    try { const r = balance("Fe2+ + H2O + O2 -> Fe(OH)3"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances Fe2+ + H2O + O2 -> Fe(OH)3", () => { try { const r = balance("Fe2+ + H2O + O2 -> Fe(OH)3"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
-  it("balances 2Fe2O3 -> 4Fe + 3O2", () => {
-    try { const r = balance("2Fe2O3 -> 4Fe + 3O2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances 2Fe2O3 -> 4Fe + 3O2", () => { const r = balance("2Fe2O3 -> 4Fe + 3O2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
-  it("balances Fe + O2 -> Fe2O3", () => {
-    try { const r = balance("Fe + O2 -> Fe2O3"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances Fe + O2 -> Fe2O3", () => { const r = balance("Fe + O2 -> Fe2O3"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
 });
 
@@ -200,14 +189,11 @@ describe("mineral dissolution", () => {
     const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
-  it("balances CaSO4 -> Ca2+ + SO4^2-", () => {
-    try { const r = balance("CaSO4 -> Ca2+ + SO4^2-"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances CaSO4 -> Ca2+ + SO4^2-", () => { const r = balance("CaSO4 -> Ca2+ + SO4^2-"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
-  it("balances KAlSi3O8 + H2O + H+ -> Al(OH)3 + H2SiO3 + K+", () => {
-    try { const r = balance("KAlSi3O8 + H2O + H+ -> Al(OH)3 + H2SiO3 + K+"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances KAlSi3O8 + H2O + H+ -> Al(OH)3 + H2SiO3 + K+", () => { const r = balance("KAlSi3O8 + H2O + H+ -> Al(OH)3 + H2SiO3 + K+"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
-  it("balances MgCl2 -> Mg2+ + Cl-", () => {
-    try { const r = balance("MgCl2 -> Mg2+ + Cl-"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances MgCl2 -> Mg2+ + Cl-", () => { const r = balance("MgCl2 -> Mg2+ + Cl-"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
 });
 
@@ -219,52 +205,38 @@ describe("soil chemistry", () => {
     const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
-  it("balances H+ + clay-O- -> clay-OH", () => {
-    try { const r = balance("H+ + clay-O- -> clay-OH"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances H+ + clay-O- -> clay-OH", () => { try { const r = balance("H+ + clay-O- -> clay-OH"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
-  it("balances Ca2+ + 2OH- -> Ca(OH)2", () => {
-    try { const r = balance("Ca2+ + 2OH- -> Ca(OH)2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances Ca2+ + 2OH- -> Ca(OH)2", () => { const r = balance("Ca2+ + 2OH- -> Ca(OH)2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
-  it("balances Fe3+ + 3OH- -> Fe(OH)3", () => {
-    try { const r = balance("Fe3+ + 3OH- -> Fe(OH)3"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances Fe3+ + 3OH- -> Fe(OH)3", () => { const r = balance("Fe3+ + 3OH- -> Fe(OH)3"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
-  it("balances NH4+ + OH- -> NH3 + H2O", () => {
-    try { const r = balance("NH4+ + OH- -> NH3 + H2O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances NH4+ + OH- -> NH3 + H2O", () => { const r = balance("NH4+ + OH- -> NH3 + H2O"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
 });
 
 describe("geochemical cycle", () => {
-  it("balances CO2 + H2O <-> H2CO3", () => {
-    try { const r = balance("CO2 + H2O <-> H2CO3"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances CO2 + H2O <-> H2CO3", () => { const r = balance("CO2 + H2O <-> H2CO3"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
-  it("balances H2CO3 <-> H+ + HCO3-", () => {
-    try { const r = balance("H2CO3 <-> H+ + HCO3-"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances H2CO3 <-> H+ + HCO3-", () => { const r = balance("H2CO3 <-> H+ + HCO3-"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
-  it("balances HCO3- <-> H+ + CO3^2-", () => {
-    try { const r = balance("HCO3- <-> H+ + CO3^2-"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances HCO3- <-> H+ + CO3^2-", () => { const r = balance("HCO3- <-> H+ + CO3^2-"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
-  it("balances CaCO3 <-> Ca2+ + CO3^2-", () => {
-    try { const r = balance("CaCO3 <-> Ca2+ + CO3^2-"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances CaCO3 <-> Ca2+ + CO3^2-", () => { const r = balance("CaCO3 <-> Ca2+ + CO3^2-"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
-  it("balances CO2 + CaCO3 + H2O -> Ca(HCO3)2", () => {
-    try { const r = balance("CO2 + CaCO3 + H2O -> Ca(HCO3)2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances CO2 + CaCO3 + H2O -> Ca(HCO3)2", () => { const r = balance("CO2 + CaCO3 + H2O -> Ca(HCO3)2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
 });
 
 describe("hydrothermal vent", () => {
-  it("balances FeS + H2S -> FeS2 + H2", () => {
-    try { const r = balance("FeS + H2S -> FeS2 + H2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances FeS + H2S -> FeS2 + H2", () => { const r = balance("FeS + H2S -> FeS2 + H2"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
-  it("balances Zn2+ + S2- -> ZnS", () => {
-    try { const r = balance("Zn2+ + S2- -> ZnS"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances Zn2+ + S2- -> ZnS", () => { const r = balance("Zn2+ + S2- -> ZnS"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
-  it("balances Cu2+ + S2- -> CuS", () => {
-    try { const r = balance("Cu2+ + S2- -> CuS"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances Cu2+ + S2- -> CuS", () => { const r = balance("Cu2+ + S2- -> CuS"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
-  it("balances Mn2+ + O2 + H2O -> MnO2 + H+", () => {
-    try { const r = balance("Mn2+ + O2 + H2O -> MnO2 + H+"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances Mn2+ + O2 + H2O -> MnO2 + H+", () => { const r = balance("Mn2+ + O2 + H2O -> MnO2 + H+"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
-  it("balances H2S + Fe2+ -> FeS + H+", () => {
-    try { const r = balance("H2S + Fe2+ -> FeS + H+"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); } catch(e) { expect(true).toBe(true); }
+  it("balances H2S + Fe2+ -> FeS + H+", () => { const r = balance("H2S + Fe2+ -> FeS + H+"); expect(r.reactants.every(s => s.coefficient > 0)).toBe(true); const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)]; expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true); 
   });
 });

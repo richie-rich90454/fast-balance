@@ -593,12 +593,8 @@ describe("fractionsToIntegers direct API", () => {
 
   it("handles zero fractions", () => {
     const fracs = [new Fraction(0), new Fraction(1, 2), new Fraction(1, 4)];
-    try {
-      const ints = fractionsToIntegers(fracs);
-      expect(ints[0]).toBe(0);
-    } catch {
-      expect(true).toBe(true);
-    }
+    const ints = fractionsToIntegers(fracs);
+    expect(ints[0]).toBe(0);
   });
 
   it("converts thirds to integers", () => {

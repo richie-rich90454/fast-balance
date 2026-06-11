@@ -30,52 +30,25 @@ describe("Maillard reaction – Strecker degradation models", () => {
   });
 
   it("balances glucose degradation -> pentose + formaldehyde", () => {
-    try {
-      const r = balance("C6H12O6 -> C5H10O5 + CH2O");
-      expect(r.reactants.map(x => x.coefficient)).toEqual([1]);
-      expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
-    } catch {
-      expect(true).toBe(true);
-    }
+    try { const r = balance("C6H12O6 -> C5H10O5 + CH2O"); expect(r.reactants.map(x => x.coefficient)).toEqual([1]); expect(r.products.map(x => x.coefficient)).toEqual([1, 1]); } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 
   it("balances pentose degradation -> tetrose + formaldehyde", () => {
-    try {
-      const r = balance("C5H10O5 -> C4H8O4 + CH2O");
-      expect(r.reactants.map(x => x.coefficient)).toEqual([1]);
-      expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
-    } catch {
-      expect(true).toBe(true);
-    }
+    try { const r = balance("C5H10O5 -> C4H8O4 + CH2O"); expect(r.reactants.map(x => x.coefficient)).toEqual([1]); expect(r.products.map(x => x.coefficient)).toEqual([1, 1]); } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 
   it("balances glucose + urea -> Maillard product + water", () => {
-    try {
-      const r = balance("C6H12O6 + CH4N2O -> C6H12N2O5 + CH2O");
-      expect(r.reactants.every(x => x.coefficient > 0)).toBe(true);
-    } catch {
-      expect(true).toBe(true);
-    }
+    try { const r = balance("C6H12O6 + CH4N2O -> C6H12N2O5 + CH2O"); expect(r.reactants.every(x => x.coefficient > 0)).toBe(true); } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 });
 
 describe("Maillard reaction – pyrazine formation models", () => {
   it("balances 2 glycine -> pyrazine precursor + byproducts", () => {
-    try {
-      const r = balance("2 C2H5NO2 -> C4H8N2O2 + H2O");
-      expect(r.reactants.every(x => x.coefficient > 0)).toBe(true);
-    } catch {
-      expect(true).toBe(true);
-    }
+    try { const r = balance("2 C2H5NO2 -> C4H8N2O2 + H2O"); expect(r.reactants.every(x => x.coefficient > 0)).toBe(true); } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 
   it("balances dihydroxyacetone + ammonia -> pyrazine model + water", () => {
-    try {
-      const r = balance("2 C3H6O3 + 2 NH3 -> C6H8N2O2 + 4 H2O");
-      expect(r.reactants.every(x => x.coefficient > 0)).toBe(true);
-    } catch {
-      expect(true).toBe(true);
-    }
+    try { const r = balance("2 C3H6O3 + 2 NH3 -> C6H8N2O2 + 4 H2O"); expect(r.reactants.every(x => x.coefficient > 0)).toBe(true); } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 });
 
@@ -176,12 +149,7 @@ describe("Fermentation – acetic acid fermentation", () => {
 
 describe("Fermentation – propionic acid fermentation", () => {
   it("balances glucose -> propionic acid + acetic acid + CO2 + water", () => {
-    try {
-      const r = balance("3 C6H12O6 -> 4 C3H6O2 + 2 C2H4O2 + 2 CO2 + 2 H2O");
-      expect(r.reactants.every(x => x.coefficient > 0)).toBe(true);
-    } catch {
-      expect(true).toBe(true);
-    }
+    try { const r = balance("3 C6H12O6 -> 4 C3H6O2 + 2 C2H4O2 + 2 CO2 + 2 H2O"); expect(r.reactants.every(x => x.coefficient > 0)).toBe(true); } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 });
 
@@ -587,12 +555,7 @@ describe("Combined – glycolysis followed by fermentation", () => {
 
 describe("Combined – Maillard + caramelization overlap", () => {
   it("balances glucose + ammonia -> HMF-like product + ammonia + water", () => {
-    try {
-      const r = balance("2 C6H12O6 + NH3 -> C12H16O6 + NH3 + 4 H2O");
-      expect(r.reactants.every(x => x.coefficient > 0)).toBe(true);
-    } catch {
-      expect(true).toBe(true);
-    }
+    try { const r = balance("2 C6H12O6 + NH3 -> C12H16O6 + NH3 + 4 H2O"); expect(r.reactants.every(x => x.coefficient > 0)).toBe(true); } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 });
 

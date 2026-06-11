@@ -61,16 +61,13 @@ describe("Contact process (sulfuric acid production)", () => {
   });
 
   it("balances overall Contact process S + O2 + H2O -> H2SO4", () => {
-    try {
       const result = balance("S + O2 + H2O -> H2SO4");
       const all = [
         ...result.reactants.map(r => r.coefficient),
         ...result.products.map(p => p.coefficient),
       ];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) {
-      expect(true).toBe(true);
-    }
+    
   });
 
   it("balances FeS2 + O2 -> Fe2O3 + SO2 (roasting pyrite)", () => {
@@ -118,16 +115,13 @@ describe("Ostwald process (nitric acid production)", () => {
   });
 
   it("balances overall Ostwald: NH3 + 2O2 -> HNO3 + H2O", () => {
-    try {
       const result = balance("NH3 + O2 -> HNO3 + H2O");
       const all = [
         ...result.reactants.map(r => r.coefficient),
         ...result.products.map(p => p.coefficient),
       ];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) {
-      expect(true).toBe(true);
-    }
+    
   });
 });
 
@@ -135,16 +129,13 @@ describe("Ostwald process (nitric acid production)", () => {
 
 describe("Fischer-Tropsch synthesis", () => {
   it("balances CO + H2 -> CH2 + H2O (simplified FT unit)", () => {
-    try {
       const result = balance("CO + H2 -> CH2 + H2O");
       const all = [
         ...result.reactants.map(r => r.coefficient),
         ...result.products.map(p => p.coefficient),
       ];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) {
-      expect(true).toBe(true);
-    }
+    
   });
 
   it("balances CO + 2H2 -> CH3OH (methanol synthesis)", () => {
@@ -163,16 +154,13 @@ describe("Fischer-Tropsch synthesis", () => {
   });
 
   it("balances 2CO + 4H2 -> C2H4 + 2H2O (ethylene via FT)", () => {
-    try {
       const result = balance("CO + H2 -> C2H4 + H2O");
       const all = [
         ...result.reactants.map(r => r.coefficient),
         ...result.products.map(p => p.coefficient),
       ];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) {
-      expect(true).toBe(true);
-    }
+    
   });
 
   it("balances CO + 3H2 -> CH4 + H2O (methanation)", () => {
@@ -182,16 +170,13 @@ describe("Fischer-Tropsch synthesis", () => {
   });
 
   it("balances nCO + (2n+1)H2 -> CnH(2n+2) + nH2O for n=3 (propane)", () => {
-    try {
       const result = balance("CO + H2 -> C3H8 + H2O");
       const all = [
         ...result.reactants.map(r => r.coefficient),
         ...result.products.map(p => p.coefficient),
       ];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) {
-      expect(true).toBe(true);
-    }
+    
   });
 });
 
@@ -214,16 +199,13 @@ describe("Catalytic converters (automotive emissions)", () => {
   });
 
   it("balances 2NO2 -> N2 + 2O2 (NO2 decomposition)", () => {
-    try {
       const result = balance("NO2 -> N2 + O2");
       const all = [
         ...result.reactants.map(r => r.coefficient),
         ...result.products.map(p => p.coefficient),
       ];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) {
-      expect(true).toBe(true);
-    }
+    
   });
 
   it("balances C8H18 + O2 -> CO2 + H2O (octane combustion)", () => {
@@ -266,14 +248,11 @@ describe("Zeolite catalysis (cracking, isomerization)", () => {
   });
 
   it("balances C6H14 -> C6H14 (n-hexane to isohexane isomerization)", () => {
-    try {
       // Same formula on both sides for isomerization — parser may treat as identity
       const result = balance("C6H14 -> C6H14");
       expect(result.reactants.map(r => r.coefficient)).toEqual([1]);
       expect(result.products.map(p => p.coefficient)).toEqual([1]);
-    } catch(e) {
-      expect(true).toBe(true);
-    }
+    
   });
 
   it("balances C2H5OH -> C2H4 + H2O (ethanol dehydration on zeolite)", () => {
@@ -283,16 +262,13 @@ describe("Zeolite catalysis (cracking, isomerization)", () => {
   });
 
   it("balances CH3OH -> CH3OCH3 + H2O (methanol to DME on zeolite)", () => {
-    try {
       const result = balance("CH3OH -> CH3OCH3 + H2O");
       const all = [
         ...result.reactants.map(r => r.coefficient),
         ...result.products.map(p => p.coefficient),
       ];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) {
-      expect(true).toBe(true);
-    }
+    
   });
 });
 
@@ -355,69 +331,59 @@ describe("Hydrogenation reactions", () => {
 
 describe("Adsorption/desorption equilibrium", () => {
   it("balances N2 + * -> N2* (nitrogen adsorption on surface site)", () => {
-    try {
       // * represents surface site; may not be parseable
+      try {
       const result = balance("N2 + * -> N2*");
       const all = [
         ...result.reactants.map(r => r.coefficient),
         ...result.products.map(p => p.coefficient),
       ];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) {
-      expect(true).toBe(true);
-    }
+      } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 
   it("balances H2 + 2* -> 2H* (dissociative hydrogen adsorption)", () => {
-    try {
+      try {
       const result = balance("H2 + 2* -> 2H*");
       const all = [
         ...result.reactants.map(r => r.coefficient),
         ...result.products.map(p => p.coefficient),
       ];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) {
-      expect(true).toBe(true);
-    }
+      } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 
   it("balances CO + * -> CO* (CO adsorption)", () => {
-    try {
+      try {
       const result = balance("CO + * -> CO*");
       const all = [
         ...result.reactants.map(r => r.coefficient),
         ...result.products.map(p => p.coefficient),
       ];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) {
-      expect(true).toBe(true);
-    }
+      } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 
   it("balances CO* -> CO + * (CO desorption)", () => {
-    try {
+      try {
       const result = balance("CO* -> CO + *");
       const all = [
         ...result.reactants.map(r => r.coefficient),
         ...result.products.map(p => p.coefficient),
       ];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) {
-      expect(true).toBe(true);
-    }
+      } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 
   it("balances O2 + 2* -> 2O* (dissociative oxygen adsorption)", () => {
-    try {
+      try {
       const result = balance("O2 + 2* -> 2O*");
       const all = [
         ...result.reactants.map(r => r.coefficient),
         ...result.products.map(p => p.coefficient),
       ];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) {
-      expect(true).toBe(true);
-    }
+      } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 });
 
@@ -432,16 +398,13 @@ describe("Langmuir-Hinshelwood mechanism examples", () => {
   });
 
   it("balances NO + CO -> 1/2N2 + CO2 (NO reduction via LH)", () => {
-    try {
       const result = balance("NO + CO -> N2 + CO2");
       const all = [
         ...result.reactants.map(r => r.coefficient),
         ...result.products.map(p => p.coefficient),
       ];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) {
-      expect(true).toBe(true);
-    }
+    
   });
 
   it("balances H2 + C2H4 -> C2H6 (hydrogenation via LH)", () => {
@@ -477,15 +440,13 @@ describe("Enzyme catalysis (simplified models)", () => {
   });
 
   it("balances C12H22O11 + H2O -> C6H12O6 + C6H12O6 (sucrose hydrolysis)", () => {
-    try {
       // Both products are C6H12O6 (glucose + fructose), which may cause
       // solver to treat them as identical species.
+      try {
       const result = balance("C12H22O11 + H2O -> C6H12O6 + C6H12O6");
       expect(result.reactants.map(r => r.coefficient)).toEqual([1, 1]);
       expect(result.products.map(p => p.coefficient)).toEqual([1, 1]);
-    } catch(e) {
-      expect(true).toBe(true);
-    }
+      } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 
   it("balances 2H2O2 -> 2H2O + O2 (catalase decomposition)", () => {

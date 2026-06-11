@@ -271,11 +271,11 @@ describe("organometallic tests", () => {
   });
 
   it("should balance C2H5MgBr + O2 -> C2H5OH + MgOBr", () => {
-    try {
+      try {
       const r = balance("C2H5MgBr + O2 -> C2H5OH + MgOBr");
       expect(r.reactants.length).toBe(2);
       expect(r.products.length).toBe(2);
-    } catch(e) { expect(true).toBe(true); }
+      } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 
   it("should balance (CH3)3Al + H2O -> CH4 + Al(OH)3", () => {
@@ -289,154 +289,145 @@ describe("organometallic tests", () => {
 
 describe("coordination compound tests", () => {
   it("should balance [Fe(CN)6]3- + e- -> [Fe(CN)6]4-", () => {
-    try {
       const r = balance("[Fe(CN)6]3- + e- -> [Fe(CN)6]4-");
       expect(r.reactants[0].coefficient).toBe(1);
       expect(r.reactants[1].coefficient).toBe(1);
       expect(r.products[0].coefficient).toBe(1);
-    } catch(e) { expect(true).toBe(true); }
+    
   });
 
   it("should balance [Co(NH3)6]3+ + e- -> [Co(NH3)6]2+", () => {
-    try {
       const r = balance("[Co(NH3)6]3+ + e- -> [Co(NH3)6]2+");
       expect(r.reactants[0].coefficient).toBe(1);
       expect(r.reactants[1].coefficient).toBe(1);
       expect(r.products[0].coefficient).toBe(1);
-    } catch(e) { expect(true).toBe(true); }
+    
   });
 
   it("should balance [Cu(NH3)4]2+ + H2O -> Cu(OH)2 + NH4+", () => {
-    try {
+      try {
       const r = balance("[Cu(NH3)4]2+ + H2O -> Cu(OH)2 + NH4+");
       expect(r.reactants.length).toBe(2);
       expect(r.products.length).toBe(2);
       const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) { expect(true).toBe(true); }
+      } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 
   it("should balance [Ag(NH3)2]+ + Cl- -> AgCl + NH3", () => {
-    try {
       const r = balance("[Ag(NH3)2]+ + Cl- -> AgCl + NH3");
       expect(r.reactants[0].coefficient).toBe(1);
       expect(r.reactants[1].coefficient).toBe(1);
       expect(r.products[0].coefficient).toBe(1);
       expect(r.products[1].coefficient).toBe(2);
-    } catch(e) { expect(true).toBe(true); }
+    
   });
 
   it("should balance [Ni(CN)4]2- + H+ -> HCN + Ni2+", () => {
-    try {
       const r = balance("[Ni(CN)4]2- + H+ -> HCN + Ni2+");
       expect(r.reactants.length).toBe(2);
       expect(r.products.length).toBe(2);
       const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) { expect(true).toBe(true); }
+    
   });
 });
 
 describe("cluster compound tests", () => {
   it("should balance Fe2(CO)9 + CO -> Fe3(CO)12", () => {
-    try {
+      try {
       const r = balance("Fe2(CO)9 + CO -> Fe3(CO)12");
       expect(r.reactants.length).toBe(2);
       expect(r.products.length).toBe(1);
       const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) { expect(true).toBe(true); }
+      } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error|expected/i); }
   });
 
   it("should balance B2H6 + H2 -> BH3", () => {
-    try {
+      try {
       const r = balance("B2H6 + H2 -> BH3");
       expect(r.reactants.length).toBe(2);
       expect(r.products.length).toBe(1);
       const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) { expect(true).toBe(true); }
+      } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 
   it("should balance Os3(CO)12 -> Os(CO)4", () => {
-    try {
       const r = balance("Os3(CO)12 -> Os(CO)4");
       expect(r.reactants.length).toBe(1);
       expect(r.products.length).toBe(1);
       const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) { expect(true).toBe(true); }
+    
   });
 
   it("should balance Re2Cl8^2- -> ReCl4", () => {
-    try {
+      try {
       const r = balance("Re2Cl8^2- -> ReCl4");
       expect(r.reactants.length).toBe(1);
       expect(r.products.length).toBe(1);
       const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) { expect(true).toBe(true); }
+      } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 
   it("should balance Mo6Cl8^4+ -> MoCl2", () => {
-    try {
+      try {
       const r = balance("Mo6Cl8^4+ -> MoCl2");
       expect(r.reactants.length).toBe(1);
       expect(r.products.length).toBe(1);
       const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) { expect(true).toBe(true); }
+      } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 });
 
 describe("extreme complexity tests", () => {
   it("should balance K4Fe(CN)6 + H2SO4 -> K2SO4 + FeSO4 + (NH4)2SO4 + CO2", () => {
-    try {
+      try {
       const r = balance("K4Fe(CN)6 + H2SO4 -> K2SO4 + FeSO4 + (NH4)2SO4 + CO2");
       expect(r.reactants.length).toBe(2);
       expect(r.products.length).toBe(4);
       const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) { expect(true).toBe(true); }
+      } catch (e: any) { expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i); }
   });
 
   it("should balance Ca3(PO4)2 + SiO2 + C -> CaSiO3 + CO + P", () => {
-    try {
       const r = balance("Ca3(PO4)2 + SiO2 + C -> CaSiO3 + CO + P");
       expect(r.reactants.length).toBe(3);
       expect(r.products.length).toBe(3);
       const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) { expect(true).toBe(true); }
+    
   });
 
   it("should balance KMnO4 + HCl -> KCl + MnCl2 + Cl2 + H2O", () => {
-    try {
       const r = balance("KMnO4 + HCl -> KCl + MnCl2 + Cl2 + H2O");
       expect(r.reactants.length).toBe(2);
       expect(r.products.length).toBe(4);
       const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) { expect(true).toBe(true); }
+    
   });
 
   it("should balance Cr2O7^2- + H+ + Fe2+ -> Cr3+ + Fe3+ + H2O", () => {
-    try {
       const r = balance("Cr2O7^2- + H+ + Fe2+ -> Cr3+ + Fe3+ + H2O");
       expect(r.reactants.length).toBe(3);
       expect(r.products.length).toBe(3);
       const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) { expect(true).toBe(true); }
+    
   });
 
   it("should balance I2 + OH- -> IO3- + I- + H2O", () => {
-    try {
       const r = balance("I2 + OH- -> IO3- + I- + H2O");
       expect(r.reactants.length).toBe(2);
       expect(r.products.length).toBe(3);
       const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
       expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
-    } catch(e) { expect(true).toBe(true); }
+    
   });
 });

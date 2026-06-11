@@ -228,12 +228,7 @@ describe("isotope labeling chemistry", () => {
     });
 
     it("H2(18)O parsing throws (digit inside group)", () => {
-      try {
-        balance("H2O + 18O2 -> H2(18)O");
-        expect.fail("should have thrown");
-      } catch {
-        expect(true).toBe(true);
-      }
+      expect(() => balance("H2O + 18O2 -> H2(18)O")).toThrow();
     });
 
     it("18O2 reduction with ions (18 stripped → O2 + H+ + e- -> H2O)", () => {
@@ -248,12 +243,7 @@ describe("isotope labeling chemistry", () => {
     });
 
     it("18O exchange between CO2 and H2O throws (digit inside group)", () => {
-      try {
-        balance("C(18O)2 + H2O -> H2C(18O)3");
-        expect.fail("should have thrown");
-      } catch {
-        expect(true).toBe(true);
-      }
+      expect(() => balance("C(18O)2 + H2O -> H2C(18O)3")).toThrow();
     });
 
     it("photosynthesis oxygen source tracing (18 stripped)", () => {
@@ -297,13 +287,7 @@ describe("isotope labeling chemistry", () => {
     });
 
     it("tritiated ammonia (3 stripped → N2 + 3H2 -> 2NH3, but 2(3H3N) throws)", () => {
-      // "2(3H3N)" throws because digit '3' inside group
-      try {
-        balance("N2 + 3H2 -> 2(3H3N)");
-        expect.fail("should have thrown");
-      } catch {
-        expect(true).toBe(true);
-      }
+      expect(() => balance("N2 + 3H2 -> 2(3H3N)")).toThrow();
     });
 
     it("tritium ammonia normal form: N2 + H2 -> NH3", () => {
@@ -427,23 +411,11 @@ describe("isotope labeling chemistry", () => {
     });
 
     it("primary KIE - H atom abstraction: H2 + Cl -> HCl + H", () => {
-      // This has H on both sides as species and in compounds → may be unbalanceable
-      try {
-        balance("H2 + Cl -> HCl + H");
-        expect.fail("should have thrown (H appears as both species and atom)");
-      } catch {
-        expect(true).toBe(true);
-      }
+      expect(() => balance("H2 + Cl -> HCl + H")).toThrow();
     });
 
     it("primary KIE - deuterated: D2 + Cl -> DCl + D", () => {
-      // Same issue as H — D appears in compound and as atomic species
-      try {
-        balance("D2 + Cl -> DCl + D");
-        expect.fail("should have thrown");
-      } catch {
-        expect(true).toBe(true);
-      }
+      expect(() => balance("D2 + Cl -> DCl + D")).toThrow();
     });
 
     it("secondary KIE - SN2: CD3Br + OH- -> CD3OH + Br-", () => {
@@ -455,13 +427,7 @@ describe("isotope labeling chemistry", () => {
     });
 
     it("KIE in E2 elimination: unbalanceable (H appears on one side only)", () => {
-      // HDO contains H but reactants don't → H imbalance
-      try {
-        balance("C2D3Br + OD- -> C2D2 + Br- + HDO");
-        expect.fail("should have thrown (H imbalance)");
-      } catch {
-        expect(true).toBe(true);
-      }
+      expect(() => balance("C2D3Br + OD- -> C2D2 + Br- + HDO")).toThrow();
     });
 
     it("KIE - deuterated E2: C2D5Br + OD- -> C2D4 + Br- + D2O", () => {
@@ -587,12 +553,7 @@ describe("isotope labeling chemistry", () => {
     });
 
     it("heavy water redox: D2O + D2 -> 2D2O (unbalanceable - same element on both sides)", () => {
-      try {
-        balance("D2O + D2 -> D2O");
-        expect.fail("should have thrown");
-      } catch {
-        expect(true).toBe(true);
-      }
+      expect(() => balance("D2O + D2 -> D2O")).toThrow();
     });
   });
 
@@ -630,12 +591,7 @@ describe("isotope labeling chemistry", () => {
     });
 
     it("triple isotope notation throws: 13C + 18O2 -> 13C(18O)2", () => {
-      try {
-        balance("13C + 18O2 -> 13C(18O)2");
-        expect.fail("should have thrown (digit inside group)");
-      } catch {
-        expect(true).toBe(true);
-      }
+      expect(() => balance("13C + 18O2 -> 13C(18O)2")).toThrow();
     });
 
     it("13C + 16O2 -> 13CO2 (all stripped → C + O2 -> CO2)", () => {
@@ -646,12 +602,7 @@ describe("isotope labeling chemistry", () => {
     });
 
     it("deuterated + 15N: 15N2 + 3D2 -> 2(15ND3) (throws - digit in group)", () => {
-      try {
-        balance("15N2 + 3D2 -> 2(15ND3)");
-        expect.fail("should have thrown");
-      } catch {
-        expect(true).toBe(true);
-      }
+      expect(() => balance("15N2 + 3D2 -> 2(15ND3)")).toThrow();
     });
 
     it("D-labeled reduction: D2 + CuO -> Cu + D2O", () => {

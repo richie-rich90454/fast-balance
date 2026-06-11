@@ -227,21 +227,13 @@ describe("Gibbs free energy related reactions", () => {
   });
 
   it("formation of nitric oxide from nitrogen and oxygen", () => {
-    try {
-      const r = balance("N2 + O2 -> NO");
-      checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
-    }
+    const r = balance("N2 + O2 -> NO");
+    checkPositiveIntegers(r);
   });
 
   it("oxidation of glucose to oxalic acid", () => {
-    try {
-      const r = balance("C6H12O6 + O2 -> C2H2O4 + H2O");
-      checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
-    }
+    const r = balance("C6H12O6 + O2 -> C2H2O4 + H2O");
+    checkPositiveIntegers(r);
   });
 
   it("Boudouard reaction (CO2 + C -> 2CO)", () => {
@@ -286,12 +278,8 @@ describe("Calorimetry reactions", () => {
   });
 
   it("dissolution of ammonium nitrate in water (endothermic)", () => {
-    try {
-      const r = balance("NH4NO3 -> NH4+ + NO3-");
-      checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
-    }
+    const r = balance("NH4NO3 -> NH4+ + NO3-");
+    checkPositiveIntegers(r);
   });
 
   it("neutralization of acetic acid and NaOH", () => {
@@ -341,12 +329,8 @@ describe("Phase transition reactions", () => {
   });
 
   it("conversion of graphite to diamond", () => {
-    try {
-      const r = balance("C(graphite) -> C(diamond)");
-      checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
-    }
+    const r = balance("C(graphite) -> C(diamond)");
+    checkPositiveIntegers(r);
   });
 
   it("conversion of white phosphorus to red phosphorus", () => {
@@ -355,21 +339,13 @@ describe("Phase transition reactions", () => {
   });
 
   it("dehydration of copper(II) sulfate pentahydrate", () => {
-    try {
-      const r = balance("CuSO4·5H2O -> CuSO4 + H2O");
-      checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
-    }
+    const r = balance("CuSO4·5H2O -> CuSO4 + H2O");
+    checkPositiveIntegers(r);
   });
 
   it("dehydration of gypsum to plaster of Paris", () => {
-    try {
-      const r = balance("CaSO4·2H2O -> CaSO4·0.5H2O + H2O");
-      checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
-    }
+    const r = balance("CaSO4·2H2O -> CaSO4·0.5H2O + H2O");
+    checkPositiveIntegers(r);
   });
 
   it("condensation of ethanol vapor", () => {
@@ -510,21 +486,13 @@ describe("Le Chatelier's principle demonstrations", () => {
   });
 
   it("Iron-thiocyanate complex equilibrium", () => {
-    try {
-      const r = balance("Fe3+ + SCN- -> FeSCN2+");
-      checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
-    }
+    const r = balance("Fe3+ + SCN- -> FeSCN2+");
+    checkPositiveIntegers(r);
   });
 
   it("Chromate-dichromate equilibrium", () => {
-    try {
-      const r = balance("CrO4^2- + H+ -> Cr2O7^2- + H2O");
-      checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
-    }
+    const r = balance("CrO4^2- + H+ -> Cr2O7^2- + H2O");
+    checkPositiveIntegers(r);
   });
 
   it("Decomposition of calcium carbonate (temperature/pressure effect)", () => {
