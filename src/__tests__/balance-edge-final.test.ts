@@ -92,8 +92,8 @@ describe("three species minimal", () => {
       expect(result.reactants).toHaveLength(3);
       expect(result.products).toHaveLength(1);
       expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|Impossible|Error/i);
     }
   });
 
