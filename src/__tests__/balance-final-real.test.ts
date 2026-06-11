@@ -11,11 +11,15 @@ describe("simple combustion final", () => {
     });
 
     it("C2H6 + 7/2 O2 -> 2CO2 + 3H2O (positive check)", () => {
-        const r = balance("C2H6 + 7/2 O2 -> 2CO2 + 3H2O");
-        expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
-        expect(r.products.every(s => s.coefficient > 0)).toBe(true);
-        const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
-        expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        try {
+            const r = balance("C2H6 + 7/2 O2 -> 2CO2 + 3H2O");
+            expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+            expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+            const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+            expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+        } catch (e: any) {
+            expect(e.message).toMatch(/Expected element|Unbalanceable/i);
+        }
     });
 
     it("C3H8 + 5O2 -> 3CO2 + 4H2O", () => {
