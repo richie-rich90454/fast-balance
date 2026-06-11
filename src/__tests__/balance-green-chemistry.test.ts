@@ -33,7 +33,9 @@ describe("green chemistry - atom economy", () => {
     try {
       const r = balance("C6H5CHO + Ph3PCH2 -> C6H5CHCH2 + Ph3PO");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 });
 
@@ -58,7 +60,9 @@ describe("green chemistry - solvent alternatives", () => {
     try {
       const r = balance("CO2 + C3H6O -> C4H6O3");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
   it("C2H5Cl + NaOH -> C2H5OH + NaCl", () => {
     const r = balance("C2H5Cl + NaOH -> C2H5OH + NaCl");
@@ -75,7 +79,9 @@ describe("green chemistry - catalysis vs stoichiometric", () => {
     try {
       const r = balance("C6H12O6 -> C6H12O6");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
   it("C2H5OH + O2 -> CH3COOH + H2O", () => {
     const r = balance("C2H5OH + O2 -> CH3COOH + H2O");
@@ -89,7 +95,9 @@ describe("green chemistry - catalysis vs stoichiometric", () => {
     try {
       const r = balance("C6H6 + O2 -> C6H5OH + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
   it("H2O -> H2 + O2", () => {
     const r = balance("H2O -> H2 + O2");
@@ -118,7 +126,9 @@ describe("green chemistry - renewable feedstocks", () => {
     try {
       const r = balance("C6H12O6 -> C3H6O3");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
   it("C6H12O6 + H2 -> C6H14O6 (sorbitol)", () => {
     const r = balance("C6H12O6 + H2 -> C6H14O6");
@@ -128,13 +138,17 @@ describe("green chemistry - renewable feedstocks", () => {
     try {
       const r = balance("C10H12O3 + O2 -> C8H8O3 + CH2O + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
   it("C5H4O2 + H2 -> C4H4O + CO + H2O", () => {
     try {
       const r = balance("C5H4O2 + H2 -> C4H4O + CO + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
   it("C3H8O3 + 3C18H34O2 -> C57H104O6 + 3H2O", () => {
     const r = balance("C3H8O3 + C18H34O2 -> C57H104O6 + H2O");
@@ -151,7 +165,9 @@ describe("green chemistry - biodegradable polymers", () => {
     try {
       const r = balance("C6H8O4 -> C6H8O4");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
   it("C4H6O4 + C4H10O2 -> C8H12O4 + H2O", () => {
     const r = balance("C4H6O4 + C4H10O2 -> C8H12O4 + H2O");
@@ -165,13 +181,17 @@ describe("green chemistry - biodegradable polymers", () => {
     try {
       const r = balance("C6H10O5 + C3H4O -> C9H14O6");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
   it("C5H10O2 -> C5H8O2 + H2O", () => {
     try {
       const r = balance("C5H10O2 -> C5H8O2 + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 });
 
@@ -246,7 +266,9 @@ describe("green chemistry - carbon capture and utilization", () => {
     try {
       const r = balance("CO2 + H2 -> CH2O2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
   it("CO2 + CaO -> CaCO3", () => {
     const r = balance("CO2 + CaO -> CaCO3");
@@ -295,13 +317,17 @@ describe("green chemistry - 12 principles", () => {
     try {
       const r = balance("C6H12O6 + O2 -> C4H6O4 + CO2 + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
   it("P8: C6H6 + CH3OH -> C6H5CH3 + H2O", () => {
     try {
       const r = balance("C6H6 + CH3OH -> C6H5CH3 + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
   it("P9: C3H8O3 + C18H36O2 -> C21H40O6 + H2O", () => {
     const r = balance("C3H8O3 + C18H36O2 -> C21H40O6 + H2O");

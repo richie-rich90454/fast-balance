@@ -80,21 +80,27 @@ describe("Redox Reactions: Metal-Acid Reactions", () => {
     try {
       const r = balance("Fe + HCl -> FeCl2 + H2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Al + 6HCl -> 2AlCl3 + 3H2", () => {
     try {
       const r = balance("Al + HCl -> AlCl3 + H2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Zn + H2SO4 -> ZnSO4 + H2", () => {
     try {
       const r = balance("Zn + H2SO4 -> ZnSO4 + H2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 });
 
@@ -103,28 +109,36 @@ describe("Redox Reactions: Displacement", () => {
     try {
       const r = balance("Fe + CuSO4 -> FeSO4 + Cu");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Zn + CuSO4 -> ZnSO4 + Cu", () => {
     try {
       const r = balance("Zn + CuSO4 -> ZnSO4 + Cu");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Cu + 2AgNO3 -> Cu(NO3)2 + 2Ag", () => {
     try {
       const r = balance("Cu + AgNO3 -> Cu(NO3)2 + Ag");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Fe + 2AgNO3 -> Fe(NO3)2 + 2Ag", () => {
     try {
       const r = balance("Fe + AgNO3 -> Fe(NO3)2 + Ag");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 });
 

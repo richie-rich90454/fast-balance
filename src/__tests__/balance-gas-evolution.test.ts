@@ -13,35 +13,45 @@ describe("Gas Evolution Reactions: Carbonate + Acid", () => {
     try {
       const r = balance("Na2CO3 + HCl -> NaCl + CO2 + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("CaCO3 + 2HCl -> CaCl2 + CO2 + H2O", () => {
     try {
       const r = balance("CaCO3 + HCl -> CaCl2 + CO2 + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("NaHCO3 + HCl -> NaCl + CO2 + H2O", () => {
     try {
       const r = balance("NaHCO3 + HCl -> NaCl + CO2 + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("MgCO3 + 2HCl -> MgCl2 + CO2 + H2O", () => {
     try {
       const r = balance("MgCO3 + HCl -> MgCl2 + CO2 + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("K2CO3 + 2HCl -> 2KCl + CO2 + H2O", () => {
     try {
       const r = balance("K2CO3 + HCl -> KCl + CO2 + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 });
 
@@ -50,21 +60,27 @@ describe("Gas Evolution Reactions: Sulfide + Acid", () => {
     try {
       const r = balance("FeS + HCl -> FeCl2 + H2S");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("ZnS + 2HCl -> ZnCl2 + H2S", () => {
     try {
       const r = balance("ZnS + HCl -> ZnCl2 + H2S");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Na2S + 2HCl -> 2NaCl + H2S", () => {
     try {
       const r = balance("Na2S + HCl -> NaCl + H2S");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 });
 
@@ -73,14 +89,18 @@ describe("Gas Evolution Reactions: Sulfite + Acid", () => {
     try {
       const r = balance("Na2SO3 + HCl -> NaCl + SO2 + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("CaSO3 + 2HCl -> CaCl2 + SO2 + H2O", () => {
     try {
       const r = balance("CaSO3 + HCl -> CaCl2 + SO2 + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 });
 
@@ -89,28 +109,36 @@ describe("Gas Evolution Reactions: Ammonium + Base", () => {
     try {
       const r = balance("NH4Cl + NaOH -> NaCl + NH3 + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("(NH4)2SO4 + 2NaOH -> Na2SO4 + 2NH3 + 2H2O", () => {
     try {
       const r = balance("(NH4)2SO4 + NaOH -> Na2SO4 + NH3 + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("NH4NO3 + NaOH -> NaNO3 + NH3 + H2O", () => {
     try {
       const r = balance("NH4NO3 + NaOH -> NaNO3 + NH3 + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("NH4HCO3 + NaOH -> NaHCO3 + NH3 + H2O", () => {
     try {
       const r = balance("NH4HCO3 + NaOH -> NaHCO3 + NH3 + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 });
 
@@ -135,13 +163,17 @@ describe("Gas Evolution Reactions: Metal + Water", () => {
     try {
       const r = balance("Ca + H2O -> Ca(OH)2 + H2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Mg + 2H2O -> Mg(OH)2 + H2 (steam)", () => {
     try {
       const r = balance("Mg + H2O -> Mg(OH)2 + H2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 });

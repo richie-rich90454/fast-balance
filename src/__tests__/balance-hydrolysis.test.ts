@@ -13,21 +13,27 @@ describe("Hydrolysis Reactions: Ester Hydrolysis", () => {
     try {
       const r = balance("CH3COOC2H5 + H2O -> CH3COOH + C2H5OH");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Methyl formate hydrolysis: HCOOCH3 + H2O -> HCOOH + CH3OH", () => {
     try {
       const r = balance("HCOOCH3 + H2O -> CH2O2 + CH3OH");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Propyl acetate hydrolysis: CH3COOC3H7 + H2O -> CH3COOH + C3H7OH", () => {
     try {
       const r = balance("C5H10O2 + H2O -> CH3COOH + C3H8O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 });
 
@@ -36,42 +42,54 @@ describe("Hydrolysis Reactions: Salt Hydrolysis", () => {
     try {
       const r = balance("AlCl3 + H2O -> Al(OH)3 + HCl");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("FeCl3 hydrolysis: FeCl3 + 3H2O -> Fe(OH)3 + 3HCl", () => {
     try {
       const r = balance("FeCl3 + H2O -> Fe(OH)3 + HCl");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("PCl5 hydrolysis: PCl5 + 4H2O -> H3PO4 + 5HCl", () => {
     try {
       const r = balance("PCl5 + H2O -> H3PO4 + HCl");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("SiCl4 hydrolysis: SiCl4 + 4H2O -> Si(OH)4 + 4HCl", () => {
     try {
       const r = balance("SiCl4 + H2O -> Si(OH)4 + HCl");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("TiCl4 hydrolysis: TiCl4 + 4H2O -> Ti(OH)4 + 4HCl", () => {
     try {
       const r = balance("TiCl4 + H2O -> Ti(OH)4 + HCl");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("NCl3 hydrolysis: NCl3 + 3H2O -> NH3 + 3HOCl", () => {
     try {
       const r = balance("NCl3 + H2O -> NH3 + HOCl");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 });
 
@@ -80,21 +98,27 @@ describe("Hydrolysis Reactions: Nitrile and Amide Hydrolysis", () => {
     try {
       const r = balance("CH3CN + H2O -> CH3COOH + NH3");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Benzonitrile hydrolysis: C6H5CN + 2H2O -> C6H5COOH + NH3", () => {
     try {
       const r = balance("C6H5CN + H2O -> C6H5COOH + NH3");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Acetamide hydrolysis: CH3CONH2 + H2O -> CH3COOH + NH3", () => {
     try {
       const r = balance("CH3CONH2 + H2O -> CH3COOH + NH3");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 });
 
@@ -103,20 +127,26 @@ describe("Hydrolysis Reactions: Carbide Hydrolysis", () => {
     try {
       const r = balance("CaC2 + H2O -> Ca(OH)2 + C2H2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Al4C3 hydrolysis: Al4C3 + 12H2O -> 4Al(OH)3 + 3CH4", () => {
     try {
       const r = balance("Al4C3 + H2O -> Al(OH)3 + CH4");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Mg2C3 hydrolysis: Mg2C3 + 4H2O -> 2Mg(OH)2 + C3H4", () => {
     try {
       const r = balance("Mg2C3 + H2O -> Mg(OH)2 + C3H4");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 });

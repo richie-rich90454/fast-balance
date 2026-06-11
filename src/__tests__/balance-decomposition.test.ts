@@ -13,84 +13,108 @@ describe("Decomposition Reactions: Thermal Decomposition", () => {
     try {
       const r = balance("CaCO3 -> CaO + CO2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("2KClO3 -> 2KCl + 3O2", () => {
     try {
       const r = balance("KClO3 -> KCl + O2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("2NaHCO3 -> Na2CO3 + CO2 + H2O", () => {
     try {
       const r = balance("NaHCO3 -> Na2CO3 + CO2 + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("2HgO -> 2Hg + O2", () => {
     try {
       const r = balance("HgO -> Hg + O2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("2Ag2O -> 4Ag + O2", () => {
     try {
       const r = balance("Ag2O -> Ag + O2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("2Pb(NO3)2 -> 2PbO + 4NO2 + O2", () => {
     try {
       const r = balance("Pb(NO3)2 -> PbO + NO2 + O2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Ca(OH)2 -> CaO + H2O", () => {
     try {
       const r = balance("Ca(OH)2 -> CaO + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("CuCO3 -> CuO + CO2", () => {
     try {
       const r = balance("CuCO3 -> CuO + CO2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("ZnCO3 -> ZnO + CO2", () => {
     try {
       const r = balance("ZnCO3 -> ZnO + CO2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("MgCO3 -> MgO + CO2", () => {
     try {
       const r = balance("MgCO3 -> MgO + CO2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("2Fe(OH)3 -> Fe2O3 + 3H2O", () => {
     try {
       const r = balance("Fe(OH)3 -> Fe2O3 + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Al(OH)3 -> Al2O3 + H2O", () => {
     try {
       const r = balance("Al(OH)3 -> Al2O3 + H2O");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 });
 
@@ -107,20 +131,26 @@ describe("Decomposition Reactions: Electrolytic Decomposition", () => {
     try {
       const r = balance("NaCl -> Na + Cl2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("2Al2O3 -> 4Al + 3O2", () => {
     try {
       const r = balance("Al2O3 -> Al + O2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("MgCl2 -> Mg + Cl2", () => {
     try {
       const r = balance("MgCl2 -> Mg + Cl2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 });

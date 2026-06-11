@@ -84,14 +84,18 @@ describe("Synthesis Reactions: Nonmetal Oxides", () => {
     try {
       const r = balance("N2 + O2 -> NO");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("4P + 5O2 -> 2P2O5", () => {
     try {
       const r = balance("P + O2 -> P2O5");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Si + O2 -> SiO2", () => {
@@ -120,28 +124,36 @@ describe("Synthesis Reactions: Metal Halides", () => {
     try {
       const r = balance("Fe + Cl2 -> FeCl2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("2Fe + 3Cl2 -> 2FeCl3", () => {
     try {
       const r = balance("Fe + Cl2 -> FeCl3");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Mg + Cl2 -> MgCl2", () => {
     try {
       const r = balance("Mg + Cl2 -> MgCl2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Zn + Cl2 -> ZnCl2", () => {
     try {
       const r = balance("Zn + Cl2 -> ZnCl2");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 });
 
@@ -150,21 +162,27 @@ describe("Synthesis Reactions: Binary Compounds", () => {
     try {
       const r = balance("Na + S -> Na2S");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("Ca + S -> CaS", () => {
     try {
       const r = balance("Ca + S -> CaS");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("2Al + 3S -> Al2S3", () => {
     try {
       const r = balance("Al + S -> Al2S3");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 
   it("N2 + 3H2 -> 2NH3", () => {
@@ -184,6 +202,8 @@ describe("Synthesis Reactions: Binary Compounds", () => {
     try {
       const r = balance("H2 + S -> H2S");
       checkPositiveIntegers(r);
-    } catch { expect(true).toBe(true); }
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
+    }
   });
 });

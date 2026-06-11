@@ -84,8 +84,8 @@ describe("Acid-Base Reactions: Weak Acid/Base", () => {
     try {
       const r = balance("CH3COOH + NaOH -> C2H3O2Na + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
     }
   });
 
@@ -93,8 +93,8 @@ describe("Acid-Base Reactions: Weak Acid/Base", () => {
     try {
       const r = balance("H2CO3 + NaOH -> Na2CO3 + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
     }
   });
 
@@ -107,8 +107,8 @@ describe("Acid-Base Reactions: Weak Acid/Base", () => {
     try {
       const r = balance("HCN + NaOH -> NaCN + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
     }
   });
 
@@ -121,8 +121,8 @@ describe("Acid-Base Reactions: Weak Acid/Base", () => {
     try {
       const r = balance("NH3 + H2SO4 -> (NH4)2SO4");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Expected element|Unbalanceable|unbalanced|Cannot balance/i);
     }
   });
 });
