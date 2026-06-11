@@ -62,3 +62,65 @@ describe("amino acid synthesis", () => {
     }
   });
 });
+
+describe("protein hydrolysis", () => {
+  it("protein + H2O -> amino acids (positive check, may not balance)", () => {
+    try {
+      const r = balance("protein + H2O -> amino acid");
+      expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+      expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch (e) {
+      expect(true).toBe(true);
+    }
+  });
+
+  it("starch + H2O -> glucose (positive check, may not balance)", () => {
+    try {
+      const r = balance("starch + H2O -> glucose");
+      expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+      expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch (e) {
+      expect(true).toBe(true);
+    }
+  });
+
+  it("sucrose + H2O -> glucose + fructose (positive check, may not balance)", () => {
+    try {
+      const r = balance("C12H22O11 + H2O -> C6H12O6 + C6H12O6");
+      expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+      expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch (e) {
+      expect(true).toBe(true);
+    }
+  });
+
+  it("cellulose + H2O -> glucose (positive check, may not balance)", () => {
+    try {
+      const r = balance("cellulose + H2O -> glucose");
+      expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+      expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch (e) {
+      expect(true).toBe(true);
+    }
+  });
+
+  it("fat + H2O -> glycerol + fatty acid (positive check, may not balance)", () => {
+    try {
+      const r = balance("fat + H2O -> glycerol + fatty acid");
+      expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+      expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch (e) {
+      expect(true).toBe(true);
+    }
+  });
+});

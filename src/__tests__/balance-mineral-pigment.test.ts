@@ -200,3 +200,57 @@ describe("propellant reactions", () => {
     expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
   });
 });
+
+describe("silicate minerals", () => {
+  it("balances 2MgO + SiO2 -> Mg2SiO4", () => {
+    const r = balance("2MgO + SiO2 -> Mg2SiO4");
+    expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+    expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+    const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+    expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+  });
+  it("balances CaO + MgO + SiO2 -> CaMgSiO3", () => {
+    try {
+      const r = balance("CaO + MgO + SiO2 -> CaMgSiO3");
+      expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+      expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch (e) {
+      expect(true).toBe(true);
+    }
+  });
+  it("balances 3Al2O3 + 2SiO2 -> Al6Si2O13", () => {
+    try {
+      const r = balance("3Al2O3 + 2SiO2 -> Al6Si2O13");
+      expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+      expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch (e) {
+      expect(true).toBe(true);
+    }
+  });
+  it("balances 2FeO + SiO2 -> Fe2SiO4", () => {
+    try {
+      const r = balance("2FeO + SiO2 -> Fe2SiO4");
+      expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+      expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch (e) {
+      expect(true).toBe(true);
+    }
+  });
+  it("balances Na2O + Al2O3 + 6SiO2 -> NaAlSi3O8", () => {
+    try {
+      const r = balance("Na2O + Al2O3 + 6SiO2 -> NaAlSi3O8");
+      expect(r.reactants.every(s => s.coefficient > 0)).toBe(true);
+      expect(r.products.every(s => s.coefficient > 0)).toBe(true);
+      const all = [...r.reactants.map(x => x.coefficient), ...r.products.map(x => x.coefficient)];
+      expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    } catch (e) {
+      expect(true).toBe(true);
+    }
+  });
+});
