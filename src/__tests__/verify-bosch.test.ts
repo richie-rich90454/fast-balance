@@ -31,6 +31,6 @@ describe("verify-bosch", () => {
     }
     writeFileSync("verify-bosch-results.txt", lines.join("\n"), "utf-8");
     it("writes results", () => {
-        expect(true).toBe(true);
-    });
+        // Results file written successfully
+      });
 });

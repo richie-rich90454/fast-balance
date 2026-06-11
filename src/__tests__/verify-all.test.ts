@@ -67,6 +67,6 @@ describe("verify-all-targeted", () => {
     }
     writeFileSync("verify-all-results.txt", lines.join("\n"), "utf-8");
     it("writes results", () => {
-        expect(true).toBe(true);
-    });
+        // Results file written successfully
+      });
 });
