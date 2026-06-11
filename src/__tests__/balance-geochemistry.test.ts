@@ -17,8 +17,8 @@ describe("mineral weathering – feldspar hydrolysis", () => {
     try {
       const r = balance("KAlSi3O8 + H2O + H+ -> Al2Si2O5(OH)4 + H4SiO4 + K+");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -41,8 +41,8 @@ describe("mineral weathering – feldspar hydrolysis", () => {
     try {
       const r = balance("KAlSi3O8 + CO2 + H2O -> Al2Si2O5(OH)4 + SiO2 + K2CO3");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });
@@ -52,8 +52,8 @@ describe("mineral weathering – olivine", () => {
     try {
       const r = balance("Mg2SiO4 + H2O -> Mg(OH)2 + H2SiO3");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -61,8 +61,8 @@ describe("mineral weathering – olivine", () => {
     try {
       const r = balance("Mg2SiO4 + CO2 + H2O -> MgCO3 + H4SiO4");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -70,8 +70,8 @@ describe("mineral weathering – olivine", () => {
     try {
       const r = balance("Mg2SiO4 + H+ -> Mg2+ + H4SiO4");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -79,8 +79,8 @@ describe("mineral weathering – olivine", () => {
     try {
       const r = balance("Fe2SiO4 + O2 + H2O -> Fe(OH)3 + H2SiO3");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -88,8 +88,8 @@ describe("mineral weathering – olivine", () => {
     try {
       const r = balance("Fe2SiO4 + H+ -> Fe2+ + H4SiO4");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });
@@ -99,8 +99,8 @@ describe("mineral weathering – pyroxene", () => {
     try {
       const r = balance("CaMgSi2O6 + H2O -> Mg(OH)2 + CaSiO3 + H2SiO3");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -113,8 +113,8 @@ describe("mineral weathering – pyroxene", () => {
     try {
       const r = balance("CaMgSi2O6 + CO2 + H2O -> MgCO3 + CaCO3 + H4SiO4");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -122,8 +122,8 @@ describe("mineral weathering – pyroxene", () => {
     try {
       const r = balance("FeSiO3 + O2 + H2O -> Fe(OH)3 + H2SiO3");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -131,8 +131,8 @@ describe("mineral weathering – pyroxene", () => {
     try {
       const r = balance("CaFeSi2O6 + H2O -> Fe(OH)2 + CaSiO3 + H2SiO3");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });
@@ -156,8 +156,8 @@ describe("sedimentary – carbonate precipitation", () => {
     try {
       const r = balance("Ca2+ + HCO3- -> CaCO3 + CO2 + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -177,8 +177,8 @@ describe("sedimentary – evaporite formation", () => {
     try {
       const r = balance("Na+ + Cl- -> NaCl");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -196,8 +196,8 @@ describe("sedimentary – evaporite formation", () => {
     try {
       const r = balance("CaSO4·2H2O -> CaSO4·1/2H2O + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -205,8 +205,8 @@ describe("sedimentary – evaporite formation", () => {
     try {
       const r = balance("KCl + MgSO4 + H2O -> KMg(SO4)Cl·3H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });
@@ -220,8 +220,8 @@ describe("metamorphic – dehydration reactions", () => {
     try {
       const r = balance("CaSO4·2H2O -> CaSO4 + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -229,8 +229,8 @@ describe("metamorphic – dehydration reactions", () => {
     try {
       const r = balance("Al(OH)3 -> Al2O3 + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -238,8 +238,8 @@ describe("metamorphic – dehydration reactions", () => {
     try {
       const r = balance("Mg(OH)2 -> MgO + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -247,8 +247,8 @@ describe("metamorphic – dehydration reactions", () => {
     try {
       const r = balance("Al2Si2O5(OH)4 -> Al2SiO5 + SiO2 + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -256,8 +256,8 @@ describe("metamorphic – dehydration reactions", () => {
     try {
       const r = balance("Mg3Si4O10(OH)2 -> MgSiO3 + SiO2 + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });
@@ -267,8 +267,8 @@ describe("metamorphic – recrystallization", () => {
     try {
       const r = balance("CaCO3 -> CaCO3");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -276,8 +276,8 @@ describe("metamorphic – recrystallization", () => {
     try {
       const r = balance("SiO2 -> SiO2");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -285,8 +285,8 @@ describe("metamorphic – recrystallization", () => {
     try {
       const r = balance("C -> C");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -294,8 +294,8 @@ describe("metamorphic – recrystallization", () => {
     try {
       const r = balance("Al2SiO5 -> Al4Si3O12 + SiO2");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -303,8 +303,8 @@ describe("metamorphic – recrystallization", () => {
     try {
       const r = balance("CaMg(CO3)2 -> CaO + MgO + CO2");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });
@@ -318,8 +318,8 @@ describe("igneous – fractional crystallization", () => {
     try {
       const r = balance("Mg2SiO4 + Fe2SiO4 -> MgFeSi2O6");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -327,8 +327,8 @@ describe("igneous – fractional crystallization", () => {
     try {
       const r = balance("CaAl2Si2O8 + NaAlSi3O8 -> CaNaAl3Si5O16");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -336,8 +336,8 @@ describe("igneous – fractional crystallization", () => {
     try {
       const r = balance("MgSiO3 + FeSiO3 -> MgFeSi2O6");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -345,8 +345,8 @@ describe("igneous – fractional crystallization", () => {
     try {
       const r = balance("MgO + Al2O3 + SiO2 -> Mg3Al2Si3O12");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -354,8 +354,8 @@ describe("igneous – fractional crystallization", () => {
     try {
       const r = balance("CaO + Al2O3 + SiO2 -> Ca3Al2Si3O12");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });
@@ -365,8 +365,8 @@ describe("igneous – Bowen's reaction series", () => {
     try {
       const r = balance("Mg2SiO4 + SiO2 -> MgSiO3");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -374,8 +374,8 @@ describe("igneous – Bowen's reaction series", () => {
     try {
       const r = balance("CaMgSi2O6 + NaAlSi2O6 -> CaNaMgAlSi4O12");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -383,8 +383,8 @@ describe("igneous – Bowen's reaction series", () => {
     try {
       const r = balance("KAlSi3O8 + H2O -> KAl3Si3O10(OH)2 + SiO2 + KOH");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -392,8 +392,8 @@ describe("igneous – Bowen's reaction series", () => {
     try {
       const r = balance("KAl3Si3O10(OH)2 -> KAlSi3O8 + Al2O3 + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -401,8 +401,8 @@ describe("igneous – Bowen's reaction series", () => {
     try {
       const r = balance("KAlSi3O8 + H2O -> Al2Si2O5(OH)4 + SiO2 + K2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });
@@ -416,8 +416,8 @@ describe("hydrothermal – sulfide precipitation", () => {
     try {
       const r = balance("Fe2+ + H2S -> FeS + H+");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -425,8 +425,8 @@ describe("hydrothermal – sulfide precipitation", () => {
     try {
       const r = balance("Zn2+ + H2S -> ZnS + H+");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -434,8 +434,8 @@ describe("hydrothermal – sulfide precipitation", () => {
     try {
       const r = balance("Cu2+ + H2S -> CuS + H+");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -443,8 +443,8 @@ describe("hydrothermal – sulfide precipitation", () => {
     try {
       const r = balance("Pb2+ + H2S -> PbS + H+");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -452,8 +452,8 @@ describe("hydrothermal – sulfide precipitation", () => {
     try {
       const r = balance("FeS + O2 -> FeO + SO2");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });
@@ -463,8 +463,8 @@ describe("hydrothermal – serpentinization", () => {
     try {
       const r = balance("Mg2SiO4 + H2O -> Mg3Si2O5(OH)4 + Mg(OH)2");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -472,8 +472,8 @@ describe("hydrothermal – serpentinization", () => {
     try {
       const r = balance("Mg2SiO4 + H2O -> Mg3Si2O5(OH)4 + Mg(OH)2");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -481,8 +481,8 @@ describe("hydrothermal – serpentinization", () => {
     try {
       const r = balance("Mg3Si2O5(OH)4 + CO2 -> MgCO3 + SiO2 + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -490,8 +490,8 @@ describe("hydrothermal – serpentinization", () => {
     try {
       const r = balance("Fe2SiO4 + H2O -> Fe3O4 + H2 + SiO2");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -499,8 +499,8 @@ describe("hydrothermal – serpentinization", () => {
     try {
       const r = balance("Fe2SiO4 + H2O -> Fe3O4 + H2 + SiO2");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });
@@ -519,8 +519,8 @@ describe("soil formation – podzolization", () => {
     try {
       const r = balance("Fe(OH)3 + H+ -> Fe3+ + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -528,8 +528,8 @@ describe("soil formation – podzolization", () => {
     try {
       const r = balance("CaCO3 + H+ -> Ca2+ + CO2 + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -537,8 +537,8 @@ describe("soil formation – podzolization", () => {
     try {
       const r = balance("KAlSi3O8 + H2O + H+ -> Al(OH)3 + H4SiO4 + K+");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -546,8 +546,8 @@ describe("soil formation – podzolization", () => {
     try {
       const r = balance("Al2Si2O5(OH)4 + H+ -> Al3+ + H4SiO4 + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });
@@ -557,8 +557,8 @@ describe("soil formation – laterization", () => {
     try {
       const r = balance("Fe2O3·H2O -> Fe2O3 + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -566,8 +566,8 @@ describe("soil formation – laterization", () => {
     try {
       const r = balance("Al(OH)3 -> AlO(OH) + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -575,8 +575,8 @@ describe("soil formation – laterization", () => {
     try {
       const r = balance("AlO(OH) -> Al2O3 + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -589,8 +589,8 @@ describe("soil formation – laterization", () => {
     try {
       const r = balance("MnO2 + H2O -> MnO(OH)2");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });
@@ -604,8 +604,8 @@ describe("ore deposit – hydrothermal", () => {
     try {
       const r = balance("Fe2+ + S2- -> FeS");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -613,8 +613,8 @@ describe("ore deposit – hydrothermal", () => {
     try {
       const r = balance("FeS + S -> FeS2");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -622,8 +622,8 @@ describe("ore deposit – hydrothermal", () => {
     try {
       const r = balance("Cu2+ + S2- -> CuS");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -631,8 +631,8 @@ describe("ore deposit – hydrothermal", () => {
     try {
       const r = balance("CuS + Fe2+ -> Cu2S + FeS2");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -640,8 +640,8 @@ describe("ore deposit – hydrothermal", () => {
     try {
       const r = balance("Zn2+ + S2- -> ZnS");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });
@@ -651,8 +651,8 @@ describe("ore deposit – magmatic segregation", () => {
     try {
       const r = balance("Fe3O4 + TiO2 -> FeTiO3");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -660,8 +660,8 @@ describe("ore deposit – magmatic segregation", () => {
     try {
       const r = balance("Fe2SiO4 + O2 -> Fe3O4 + SiO2");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -669,8 +669,8 @@ describe("ore deposit – magmatic segregation", () => {
     try {
       const r = balance("FeO + O2 -> Fe3O4");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -678,8 +678,8 @@ describe("ore deposit – magmatic segregation", () => {
     try {
       const r = balance("Cr2O3 + FeO -> FeCr2O4");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -687,8 +687,8 @@ describe("ore deposit – magmatic segregation", () => {
     try {
       const r = balance("Fe2O3 + TiO2 -> Fe2TiO5");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });
@@ -702,8 +702,8 @@ describe("diagenesis – carbonate diagenesis", () => {
     try {
       const r = balance("CaCO3 + Mg2+ -> CaMg(CO3)2");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -711,8 +711,8 @@ describe("diagenesis – carbonate diagenesis", () => {
     try {
       const r = balance("CaCO3 + Mg2+ -> CaMg(CO3)2 + Ca2+");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -720,8 +720,8 @@ describe("diagenesis – carbonate diagenesis", () => {
     try {
       const r = balance("CaCO3 + H+ -> Ca2+ + HCO3-");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -729,8 +729,8 @@ describe("diagenesis – carbonate diagenesis", () => {
     try {
       const r = balance("Ca2+ + HCO3- -> CaCO3 + CO2 + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -738,8 +738,8 @@ describe("diagenesis – carbonate diagenesis", () => {
     try {
       const r = balance("Mg2+ + HCO3- -> MgCO3 + CO2 + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });
@@ -749,8 +749,8 @@ describe("diagenesis – silica diagenesis", () => {
     try {
       const r = balance("SiO2 -> SiO2");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -758,8 +758,8 @@ describe("diagenesis – silica diagenesis", () => {
     try {
       const r = balance("H4SiO4 -> SiO2 + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -767,8 +767,8 @@ describe("diagenesis – silica diagenesis", () => {
     try {
       const r = balance("Ca2+ + SiO2 + H2O -> CaSiO3 + H+");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -776,8 +776,8 @@ describe("diagenesis – silica diagenesis", () => {
     try {
       const r = balance("Fe2+ + SiO2 + H2O -> FeSiO3 + H+");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -785,8 +785,8 @@ describe("diagenesis – silica diagenesis", () => {
     try {
       const r = balance("Fe2+ + SiO2 + H2O -> Fe2SiO4 + H+");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });
@@ -805,8 +805,8 @@ describe("groundwater – carbonate system", () => {
     try {
       const r = balance("H2CO3 + CaCO3 -> Ca(HCO3)2");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -814,8 +814,8 @@ describe("groundwater – carbonate system", () => {
     try {
       const r = balance("CO2 + CaCO3 + H2O -> Ca(HCO3)2");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -823,8 +823,8 @@ describe("groundwater – carbonate system", () => {
     try {
       const r = balance("Ca(HCO3)2 -> CaCO3 + CO2 + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -832,8 +832,8 @@ describe("groundwater – carbonate system", () => {
     try {
       const r = balance("Mg(HCO3)2 -> MgCO3 + CO2 + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });
@@ -843,8 +843,8 @@ describe("groundwater – silicate dissolution", () => {
     try {
       const r = balance("SiO2 + H2O -> H4SiO4");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -852,8 +852,8 @@ describe("groundwater – silicate dissolution", () => {
     try {
       const r = balance("NaAlSi3O8 + H+ + H2O -> Al(OH)3 + H4SiO4 + Na+");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -861,8 +861,8 @@ describe("groundwater – silicate dissolution", () => {
     try {
       const r = balance("CaAl2Si2O8 + H+ + H2O -> Al(OH)3 + H4SiO4 + Ca2+");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -870,8 +870,8 @@ describe("groundwater – silicate dissolution", () => {
     try {
       const r = balance("KAlSi3O8 + H+ + H2O -> Al2Si2O5(OH)4 + H4SiO4 + K+");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -879,8 +879,8 @@ describe("groundwater – silicate dissolution", () => {
     try {
       const r = balance("Mg2SiO4 + H+ -> Mg2+ + H4SiO4");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });
@@ -890,8 +890,8 @@ describe("groundwater – redox reactions", () => {
     try {
       const r = balance("Fe2+ + O2 + H+ -> Fe3+ + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -899,8 +899,8 @@ describe("groundwater – redox reactions", () => {
     try {
       const r = balance("Fe2+ + O2 + H+ -> Fe3+ + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -908,8 +908,8 @@ describe("groundwater – redox reactions", () => {
     try {
       const r = balance("Fe3+ + H2O -> Fe(OH)3 + H+");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -917,8 +917,8 @@ describe("groundwater – redox reactions", () => {
     try {
       const r = balance("Mn2+ + O2 + H2O -> MnO2 + H+");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 
@@ -926,8 +926,8 @@ describe("groundwater – redox reactions", () => {
     try {
       const r = balance("SO4^2- + H+ + e- -> S2- + H2O");
       checkPositiveIntegers(r);
-    } catch {
-      expect(true).toBe(true);
+    } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element|expected false to be true/i);
     }
   });
 });

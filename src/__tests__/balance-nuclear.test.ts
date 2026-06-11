@@ -11,36 +11,36 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("U -> Th + He", { showOne: false });
         expect(result.equation).toBe("U -> Th + He");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("radium-226 alpha decay: Ra -> Rn + He", () => {
       try {
         const result = balance("Ra -> Rn + He", { showOne: false });
         expect(result.equation).toBe("Ra -> Rn + He");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("polonium-210 alpha decay: Po -> Pb + He", () => {
       try {
         const result = balance("Po -> Pb + He", { showOne: false });
         expect(result.equation).toBe("Po -> Pb + He");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("thorium-232 decay series start: Th -> Ra + He", () => {
       try {
         const result = balance("Th -> Ra + He", { showOne: false });
         expect(result.equation).toBe("Th -> Ra + He");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("actinium series: U -> Pa + e-", () => {
@@ -48,36 +48,37 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("U -> Pa + e-", { showOne: false });
         expect(result.reactants.length).toBeGreaterThan(0);
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("lead-210 beta decay: Pb -> Bi + e-", () => {
       try {
         const result = balance("Pb -> Bi + e-", { showOne: false });
         expect(result.reactants.length).toBeGreaterThan(0);
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("bismuth-210 beta decay: Bi -> Po + e-", () => {
       try {
         const result = balance("Bi -> Po + e-", { showOne: false });
-        expect(true).toBe(true);
-      } catch {
-        expect(true).toBe(true);
-      }
+        expect(result.reactants.length).toBe(1);
+        expect(result.products.length).toBe(2);
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("radon-222 alpha decay: Rn -> Po + He", () => {
       try {
         const result = balance("Rn -> Po + He", { showOne: false });
         expect(result.equation).toBe("Rn -> Po + He");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
   });
 
@@ -89,9 +90,9 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("UF6 + Mg -> U + MgF2", { showOne: false });
         expect(result.equation).toBe("UF6 + 3 Mg -> U + 3 MgF2");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("uranium oxide reduction: UO2 + H2 -> U + H2O", () => {
@@ -118,9 +119,9 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("UO2SO4 + NH3 + H2O -> (NH4)2U2O7 + (NH4)2SO4", { showOne: false });
         expect(result.reactants.length).toBeGreaterThan(0);
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("U3O8 formation: UO2 + O2 -> U3O8", () => {
@@ -142,9 +143,9 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("PuO2 + HNO3 -> Pu(NO3)4 + H2O", { showOne: false });
         expect(result.reactants.length).toBeGreaterThan(0);
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
   });
 
@@ -156,18 +157,18 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("MoO4^2- -> TcO4- + e-", { showOne: false });
         expect(result.reactants.length).toBeGreaterThan(0);
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("iodine-131 production: Te + n -> I (simplified as Te + H -> I)", () => {
       try {
         const result = balance("TeO2 + H2 -> Te + H2O", { showOne: false });
         expect(result.equation).toBe("TeO2 + 2 H2 -> Te + 2 H2O");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("cobalt-60 production: Co + n -> Co", () => {
@@ -175,9 +176,9 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("Co -> Co", { showOne: false });
         expect(result.equation).toBe("Co -> Co");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("fluorine-18 via (p,n) on O-18 water: H2 18O -> H2 18O", () => {
@@ -190,20 +191,22 @@ describe("nuclear and radiochemistry", () => {
       // Nuclear, won't balance
       try {
         const result = balance("N2 -> C", { showOne: false });
-        expect(true).toBe(true);
-      } catch {
-        expect(true).toBe(true);
-      }
+        expect(result.reactants.length).toBeGreaterThan(0);
+        expect(result.products.length).toBeGreaterThan(0);
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("tritium production: Li + n -> He + H", () => {
       // Li-6 + n -> He-4 + H-3 (tritium)
       try {
         const result = balance("Li -> He + H", { showOne: false });
-        expect(true).toBe(true);
-      } catch {
-        expect(true).toBe(true);
-      }
+        expect(result.reactants.length).toBeGreaterThan(0);
+        expect(result.products.length).toBeGreaterThan(0);
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("tritium from lithium oxide: Li2O + H2O -> LiOH", () => {
@@ -230,9 +233,9 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("H2O -> H + OH", { showOne: false });
         expect(result.equation).toBe("H2O -> H + OH");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("hydrogen peroxide formation: H2O -> H2O2 + H2", () => {
@@ -253,19 +256,21 @@ describe("nuclear and radiochemistry", () => {
     it("hydroperoxyl radical: OH + H -> HO2", () => {
       try {
         const result = balance("OH + H -> HO2", { showOne: false });
-        expect(true).toBe(true);
-      } catch {
-        expect(true).toBe(true);
-      }
+        expect(result.reactants.length).toBeGreaterThan(0);
+        expect(result.products.length).toBeGreaterThan(0);
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("radiolytic ozone: O2 -> O3", () => {
       try {
         const result = balance("O2 -> O3", { showOne: false });
-        expect(true).toBe(true);
-      } catch {
-        expect(true).toBe(true);
-      }
+        expect(result.reactants.length).toBeGreaterThan(0);
+        expect(result.products.length).toBeGreaterThan(0);
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("radiolysis of HCl: HCl -> H2 + Cl2", () => {
@@ -277,9 +282,9 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("HNO3 -> NO2 + O2 + H2O", { showOne: false });
         expect(result.reactants.length).toBeGreaterThan(0);
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
   });
 
@@ -296,27 +301,27 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("U6+ + F- -> [UF6]", { showOne: false });
         expect(result.equation).toBe("U6+ + 6 F- -> [UF6]");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("plutonium(IV) nitrate: Pu4+ + NO3- -> Pu(NO3)4", () => {
       try {
         const result = balance("Pu4+ + NO3- -> Pu(NO3)4", { showOne: false });
         expect(result.equation).toBe("Pu4+ + 4 NO3- -> Pu(NO3)4");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("neptunium(V) oxo complex: NpO2+ + H2O -> NpO2+ + H2O", () => {
       try {
         const result = balance("NpO2+ + H2O -> NpO2+ + H2O", { showOne: false });
         expect(result.equation).toBe("NpO2+ + H2O -> NpO2+ + H2O");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("americium(III) chloride: Am2O3 + HCl -> AmCl3 + H2O", () => {
@@ -328,9 +333,9 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("UO2^2+ + H2 -> U4+ + H2O", { showOne: false });
         expect(result.equation).toBe("UO2^2+ + 2 H2 -> U4+ + 2 H2O");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("thorium(IV) nitrate: ThO2 + HNO3 -> Th(NO3)4 + H2O", () => {
@@ -347,9 +352,9 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("Pu4+ + C2O4^2- -> Pu(C2O4)2", { showOne: false });
         expect(result.equation).toBe("Pu4+ + 2 C2O4^2- -> Pu(C2O4)2");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("neptunium(IV) fluoride: NpF4 -> NpF4", () => {
@@ -366,9 +371,9 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("UO2^2+ + H2O2 -> UO4 + H+", { showOne: false });
         expect(result.equation).toBe("UO2^2+ + H2O2 -> UO4 + 2 H+");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("curium(III) chloride: Cm2O3 + HCl -> CmCl3 + H2O", () => {
@@ -385,9 +390,9 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("UO2SO4 + Na2CO3 -> Na4[UO2(CO3)3] + Na2SO4", { showOne: false });
         expect(result.reactants.length).toBeGreaterThan(0);
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
   });
 
@@ -433,9 +438,9 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("Xe + F2 -> XeF6", { showOne: false });
         expect(result.equation).toBe("Xe + 3 F2 -> XeF6");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("xenon trioxide: XeF6 + H2O -> XeO3 + HF", () => {
@@ -447,9 +452,9 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("Cs2O + UO3 -> Cs2UO4", { showOne: false });
         expect(result.equation).toBe("Cs2O + UO3 -> Cs2UO4");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("barium zirconate: BaO + ZrO2 -> BaZrO3", () => {
@@ -486,9 +491,9 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("CsCl + NaOH -> CsOH + NaCl", { showOne: false });
         expect(result.equation).toBe("CsCl + NaOH -> CsOH + NaCl");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("chemical decontamination: Fe2O3 + H2SO4 -> Fe2(SO4)3 + H2O", () => {
@@ -500,10 +505,11 @@ describe("nuclear and radiochemistry", () => {
     it("oxalic acid decontamination: Fe2O3 + H2C2O4 -> [Fe(C2O4)3]3-", () => {
       try {
         const result = balance("Fe2O3 + H2C2O4 -> [Fe(C2O4)3]3-", { showOne: false });
-        expect(true).toBe(true);
-      } catch {
-        expect(true).toBe(true);
-      }
+        expect(result.reactants.length).toBeGreaterThan(0);
+        expect(result.products.length).toBeGreaterThan(0);
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("permanganate oxidation: MnO4- + H+ -> Mn2+ + O2 + H2O", () => {
@@ -511,9 +517,9 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("MnO4- + H+ -> Mn2+ + O2 + H2O", { showOne: false });
         expect(result.reactants.length).toBeGreaterThan(0);
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("citric acid complexation: Fe3+ + C6H8O7 -> [Fe(C6H5O7)] + H+", () => {
@@ -530,18 +536,18 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("Pu4+ + OH- -> Pu(OH)4", { showOne: false });
         expect(result.equation).toBe("Pu4+ + 4 OH- -> Pu(OH)4");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("uranium peroxide precipitation: UO2 2+ + H2O2 + H2O -> UO4·4H2O", () => {
       try {
         const result = balance("UO2^2+ + H2O2 -> UO4", { showOne: false });
         expect(result.reactants.length).toBeGreaterThan(0);
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
   });
 
@@ -552,9 +558,9 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("UO2 + HNO3 -> UO2(NO3)2 + NO + H2O", { showOne: false });
         expect(result.reactants.length).toBeGreaterThan(0);
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("uranium extraction with TBP: UO2(NO3)2 + TBP -> UO2(NO3)2·2TBP", () => {
@@ -562,27 +568,27 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("UO2(NO3)2 + C12H27O4P -> UO2(NO3)2(C12H27O4P)2", { showOne: false });
         expect(result.equation).toBe("UO2(NO3)2 + 2 C12H27O4P -> UO2(NO3)2(C12H27O4P)2");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("plutonium extraction with TBP: Pu(NO3)4 + TBP -> Pu(NO3)4·2TBP", () => {
       try {
         const result = balance("Pu(NO3)4 + C12H27O4P -> Pu(NO3)4(C12H27O4P)2", { showOne: false });
         expect(result.equation).toBe("Pu(NO3)4 + 2 C12H27O4P -> Pu(NO3)4(C12H27O4P)2");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("plutonium reduction: Pu4+ + Fe2+ -> Pu3+ + Fe3+", () => {
       try {
         const result = balance("Pu4+ + Fe2+ -> Pu3+ + Fe3+", { showOne: false });
         expect(result.equation).toBe("Pu4+ + Fe2+ -> Pu3+ + Fe3+");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("uranium stripping: UO2(NO3)2·2TBP + H2O -> UO2 2+ + NO3- + TBP", () => {
@@ -590,9 +596,9 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("UO2(NO3)2 + H2O -> UO2^2+ + NO3-", { showOne: false });
         expect(result.reactants.length).toBeGreaterThan(0);
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("nitric acid regeneration: NO + O2 + H2O -> HNO3", () => {
@@ -604,10 +610,11 @@ describe("nuclear and radiochemistry", () => {
       // Simplified: carbonate wash of degraded TBP products
       try {
         const result = balance("C12H27O4P + Na2CO3 + H2O -> C12H27O4P + NaHCO3 + NaOH", { showOne: false });
-        expect(true).toBe(true);
-      } catch {
-        expect(true).toBe(true);
-      }
+        expect(result.reactants.length).toBeGreaterThan(0);
+        expect(result.products.length).toBeGreaterThan(0);
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("fission product removal: Cs+ + I- -> CsI", () => {
@@ -619,27 +626,27 @@ describe("nuclear and radiochemistry", () => {
       try {
         const result = balance("ThO2 + HNO3 -> Th(NO3)4 + H2O", { showOne: false });
         expect(result.equation).toBe("ThO2 + 4 HNO3 -> Th(NO3)4 + 2 H2O");
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("uranium precipitation from PUREX: UO2 2+ + NH3 + H2O -> (NH4)2U2O7", () => {
       try {
         const result = balance("UO2^2+ + NH3 + H2O -> (NH4)2U2O7", { showOne: false });
         expect(result.reactants.length).toBeGreaterThan(0);
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
 
     it("redox control: U4+ + 2 Fe3+ + 2 H2O -> UO2 2+ + 2 Fe2+ + 4 H+", () => {
       try {
         const result = balance("U4+ + Fe3+ + H2O -> UO2^2+ + Fe2+ + H+", { showOne: false });
         expect(result.reactants.length).toBeGreaterThan(0);
-      } catch {
-        expect(true).toBe(true);
-      }
+      } catch (e: any) {
+      expect(e.message).toMatch(/Unbalanceable|unbalanced|Cannot balance|Expected element/i);
+    }
     });
   });
 });
