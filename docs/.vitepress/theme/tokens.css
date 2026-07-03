@@ -29,6 +29,8 @@
 
   /* Chemistry accent colors */
   --fb-primary: #0f62fe;
+  --fb-primary-hover: #0353e9;
+  --fb-primary-active: #0530ad;
   --fb-secondary: #198038;
 
   /* Semantic colors */
@@ -139,6 +141,8 @@
 
   /* Chemistry accent colors (lightened for dark backgrounds) */
   --fb-primary: #4589ff;
+  --fb-primary-hover: #5c9aff;
+  --fb-primary-active: #78a9ff;
   --fb-secondary: #42be65;
 
   /* Semantic colors */

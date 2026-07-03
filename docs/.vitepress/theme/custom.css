@@ -1,339 +1,136 @@
-/**
- * Chemistry-Themed Custom CSS for VitePress
- * Inspired by laboratory aesthetics, chemical reactions, and the periodic table
- *
- * Color Philosophy:
- * - Primary: Deep blue/teal inspired by copper sulfate solutions and lab glassware
- * - Secondary: Vibrant green inspired by chemical indicators (bromothymol blue)
- * - Accent: Purple/magenta inspired by noble gases and potassium permanganate
- * - Elemental: Periodic table category colors for semantic elements
- */
+/* ==========================================================================
+   Fast Balance VitePress Theme
+   Clean, Carbon-influenced design system
+   ========================================================================== */
 
-/* Import distinctive fonts - must be at the top */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+/* --------------------------------------------------------------------------
+   Imports
+   -------------------------------------------------------------------------- */
 
-/* ============================================
-   CSS CUSTOM PROPERTIES - CHEMISTRY PALETTE
-   ============================================ */
+@import './tokens.css';
 
-:root {
-  /* Core Chemistry Colors */
-  --chem-primary: #0A4D68;           /* Copper sulfate blue - lab glassware */
-  --chem-primary-light: #08839B;     /* Lighter blue for hover states */
-  --chem-primary-dark: #052E3D;      /* Darker blue for depth */
+/* IBM Plex Sans + IBM Plex Mono */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
 
-  --chem-secondary: #00C896;          /* Bromothymol blue green - indicators */
-  --chem-secondary-light: #00E6AC;   /* Brighter green for accents */
-  --chem-secondary-dark: #00A67B;    /* Deeper green for contrast */
+/* --------------------------------------------------------------------------
+   Font
+   -------------------------------------------------------------------------- */
 
-  --chem-accent: #9D4EDD;            /* Noble gas purple - potassium permanganate */
-  --chem-accent-light: #B57EEC;      /* Lighter purple for highlights */
-  --chem-accent-dark: #7B2CBF;       /* Deeper purple for emphasis */
-
-  /* Periodic Table Category Colors */
-  --chem-metals: #8D99AE;            /* Silver/gray - metals */
-  --chem-nonmetals: #2DC653;         /* Green - nonmetals */
-  --chem-noble-gases: #C77DFF;       /* Purple - noble gases */
-  --chem-halogens: #FF6B35;          /* Orange - halogens */
-  --chem-alkali: #FFD166;            /* Gold - alkali metals */
-  --chem-alkaline: #06D6A0;          /* Teal - alkaline earth */
-  --chem-transition: #118AB2;         /* Blue - transition metals */
-
-  /* Light Mode - Clean Lab Environment */
-  --vp-c-bg: #FAFBFC;                /* Clean white with subtle blue tint */
-  --vp-c-bg-alt: #F0F4F8;            /* Light gray-blue for sections */
-  --vp-c-bg-elv: #FFFFFF;            /* Elevated surfaces */
-  --vp-c-bg-soft: #E8F0F7;           /* Soft blue-gray backgrounds */
-
-  /* Text Colors - Precision Typography */
-  --vp-c-text: #1A2332;              /* Deep navy for primary text */
-  --vp-c-text-1: #1A2332;
-  --vp-c-text-2: #3D5A73;             /* Medium blue-gray */
-  --vp-c-text-3: #5A7A94;             /* Light blue-gray */
-  --vp-c-text-4: #7A99B0;            /* Subtle text */
-
-  /* Border & Divider Colors */
-  --vp-c-border: #D1DCE8;            /* Soft blue-gray borders */
-  --vp-c-divider: #E0E8F0;           /* Subtle dividers */
-  --vp-c-gutter: #E8F0F7;            /* Gutter backgrounds */
-
-  /* Brand Colors */
-  --vp-c-brand: var(--chem-primary);
-  --vp-c-brand-light: var(--chem-primary-light);
-  --vp-c-brand-dark: var(--chem-primary-dark);
-  --vp-c-brand-tint: rgba(10, 77, 104, 0.1);
-
-  /* Chemistry-Specific Semantic Colors */
-  --chem-success: #06D6A0;           /* Reaction successful - green */
-  --chem-warning: #FFD166;           /* Caution - yellow */
-  --chem-danger: #EF476F;            /* Hazard - red/pink */
-  --chem-info: #118AB2;              /* Information - blue */
-
-  /* Gradient Definitions */
-  --chem-gradient-primary: linear-gradient(135deg, var(--chem-primary) 0%, var(--chem-primary-light) 100%);
-  --chem-gradient-secondary: linear-gradient(135deg, var(--chem-secondary) 0%, var(--chem-secondary-light) 100%);
-  --chem-gradient-accent: linear-gradient(135deg, var(--chem-accent) 0%, var(--chem-accent-light) 100%);
-  --chem-gradient-reaction: linear-gradient(90deg, var(--chem-primary) 0%, var(--chem-primary-light) 100%);
-  /* --chem-gradient-solution removed during cleanup */
-
-  /* Typography */
-  --vp-font-family-base: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --vp-font-family-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
-
-  /* Shadows - Lab Equipment Depth */
-  --chem-shadow-sm: 0 1px 3px rgba(10, 77, 104, 0.08);
-  --chem-shadow-md: 0 2px 8px rgba(10, 77, 104, 0.12);
-  --chem-shadow-lg: 0 4px 16px rgba(10, 77, 104, 0.16);
-  /* --chem-shadow-glow removed during cleanup */
-
-  /* Transitions */
-  --chem-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --chem-transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  --chem-transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
-  --chem-transition-bounce: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* ============================================
-   DARK MODE - LABORATORY NIGHT SHIFT
-   ============================================ */
-
-.dark {
-  /* Dark Mode - Laboratory Night Shift */
-  --vp-c-bg: #0D1B2A;                /* Deep navy - dark lab environment */
-  --vp-c-bg-alt: #1B2838;            /* Elevated dark surfaces */
-  --vp-c-bg-elv: #162231;            /* Card backgrounds */
-  --vp-c-bg-soft: #1B2838;           /* Soft dark sections */
-
-  /* Text Colors - Glowing Chemistry */
-  --vp-c-text: #E8F0F7;              /* Soft white-blue */
-  --vp-c-text-1: #E8F0F7;
-  --vp-c-text-2: #B8C9D9;            /* Light blue-gray */
-  --vp-c-text-3: #8BA4BC;            /* Medium blue-gray */
-  --vp-c-text-4: #5A7A94;            /* Subtle text */
-
-  /* Border & Divider Colors */
-  --vp-c-border: #2D4156;            /* Subtle blue-gray borders */
-  --vp-c-divider: #1B2838;           /* Dark dividers */
-  --vp-c-gutter: #162231;            /* Gutter backgrounds */
-
-  /* Brand Colors - Brighter for Dark Mode */
-  --vp-c-brand: var(--chem-primary-light);
-  --vp-c-brand-light: var(--chem-secondary);
-  --vp-c-brand-dark: var(--chem-primary);
-
-  /* Enhanced Shadows for Dark Mode */
-  --chem-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --chem-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.4);
-  --chem-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.5);
-  /* --chem-shadow-glow removed during cleanup */
-}
-
-/* ============================================
-   TYPOGRAPHY - SCIENTIFIC PRECISION
-   ============================================ */
-
-/* Base Typography */
 body {
   font-family: var(--vp-font-family-base);
-  font-weight: 400;
-  letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Headings - Strong Scientific Character */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--vp-font-family-base);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--vp-c-text-1);
-  position: relative;
+/* --------------------------------------------------------------------------
+   VitePress variable overrides
+   -------------------------------------------------------------------------- */
+
+:root {
+  --vp-c-bg: var(--fb-background);
+  --vp-c-bg-alt: var(--fb-layer-01);
+  --vp-c-bg-elv: var(--fb-layer-02);
+
+  --vp-c-text-1: var(--fb-text-primary);
+  --vp-c-text-2: var(--fb-text-secondary);
+  --vp-c-text-3: var(--fb-text-helper);
+
+  --vp-c-brand: var(--fb-primary);
+  --vp-c-brand-1: var(--fb-primary);
+  --vp-c-brand-2: var(--fb-primary-hover);
+  --vp-c-brand-3: var(--fb-primary-active);
+
+  --vp-c-divider: var(--fb-border-subtle);
+  --vp-c-gutter: var(--fb-border-subtle);
+
+  --vp-font-family-base: var(--fb-font-sans);
+  --vp-font-family-mono: var(--fb-font-mono);
+
+  --vp-radius: var(--fb-radius-md);
+
+  /* VitePress semantic mappings that are not covered by tokens */
+  --vp-c-border: var(--fb-border-subtle);
+  --vp-c-bg-soft: var(--fb-layer-01);
 }
 
-h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 2rem;
-  color: var(--chem-primary);
+.dark {
+  --vp-c-bg: var(--fb-background);
+  --vp-c-bg-alt: var(--fb-layer-01);
+  --vp-c-bg-elv: var(--fb-layer-02);
+
+  --vp-c-text-1: var(--fb-text-primary);
+  --vp-c-text-2: var(--fb-text-secondary);
+  --vp-c-text-3: var(--fb-text-helper);
+
+  --vp-c-brand: var(--fb-primary);
+  --vp-c-brand-1: var(--fb-primary);
+  --vp-c-brand-2: var(--fb-primary-hover);
+  --vp-c-brand-3: var(--fb-primary-active);
+
+  --vp-c-divider: var(--fb-border-subtle);
+  --vp-c-gutter: var(--fb-border-subtle);
+  --vp-c-border: var(--fb-border-subtle);
+  --vp-c-bg-soft: var(--fb-layer-01);
 }
 
-h2 {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-top: 3rem;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.5rem;
-  color: var(--chem-primary);
-  position: relative;
-}
+/* --------------------------------------------------------------------------
+   Layout
+   -------------------------------------------------------------------------- */
 
-h2::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 60px;
-  height: 3px;
-  background: var(--chem-primary);
-  border-radius: 2px;
-}
-
-h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  color: var(--chem-primary);
-}
-
-.dark h3 {
-  color: var(--chem-primary-light);
-}
-
-h4 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--vp-c-text-1);
-}
-
-/* Code & Chemical Formulas - Monospace Precision */
-code {
-  font-family: var(--vp-font-family-mono);
-  font-weight: 500;
-  font-size: 0.9em;
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 4px;
-  padding: 0.2em 0.5em;
-  color: var(--chem-accent);
-}
-
-/* Chemical Formula Styling */
-.chemical-formula,
-code.chemical-formula {
-  font-family: var(--vp-font-family-mono);
-  font-weight: 600;
-  background: rgba(10, 77, 104, 0.06);
-  border: 1px solid rgba(10, 77, 104, 0.2);
-  color: var(--chem-primary);
-  padding: 0.25em 0.6em;
-  border-radius: 4px;
-}
-
-.dark .chemical-formula,
-.dark code.chemical-formula {
-  background: rgba(8, 131, 155, 0.1);
-  border-color: rgba(8, 131, 155, 0.3);
-  color: var(--chem-primary-light);
-}
-
-/* Subscript for chemical formulas */
-.chemical-formula sub {
-  font-size: 0.7em;
-  vertical-align: baseline;
-  position: relative;
-  top: 0.3em;
-}
-
-/* ============================================
-   NAVIGATION - PERIODIC TABLE INSPIRED
-   ============================================ */
-
-/* Navigation Bar */
+/* Navbar */
 .VPNav {
-  background: rgba(250, 251, 252, 0.85);
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
-  border-bottom: 1px solid var(--vp-c-border);
-  transition: all var(--chem-transition-base);
+  background: var(--fb-background);
+  border-bottom: 1px solid var(--fb-border-subtle);
+  height: 56px;
+  box-shadow: none;
 }
 
-.dark .VPNav {
-  background: rgba(13, 27, 42, 0.85);
-  border-bottom-color: var(--vp-c-border);
+.VPNav .container {
+  height: 56px;
 }
 
-/* Logo Styling */
 .VPNavBarTitle {
-  font-family: var(--vp-font-family-base);
-  font-weight: 700;
-  font-size: 1.25rem;
-  letter-spacing: -0.02em;
-  color: var(--chem-primary);
-  transition: all var(--chem-transition-base);
+  font-weight: 600;
+  font-size: var(--fb-heading-03);
+  color: var(--fb-text-primary);
+  transition: color var(--fb-transition-base);
 }
 
 .VPNavBarTitle:hover {
-  color: var(--chem-accent);
-  transform: scale(1.02);
+  color: var(--fb-primary);
 }
 
-/* Navigation Links */
 .VPNavBarMenuLink {
+  color: var(--fb-text-secondary);
   font-weight: 500;
-  color: var(--vp-c-text-2);
-  transition: all var(--chem-transition-fast);
-  position: relative;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-}
-
-.VPNavBarMenuLink::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 2px;
-  background: var(--chem-gradient-reaction);
-  border-radius: 2px;
-  transition: width var(--chem-transition-base);
+  padding: 0 var(--fb-spacing-03);
+  margin: 0 var(--fb-spacing-02);
+  border-radius: var(--fb-radius-md);
+  transition: color var(--fb-transition-base),
+    background-color var(--fb-transition-base);
 }
 
 .VPNavBarMenuLink:hover {
-  color: var(--chem-primary);
-  background: rgba(10, 77, 104, 0.05);
+  color: var(--fb-text-primary);
+  background: var(--fb-background-hover);
 }
 
-.dark .VPNavBarMenuLink:hover {
-  background: rgba(8, 131, 155, 0.1);
-}
-
-.VPNavBarMenuLink:hover::before {
-  width: 60%;
-}
-
-/* Active Navigation Link */
 .VPNavBarMenuLink.active {
-  color: var(--chem-primary);
+  color: var(--fb-primary);
   font-weight: 600;
 }
 
-.VPNavBarMenuLink.active::before {
-  width: 60%;
-  background: var(--chem-primary);
-}
-
-/* ============================================
-   SIDEBAR - ELEMENTAL ORGANIZATION
-   ============================================ */
-
+/* Sidebar */
 .VPSidebar {
-  background: var(--vp-c-bg);
-  border-right: 1px solid var(--vp-c-divider);
-  position: relative;
-}
-
-.VPSidebar .VPSidebarItem {
-  position: relative;
-  z-index: 1;
+  background: var(--fb-background);
+  border-right: 1px solid var(--fb-border-subtle);
 }
 
 .VPSidebarItem {
   position: relative;
-  transition: all var(--chem-transition-fast);
+  border-radius: 0;
+  transition: background-color var(--fb-transition-base),
+    color var(--fb-transition-base);
 }
 
 .VPSidebarItem::before {
@@ -341,819 +138,772 @@ code.chemical-formula {
   position: absolute;
   left: 0;
   top: 0;
-  height: 100%;
-  width: 3px;
-  background: transparent;
-  border-radius: 2px;
-  transition: all var(--chem-transition-base);
+  bottom: 0;
+  width: 0;
+  background: var(--fb-primary);
+  transition: width var(--fb-transition-base);
 }
 
-.VPSidebarItem::after {
-  content: '';
-  position: absolute;
-  left: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 6px;
-  height: 6px;
-  background: transparent;
-  border-radius: 50%;
-  transition: all var(--chem-transition-base);
-  opacity: 0;
+.VPSidebarItem:hover {
+  background: var(--fb-background-hover);
 }
 
-.VPSidebarItem:hover::before {
-  background: var(--chem-gradient-reaction);
-}
-
-.VPSidebarItem:hover::after {
-  background: var(--chem-accent);
-  opacity: 0.5;
+.VPSidebarItem.active {
+  background: var(--fb-background-hover);
 }
 
 .VPSidebarItem.active::before {
-  background: var(--chem-primary);
-  width: 4px;
-}
-
-.VPSidebarItem.active::after {
-  background: var(--chem-secondary);
-  opacity: 1;
+  width: 3px;
 }
 
 .VPSidebarItem.level-0 > .item > .text {
   font-weight: 600;
-  font-size: 1rem;
-  color: var(--vp-c-text-1);
-  letter-spacing: -0.01em;
+  color: var(--fb-text-primary);
 }
 
 .VPSidebarItem.level-1 > .item > .text {
-  font-weight: 500;
-  font-size: 0.9rem;
-  color: var(--vp-c-text-2);
-  transition: color var(--chem-transition-fast);
+  color: var(--fb-text-secondary);
 }
 
 .VPSidebarItem.level-1 > .item:hover > .text {
-  color: var(--chem-primary);
+  color: var(--fb-text-primary);
 }
 
-/* ============================================
-   HERO SECTION - REACTION CHAMBER
-   ============================================ */
-
+/* Hero */
 .VPHero {
-  position: relative;
-  background: var(--vp-c-bg);
-  overflow: hidden;
-  padding-bottom: 4rem;
+  background: var(--fb-background);
+  padding: var(--fb-spacing-09) 0 var(--fb-spacing-08);
 }
 
 .VPHero .container {
-  position: relative;
-  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
 }
 
 .VPHero .name {
-  font-size: 4rem;
+  font-size: var(--fb-display);
   font-weight: 700;
-  color: var(--chem-primary);
-  letter-spacing: -0.03em;
-  position: relative;
+  letter-spacing: -0.02em;
+  color: var(--fb-text-primary);
+  line-height: 1.1;
 }
 
 .VPHero .text {
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: var(--vp-c-text-2);
+  font-size: var(--fb-body-large);
+  color: var(--fb-text-secondary);
   line-height: 1.6;
-  margin-top: 1rem;
-  letter-spacing: -0.01em;
+  margin-top: var(--fb-spacing-04);
+  max-width: 640px;
 }
 
 .VPHero .tagline {
-  font-size: 1.125rem;
+  font-size: var(--fb-body);
   font-weight: 500;
-  color: var(--chem-accent);
-  margin-top: 0.5rem;
-  letter-spacing: -0.01em;
+  color: var(--fb-primary);
+  margin-top: var(--fb-spacing-03);
 }
 
-/* ============================================
-   BUTTONS - CHEMICAL SOLUTION GRADIENTS
-   ============================================ */
+.VPHero .actions {
+  margin-top: var(--fb-spacing-06);
+  display: flex;
+  gap: var(--fb-spacing-04);
+}
 
-/* Primary Button */
+.VPHero .image {
+  margin-top: var(--fb-spacing-07);
+  max-width: 320px;
+}
+
+.VPHero .image img[src*='hero-chemistry'],
+.VPHero .image svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Footer */
+.VPFooter {
+  background: var(--fb-background);
+  border-top: 1px solid var(--fb-border-subtle);
+  padding: var(--fb-spacing-06) 0;
+}
+
+.VPFooter .container {
+  color: var(--fb-text-secondary);
+  font-size: var(--fb-caption);
+  text-align: center;
+}
+
+/* Content area */
+.VPDoc .content {
+  max-width: 740px;
+}
+
+.VPDoc .content-container {
+  max-width: 740px;
+}
+
+.vp-doc {
+  font-size: var(--fb-body);
+  line-height: 1.65;
+}
+
+/* --------------------------------------------------------------------------
+   Component utility classes
+   -------------------------------------------------------------------------- */
+
+/* Card */
+.fb-card {
+  background: var(--fb-background);
+  border: 1px solid var(--fb-border-subtle);
+  border-radius: var(--fb-radius-md);
+  padding: var(--fb-spacing-05);
+  transition: border-color var(--fb-transition-base);
+}
+
+.fb-card:hover {
+  border-color: var(--fb-border-strong);
+}
+
+/* Buttons */
+.fb-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--fb-spacing-03);
+  padding: 0 calc(var(--fb-spacing-05) + var(--fb-spacing-02)) 0
+    var(--fb-spacing-05);
+  height: 40px;
+  font-family: inherit;
+  font-size: var(--fb-body);
+  font-weight: 500;
+  line-height: 1;
+  border: 1px solid transparent;
+  border-radius: var(--fb-radius-md);
+  cursor: pointer;
+  transition: background-color var(--fb-transition-base),
+    border-color var(--fb-transition-base), color var(--fb-transition-base);
+}
+
+.fb-button:focus-visible {
+  outline: none;
+  box-shadow: var(--fb-focus-ring);
+}
+
+.fb-button--primary {
+  background: var(--fb-primary);
+  color: var(--fb-text-inverse);
+}
+
+.fb-button--primary:hover {
+  background: var(--fb-primary-hover);
+}
+
+.fb-button--primary:active {
+  background: var(--fb-primary-active);
+}
+
+.fb-button--secondary {
+  background: var(--fb-layer-01);
+  color: var(--fb-text-primary);
+  border-color: var(--fb-border-subtle);
+}
+
+.fb-button--secondary:hover {
+  background: var(--fb-background-hover);
+  border-color: var(--fb-border-strong);
+}
+
+.fb-button--secondary:active {
+  background: var(--fb-background-active);
+}
+
+.fb-button--ghost {
+  background: transparent;
+  color: var(--fb-primary);
+  border-color: var(--fb-primary);
+}
+
+.fb-button--ghost:hover {
+  background: var(--fb-primary);
+  color: var(--fb-text-inverse);
+}
+
+/* Input */
+.fb-input {
+  width: 100%;
+  height: 40px;
+  padding: 0 var(--fb-spacing-04);
+  background: var(--fb-background);
+  color: var(--fb-text-primary);
+  border: 1px solid var(--fb-border-subtle);
+  border-radius: var(--fb-radius-md);
+  font-family: var(--fb-font-sans);
+  font-size: var(--fb-body);
+  transition: border-color var(--fb-transition-base),
+    background-color var(--fb-transition-base);
+}
+
+.fb-input:focus {
+  outline: none;
+  border-color: var(--fb-border-interactive);
+  box-shadow: var(--fb-focus-ring);
+}
+
+.fb-input--mono {
+  font-family: var(--fb-font-mono);
+}
+
+.fb-input::placeholder {
+  color: var(--fb-text-helper);
+}
+
+/* Select */
+.fb-select {
+  width: 100%;
+  height: 40px;
+  padding: 0 var(--fb-spacing-07) 0 var(--fb-spacing-04);
+  background: var(--fb-background);
+  color: var(--fb-text-primary);
+  border: 1px solid var(--fb-border-subtle);
+  border-radius: var(--fb-radius-md);
+  font-family: inherit;
+  font-size: var(--fb-body);
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23525252' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--fb-spacing-03) center;
+  transition: border-color var(--fb-transition-base);
+}
+
+.fb-select:focus {
+  outline: none;
+  border-color: var(--fb-border-interactive);
+  box-shadow: var(--fb-focus-ring);
+}
+
+.dark .fb-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23c6c6c6' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* Checkbox */
+.fb-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fb-spacing-03);
+  cursor: pointer;
+  user-select: none;
+}
+
+.fb-checkbox input[type='checkbox'] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.fb-checkbox__mark {
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--fb-border-strong);
+  border-radius: var(--fb-radius-sm);
+  background: var(--fb-background);
+  position: relative;
+  transition: background-color var(--fb-transition-base),
+    border-color var(--fb-transition-base);
+}
+
+.fb-checkbox input[type='checkbox']:checked + .fb-checkbox__mark {
+  background: var(--fb-primary);
+  border-color: var(--fb-primary);
+}
+
+.fb-checkbox__mark::after {
+  content: '';
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  width: 5px;
+  height: 9px;
+  border: solid var(--fb-text-inverse);
+  border-width: 0 1.5px 1.5px 0;
+  transform: translate(-50%, -50%) rotate(45deg) scale(0);
+  transition: transform var(--fb-transition-fast);
+}
+
+.fb-checkbox input[type='checkbox']:checked + .fb-checkbox__mark::after {
+  transform: translate(-50%, -50%) rotate(45deg) scale(1);
+}
+
+.fb-checkbox:focus-visible .fb-checkbox__mark {
+  box-shadow: var(--fb-focus-ring);
+}
+
+/* Chip */
+.fb-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 var(--fb-spacing-03);
+  background: var(--fb-layer-01);
+  color: var(--fb-text-secondary);
+  border: 1px solid var(--fb-border-subtle);
+  border-radius: var(--fb-radius-md);
+  font-size: var(--fb-caption);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--fb-transition-base),
+    border-color var(--fb-transition-base), color var(--fb-transition-base);
+}
+
+.fb-chip:hover {
+  background: var(--fb-background-hover);
+  border-color: var(--fb-border-strong);
+  color: var(--fb-text-primary);
+}
+
+.fb-chip--active {
+  background: var(--fb-primary);
+  border-color: var(--fb-primary);
+  color: var(--fb-text-inverse);
+}
+
+/* Badge */
+.fb-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 var(--fb-spacing-02);
+  border-radius: var(--fb-radius-sm);
+  font-size: var(--fb-caption);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.fb-badge--redox {
+  background: rgba(218, 30, 40, 0.1);
+  color: var(--fb-error);
+}
+
+.fb-badge--organic {
+  background: rgba(15, 98, 254, 0.1);
+  color: var(--fb-primary);
+}
+
+.fb-badge--acid-base {
+  background: rgba(241, 194, 27, 0.15);
+  color: #8e6a00;
+}
+
+.dark .fb-badge--acid-base {
+  color: #f1c21b;
+}
+
+/* Icon */
+.fb-icon {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.fb-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* Form helpers */
+.fb-form-label {
+  display: block;
+  font-size: var(--fb-body);
+  font-weight: 600;
+  color: var(--fb-text-primary);
+  margin-bottom: var(--fb-spacing-02);
+}
+
+.fb-helper-text {
+  font-size: var(--fb-caption);
+  color: var(--fb-text-helper);
+  margin-top: var(--fb-spacing-02);
+}
+
+.fb-error-message {
+  font-size: var(--fb-caption);
+  color: var(--fb-error);
+  margin-top: var(--fb-spacing-02);
+}
+
+/* Divider */
+.fb-divider {
+  display: flex;
+  align-items: center;
+  color: var(--fb-text-helper);
+  font-size: var(--fb-caption);
+  gap: var(--fb-spacing-03);
+}
+
+.fb-divider::before,
+.fb-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--fb-border-subtle);
+}
+
+/* --------------------------------------------------------------------------
+   VitePress native components
+   -------------------------------------------------------------------------- */
+
+/* Buttons */
 .vp-button.brand,
 .VPButton.brand {
-  background: var(--chem-primary);
-  border: none;
-  color: white;
-  font-weight: 600;
-  padding: 0.875rem 2rem;
-  border-radius: 8px;
-  font-size: 1rem;
-  letter-spacing: -0.01em;
-  transition: background-color var(--chem-transition-base);
+  background: var(--fb-primary);
+  color: var(--fb-text-inverse);
+  border: 1px solid var(--fb-primary);
+  border-radius: var(--fb-radius-md);
+  font-weight: 500;
+  transition: background-color var(--fb-transition-base),
+    border-color var(--fb-transition-base);
 }
 
 .vp-button.brand:hover,
 .VPButton.brand:hover {
-  background: var(--chem-primary-light);
+  background: var(--fb-primary-hover);
+  border-color: var(--fb-primary-hover);
 }
 
-/* Secondary Button */
 .vp-button.alt,
 .VPButton.alt {
   background: transparent;
-  border: 2px solid var(--chem-primary);
-  color: var(--chem-primary);
-  font-weight: 600;
-  padding: 0.875rem 2rem;
-  border-radius: 8px;
-  font-size: 1rem;
-  letter-spacing: -0.01em;
-  transition: background-color var(--chem-transition-base), color var(--chem-transition-base);
+  color: var(--fb-primary);
+  border: 1px solid var(--fb-primary);
+  border-radius: var(--fb-radius-md);
+  font-weight: 500;
+  transition: background-color var(--fb-transition-base),
+    color var(--fb-transition-base);
 }
 
 .vp-button.alt:hover,
 .VPButton.alt:hover {
-  color: white;
-  background: var(--chem-primary);
+  background: var(--fb-primary);
+  color: var(--fb-text-inverse);
 }
 
-/* ============================================
-   CARDS - LAB EQUIPMENT TRANSPARENCY
-   ============================================ */
-
+/* Feature / box cards */
 .VPBox,
 .VPFeature,
 .custom-block {
-  background: var(--vp-c-bg-elv);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 8px;
-  padding: 1.5rem;
-  transition: border-color var(--chem-transition-base);
-  position: relative;
+  background: var(--fb-background);
+  border: 1px solid var(--fb-border-subtle);
+  border-radius: var(--fb-radius-md);
+  padding: var(--fb-spacing-05);
+  transition: border-color var(--fb-transition-base);
 }
 
 .VPBox:hover,
 .VPFeature:hover,
 .custom-block:hover {
-  border-color: var(--chem-primary);
+  border-color: var(--fb-border-strong);
 }
 
 .VPFeature .title {
-  font-size: 1.25rem;
+  font-size: var(--fb-heading-03);
   font-weight: 600;
-  color: var(--chem-primary);
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.01em;
-}
-
-.dark .VPFeature .title {
-  color: var(--chem-primary-light);
+  color: var(--fb-text-primary);
+  margin-bottom: var(--fb-spacing-02);
 }
 
 .VPFeature .details {
-  font-size: 0.95rem;
-  color: var(--vp-c-text-2);
+  font-size: var(--fb-body);
+  color: var(--fb-text-secondary);
   line-height: 1.6;
 }
 
-/* ============================================
-   CONTENT SECTIONS - LAB NOTEBOOK AESTHETIC
-   ============================================ */
-
-.vp-doc {
-  line-height: 1.7;
-  font-size: 1rem;
-}
-
-.vp-doc p {
-  margin-bottom: 1.25rem;
-  color: var(--vp-c-text-2);
-}
-
-.vp-doc a {
-  color: var(--chem-primary);
-  font-weight: 500;
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: color var(--chem-transition-fast), border-bottom-color var(--chem-transition-fast);
-  padding-bottom: 1px;
-}
-
-.vp-doc a:hover {
-  color: var(--chem-accent);
-  border-bottom-color: var(--chem-accent);
-}
-
-.dark .vp-doc a {
-  color: var(--chem-primary-light);
-}
-
-/* Lists - Organized Data */
-.vp-doc ul,
-.vp-doc ol {
-  margin-bottom: 1.25rem;
-  padding-left: 1.5rem;
-  color: var(--vp-c-text-2);
-}
-
-.vp-doc li {
-  margin-bottom: 0.5rem;
-  position: relative;
-}
-
-.vp-doc ul li::marker {
-  color: var(--chem-secondary);
-  font-weight: 600;
-}
-
-.vp-doc ol li::marker {
-  color: var(--chem-primary);
-  font-weight: 600;
-}
-
-/* Blockquotes - Lab Notebook Notes */
-.vp-doc blockquote {
-  margin: 1.5rem 0;
-  padding: 1rem 1.5rem;
-  border-left: 4px solid var(--chem-primary);
-  background: var(--vp-c-bg-soft);
-  border-radius: 0 8px 8px 0;
-  font-style: italic;
-  color: var(--vp-c-text-2);
-}
-
-/* Tables - Periodic Table Grid */
-.vp-doc table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin: 1.5rem 0;
-  overflow: hidden;
-  border-radius: 8px;
-  border: 1px solid var(--vp-c-border);
-}
-
-.vp-doc thead {
-  background: var(--chem-primary);
-  color: white;
+/* Typography */
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3,
+.vp-doc h4,
+.vp-doc h5,
+.vp-doc h6 {
+  color: var(--fb-text-primary);
   font-weight: 600;
   letter-spacing: -0.01em;
 }
 
-.vp-doc th {
-  padding: 0.875rem 1rem;
-  text-align: left;
-  border: none;
+.vp-doc h1 {
+  font-size: var(--fb-heading-06);
+  margin-bottom: var(--fb-spacing-05);
+}
+
+.vp-doc h2 {
+  font-size: var(--fb-heading-05);
+  margin-top: var(--fb-spacing-08);
+  margin-bottom: var(--fb-spacing-04);
+  padding-bottom: var(--fb-spacing-03);
+  border-bottom: 1px solid var(--fb-border-subtle);
+}
+
+.vp-doc h3 {
+  font-size: var(--fb-heading-04);
+  margin-top: var(--fb-spacing-06);
+  margin-bottom: var(--fb-spacing-03);
+}
+
+.vp-doc p {
+  color: var(--fb-text-secondary);
+  margin-bottom: var(--fb-spacing-04);
+}
+
+.vp-doc a {
+  color: var(--fb-primary);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color var(--fb-transition-fast),
+    border-bottom-color var(--fb-transition-fast);
+}
+
+.vp-doc a:hover {
+  border-bottom-color: var(--fb-primary);
+}
+
+.vp-doc ul,
+.vp-doc ol {
+  color: var(--fb-text-secondary);
+  padding-left: var(--fb-spacing-05);
+  margin-bottom: var(--fb-spacing-04);
+}
+
+.vp-doc li {
+  margin-bottom: var(--fb-spacing-02);
+}
+
+.vp-doc ul li::marker {
+  color: var(--fb-text-helper);
+}
+
+.vp-doc blockquote {
+  margin: var(--fb-spacing-05) 0;
+  padding: var(--fb-spacing-04) var(--fb-spacing-05);
+  border-left: 3px solid var(--fb-primary);
+  background: var(--fb-layer-01);
+  color: var(--fb-text-secondary);
+}
+
+.vp-doc blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Tables */
+.vp-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--fb-spacing-05) 0;
+  border: 1px solid var(--fb-border-subtle);
+  border-radius: var(--fb-radius-md);
+  overflow: hidden;
+}
+
+.vp-doc thead {
+  background: var(--fb-layer-01);
+  color: var(--fb-text-primary);
   font-weight: 600;
 }
 
-.vp-doc tbody tr {
-  background: var(--vp-c-bg-elv);
+.vp-doc th,
+.vp-doc td {
+  padding: var(--fb-spacing-03) var(--fb-spacing-04);
+  text-align: left;
+  border-bottom: 1px solid var(--fb-border-subtle);
 }
 
 .vp-doc tbody tr:nth-child(even) {
-  background: var(--vp-c-bg-soft);
+  background: var(--fb-layer-01);
 }
 
 .vp-doc tbody tr:hover {
-  background: rgba(10, 77, 104, 0.05);
-}
-
-.dark .vp-doc tbody tr:hover {
-  background: rgba(8, 131, 155, 0.1);
-}
-
-.vp-doc td {
-  padding: 0.875rem 1rem;
-  border: none;
-  border-bottom: 1px solid var(--vp-c-divider);
-  color: var(--vp-c-text-2);
+  background: var(--fb-background-hover);
 }
 
 .vp-doc tbody tr:last-child td {
   border-bottom: none;
 }
 
-/* ============================================
-   CODE BLOCKS - PRECISION INSTRUMENTS
-   ============================================ */
+/* Code */
+code {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.9em;
+  background: var(--fb-layer-01);
+  border: 1px solid var(--fb-border-subtle);
+  border-radius: var(--fb-radius-md);
+  padding: 0.15em 0.4em;
+  color: var(--fb-text-primary);
+}
 
 .vp-doc div[class*='language-'] {
-  margin: 1.5rem 0;
-  border-radius: 8px;
-  background: var(--vp-c-bg-alt);
-  border: 1px solid var(--vp-c-border);
+  margin: var(--fb-spacing-05) 0;
+  border-radius: var(--fb-radius-md);
+  background: var(--fb-layer-01);
+  border: 1px solid var(--fb-border-subtle);
   overflow: hidden;
-  position: relative;
 }
 
 .vp-doc [class*='language-'] pre {
-  padding: 1.25rem 1.5rem;
+  padding: var(--fb-spacing-05);
   background: transparent;
-  overflow-x: auto;
 }
 
 .vp-doc [class*='language-'] code {
   background: transparent;
   border: none;
   padding: 0;
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: var(--vp-c-text-1);
+  color: var(--fb-text-primary);
 }
 
-/* Code Block Language Badge */
 .vp-doc [class*='language-'] .lang {
-  position: absolute;
-  top: 0.5rem;
-  right: 1rem;
-  font-size: 0.75rem;
+  color: var(--fb-text-helper);
+  font-size: var(--fb-caption);
   font-weight: 600;
-  color: var(--vp-c-text-3);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
-/* ============================================
-   CUSTOM BLOCKS - LAB SAFETY & INFORMATION
-   ============================================ */
-
-/* Info Block - Laboratory Information */
+/* Custom blocks */
 .custom-block.info {
-  background: rgba(17, 138, 178, 0.06);
-  border-left: 4px solid var(--chem-info);
-  border-radius: 8px;
-  padding: 1rem 1.5rem;
-  margin: 1.5rem 0;
+  background: rgba(15, 98, 254, 0.06);
+  border-left-color: var(--fb-primary);
 }
 
 .custom-block.info .custom-block-title {
-  color: var(--chem-info);
-  font-weight: 600;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.01em;
+  color: var(--fb-primary);
 }
 
-/* Warning Block - Caution Required */
-.custom-block.warning {
-  background: rgba(255, 209, 102, 0.08);
-  border-left: 4px solid var(--chem-warning);
-  border-radius: 8px;
-  padding: 1rem 1.5rem;
-  margin: 1.5rem 0;
-}
-
-.custom-block.warning .custom-block-title {
-  color: #E69500;
-  font-weight: 600;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.01em;
-}
-
-/* Danger Block - Hazard Warning */
-.custom-block.danger {
-  background: rgba(239, 71, 111, 0.08);
-  border-left: 4px solid var(--chem-danger);
-  border-radius: 8px;
-  padding: 1rem 1.5rem;
-  margin: 1.5rem 0;
-}
-
-.custom-block.danger .custom-block-title {
-  color: var(--chem-danger);
-  font-weight: 600;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.01em;
-}
-
-/* Tip Block - Pro Tip */
 .custom-block.tip {
-  background: rgba(0, 200, 150, 0.06);
-  border-left: 4px solid var(--chem-success);
-  border-radius: 8px;
-  padding: 1rem 1.5rem;
-  margin: 1.5rem 0;
+  background: rgba(25, 128, 56, 0.06);
+  border-left-color: var(--fb-secondary);
 }
 
 .custom-block.tip .custom-block-title {
-  color: var(--chem-success);
-  font-weight: 600;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.01em;
+  color: var(--fb-secondary);
 }
 
-/* ============================================
-   FOOTER - LABORATORY BASEMENT
-   ============================================ */
-
-.VPFooter {
-  background: var(--vp-c-bg);
-  border-top: 1px solid var(--vp-c-border);
-  padding: 2rem 0;
+.custom-block.warning {
+  background: rgba(241, 194, 27, 0.08);
+  border-left-color: var(--fb-warning);
 }
 
-.VPFooter .container {
-  color: var(--vp-c-text-2);
-  font-size: 0.9rem;
-  text-align: center;
+.custom-block.warning .custom-block-title {
+  color: #8e6a00;
 }
 
-/* ============================================
-   SEARCH - PRECISION MEASUREMENT
-   ============================================ */
-
-.VPLocalSearchBox {
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 8px;
+.custom-block.danger {
+  background: rgba(218, 30, 40, 0.06);
+  border-left-color: var(--fb-error);
 }
 
+.custom-block.danger .custom-block-title {
+  color: var(--fb-error);
+}
+
+.dark .custom-block.warning .custom-block-title {
+  color: var(--fb-warning);
+}
+
+/* Search */
 .DocSearch-Button {
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 8px;
-  transition: border-color var(--chem-transition-fast), background-color var(--chem-transition-fast);
+  background: var(--fb-layer-01);
+  border: 1px solid var(--fb-border-subtle);
+  border-radius: var(--fb-radius-md);
+  transition: border-color var(--fb-transition-fast),
+    background-color var(--fb-transition-fast);
 }
 
 .DocSearch-Button:hover {
-  border-color: var(--chem-primary);
-  background: var(--vp-c-bg);
+  border-color: var(--fb-border-strong);
+  background: var(--fb-background-hover);
 }
 
 .DocSearch-Button-Placeholder {
-  color: var(--vp-c-text-3);
-  font-size: 0.9rem;
+  color: var(--fb-text-helper);
 }
 
-/* ============================================
-   RESPONSIVE ADJUSTMENTS
-   ============================================ */
-
-/* Large screens - default styling applies */
-
-/* Desktop (1280px+) */
-@media (min-width: 1280px) {
-  .VPHero .name {
-    font-size: 4.5rem;
-  }
+.VPLocalSearchBox {
+  background: var(--fb-background);
+  border: 1px solid var(--fb-border-subtle);
+  border-radius: var(--fb-radius-md);
 }
 
-/* Tablet Landscape (960px - 1279px) */
-@media (max-width: 1279px) {
-  .VPHero .name {
-    font-size: 3.5rem;
-  }
+/* --------------------------------------------------------------------------
+   Chemistry identity accents
+   -------------------------------------------------------------------------- */
+
+.chemical-formula,
+code.chemical-formula {
+  font-family: var(--vp-font-family-mono);
+  font-weight: 500;
+  background: var(--fb-layer-01);
+  border: 1px solid var(--fb-border-subtle);
+  color: var(--fb-text-primary);
+  padding: 0.2em 0.4em;
+  border-radius: var(--fb-radius-md);
 }
 
-/* Tablet Portrait (768px - 959px) */
-@media (max-width: 960px) {
-  h1 {
-    font-size: 2.5rem;
-  }
-
-  h2 {
-    font-size: 1.75rem;
-    margin-top: 2.5rem;
-    margin-bottom: 1.25rem;
-  }
-
-  h3 {
-    font-size: 1.35rem;
-  }
-
-  .VPHero .name {
-    font-size: 3rem;
-  }
-
-  .VPHero .text {
-    font-size: 1.25rem;
-  }
-
-  .VPHero .tagline {
-    font-size: 1rem;
-  }
-
-  /* Reduce molecular pattern complexity on tablet */
-  .VPHero::before {
-    background-image:
-      radial-gradient(circle at 15% 25%, rgba(10, 77, 104, 0.1) 0%, transparent 30%),
-      radial-gradient(circle at 85% 75%, rgba(157, 78, 221, 0.08) 0%, transparent 35%);
-  }
-
-  .dark .VPHero::before {
-    background-image:
-      radial-gradient(circle at 15% 25%, rgba(8, 131, 155, 0.15) 0%, transparent 30%),
-      radial-gradient(circle at 85% 75%, rgba(181, 126, 236, 0.12) 0%, transparent 35%);
-  }
-
-  /* Sidebar molecular pattern simplification */
-  .VPSidebar::before {
-    background-image:
-      radial-gradient(circle at 10% 10%, rgba(10, 77, 104, 0.02) 0%, transparent 25%);
-  }
-
-  /* Adjust content area decorations */
-  .vp-doc::before,
-  .vp-doc::after {
-    width: 100px;
-    height: 100px;
-  }
+.chemical-formula sub,
+.chemical-formula sup {
+  font-size: 0.75em;
 }
 
-/* Mobile Landscape (640px - 767px) */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-  }
-
-  h3 {
-    font-size: 1.2rem;
-  }
-
-  h4 {
-    font-size: 1.1rem;
-  }
-
-  .VPHero .name {
-    font-size: 2.5rem;
-  }
-
-  .VPHero .text {
-    font-size: 1.125rem;
-  }
-
-  .VPHero .tagline {
-    font-size: 0.95rem;
-  }
-
-  /* Simplify buttons for mobile */
-  .vp-button.brand,
-  .vp-button.alt,
-  .VPButton.brand,
-  .VPButton.alt {
-    padding: 0.875rem 1.5rem;
-    font-size: 0.95rem;
-    min-height: 44px; /* Touch target minimum */
-    min-width: 44px;
-  }
-
-  /* Ensure touch targets meet minimum size (44x44px) */
-  .VPNavBarMenuLink {
-    min-height: 44px;
-    padding: 0.75rem 1rem;
-  }
-
-  .VPSidebarItem .item {
-    min-height: 44px;
-  }
-
-  /* Reduce card padding on mobile */
-  .VPBox,
-  .VPFeature,
-  .custom-block {
-    padding: 1.25rem;
-    border-radius: 12px;
-  }
-
-  /* Simplify hero molecular pattern for mobile */
-  .VPHero::before {
-    background-image:
-      radial-gradient(circle at 20% 30%, rgba(10, 77, 104, 0.08) 0%, transparent 25%),
-      radial-gradient(circle at 80% 70%, rgba(157, 78, 221, 0.06) 0%, transparent 30%);
-    animation-duration: 30s;
-  }
-
-  .dark .VPHero::before {
-    background-image:
-      radial-gradient(circle at 20% 30%, rgba(8, 131, 155, 0.12) 0%, transparent 25%),
-      radial-gradient(circle at 80% 70%, rgba(181, 126, 236, 0.1) 0%, transparent 30%);
-  }
-
-  /* Reduce hexagonal pattern opacity */
-  .VPHero::after {
-    opacity: 0.4;
-  }
-
-  /* Hide decorative elements on mobile for performance */
-  .vp-doc::before,
-  .vp-doc::after {
-    display: none;
-  }
-
-  /* Adjust tables for mobile */
-  .vp-doc table {
-    border-radius: 8px;
-  }
-
-  .vp-doc th,
-  .vp-doc td {
-    padding: 0.75rem 0.5rem;
-    font-size: 0.9rem;
-  }
-
-  /* Simplify code blocks */
-  .vp-doc div[class*='language-'] {
-    border-radius: 8px;
-    margin: 1rem 0;
-  }
-
-  .vp-doc [class*='language-'] pre {
-    padding: 1rem;
-  }
-
-  /* Adjust feature cards */
-  .VPFeature .title {
-    font-size: 1.1rem;
-  }
-
-  .VPFeature .details {
-    font-size: 0.9rem;
-  }
+/* Muted periodic-table category utilities */
+.fb-category {
+  border-left: 3px solid var(--fb-border-subtle);
+  padding-left: var(--fb-spacing-03);
 }
 
-/* Mobile Portrait (< 640px) */
-@media (max-width: 639px) {
-  h1 {
-    font-size: 1.75rem;
-  }
-
-  h2 {
-    font-size: 1.35rem;
-  }
-
-  h3 {
-    font-size: 1.1rem;
-  }
-
-  .VPHero .name {
-    font-size: 2rem;
-  }
-
-  .VPHero .text {
-    font-size: 1rem;
-  }
-
-  .VPHero .tagline {
-    font-size: 0.875rem;
-  }
-
-  /* Ensure all interactive elements meet touch target minimum */
-  .vp-button,
-  .VPButton,
-  button,
-  .VPNavBarMenuLink,
-  .VPSidebarItem,
-  .example-btn,
-  .chemistry-checkbox,
-  .chemistry-select,
-  .element-badge-mini {
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  /* Adjust buttons for small screens */
-  .vp-button.brand,
-  .vp-button.alt,
-  .VPButton.brand,
-  .VPButton.alt {
-    padding: 0.75rem 1.25rem;
-    font-size: 0.9rem;
-    border-radius: 10px;
-  }
-
-  /* Full-width buttons on very small screens */
-  .VPHero .actions {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .VPHero .actions .action {
-    width: 100%;
-  }
-
-  /* Reduce card sizes */
-  .VPBox,
-  .VPFeature,
-  .custom-block,
-  .balance-demo {
-    padding: 1rem;
-    border-radius: 10px;
-  }
-
-  /* Simplify navigation */
-  .VPNavBarTitle {
-    font-size: 1.1rem;
-  }
-
-  /* Adjust font sizes for readability */
-  .vp-doc {
-    font-size: 0.95rem;
-    line-height: 1.65;
-  }
-
-  .vp-doc p {
-    margin-bottom: 1rem;
-  }
-
-  /* Simplify tables for small screens */
-  .vp-doc table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-
-  .vp-doc th,
-  .vp-doc td {
-    padding: 0.625rem 0.5rem;
-    font-size: 0.85rem;
-  }
-
-  /* Adjust blockquotes */
-  .vp-doc blockquote {
-    padding: 0.75rem 1rem;
-    margin: 1rem 0;
-  }
-
-  /* Reduce spacing */
-  .vp-doc h2 {
-    margin: 1.5rem 0 1rem 0;
-  }
-
-  .vp-doc h3 {
-    margin: 1.25rem 0 0.75rem 0;
-  }
+.fb-category--metal {
+  border-left-color: var(--fb-gray-50);
 }
 
-/* Very small screens (< 480px) */
-@media (max-width: 479px) {
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  h2 {
-    font-size: 1.25rem;
-  }
-
-  .VPHero .name {
-    font-size: 1.75rem;
-  }
-
-  .VPHero .text {
-    font-size: 0.9rem;
-  }
-
-  /* Ensure touch targets */
-  .vp-doc a {
-    padding: 0.25rem 0;
-  }
-
-  code {
-    font-size: 0.85em;
-    padding: 0.15em 0.4em;
-  }
-
-  /* Simplify custom blocks */
-  .custom-block.info,
-  .custom-block.warning,
-  .custom-block.danger,
-  .custom-block.tip {
-    padding: 0.75rem 1rem;
-    margin: 1rem 0;
-  }
+.fb-category--nonmetal {
+  border-left-color: var(--fb-secondary);
 }
 
-/* High-resolution displays */
-@media (min-width: 1920px) {
-  .VPHero .name {
-    font-size: 5rem;
-  }
-
-  .VPHero .text {
-    font-size: 1.75rem;
-  }
+.fb-category--noble-gas {
+  border-left-color: #8a3ffc;
 }
 
-/* ============================================
-   ACCESSIBILITY - REDUCED MOTION
-   ============================================ */
+.fb-category--halogen {
+  border-left-color: #ff832b;
+}
 
-/* Respect user preference for reduced motion */
+.fb-category--alkali {
+  border-left-color: #f1c21b;
+}
+
+.fb-category--alkaline {
+  border-left-color: #08bdba;
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility
+   -------------------------------------------------------------------------- */
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--fb-focus-ring);
+}
+
+/* Remove default outline, but keep it for non-keyboard users via focus-visible */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -1163,238 +913,46 @@ code.chemical-formula {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
 
-  /* Preserve opacity transitions for usability */
-  .VPNavBarMenuLink,
-  .VPSidebarItem,
-  .VPFeature,
-  .custom-block {
-    transition: opacity 0.15s ease !important;
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  :root {
+    --vp-c-border: #000000;
+    --vp-c-divider: #000000;
+    --fb-border-subtle: #000000;
+    --fb-border-strong: #000000;
+  }
+
+  .dark {
+    --vp-c-border: #ffffff;
+    --vp-c-divider: #ffffff;
+    --fb-border-subtle: #ffffff;
+    --fb-border-strong: #ffffff;
   }
 }
 
-/* ============================================
-   ACCESSIBILITY - FOCUS STATES
-   ============================================ */
+@media (forced-colors: active) {
+  .vp-button,
+  .VPButton,
+  .VPFeature,
+  .custom-block,
+  .fb-input,
+  .fb-select,
+  .fb-button,
+  .fb-card {
+    border: 1px solid CanvasText;
+  }
 
-/* Remove default focus outline and replace with custom styling */
-:focus {
-  outline: none;
+  a {
+    text-decoration: underline;
+  }
 }
 
-/* High visibility focus indicator using focus-visible */
-:focus-visible {
-  outline: 2px solid var(--chem-primary);
-  outline-offset: 2px;
-  border-radius: 4px;
-}
+/* --------------------------------------------------------------------------
+   Print
+   -------------------------------------------------------------------------- */
 
-/* Dark mode focus color */
-.dark :focus-visible {
-  outline-color: var(--chem-primary-light);
-}
-
-/* Specific focus styles for interactive elements */
-.VPNavBarMenuLink:focus-visible {
-  outline-offset: 4px;
-  background: rgba(10, 77, 104, 0.08);
-}
-
-.dark .VPNavBarMenuLink:focus-visible {
-  background: rgba(8, 131, 155, 0.12);
-}
-
-/* Button focus states */
-.vp-button:focus-visible,
-.VPButton:focus-visible {
-  outline-width: 3px;
-  outline-offset: 3px;
-}
-
-/* Link focus states in content */
-.vp-doc a:focus-visible {
-  outline-offset: 2px;
-  background: rgba(10, 77, 104, 0.05);
-  border-radius: 2px;
-}
-
-.dark .vp-doc a:focus-visible {
-  background: rgba(8, 131, 155, 0.08);
-}
-
-/* Sidebar item focus */
-.VPSidebarItem:focus-visible,
-.VPSidebarItem a:focus-visible {
-  outline-offset: 4px;
-  background: rgba(10, 77, 104, 0.05);
-}
-
-.dark .VPSidebarItem:focus-visible,
-.dark .VPSidebarItem a:focus-visible {
-  background: rgba(8, 131, 155, 0.08);
-}
-
-/* Feature card focus */
-.VPFeature:focus-visible,
-.chem-feature-card:focus-visible {
-  outline-width: 3px;
-  outline-offset: 4px;
-}
-
-/* Element badge focus */
-.element-badge:focus-visible,
-.element-badge-mini:focus-visible {
-  outline-width: 2px;
-  outline-offset: 3px;
-  transform: translateY(-4px);
-}
-
-/* Select/dropdown focus */
-.chemistry-select:focus-visible {
-  outline-width: 3px;
-  outline-offset: 2px;
-}
-
-/* Checkbox focus */
-.chemistry-checkbox:focus-visible .checkbox-custom {
-  outline: 2px solid var(--chem-primary);
-  outline-offset: 2px;
-}
-
-.dark .chemistry-checkbox:focus-visible .checkbox-custom {
-  outline-color: var(--chem-primary-light);
-}
-
-/* Search button focus */
-.DocSearch-Button:focus-visible {
-  outline-width: 2px;
-  outline-offset: 4px;
-  border-color: var(--chem-primary);
-}
-
-/* Code block copy button focus */
-.vp-doc div[class*='language-'] button:focus-visible {
-  outline: 2px solid var(--chem-primary);
-  outline-offset: 2px;
-}
-
-/* Textarea/input focus */
-.chemistry-textarea:focus-visible {
-  outline: none; /* Already has border styling */
-}
-
-/* Skip to content link (if added) */
-.skip-to-content:focus-visible {
-  outline: 3px solid var(--chem-accent);
-  outline-offset: 4px;
-  background: var(--vp-c-bg);
-  z-index: 1000;
-}
-
-/* ============================================
-   SPECIAL ELEMENTS - CHEMISTRY SPECIFIC
-   ============================================ */
-
-/* Reaction Arrow */
-.reaction-arrow {
-  display: inline-block;
-  margin: 0 0.5rem;
-  color: var(--chem-primary);
-  font-weight: 600;
-}
-
-/* Molecule Icon */
-.molecule-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  background: var(--chem-primary);
-  border-radius: 50%;
-  color: white;
-  font-size: 0.9rem;
-}
-
-/* Element Badge - Periodic Table Style */
-.element-badge {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem;
-  border-radius: 4px;
-  font-family: var(--vp-font-family-mono);
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.element-badge.metal {
-  background: #8D99AE;
-  color: white;
-}
-
-.element-badge.nonmetal {
-  background: #2DC653;
-  color: white;
-}
-
-.element-badge.noble-gas {
-  background: #C77DFF;
-  color: white;
-}
-
-.element-badge.halogen {
-  background: #FF6B35;
-  color: white;
-}
-
-.element-badge .atomic-number {
-  font-size: 0.6rem;
-  opacity: 0.8;
-  line-height: 1;
-}
-
-.element-badge .symbol {
-  font-size: 1.25rem;
-  line-height: 1;
-  margin: 0.25rem 0;
-}
-
-.element-badge .name {
-  font-size: 0.65rem;
-  opacity: 0.9;
-  line-height: 1;
-}
-
-/* ============================================
-   SECTION TRANSITIONS - REACTION PROGRESS
-   ============================================ */
-
-/* Smooth section transitions */
-.vp-doc h2 {
-  position: relative;
-}
-
-.vp-doc h2 {
-  position: relative;
-}
-
-/* Smooth scrolling for the entire page */
-html {
-  scroll-behavior: smooth;
-}
-
-/* ============================================
-   VISUAL POLISH - CHEMISTRY ENHANCEMENTS
-   ============================================ */
-
-.vp-doc img {
-  border-radius: 8px;
-  border: 1px solid var(--vp-c-border);
-}
-
-/* Print Styles */
 @media print {
   .VPNav,
   .VPSidebar,
@@ -1406,420 +964,51 @@ html {
     background: white;
     color: black;
   }
-
-  h1, h2, h3, h4, h5, h6 {
-    color: black;
-    background: none;
-    -webkit-text-fill-color: black;
-  }
-
-  a {
-    color: black;
-    text-decoration: underline;
-  }
 }
 
-/* ============================================
-   COLOR CONTRAST ENHANCEMENTS - WCAG COMPLIANCE
-   ============================================ */
+/* --------------------------------------------------------------------------
+   Backward-compatible chemistry aliases (kept minimal for existing demo)
+   -------------------------------------------------------------------------- */
 
-/* Ensure minimum contrast ratios for accessibility:
-   - Normal text: 4.5:1 minimum
-   - Large text (18px+ or 14px bold): 3:1 minimum
-   - UI components: 3:1 minimum
-*/
-
-/* Light mode text adjustments for better contrast */
 :root {
-  /* Enhanced text colors for WCAG AA compliance */
-  --vp-c-text-2: #2D4A63;       /* Improved contrast: ~5.5:1 on white */
-  --vp-c-text-3: #4A6A84;       /* Improved contrast: ~4.2:1 on white */
-  --vp-c-text-4: #6A8AA4;       /* Improved contrast: ~3.1:1 on white */
+  --chem-primary: var(--fb-primary);
+  --chem-primary-light: var(--fb-primary-hover);
+  --chem-primary-dark: var(--fb-primary-active);
+  --chem-secondary: var(--fb-secondary);
+  --chem-secondary-light: var(--fb-success);
+  --chem-secondary-dark: var(--fb-secondary);
+  --chem-accent: var(--fb-primary);
+  --chem-accent-light: var(--fb-primary-hover);
+  --chem-accent-dark: var(--fb-primary-active);
+
+  --chem-success: var(--fb-success);
+  --chem-warning: var(--fb-warning);
+  --chem-danger: var(--fb-error);
+  --chem-info: var(--fb-info);
+
+  --chem-metals: var(--fb-gray-50);
+  --chem-nonmetals: var(--fb-secondary);
+  --chem-noble-gases: #8a3ffc;
+  --chem-halogens: #ff832b;
+  --chem-alkali: var(--fb-warning);
+  --chem-alkaline: #08bdba;
+  --chem-transition: var(--fb-primary);
+
+  --chem-shadow-sm: var(--fb-shadow-sm);
+  --chem-shadow-md: var(--fb-shadow-md);
+  --chem-shadow-lg: var(--fb-shadow-lg);
+
+  --chem-transition-fast: var(--fb-transition-fast);
+  --chem-transition-base: var(--fb-transition-base);
+  --chem-transition-slow: var(--fb-transition-slow);
+
+  --chem-radius: var(--fb-radius-md);
 }
 
-/* Dark mode text adjustments for better contrast */
 .dark {
-  --vp-c-text-2: #A8C0D4;       /* Improved contrast: ~5.8:1 on dark bg */
-  --vp-c-text-3: #7898B0;       /* Improved contrast: ~4.3:1 on dark bg */
-  --vp-c-text-4: #5878A0;       /* Improved contrast: ~3.1:1 on dark bg */
-}
-
-/* Ensure custom block titles have sufficient contrast */
-.custom-block.warning .custom-block-title {
-  color: #B8860B;              /* Dark goldenrod - 4.5:1 on light bg */
-}
-
-.dark .custom-block.warning .custom-block-title {
-  color: #FFD700;              /* Gold - better visibility in dark mode */
-}
-
-.custom-block.danger .custom-block-title {
-  color: #C41E3A;              /* Cardinal red - 4.5:1 on light bg */
-}
-
-.dark .custom-block.danger .custom-block-title {
-  color: #FF6B6B;              /* Light red - better visibility in dark mode */
-}
-
-.custom-block.info .custom-block-title {
-  color: #0A5D68;              /* Deeper blue - 4.5:1 on light bg */
-}
-
-.dark .custom-block.info .custom-block-title {
-  color: #5FAFBA;              /* Light blue - 4.5:1 on dark bg */
-}
-
-.custom-block.tip .custom-block-title {
-  color: #00875A;              /* Deeper green - 4.5:1 on light bg */
-}
-
-.dark .custom-block.tip .custom-block-title {
-  color: #36B37E;              /* Light green - 4.5:1 on dark bg */
-}
-
-/* Ensure code text has sufficient contrast */
-code {
-  color: #7B2CBF;              /* Deeper purple for 4.5:1 contrast */
-}
-
-.dark code {
-  color: #B57EEC;              /* Lighter purple for dark mode */
-}
-
-/* Chemical formula contrast enhancement */
-.chemical-formula {
-  color: #087D92;              /* Deeper teal for better contrast */
-}
-
-.dark .chemical-formula {
-  color: #00C896;              /* Brighter green for dark mode */
-}
-
-/* Link contrast improvements */
-.vp-doc a {
-  color: #086E8A;              /* Deeper blue for 4.5:1 contrast */
-}
-
-.dark .vp-doc a {
-  color: #00B4D8;              /* Lighter blue for dark mode */
-}
-
-/* Ensure button text contrast */
-.vp-button.brand,
-.VPButton.brand {
-  color: #FFFFFF;              /* White on blue - excellent contrast */
-}
-
-.vp-button.alt,
-.VPButton.alt {
-  color: #053D4C;              /* Darker blue for 4.5:1 on transparent */
-}
-
-.vp-button.alt:hover,
-.VPButton.alt:hover {
-  color: #FFFFFF;              /* White after hover */
-}
-
-/* Example button category label contrast */
-.example-category {
-  color: #053D4C;              /* Darker for better contrast */
-}
-
-.dark .example-category {
-  color: #A0C8D8;              /* Lighter for dark mode */
-}
-
-/* Helper text contrast */
-.helper-text {
-  color: #4A6A84;              /* Improved contrast */
-}
-
-.dark .helper-text {
-  color: #8AA8C0;              /* Lighter for dark mode */
-}
-
-/* Hint text contrast */
-.hint {
-  color: #4A6A84;              /* Improved contrast */
-}
-
-.dark .hint {
-  color: #8AA8C0;              /* Lighter for dark mode */
-}
-
-/* Tooltip contrast */
-.tooltip {
-  color: #4A6A84;              /* Improved contrast */
-}
-
-.dark .tooltip {
-  color: #8AA8C0;              /* Lighter for dark mode */
-}
-
-/* ============================================
-   FINAL POLISH - VISUAL QUALITY ENHANCEMENTS
-   ============================================ */
-
-/* Ensure consistent spacing throughout */
-.vp-doc h2 {
-  margin-top: 2.5rem;
-}
-
-.vp-doc h3 {
-  margin-top: 2rem;
-}
-
-.vp-doc h4 {
-  margin-top: 1.5rem;
-}
-
-/* Improve visual hierarchy with subtle enhancements */
-.vp-doc h2:first-of-type {
-  margin-top: 1.5rem;
-}
-
-/* Add subtle separator between major sections */
-.vp-doc section:not(:last-child) {
-  margin-bottom: 2rem;
-}
-
-/* Enhance card visual hierarchy */
-.VPFeature .title {
-  letter-spacing: -0.02em;
-}
-
-/* Ensure consistent border radius throughout */
-.VPNav,
-.VPNavBarMenuLink,
-.VPSidebarItem,
-.VPFeature,
-.custom-block,
-.chemistry-textarea,
-.chemistry-select,
-.example-btn,
-.result-card,
-.balance-demo {
-  border-radius: var(--chem-radius, 12px);
-}
-
-/* Subtle gradient for hero text for depth */
-.VPHero .text {
-  position: relative;
-}
-
-.VPHero .text::before {
-  content: '';
-  position: absolute;
-  left: -1rem;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: var(--chem-gradient-secondary);
-  opacity: 0.3;
-  border-radius: 2px;
-}
-
-/* Enhanced shadow depth for visual hierarchy */
-.VPFeature:hover,
-.chem-feature-card:hover,
-.VPBox:hover {
-  box-shadow:
-    0 8px 24px rgba(10, 77, 104, 0.12),
-    0 2px 8px rgba(10, 77, 104, 0.08);
-}
-
-.dark .VPFeature:hover,
-.dark .chem-feature-card:hover,
-.dark .VPBox:hover {
-  box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.4),
-    0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* Chemistry-themed underlines for emphasis */
-.vp-doc strong {
-  position: relative;
-}
-
-.vp-doc strong::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: var(--chem-gradient-reaction);
-  opacity: 0.3;
-  border-radius: 1px;
-}
-
-/* Enhanced list styling for chemistry theme */
-.vp-doc ul li::marker {
-  content: '•';
-  color: var(--chem-secondary);
-}
-
-.vp-doc ol li::marker {
-  color: var(--chem-primary);
-  font-weight: 700;
-}
-
-/* Subtle background patterns for visual interest */
-.vp-doc .chem-equation {
-  position: relative;
-}
-
-.vp-doc .chem-equation::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--chem-primary), transparent);
-  opacity: 0.3;
-}
-
-/* Consistent icon sizing */
-.lab-icon {
-  width: 36px;
-  height: 36px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Improved button hover animations */
-.vp-button.brand:hover,
-.VPButton.brand:hover {
-  transform: translateY(-3px);
-}
-
-.vp-button.alt:hover,
-.VPButton.alt:hover {
-  transform: translateY(-3px);
-}
-
-/* Consistent timing for all hover effects */
-.VPNavBarMenuLink:hover,
-.VPSidebarItem:hover,
-.VPFeature:hover,
-.custom-block:hover,
-.example-btn:hover,
-.chem-feature-card:hover {
-  transition-duration: 200ms;
-}
-
-/* Ensure smooth transitions on all interactive elements */
-a,
-button,
-input,
-select,
-textarea,
-.VPNavBarMenuLink,
-.VPSidebarItem,
-.VPFeature,
-.VPBox,
-.custom-block,
-.example-btn,
-.chem-feature-card,
-.element-badge,
-.molecule-icon {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Loading state visual consistency */
-.molecule-spinner {
-  border-width: 3px;
-}
-
-/* Ensure consistent z-index hierarchy */
-.VPNav {
-  z-index: 100;
-}
-
-.VPSidebar {
-  z-index: 50;
-}
-
-.VPLocalSearchBox {
-  z-index: 200;
-}
-
-.VPHero::before,
-.VPHero::after {
-  z-index: 0;
-}
-
-.VPHero .container {
-  z-index: 1;
-}
-
-/* Prevent layout shift from animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Reduce animation intensity for subtle effect */
-.vp-doc section {
-  animation: fadeInUp 0.4s ease-out;
-}
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  :root {
-    --vp-c-border: #000000;
-    --vp-c-divider: #333333;
-  }
-
-  .dark {
-    --vp-c-border: #FFFFFF;
-    --vp-c-divider: #CCCCCC;
-  }
-
-  /* Ensure borders are visible */
-  .VPFeature,
-  .custom-block,
-  .chemistry-textarea,
-  .example-btn {
-    border-width: 2px;
-  }
-
-  /* Increase text contrast */
-  .vp-doc a {
-    text-decoration: underline;
-  }
-}
-
-/* Forced colors mode (Windows High Contrast) */
-@media (forced-colors: active) {
-  .vp-button,
-  .VPButton,
-  .VPFeature,
-  .custom-block,
-  .chemistry-checkbox .checkbox-custom {
-    border: 2px solid CanvasText;
-  }
-
-  /* Ensure links are distinguishable */
-  a {
-    text-decoration: underline;
-  }
-
-  /* Remove gradients that don't work in high contrast */
-  h1,
-  h2,
-  .VPHero .name {
-    background: none;
-    -webkit-text-fill-color: CanvasText;
-  }
+  --chem-primary: var(--fb-primary);
+  --chem-primary-light: var(--fb-primary-hover);
+  --chem-primary-dark: var(--fb-primary-active);
+  --chem-secondary: var(--fb-secondary);
+  --chem-accent: var(--fb-primary);
 }
