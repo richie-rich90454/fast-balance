@@ -777,4 +777,93 @@ const getCoefficientColor = (index: number) => {
         font-size: 1rem;
     }
 }
+
+/* Touch target improvements for accessibility */
+@media (max-width: 640px) {
+    .example-btn {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 0.875rem 1rem;
+    }
+    
+    .chemistry-select {
+        min-height: 44px;
+        padding: 0.875rem 2.5rem 0.875rem 1rem;
+    }
+    
+    .chemistry-checkbox .checkbox-custom {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .chemistry-textarea {
+        min-height: 100px;
+    }
+    
+    .result-card {
+        padding: 1.25rem;
+    }
+}
+
+/* Focus states for accessibility */
+.example-btn:focus-visible {
+    outline: 2px solid var(--chem-primary);
+    outline-offset: 2px;
+}
+
+.chemistry-textarea:focus-visible {
+    outline: none;
+    border-color: var(--chem-primary);
+    box-shadow: 0 0 0 3px rgba(10, 77, 104, 0.15);
+}
+
+.dark .chemistry-textarea:focus-visible {
+    box-shadow: 0 0 0 3px rgba(8, 131, 155, 0.2);
+}
+
+.chemistry-select:focus-visible {
+    outline: 2px solid var(--chem-primary);
+    outline-offset: 2px;
+}
+
+.chemistry-checkbox:focus-visible .checkbox-custom {
+    outline: 2px solid var(--chem-primary);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+    .example-btn,
+    .chemistry-textarea,
+    .chemistry-select,
+    .result-card,
+    .balance-demo {
+        border: 2px solid CanvasText;
+    }
+    
+    .chemistry-checkbox .checkbox-custom {
+        border: 2px solid CanvasText;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .balance-demo,
+    .example-btn,
+    .chemistry-textarea,
+    .chemistry-select,
+    .result-card,
+    .molecule-spinner {
+        transition: none;
+        animation: none;
+    }
+    
+    .balance-demo.changed {
+        animation: none;
+    }
+    
+    .result-card::before {
+        animation: none;
+    }
+}
 </style>

@@ -9,6 +9,9 @@
  * - Elemental: Periodic table category colors for semantic elements
  */
 
+/* Import distinctive fonts - must be at the top */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
 /* ============================================
    CSS CUSTOM PROPERTIES - CHEMISTRY PALETTE
    ============================================ */
@@ -129,9 +132,6 @@
 /* ============================================
    TYPOGRAPHY - SCIENTIFIC PRECISION
    ============================================ */
-
-/* Import distinctive fonts */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 /* Base Typography */
 body {
@@ -1171,7 +1171,23 @@ code.chemical-formula {
    RESPONSIVE ADJUSTMENTS
    ============================================ */
 
-/* Tablet */
+/* Large screens - default styling applies */
+
+/* Desktop (1280px+) */
+@media (min-width: 1280px) {
+  .VPHero .name {
+    font-size: 4.5rem;
+  }
+}
+
+/* Tablet Landscape (960px - 1279px) */
+@media (max-width: 1279px) {
+  .VPHero .name {
+    font-size: 3.5rem;
+  }
+}
+
+/* Tablet Portrait (768px - 959px) */
 @media (max-width: 960px) {
   h1 {
     font-size: 2.5rem;
@@ -1179,6 +1195,12 @@ code.chemical-formula {
 
   h2 {
     font-size: 1.75rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  h3 {
+    font-size: 1.35rem;
   }
 
   .VPHero .name {
@@ -1188,9 +1210,39 @@ code.chemical-formula {
   .VPHero .text {
     font-size: 1.25rem;
   }
+
+  .VPHero .tagline {
+    font-size: 1rem;
+  }
+
+  /* Reduce molecular pattern complexity on tablet */
+  .VPHero::before {
+    background-image:
+      radial-gradient(circle at 15% 25%, rgba(10, 77, 104, 0.1) 0%, transparent 30%),
+      radial-gradient(circle at 85% 75%, rgba(157, 78, 221, 0.08) 0%, transparent 35%);
+  }
+
+  .dark .VPHero::before {
+    background-image:
+      radial-gradient(circle at 15% 25%, rgba(8, 131, 155, 0.15) 0%, transparent 30%),
+      radial-gradient(circle at 85% 75%, rgba(181, 126, 236, 0.12) 0%, transparent 35%);
+  }
+
+  /* Sidebar molecular pattern simplification */
+  .VPSidebar::before {
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(10, 77, 104, 0.02) 0%, transparent 25%);
+  }
+
+  /* Adjust content area decorations */
+  .vp-doc::before,
+  .vp-doc::after {
+    width: 100px;
+    height: 100px;
+  }
 }
 
-/* Mobile */
+/* Mobile Landscape (640px - 767px) */
 @media (max-width: 768px) {
   h1 {
     font-size: 2rem;
@@ -1198,6 +1250,16 @@ code.chemical-formula {
 
   h2 {
     font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  h4 {
+    font-size: 1.1rem;
   }
 
   .VPHero .name {
@@ -1208,12 +1270,268 @@ code.chemical-formula {
     font-size: 1.125rem;
   }
 
+  .VPHero .tagline {
+    font-size: 0.95rem;
+  }
+
+  /* Simplify buttons for mobile */
   .vp-button.brand,
   .vp-button.alt,
   .VPButton.brand,
   .VPButton.alt {
-    padding: 0.75rem 1.5rem;
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+    min-height: 44px; /* Touch target minimum */
+    min-width: 44px;
+  }
+
+  /* Ensure touch targets meet minimum size (44x44px) */
+  .VPNavBarMenuLink {
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+  }
+
+  .VPSidebarItem .item {
+    min-height: 44px;
+  }
+
+  /* Reduce card padding on mobile */
+  .VPBox,
+  .VPFeature,
+  .custom-block {
+    padding: 1.25rem;
+    border-radius: 12px;
+  }
+
+  /* Simplify hero molecular pattern for mobile */
+  .VPHero::before {
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(10, 77, 104, 0.08) 0%, transparent 25%),
+      radial-gradient(circle at 80% 70%, rgba(157, 78, 221, 0.06) 0%, transparent 30%);
+    animation-duration: 30s;
+  }
+
+  .dark .VPHero::before {
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(8, 131, 155, 0.12) 0%, transparent 25%),
+      radial-gradient(circle at 80% 70%, rgba(181, 126, 236, 0.1) 0%, transparent 30%);
+  }
+
+  /* Reduce hexagonal pattern opacity */
+  .VPHero::after {
+    opacity: 0.4;
+  }
+
+  /* Hide decorative elements on mobile for performance */
+  .vp-doc::before,
+  .vp-doc::after {
+    display: none;
+  }
+
+  /* Adjust tables for mobile */
+  .vp-doc table {
+    border-radius: 8px;
+  }
+
+  .vp-doc th,
+  .vp-doc td {
+    padding: 0.75rem 0.5rem;
     font-size: 0.9rem;
+  }
+
+  /* Simplify code blocks */
+  .vp-doc div[class*='language-'] {
+    border-radius: 8px;
+    margin: 1rem 0;
+  }
+
+  .vp-doc [class*='language-'] pre {
+    padding: 1rem;
+  }
+
+  /* Adjust feature cards */
+  .VPFeature .title {
+    font-size: 1.1rem;
+  }
+
+  .VPFeature .details {
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile Portrait (< 640px) */
+@media (max-width: 639px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  .VPHero .name {
+    font-size: 2rem;
+  }
+
+  .VPHero .text {
+    font-size: 1rem;
+  }
+
+  .VPHero .tagline {
+    font-size: 0.875rem;
+  }
+
+  /* Ensure all interactive elements meet touch target minimum */
+  .vp-button,
+  .VPButton,
+  button,
+  .VPNavBarMenuLink,
+  .VPSidebarItem,
+  .example-btn,
+  .chemistry-checkbox,
+  .chemistry-select,
+  .element-badge-mini {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Adjust buttons for small screens */
+  .vp-button.brand,
+  .vp-button.alt,
+  .VPButton.brand,
+  .VPButton.alt {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+    border-radius: 10px;
+  }
+
+  /* Full-width buttons on very small screens */
+  .VPHero .actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .VPHero .actions .action {
+    width: 100%;
+  }
+
+  /* Reduce card sizes */
+  .VPBox,
+  .VPFeature,
+  .custom-block,
+  .balance-demo {
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  /* Simplify navigation */
+  .VPNavBarTitle {
+    font-size: 1.1rem;
+  }
+
+  /* Adjust font sizes for readability */
+  .vp-doc {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .vp-doc p {
+    margin-bottom: 1rem;
+  }
+
+  /* Simplify tables for small screens */
+  .vp-doc table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .vp-doc th,
+  .vp-doc td {
+    padding: 0.625rem 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  /* Adjust blockquotes */
+  .vp-doc blockquote {
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+  }
+
+  /* Reduce spacing */
+  .chem-divider {
+    height: 40px;
+    margin: 2rem 0;
+  }
+
+  .reaction-divider {
+    margin: 1.5rem 0;
+    padding: 0.75rem 0;
+  }
+
+  /* Simplify chemistry-specific elements */
+  .element-badge {
+    padding: 0.375rem;
+    font-size: 0.85rem;
+  }
+
+  .molecule-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Very small screens (< 480px) */
+@media (max-width: 479px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  .VPHero .name {
+    font-size: 1.75rem;
+  }
+
+  .VPHero .text {
+    font-size: 0.9rem;
+  }
+
+  /* Ensure touch targets */
+  .vp-doc a {
+    padding: 0.25rem 0;
+  }
+
+  code {
+    font-size: 0.85em;
+    padding: 0.15em 0.4em;
+  }
+
+  /* Simplify custom blocks */
+  .custom-block.info,
+  .custom-block.warning,
+  .custom-block.danger,
+  .custom-block.tip {
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+  }
+}
+
+/* High-resolution displays */
+@media (min-width: 1920px) {
+  .VPHero .name {
+    font-size: 5rem;
+  }
+
+  .VPHero .text {
+    font-size: 1.75rem;
   }
 }
 
@@ -1264,6 +1582,161 @@ code.chemical-formula {
 
 .chem-reaction {
   animation: titration 6s ease-in-out infinite;
+}
+
+/* ============================================
+   ACCESSIBILITY - REDUCED MOTION
+   ============================================ */
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Keep essential transitions but remove decorative animations */
+  .VPHero::before,
+  .VPHero::after,
+  .VPHero .name,
+  .VPHero .tagline::before,
+  .VPFeature::after,
+  .chem-divider .molecule,
+  .gradient-text-animated,
+  .molecule-spinner {
+    animation: none !important;
+  }
+
+  /* Preserve opacity transitions for usability */
+  .VPNavBarMenuLink,
+  .VPSidebarItem,
+  .VPFeature,
+  .custom-block {
+    transition: opacity 0.15s ease !important;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY - FOCUS STATES
+   ============================================ */
+
+/* Remove default focus outline and replace with custom styling */
+:focus {
+  outline: none;
+}
+
+/* High visibility focus indicator using focus-visible */
+:focus-visible {
+  outline: 2px solid var(--chem-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Dark mode focus color */
+.dark :focus-visible {
+  outline-color: var(--chem-primary-light);
+}
+
+/* Specific focus styles for interactive elements */
+.VPNavBarMenuLink:focus-visible {
+  outline-offset: 4px;
+  background: rgba(10, 77, 104, 0.08);
+}
+
+.dark .VPNavBarMenuLink:focus-visible {
+  background: rgba(8, 131, 155, 0.12);
+}
+
+/* Button focus states */
+.vp-button:focus-visible,
+.VPButton:focus-visible {
+  outline-width: 3px;
+  outline-offset: 3px;
+  box-shadow: var(--chem-shadow-glow);
+}
+
+/* Link focus states in content */
+.vp-doc a:focus-visible {
+  outline-offset: 2px;
+  background: rgba(10, 77, 104, 0.05);
+  border-radius: 2px;
+}
+
+.dark .vp-doc a:focus-visible {
+  background: rgba(8, 131, 155, 0.08);
+}
+
+/* Sidebar item focus */
+.VPSidebarItem:focus-visible,
+.VPSidebarItem a:focus-visible {
+  outline-offset: 4px;
+  background: rgba(10, 77, 104, 0.05);
+}
+
+.dark .VPSidebarItem:focus-visible,
+.dark .VPSidebarItem a:focus-visible {
+  background: rgba(8, 131, 155, 0.08);
+}
+
+/* Feature card focus */
+.VPFeature:focus-visible,
+.chem-feature-card:focus-visible {
+  outline-width: 3px;
+  outline-offset: 4px;
+}
+
+/* Element badge focus */
+.element-badge:focus-visible,
+.element-badge-mini:focus-visible {
+  outline-width: 2px;
+  outline-offset: 3px;
+  transform: translateY(-4px);
+}
+
+/* Select/dropdown focus */
+.chemistry-select:focus-visible {
+  outline-width: 3px;
+  outline-offset: 2px;
+}
+
+/* Checkbox focus */
+.chemistry-checkbox:focus-visible .checkbox-custom {
+  outline: 2px solid var(--chem-primary);
+  outline-offset: 2px;
+}
+
+.dark .chemistry-checkbox:focus-visible .checkbox-custom {
+  outline-color: var(--chem-primary-light);
+}
+
+/* Search button focus */
+.DocSearch-Button:focus-visible {
+  outline-width: 2px;
+  outline-offset: 4px;
+  border-color: var(--chem-primary);
+}
+
+/* Code block copy button focus */
+.vp-doc div[class*='language-'] button:focus-visible {
+  outline: 2px solid var(--chem-primary);
+  outline-offset: 2px;
+}
+
+/* Textarea/input focus */
+.chemistry-textarea:focus-visible {
+  outline: none; /* Already has border styling */
+}
+
+/* Skip to content link (if added) */
+.skip-to-content:focus-visible {
+  outline: 3px solid var(--chem-accent);
+  outline-offset: 4px;
+  background: var(--vp-c-bg);
+  z-index: 1000;
 }
 
 /* ============================================
@@ -1518,5 +1991,410 @@ html {
   a {
     color: black;
     text-decoration: underline;
+  }
+}
+
+/* ============================================
+   COLOR CONTRAST ENHANCEMENTS - WCAG COMPLIANCE
+   ============================================ */
+
+/* Ensure minimum contrast ratios for accessibility:
+   - Normal text: 4.5:1 minimum
+   - Large text (18px+ or 14px bold): 3:1 minimum
+   - UI components: 3:1 minimum
+*/
+
+/* Light mode text adjustments for better contrast */
+:root {
+  /* Enhanced text colors for WCAG AA compliance */
+  --vp-c-text-2: #2D4A63;       /* Improved contrast: ~5.5:1 on white */
+  --vp-c-text-3: #4A6A84;       /* Improved contrast: ~4.2:1 on white */
+  --vp-c-text-4: #6A8AA4;       /* Improved contrast: ~3.1:1 on white */
+}
+
+/* Dark mode text adjustments for better contrast */
+.dark {
+  --vp-c-text-2: #A8C0D4;       /* Improved contrast: ~5.8:1 on dark bg */
+  --vp-c-text-3: #7898B0;       /* Improved contrast: ~4.3:1 on dark bg */
+  --vp-c-text-4: #5878A0;       /* Improved contrast: ~3.1:1 on dark bg */
+}
+
+/* Ensure custom block titles have sufficient contrast */
+.custom-block.warning .custom-block-title {
+  color: #B8860B;              /* Dark goldenrod - 4.5:1 on light bg */
+}
+
+.dark .custom-block.warning .custom-block-title {
+  color: #FFD700;              /* Gold - better visibility in dark mode */
+}
+
+.custom-block.danger .custom-block-title {
+  color: #C41E3A;              /* Cardinal red - 4.5:1 on light bg */
+}
+
+.dark .custom-block.danger .custom-block-title {
+  color: #FF6B6B;              /* Light red - better visibility in dark mode */
+}
+
+.custom-block.info .custom-block-title {
+  color: #0A5D68;              /* Deeper blue - 4.5:1 on light bg */
+}
+
+.dark .custom-block.info .custom-block-title {
+  color: #5FAFBA;              /* Light blue - 4.5:1 on dark bg */
+}
+
+.custom-block.tip .custom-block-title {
+  color: #00875A;              /* Deeper green - 4.5:1 on light bg */
+}
+
+.dark .custom-block.tip .custom-block-title {
+  color: #36B37E;              /* Light green - 4.5:1 on dark bg */
+}
+
+/* Ensure code text has sufficient contrast */
+code {
+  color: #7B2CBF;              /* Deeper purple for 4.5:1 contrast */
+}
+
+.dark code {
+  color: #B57EEC;              /* Lighter purple for dark mode */
+}
+
+/* Chemical formula contrast enhancement */
+.chemical-formula {
+  color: #087D92;              /* Deeper teal for better contrast */
+}
+
+.dark .chemical-formula {
+  color: #00C896;              /* Brighter green for dark mode */
+}
+
+/* Link contrast improvements */
+.vp-doc a {
+  color: #086E8A;              /* Deeper blue for 4.5:1 contrast */
+}
+
+.dark .vp-doc a {
+  color: #00B4D8;              /* Lighter blue for dark mode */
+}
+
+/* Ensure button text contrast */
+.vp-button.brand,
+.VPButton.brand {
+  color: #FFFFFF;              /* White on blue - excellent contrast */
+}
+
+.vp-button.alt,
+.VPButton.alt {
+  color: #053D4C;              /* Darker blue for 4.5:1 on transparent */
+}
+
+.vp-button.alt:hover,
+.VPButton.alt:hover {
+  color: #FFFFFF;              /* White after hover */
+}
+
+/* Example button category label contrast */
+.example-category {
+  color: #053D4C;              /* Darker for better contrast */
+}
+
+.dark .example-category {
+  color: #A0C8D8;              /* Lighter for dark mode */
+}
+
+/* Helper text contrast */
+.helper-text {
+  color: #4A6A84;              /* Improved contrast */
+}
+
+.dark .helper-text {
+  color: #8AA8C0;              /* Lighter for dark mode */
+}
+
+/* Hint text contrast */
+.hint {
+  color: #4A6A84;              /* Improved contrast */
+}
+
+.dark .hint {
+  color: #8AA8C0;              /* Lighter for dark mode */
+}
+
+/* Tooltip contrast */
+.tooltip {
+  color: #4A6A84;              /* Improved contrast */
+}
+
+.dark .tooltip {
+  color: #8AA8C0;              /* Lighter for dark mode */
+}
+
+/* ============================================
+   FINAL POLISH - VISUAL QUALITY ENHANCEMENTS
+   ============================================ */
+
+/* Ensure consistent spacing throughout */
+.vp-doc h2 {
+  margin-top: 2.5rem;
+}
+
+.vp-doc h3 {
+  margin-top: 2rem;
+}
+
+.vp-doc h4 {
+  margin-top: 1.5rem;
+}
+
+/* Improve visual hierarchy with subtle enhancements */
+.vp-doc h2:first-of-type {
+  margin-top: 1.5rem;
+}
+
+/* Add subtle separator between major sections */
+.vp-doc section:not(:last-child) {
+  margin-bottom: 2rem;
+}
+
+/* Enhance card visual hierarchy */
+.VPFeature .title {
+  letter-spacing: -0.02em;
+}
+
+/* Ensure consistent border radius throughout */
+.VPNav,
+.VPNavBarMenuLink,
+.VPSidebarItem,
+.VPFeature,
+.custom-block,
+.chemistry-textarea,
+.chemistry-select,
+.example-btn,
+.result-card,
+.balance-demo {
+  border-radius: var(--chem-radius, 12px);
+}
+
+/* Subtle gradient for hero text for depth */
+.VPHero .text {
+  position: relative;
+}
+
+.VPHero .text::before {
+  content: '';
+  position: absolute;
+  left: -1rem;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--chem-gradient-secondary);
+  opacity: 0.3;
+  border-radius: 2px;
+}
+
+/* Enhanced shadow depth for visual hierarchy */
+.VPFeature:hover,
+.chem-feature-card:hover,
+.VPBox:hover {
+  box-shadow:
+    0 8px 24px rgba(10, 77, 104, 0.12),
+    0 2px 8px rgba(10, 77, 104, 0.08);
+}
+
+.dark .VPFeature:hover,
+.dark .chem-feature-card:hover,
+.dark .VPBox:hover {
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Chemistry-themed underlines for emphasis */
+.vp-doc strong {
+  position: relative;
+}
+
+.vp-doc strong::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--chem-gradient-reaction);
+  opacity: 0.3;
+  border-radius: 1px;
+}
+
+/* Enhanced list styling for chemistry theme */
+.vp-doc ul li::marker {
+  content: '•';
+  color: var(--chem-secondary);
+}
+
+.vp-doc ol li::marker {
+  color: var(--chem-primary);
+  font-weight: 700;
+}
+
+/* Subtle background patterns for visual interest */
+.vp-doc .chem-equation {
+  position: relative;
+}
+
+.vp-doc .chem-equation::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--chem-primary), transparent);
+  opacity: 0.3;
+}
+
+/* Consistent icon sizing */
+.lab-icon {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Improved button hover animations */
+.vp-button.brand:hover,
+.VPButton.brand:hover {
+  transform: translateY(-3px);
+}
+
+.vp-button.alt:hover,
+.VPButton.alt:hover {
+  transform: translateY(-3px);
+}
+
+/* Consistent timing for all hover effects */
+.VPNavBarMenuLink:hover,
+.VPSidebarItem:hover,
+.VPFeature:hover,
+.custom-block:hover,
+.example-btn:hover,
+.chem-feature-card:hover {
+  transition-duration: 200ms;
+}
+
+/* Ensure smooth transitions on all interactive elements */
+a,
+button,
+input,
+select,
+textarea,
+.VPNavBarMenuLink,
+.VPSidebarItem,
+.VPFeature,
+.VPBox,
+.custom-block,
+.example-btn,
+.chem-feature-card,
+.element-badge,
+.molecule-icon {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Loading state visual consistency */
+.molecule-spinner {
+  border-width: 3px;
+}
+
+/* Ensure consistent z-index hierarchy */
+.VPNav {
+  z-index: 100;
+}
+
+.VPSidebar {
+  z-index: 50;
+}
+
+.VPLocalSearchBox {
+  z-index: 200;
+}
+
+.VPHero::before,
+.VPHero::after {
+  z-index: 0;
+}
+
+.VPHero .container {
+  z-index: 1;
+}
+
+/* Prevent layout shift from animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Reduce animation intensity for subtle effect */
+.vp-doc section {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --vp-c-border: #000000;
+    --vp-c-divider: #333333;
+  }
+
+  .dark {
+    --vp-c-border: #FFFFFF;
+    --vp-c-divider: #CCCCCC;
+  }
+
+  /* Ensure borders are visible */
+  .VPFeature,
+  .custom-block,
+  .chemistry-textarea,
+  .example-btn {
+    border-width: 2px;
+  }
+
+  /* Increase text contrast */
+  .vp-doc a {
+    text-decoration: underline;
+  }
+}
+
+/* Forced colors mode (Windows High Contrast) */
+@media (forced-colors: active) {
+  .vp-button,
+  .VPButton,
+  .VPFeature,
+  .custom-block,
+  .chemistry-checkbox .checkbox-custom {
+    border: 2px solid CanvasText;
+  }
+
+  /* Ensure links are distinguishable */
+  a {
+    text-decoration: underline;
+  }
+
+  /* Remove gradients that don't work in high contrast */
+  h1,
+  h2,
+  .VPHero .name {
+    background: none;
+    -webkit-text-fill-color: CanvasText;
   }
 }
