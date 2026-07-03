@@ -2,65 +2,65 @@
 layout: home
 hero:
   name: "fast-balance"
-  text: "Chemical Equation Balancer"
-  tagline: "Precision stoichiometry for modern chemistry"
+  text: "Exact-arithmetic chemical equation balancer"
+  tagline: "Balance chemical equations with integer-based rational arithmetic"
+  image:
+    src: /hero-chemistry.svg
+    alt: fast-balance
   actions:
     - theme: brand
       text: "Get Started"
-      link: /api-reference
+      link: /installation
     - theme: alt
-      text: "View on GitHub"
-      link: https://github.com/richie-rich90454/fast-balance
-features:
-  - title: "Universal Stoichiometry"
-    details: "Handles any chemical equation from simple to complex redox reactions, ionic equations, and hydrates"
-  - title: "Complex Syntax Support"
-    details: "Supports all arrow styles, ionic charges, hydrates, and complex organic formulas with intuitive syntax"
-  - title: "Exact Arithmetic"
-    details: "Uses integer-based rational arithmetic to avoid floating-point errors and ensure mathematically correct results"
-  - title: "Zero Dependencies"
-    details: "Lightweight library with no external dependencies, perfect for educational and production use"
+      text: "Try Demo"
+      link: /demo
 ---
 
-## Quick Start
+<div class="features">
+  <div class="feature-card">
+    <img src="/icons/atom.svg" alt="" width="48" height="48" />
+    <h3>Universal stoichiometry</h3>
+    <p>Balances simple synthesis, combustion, redox, ionic, and industrial equations.</p>
+  </div>
+  <div class="feature-card">
+    <img src="/icons/molecule.svg" alt="" width="48" height="48" />
+    <h3>Complex syntax</h3>
+    <p>Supports parentheses, brackets, ionic charges, hydrates, state symbols, and multiple arrow styles.</p>
+  </div>
+  <div class="feature-card">
+    <img src="/icons/balance.svg" alt="" width="48" height="48" />
+    <h3>Exact arithmetic</h3>
+    <p>Uses integer rational arithmetic to eliminate floating-point errors and produce minimal coefficients.</p>
+  </div>
+  <div class="feature-card">
+    <img src="/icons/code.svg" alt="" width="48" height="48" />
+    <h3>Developer friendly</h3>
+    <p>Single balance() API with typed results, ESM and CommonJS builds, and zero runtime dependencies.</p>
+  </div>
+</div>
 
-Install fast-balance using npm:
+## Quick example
 
-```bash
-npm install fast-balance
-```
-
-Balance a simple equation:
+Balance a simple equation in JavaScript or TypeScript:
 
 ```javascript
 import { balance } from 'fast-balance';
 
 const result = balance('H2 + O2 -> H2O');
 console.log(result.equation);
-// Output: 2H2 + O2 -> 2H2O
+// 2 H2 + 1 O2 -> 2 H2O
 ```
 
-## Why fast-balance?
+## Installation
 
-- **Precision**: Integer-based rational arithmetic ensures mathematically exact results with no floating-point errors.
-- **Universal**: Handles any valid chemical equation including redox reactions, ionic equations, and hydrates.
-- **Flexible Syntax**: Supports all arrow styles (`->`, `→`, `=`), ionic charges, and complex organic formulas.
-- **Zero Dependencies**: Lightweight and self-contained, suitable for educational tools, production apps, and embedded systems.
+```bash
+npm install fast-balance
+```
 
-## Supported Syntax
+## Explore
 
-| Feature | Example | Description |
-|---------|---------|-------------|
-| Standard equations | `H2 + O2 -> H2O` | Basic chemical equations |
-| Redox reactions | `Fe + CuSO4 -> FeSO4 + Cu` | Oxidation-reduction |
-| Ionic equations | `Ag+ + Cl- -> AgCl` | With ionic charges |
-| Hydrates | `CuSO4·5H2O` | Hydrate notation |
-| Multiple arrows | `A <=> B`, `A <- B` | Different reaction types |
-| Organic compounds | `CH3CH2OH` | Complex formulas |
-
-## Explore More
-
-- [API Reference](/api-reference) for complete function and type documentation
-- [Examples](/examples) for real-world use cases
-- [Interactive Demo](/demo) to try the balancer in your browser
-- [Source Code on GitHub](https://github.com/richie-rich90454/fast-balance)
+- [Installation](/installation) — install and import the library
+- [API Reference](/api-reference) — full API and type documentation
+- [Notation](/notation) — supported chemical notation
+- [Examples](/examples) — curated reaction examples
+- [Live Demo](/demo) — try the balancer in the browser

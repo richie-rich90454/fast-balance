@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress';
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
     title: "fast-balance",
-    description: "Blazing fast chemical equation balancer - handles complex formulas, redox, charges, hydrates, all arrow styles",
+    description: "Exact-arithmetic chemical equation balancer supporting complex formulas, redox, charges, hydrates, and all arrow styles",
     base: '/fast-balance/',
     cleanUrls: true,
 
@@ -17,11 +17,11 @@ export default defineConfig({
         ['meta', { name: 'theme-color', content: '#3eaf7c' }],
         ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
         ['meta', { name: 'twitter:title', content: 'fast-balance | Chemical Equation Balancer' }],
-        ['meta', { name: 'twitter:description', content: 'Blazing fast chemical equation balancer - handles complex formulas, redox, charges, hydrates, all arrow styles' }],
+        ['meta', { name: 'twitter:description', content: 'Exact-arithmetic chemical equation balancer supporting complex formulas, redox, charges, hydrates, and all arrow styles' }],
         ['meta', { name: 'twitter:image', content: '/fast-balance/logo.svg' }],
         ['meta', { property: 'og:type', content: 'website' }],
         ['meta', { property: 'og:title', content: 'fast-balance | Chemical Equation Balancer' }],
-        ['meta', { property: 'og:description', content: 'Blazing fast chemical equation balancer - handles complex formulas, redox, charges, hydrates, all arrow styles' }],
+        ['meta', { property: 'og:description', content: 'Exact-arithmetic chemical equation balancer supporting complex formulas, redox, charges, hydrates, and all arrow styles' }],
         ['meta', { property: 'og:image', content: '/fast-balance/logo.svg' }],
         ['meta', { property: 'og:url', content: 'https://richie-rich90454.github.io/fast-balance/' }],
         ['meta', { name: 'keywords', content: 'chemistry, chemical equation, balancer, stoichiometry, redox, chemical reaction, equation balancing, chemistry library, javascript, typescript' }]

@@ -626,6 +626,49 @@ body {
   line-height: 1.6;
 }
 
+/* --------------------------------------------------------------------------
+   Home feature cards
+   -------------------------------------------------------------------------- */
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--fb-spacing-05);
+  margin: var(--fb-spacing-08) 0;
+}
+
+.feature-card {
+  background: var(--fb-background);
+  border: 1px solid var(--fb-border-subtle);
+  border-radius: var(--fb-radius-md);
+  padding: var(--fb-spacing-05);
+  transition: border-color var(--fb-transition-base);
+}
+
+.feature-card:hover {
+  border-color: var(--fb-border-strong);
+}
+
+.feature-card img {
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--fb-spacing-04);
+}
+
+.feature-card h3 {
+  font-size: var(--fb-heading-03);
+  font-weight: 600;
+  color: var(--fb-text-primary);
+  margin: 0 0 var(--fb-spacing-02);
+}
+
+.feature-card p {
+  font-size: var(--fb-body);
+  color: var(--fb-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
 /* Typography */
 .vp-doc h1,
 .vp-doc h2,
