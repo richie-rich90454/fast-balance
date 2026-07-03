@@ -1,0 +1,1200 @@
+/**
+ * Chemistry-Themed Custom CSS for VitePress
+ * Inspired by laboratory aesthetics, chemical reactions, and the periodic table
+ *
+ * Color Philosophy:
+ * - Primary: Deep blue/teal inspired by copper sulfate solutions and lab glassware
+ * - Secondary: Vibrant green inspired by chemical indicators (bromothymol blue)
+ * - Accent: Purple/magenta inspired by noble gases and potassium permanganate
+ * - Elemental: Periodic table category colors for semantic elements
+ */
+
+/* ============================================
+   CSS CUSTOM PROPERTIES - CHEMISTRY PALETTE
+   ============================================ */
+
+:root {
+  /* Core Chemistry Colors */
+  --chem-primary: #0A4D68;           /* Copper sulfate blue - lab glassware */
+  --chem-primary-light: #08839B;     /* Lighter blue for hover states */
+  --chem-primary-dark: #052E3D;      /* Darker blue for depth */
+
+  --chem-secondary: #00C896;          /* Bromothymol blue green - indicators */
+  --chem-secondary-light: #00E6AC;   /* Brighter green for accents */
+  --chem-secondary-dark: #00A67B;    /* Deeper green for contrast */
+
+  --chem-accent: #9D4EDD;            /* Noble gas purple - potassium permanganate */
+  --chem-accent-light: #B57EEC;      /* Lighter purple for highlights */
+  --chem-accent-dark: #7B2CBF;       /* Deeper purple for emphasis */
+
+  /* Periodic Table Category Colors */
+  --chem-metals: #8D99AE;            /* Silver/gray - metals */
+  --chem-nonmetals: #2DC653;         /* Green - nonmetals */
+  --chem-noble-gases: #C77DFF;       /* Purple - noble gases */
+  --chem-halogens: #FF6B35;          /* Orange - halogens */
+  --chem-alkali: #FFD166;            /* Gold - alkali metals */
+  --chem-alkaline: #06D6A0;          /* Teal - alkaline earth */
+  --chem-transition: #118AB2;         /* Blue - transition metals */
+
+  /* Light Mode - Clean Lab Environment */
+  --vp-c-bg: #FAFBFC;                /* Clean white with subtle blue tint */
+  --vp-c-bg-alt: #F0F4F8;            /* Light gray-blue for sections */
+  --vp-c-bg-elv: #FFFFFF;            /* Elevated surfaces */
+  --vp-c-bg-soft: #E8F0F7;           /* Soft blue-gray backgrounds */
+
+  /* Text Colors - Precision Typography */
+  --vp-c-text: #1A2332;              /* Deep navy for primary text */
+  --vp-c-text-1: #1A2332;
+  --vp-c-text-2: #3D5A73;             /* Medium blue-gray */
+  --vp-c-text-3: #5A7A94;             /* Light blue-gray */
+  --vp-c-text-4: #7A99B0;            /* Subtle text */
+
+  /* Border & Divider Colors */
+  --vp-c-border: #D1DCE8;            /* Soft blue-gray borders */
+  --vp-c-divider: #E0E8F0;           /* Subtle dividers */
+  --vp-c-gutter: #E8F0F7;            /* Gutter backgrounds */
+
+  /* Brand Colors */
+  --vp-c-brand: var(--chem-primary);
+  --vp-c-brand-light: var(--chem-primary-light);
+  --vp-c-brand-dark: var(--chem-primary-dark);
+  --vp-c-brand-tint: rgba(10, 77, 104, 0.1);
+
+  /* Chemistry-Specific Semantic Colors */
+  --chem-success: #06D6A0;           /* Reaction successful - green */
+  --chem-warning: #FFD166;           /* Caution - yellow */
+  --chem-danger: #EF476F;            /* Hazard - red/pink */
+  --chem-info: #118AB2;              /* Information - blue */
+
+  /* Gradient Definitions */
+  --chem-gradient-primary: linear-gradient(135deg, var(--chem-primary) 0%, var(--chem-primary-light) 100%);
+  --chem-gradient-secondary: linear-gradient(135deg, var(--chem-secondary) 0%, var(--chem-secondary-light) 100%);
+  --chem-gradient-accent: linear-gradient(135deg, var(--chem-accent) 0%, var(--chem-accent-light) 100%);
+  --chem-gradient-reaction: linear-gradient(45deg, var(--chem-primary) 0%, var(--chem-accent) 50%, var(--chem-secondary) 100%);
+  --chem-gradient-solution: radial-gradient(circle at 30% 70%, var(--chem-secondary-light) 0%, transparent 50%),
+                            radial-gradient(circle at 70% 30%, var(--chem-accent-light) 0%, transparent 50%);
+
+  /* Typography */
+  --vp-font-family-base: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --vp-font-family-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* Shadows - Lab Equipment Depth */
+  --chem-shadow-sm: 0 2px 8px rgba(10, 77, 104, 0.08), 0 1px 2px rgba(10, 77, 104, 0.04);
+  --chem-shadow-md: 0 4px 16px rgba(10, 77, 104, 0.12), 0 2px 4px rgba(10, 77, 104, 0.06);
+  --chem-shadow-lg: 0 8px 32px rgba(10, 77, 104, 0.16), 0 4px 8px rgba(10, 77, 104, 0.08);
+  --chem-shadow-glow: 0 0 20px rgba(10, 77, 104, 0.3), 0 0 40px rgba(157, 78, 221, 0.2);
+
+  /* Transitions */
+  --chem-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --chem-transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --chem-transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --chem-transition-bounce: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================
+   DARK MODE - LABORATORY NIGHT SHIFT
+   ============================================ */
+
+.dark {
+  /* Dark Mode - Laboratory Night Shift */
+  --vp-c-bg: #0D1B2A;                /* Deep navy - dark lab environment */
+  --vp-c-bg-alt: #1B2838;            /* Elevated dark surfaces */
+  --vp-c-bg-elv: #162231;            /* Card backgrounds */
+  --vp-c-bg-soft: #1B2838;           /* Soft dark sections */
+
+  /* Text Colors - Glowing Chemistry */
+  --vp-c-text: #E8F0F7;              /* Soft white-blue */
+  --vp-c-text-1: #E8F0F7;
+  --vp-c-text-2: #B8C9D9;            /* Light blue-gray */
+  --vp-c-text-3: #8BA4BC;            /* Medium blue-gray */
+  --vp-c-text-4: #5A7A94;            /* Subtle text */
+
+  /* Border & Divider Colors */
+  --vp-c-border: #2D4156;            /* Subtle blue-gray borders */
+  --vp-c-divider: #1B2838;           /* Dark dividers */
+  --vp-c-gutter: #162231;            /* Gutter backgrounds */
+
+  /* Brand Colors - Brighter for Dark Mode */
+  --vp-c-brand: var(--chem-primary-light);
+  --vp-c-brand-light: var(--chem-secondary);
+  --vp-c-brand-dark: var(--chem-primary);
+
+  /* Enhanced Shadows for Dark Mode */
+  --chem-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --chem-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+  --chem-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.4);
+  --chem-shadow-glow: 0 0 30px rgba(8, 131, 155, 0.4), 0 0 60px rgba(157, 78, 221, 0.3);
+}
+
+/* ============================================
+   TYPOGRAPHY - SCIENTIFIC PRECISION
+   ============================================ */
+
+/* Import distinctive fonts */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+/* Base Typography */
+body {
+  font-family: var(--vp-font-family-base);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings - Strong Scientific Character */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--vp-font-family-base);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--vp-c-text-1);
+  position: relative;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 2rem;
+  background: var(--chem-gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid transparent;
+  background: linear-gradient(90deg, var(--chem-primary) 0%, var(--chem-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: var(--chem-gradient-reaction);
+  border-radius: 2px;
+  transition: width var(--chem-transition-base);
+}
+
+h2:hover::after {
+  width: 120px;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--chem-primary);
+}
+
+.dark h3 {
+  color: var(--chem-primary-light);
+}
+
+h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+}
+
+/* Code & Chemical Formulas - Monospace Precision */
+code {
+  font-family: var(--vp-font-family-mono);
+  font-weight: 500;
+  font-size: 0.9em;
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 6px;
+  padding: 0.2em 0.5em;
+  color: var(--chem-accent);
+  transition: all var(--chem-transition-fast);
+}
+
+code:hover {
+  background: var(--vp-c-bg-alt);
+  border-color: var(--chem-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(157, 78, 221, 0.15);
+}
+
+/* Chemical Formula Styling */
+.chemical-formula,
+code.chemical-formula {
+  font-family: var(--vp-font-family-mono);
+  font-weight: 600;
+  background: linear-gradient(135deg, rgba(10, 77, 104, 0.08) 0%, rgba(157, 78, 221, 0.08) 100%);
+  border: 1px solid rgba(10, 77, 104, 0.2);
+  color: var(--chem-primary);
+  padding: 0.25em 0.6em;
+  border-radius: 8px;
+}
+
+.dark .chemical-formula,
+.dark code.chemical-formula {
+  background: linear-gradient(135deg, rgba(8, 131, 155, 0.15) 0%, rgba(181, 126, 236, 0.15) 100%);
+  border-color: rgba(8, 131, 155, 0.3);
+  color: var(--chem-primary-light);
+}
+
+/* Subscript for chemical formulas */
+.chemical-formula sub {
+  font-size: 0.7em;
+  vertical-align: baseline;
+  position: relative;
+  top: 0.3em;
+}
+
+/* ============================================
+   NAVIGATION - PERIODIC TABLE INSPIRED
+   ============================================ */
+
+/* Navigation Bar */
+.VPNav {
+  background: rgba(250, 251, 252, 0.85);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-bottom: 1px solid var(--vp-c-border);
+  transition: all var(--chem-transition-base);
+}
+
+.dark .VPNav {
+  background: rgba(13, 27, 42, 0.85);
+  border-bottom-color: var(--vp-c-border);
+}
+
+/* Logo Styling */
+.VPNavBarTitle {
+  font-family: var(--vp-font-family-base);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  color: var(--chem-primary);
+  transition: all var(--chem-transition-base);
+}
+
+.VPNavBarTitle:hover {
+  color: var(--chem-accent);
+  transform: scale(1.02);
+}
+
+/* Navigation Links */
+.VPNavBarMenuLink {
+  font-weight: 500;
+  color: var(--vp-c-text-2);
+  transition: all var(--chem-transition-fast);
+  position: relative;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.VPNavBarMenuLink::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: var(--chem-gradient-reaction);
+  border-radius: 2px;
+  transition: width var(--chem-transition-base);
+}
+
+.VPNavBarMenuLink:hover {
+  color: var(--chem-primary);
+  background: rgba(10, 77, 104, 0.05);
+}
+
+.dark .VPNavBarMenuLink:hover {
+  background: rgba(8, 131, 155, 0.1);
+}
+
+.VPNavBarMenuLink:hover::before {
+  width: 60%;
+}
+
+/* Active Navigation Link */
+.VPNavBarMenuLink.active {
+  color: var(--chem-primary);
+  font-weight: 600;
+}
+
+.VPNavBarMenuLink.active::before {
+  width: 60%;
+  background: var(--chem-primary);
+}
+
+/* ============================================
+   SIDEBAR - ELEMENTAL ORGANIZATION
+   ============================================ */
+
+.VPSidebar {
+  background: var(--vp-c-bg);
+  border-right: 1px solid var(--vp-c-divider);
+}
+
+.VPSidebarItem {
+  position: relative;
+  transition: all var(--chem-transition-fast);
+}
+
+.VPSidebarItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: transparent;
+  border-radius: 2px;
+  transition: all var(--chem-transition-base);
+}
+
+.VPSidebarItem:hover::before {
+  background: var(--chem-gradient-reaction);
+}
+
+.VPSidebarItem.active::before {
+  background: var(--chem-primary);
+  width: 4px;
+}
+
+.VPSidebarItem.level-0 > .item > .text {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--vp-c-text-1);
+  letter-spacing: -0.01em;
+}
+
+.VPSidebarItem.level-1 > .item > .text {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--vp-c-text-2);
+  transition: color var(--chem-transition-fast);
+}
+
+.VPSidebarItem.level-1 > .item:hover > .text {
+  color: var(--chem-primary);
+}
+
+/* ============================================
+   HERO SECTION - REACTION CHAMBER
+   ============================================ */
+
+.VPHero {
+  position: relative;
+  background: var(--vp-c-bg);
+  overflow: hidden;
+}
+
+/* Molecular Pattern Background */
+.VPHero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(10, 77, 104, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(157, 78, 221, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 60% 20%, rgba(0, 200, 150, 0.08) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark .VPHero::before {
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(8, 131, 155, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(181, 126, 236, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 60% 20%, rgba(0, 230, 172, 0.15) 0%, transparent 40%);
+}
+
+/* Hexagonal Molecular Pattern Overlay */
+.VPHero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15L30 0z' fill='none' stroke='%230A4D68' stroke-width='0.5' stroke-opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+.dark .VPHero::after {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15L30 0z' fill='none' stroke='%2308839B' stroke-width='0.5' stroke-opacity='0.08'/%3E%3C/svg%3E");
+}
+
+.VPHero .container {
+  position: relative;
+  z-index: 1;
+}
+
+.VPHero .name {
+  font-size: 4rem;
+  font-weight: 700;
+  background: var(--chem-gradient-reaction);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.03em;
+  animation: gradientShift 8s ease infinite;
+  background-size: 200% 200%;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.VPHero .text {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--vp-c-text-2);
+  line-height: 1.6;
+  margin-top: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.VPHero .tagline {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--chem-accent);
+  margin-top: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+/* ============================================
+   BUTTONS - CHEMICAL SOLUTION GRADIENTS
+   ============================================ */
+
+/* Primary Button - Solution Gradient */
+.vp-button.brand,
+.VPButton.brand {
+  background: var(--chem-gradient-primary);
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 0.875rem 2rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  transition: all var(--chem-transition-base);
+  box-shadow: var(--chem-shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.vp-button.brand::before,
+.VPButton.brand::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left var(--chem-transition-slow);
+}
+
+.vp-button.brand:hover,
+.VPButton.brand:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--chem-shadow-glow);
+}
+
+.vp-button.brand:hover::before,
+.VPButton.brand:hover::before {
+  left: 100%;
+}
+
+.vp-button.brand:active,
+.VPButton.brand:active {
+  transform: translateY(0);
+}
+
+/* Secondary Button - Indicator Color */
+.vp-button.alt,
+.VPButton.alt {
+  background: transparent;
+  border: 2px solid var(--chem-primary);
+  color: var(--chem-primary);
+  font-weight: 600;
+  padding: 0.875rem 2rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  transition: all var(--chem-transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.vp-button.alt::before,
+.VPButton.alt::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: var(--chem-gradient-primary);
+  transition: width var(--chem-transition-base);
+  z-index: -1;
+}
+
+.vp-button.alt:hover,
+.VPButton.alt:hover {
+  color: white;
+  border-color: var(--chem-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--chem-shadow-md);
+}
+
+.vp-button.alt:hover::before,
+.VPButton.alt:hover::before {
+  width: 100%;
+}
+
+/* Accent Button - Noble Gas Glow */
+.vp-button.accent {
+  background: var(--chem-gradient-accent);
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 0.875rem 2rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  transition: all var(--chem-transition-base);
+  box-shadow: var(--chem-shadow-sm);
+}
+
+.vp-button.accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(157, 78, 221, 0.4);
+}
+
+/* ============================================
+   CARDS - LAB EQUIPMENT TRANSPARENCY
+   ============================================ */
+
+.VPBox,
+.VPFeature,
+.custom-block {
+  background: var(--vp-c-bg-elv);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all var(--chem-transition-base);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--chem-shadow-sm);
+}
+
+.VPBox::before,
+.VPFeature::before,
+.custom-block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--chem-gradient-reaction);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--chem-transition-base);
+}
+
+.VPBox:hover,
+.VPFeature:hover,
+.custom-block:hover {
+  border-color: var(--chem-primary);
+  transform: translateY(-4px);
+  box-shadow: var(--chem-shadow-lg);
+}
+
+.VPBox:hover::before,
+.VPFeature:hover::before,
+.custom-block:hover::before {
+  transform: scaleX(1);
+}
+
+/* Feature Cards - Glassware Inspired */
+.VPFeature {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+}
+
+.dark .VPFeature {
+  background: rgba(22, 34, 49, 0.9);
+  border-color: var(--vp-c-border);
+}
+
+.VPFeature .title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--chem-primary);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.dark .VPFeature .title {
+  color: var(--chem-primary-light);
+}
+
+.VPFeature .details {
+  font-size: 0.95rem;
+  color: var(--vp-c-text-2);
+  line-height: 1.6;
+}
+
+/* ============================================
+   CONTENT SECTIONS - LAB NOTEBOOK AESTHETIC
+   ============================================ */
+
+.vp-doc {
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.vp-doc p {
+  margin-bottom: 1.25rem;
+  color: var(--vp-c-text-2);
+}
+
+.vp-doc a {
+  color: var(--chem-primary);
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all var(--chem-transition-fast);
+  padding-bottom: 1px;
+}
+
+.vp-doc a:hover {
+  color: var(--chem-accent);
+  border-bottom-color: var(--chem-accent);
+}
+
+.dark .vp-doc a {
+  color: var(--chem-primary-light);
+}
+
+/* Lists - Organized Data */
+.vp-doc ul,
+.vp-doc ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+  color: var(--vp-c-text-2);
+}
+
+.vp-doc li {
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.vp-doc ul li::marker {
+  color: var(--chem-secondary);
+  font-weight: 600;
+}
+
+.vp-doc ol li::marker {
+  color: var(--chem-primary);
+  font-weight: 600;
+}
+
+/* Blockquotes - Lab Notebook Notes */
+.vp-doc blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  border-left: 4px solid var(--chem-primary);
+  background: var(--vp-c-bg-soft);
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--vp-c-text-2);
+  position: relative;
+}
+
+.vp-doc blockquote::before {
+  content: '"';
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  font-size: 2rem;
+  color: var(--chem-primary);
+  opacity: 0.3;
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+/* Tables - Periodic Table Grid */
+.vp-doc table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1.5rem 0;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: var(--chem-shadow-sm);
+}
+
+.vp-doc thead {
+  background: var(--chem-gradient-primary);
+  color: white;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.vp-doc th {
+  padding: 0.875rem 1rem;
+  text-align: left;
+  border: none;
+  font-weight: 600;
+}
+
+.vp-doc tbody tr {
+  background: var(--vp-c-bg-elv);
+  transition: all var(--chem-transition-fast);
+}
+
+.vp-doc tbody tr:nth-child(even) {
+  background: var(--vp-c-bg-soft);
+}
+
+.vp-doc tbody tr:hover {
+  background: rgba(10, 77, 104, 0.05);
+  transform: scale(1.01);
+}
+
+.dark .vp-doc tbody tr:hover {
+  background: rgba(8, 131, 155, 0.1);
+}
+
+.vp-doc td {
+  padding: 0.875rem 1rem;
+  border: none;
+  border-bottom: 1px solid var(--vp-c-divider);
+  color: var(--vp-c-text-2);
+}
+
+.vp-doc tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ============================================
+   CODE BLOCKS - PRECISION INSTRUMENTS
+   ============================================ */
+
+.vp-doc div[class*='language-'] {
+  margin: 1.5rem 0;
+  border-radius: 12px;
+  background: var(--vp-c-bg-alt);
+  border: 1px solid var(--vp-c-border);
+  overflow: hidden;
+  box-shadow: var(--chem-shadow-md);
+  position: relative;
+}
+
+.vp-doc div[class*='language-']::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--chem-gradient-reaction);
+}
+
+.vp-doc [class*='language-'] pre {
+  padding: 1.25rem 1.5rem;
+  background: transparent;
+  overflow-x: auto;
+}
+
+.vp-doc [class*='language-'] code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--vp-c-text-1);
+}
+
+/* Code Block Language Badge */
+.vp-doc [class*='language-'] .lang {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--vp-c-text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ============================================
+   CUSTOM BLOCKS - LAB SAFETY & INFORMATION
+   ============================================ */
+
+/* Info Block - Laboratory Information */
+.custom-block.info {
+  background: linear-gradient(135deg, rgba(17, 138, 178, 0.08) 0%, rgba(10, 77, 104, 0.08) 100%);
+  border-left: 4px solid var(--chem-info);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.custom-block.info .custom-block-title {
+  color: var(--chem-info);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+/* Warning Block - Caution Required */
+.custom-block.warning {
+  background: linear-gradient(135deg, rgba(255, 209, 102, 0.12) 0%, rgba(255, 209, 102, 0.08) 100%);
+  border-left: 4px solid var(--chem-warning);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.custom-block.warning .custom-block-title {
+  color: #E69500;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+/* Danger Block - Hazard Warning */
+.custom-block.danger {
+  background: linear-gradient(135deg, rgba(239, 71, 111, 0.12) 0%, rgba(239, 71, 111, 0.08) 100%);
+  border-left: 4px solid var(--chem-danger);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.custom-block.danger .custom-block-title {
+  color: var(--chem-danger);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+/* Tip Block - Pro Tip */
+.custom-block.tip {
+  background: linear-gradient(135deg, rgba(0, 200, 150, 0.08) 0%, rgba(6, 214, 160, 0.08) 100%);
+  border-left: 4px solid var(--chem-success);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.custom-block.tip .custom-block-title {
+  color: var(--chem-success);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+/* ============================================
+   FOOTER - LABORATORY BASEMENT
+   ============================================ */
+
+.VPFooter {
+  background: var(--vp-c-bg);
+  border-top: 1px solid var(--vp-c-border);
+  padding: 2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.VPFooter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--chem-gradient-reaction);
+}
+
+.VPFooter .container {
+  color: var(--vp-c-text-2);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* ============================================
+   SEARCH - PRECISION MEASUREMENT
+   ============================================ */
+
+.VPLocalSearchBox {
+  background: var(--vp-c-bg);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 12px;
+  box-shadow: var(--chem-shadow-lg);
+}
+
+.DocSearch-Button {
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 8px;
+  transition: all var(--chem-transition-fast);
+}
+
+.DocSearch-Button:hover {
+  border-color: var(--chem-primary);
+  background: var(--vp-c-bg);
+  box-shadow: var(--chem-shadow-sm);
+}
+
+.DocSearch-Button-Placeholder {
+  color: var(--vp-c-text-3);
+  font-size: 0.9rem;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+/* Tablet */
+@media (max-width: 960px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  .VPHero .name {
+    font-size: 3rem;
+  }
+
+  .VPHero .text {
+    font-size: 1.25rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .VPHero .name {
+    font-size: 2.5rem;
+  }
+
+  .VPHero .text {
+    font-size: 1.125rem;
+  }
+
+  .vp-button.brand,
+  .vp-button.alt,
+  .VPButton.brand,
+  .VPButton.alt {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* ============================================
+   ANIMATIONS - CHEMICAL REACTIONS
+   ============================================ */
+
+/* Loading Animation - Molecular Motion */
+@keyframes molecularShake {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  25% { transform: translateX(-2px) rotate(-1deg); }
+  75% { transform: translateX(2px) rotate(1deg); }
+}
+
+/* Gradient Animation - Color Transition */
+@keyframes colorShift {
+  0% { filter: hue-rotate(0deg); }
+  50% { filter: hue-rotate(15deg); }
+  100% { filter: hue-rotate(0deg); }
+}
+
+/* Glow Animation - Noble Gas Glow */
+@keyframes nobleGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(157, 78, 221, 0.3), 0 0 40px rgba(157, 78, 221, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(157, 78, 221, 0.5), 0 0 60px rgba(157, 78, 221, 0.3);
+  }
+}
+
+/* Reaction Animation - Titration Color Change */
+@keyframes titration {
+  0% { background-color: var(--chem-primary); }
+  33% { background-color: var(--chem-secondary); }
+  66% { background-color: var(--chem-accent); }
+  100% { background-color: var(--chem-primary); }
+}
+
+/* Apply Animations */
+.chem-loading {
+  animation: molecularShake 0.5s ease-in-out infinite;
+}
+
+.chem-glow {
+  animation: nobleGlow 2s ease-in-out infinite;
+}
+
+.chem-reaction {
+  animation: titration 6s ease-in-out infinite;
+}
+
+/* ============================================
+   SPECIAL ELEMENTS - CHEMISTRY SPECIFIC
+   ============================================ */
+
+/* Reaction Arrow */
+.reaction-arrow {
+  display: inline-block;
+  margin: 0 0.5rem;
+  color: var(--chem-primary);
+  font-weight: 600;
+  transition: all var(--chem-transition-fast);
+}
+
+.reaction-arrow:hover {
+  color: var(--chem-accent);
+  transform: scale(1.2);
+}
+
+/* Molecule Icon */
+.molecule-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: var(--chem-gradient-primary);
+  border-radius: 50%;
+  color: white;
+  font-size: 0.9rem;
+  transition: all var(--chem-transition-base);
+  box-shadow: var(--chem-shadow-sm);
+}
+
+.molecule-icon:hover {
+  transform: scale(1.1) rotate(10deg);
+  box-shadow: var(--chem-shadow-glow);
+}
+
+/* Element Badge - Periodic Table Style */
+.element-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 6px;
+  font-family: var(--vp-font-family-mono);
+  font-weight: 600;
+  transition: all var(--chem-transition-base);
+  box-shadow: var(--chem-shadow-sm);
+  cursor: pointer;
+}
+
+.element-badge.metal {
+  background: linear-gradient(135deg, #8D99AE 0%, #6B7A8C 100%);
+  color: white;
+}
+
+.element-badge.nonmetal {
+  background: linear-gradient(135deg, #2DC653 0%, #1FA846 100%);
+  color: white;
+}
+
+.element-badge.noble-gas {
+  background: linear-gradient(135deg, #C77DFF 0%, #A456E6 100%);
+  color: white;
+}
+
+.element-badge.halogen {
+  background: linear-gradient(135deg, #FF6B35 0%, #E55A2B 100%);
+  color: white;
+}
+
+.element-badge .atomic-number {
+  font-size: 0.6rem;
+  opacity: 0.8;
+  line-height: 1;
+}
+
+.element-badge .symbol {
+  font-size: 1.25rem;
+  line-height: 1;
+  margin: 0.25rem 0;
+}
+
+.element-badge .name {
+  font-size: 0.65rem;
+  opacity: 0.9;
+  line-height: 1;
+}
+
+.element-badge:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--chem-shadow-lg);
+}
+
+/* Print Styles */
+@media print {
+  .VPNav,
+  .VPSidebar,
+  .VPFooter {
+    display: none;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: black;
+    background: none;
+    -webkit-text-fill-color: black;
+  }
+
+  a {
+    color: black;
+    text-decoration: underline;
+  }
+}
