@@ -7,6 +7,10 @@ export default defineConfig({
     base: '/fast-balance/',
     cleanUrls: true,
 
+    vite: {
+        publicDir: '.vitepress/public'
+    },
+
     // Head configuration for SEO and deployment
     head: [
         ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
