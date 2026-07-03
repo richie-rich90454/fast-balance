@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <!-- Balanced equation -->
+  <g stroke="none" fill="currentColor" font-family="IBM Plex Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="32" font-weight="400">
+    <text x="55" y="160">H<tspan font-size="18" dy="8">2</tspan></text>
+    <text x="115" y="160" font-size="28">+</text>
+    <text x="150" y="160">Cl<tspan font-size="18" dy="8">2</tspan></text>
+    <text x="310" y="160">2HCl</text>
+  </g>
+
+  <!-- Reaction arrow -->
+  <path d="M210 155h48M248 146l10 9-10 9" stroke-width="2.5"/>
+
+  <!-- Balance scale -->
+  <g transform="translate(200,50)">
+    <path d="M-15 0h30M-15 0v5M15 0v5M-18 8l3 3 3-3M12 8l3 3 3-3M0 0v10M-6 15h12l-6-5-6 5z"/>
+  </g>
+
+  <!-- Atom -->
+  <g transform="translate(75,75)">
+    <ellipse rx="50" ry="16"/>
+    <ellipse rx="50" ry="16" transform="rotate(60)"/>
+    <ellipse rx="50" ry="16" transform="rotate(-60)"/>
+    <circle r="4" fill="currentColor" stroke="none"/>
+  </g>
+
+  <!-- Molecule -->
+  <g transform="translate(325,75)">
+    <path d="M0 -40l34.641 20v40L0 40l-34.641-20V-20z"/>
+    <circle r="12"/>
+  </g>
+
+  <!-- Flask -->
+  <path d="M68 205h24v15l6 40H62l6-40v-15z"/>
+
+  <!-- Beaker -->
+  <path d="M301 212l1-7h36l1 7v48h-38v-48z"/>
+  <path d="M308 220h6M308 232h6M308 244h6"/>
+</svg>
