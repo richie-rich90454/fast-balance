@@ -83,9 +83,8 @@ const loadExample = (example: string) => {
         </div>
         <div v-if="result" class="result-section">
             <label>Balanced Equation:</label>
-            <div class="result-display" v-html="format === 'html' ? result : undefined">
-                {{ format !== 'html' ? result : '' }}
-            </div>
+            <div v-if="format === 'html'" class="result-display" v-html="result"></div>
+            <div v-else class="result-display">{{ result }}</div>
         </div>
     </div>
 </template>

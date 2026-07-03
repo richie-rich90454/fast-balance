@@ -243,4 +243,4 @@ npm list fast-balance
 
 ## License
 
-fast-balance is released under the MIT License. See the [LICENSE](../LICENSE) file for full license text.
+fast-balance is released under the MIT License. See the [LICENSE](https://github.com/richie-rich90454/fast-balance/blob/main/LICENSE) file for full license text.
