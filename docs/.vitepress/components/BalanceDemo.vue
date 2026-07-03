@@ -89,7 +89,6 @@ const getCoefficientColor = (index: number) => {
         <div class="input-section">
             <div class="section-header">
                 <label for="equation-input" class="input-label">
-                    <span class="label-icon">⚗️</span>
                     Chemical Equation
                 </label>
                 <span class="helper-text">Enter reactants and products separated by → or -></span>
@@ -108,15 +107,15 @@ const getCoefficientColor = (index: number) => {
                 </div>
             </div>
             <div class="input-hints">
-                <span class="hint">💡 Use arrow (→) or -> for reaction direction</span>
-                <span class="hint">💡 Support for ions (e.g., MnO4-, H+)</span>
-                <span class="hint">💡 Parentheses supported (e.g., Ca3(PO4)2)</span>
+                <span class="hint">Use arrow (→) or -> for reaction direction</span>
+                <span class="hint">Support for ions (e.g., MnO4-, H+)</span>
+                <span class="hint">Parentheses supported (e.g., Ca3(PO4)2)</span>
             </div>
         </div>
 
         <div class="examples-section">
             <div class="section-header">
-                <span class="examples-label">📚 Try these examples:</span>
+                <span class="examples-label">Try these examples:</span>
             </div>
             <div class="examples-list">
                 <button
@@ -136,7 +135,6 @@ const getCoefficientColor = (index: number) => {
         <div class="options-section">
             <div class="option-group format-group">
                 <label for="format-select" class="option-label">
-                    <span class="label-icon">📊</span>
                     Output Format
                 </label>
                 <div class="select-wrapper">
@@ -155,7 +153,6 @@ const getCoefficientColor = (index: number) => {
                     <input type="checkbox" v-model="showOne" />
                     <span class="checkbox-custom"></span>
                     <span class="checkbox-label">
-                        <span class="label-icon">1️⃣</span>
                         Show coefficient of 1
                     </span>
                 </label>
@@ -164,7 +161,7 @@ const getCoefficientColor = (index: number) => {
         </div>
 
         <div v-if="error" class="error-section">
-            <div class="error-icon">⚠️</div>
+            <div class="error-icon">!</div>
             <div class="error-content">
                 <p class="error-title">Balancing Error</p>
                 <p class="error-message">{{ error }}</p>
@@ -174,7 +171,6 @@ const getCoefficientColor = (index: number) => {
         <div v-if="result && !error" class="result-section">
             <div class="section-header">
                 <label class="result-label">
-                    <span class="label-icon">✨</span>
                     Balanced Equation
                 </label>
             </div>
@@ -186,7 +182,6 @@ const getCoefficientColor = (index: number) => {
                 <div v-else class="result-display">
                     <code class="chemical-formula">{{ result }}</code>
                 </div>
-                <div class="result-decoration"></div>
             </div>
         </div>
     </div>
@@ -196,48 +191,15 @@ const getCoefficientColor = (index: number) => {
 .balance-demo {
     padding: 2rem;
     border: 2px solid var(--vp-c-border);
-    border-radius: 16px;
+    border-radius: 12px;
     background: var(--vp-c-bg-soft);
-    box-shadow: var(--chem-shadow-md);
-    transition: all var(--chem-transition-base);
+    box-shadow: var(--chem-shadow-sm);
+    transition: border-color var(--chem-transition-base), box-shadow var(--chem-transition-base);
     position: relative;
-    overflow: hidden;
-}
-
-.balance-demo::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--chem-gradient-reaction);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform var(--chem-transition-base);
-}
-
-.balance-demo:hover::before,
-.balance-demo.processing::before {
-    transform: scaleX(1);
 }
 
 .balance-demo.processing {
     border-color: var(--chem-primary);
-    box-shadow: var(--chem-shadow-glow);
-}
-
-.balance-demo.changed {
-    animation: colorPulse 0.3s ease-out;
-}
-
-@keyframes colorPulse {
-    0% {
-        background: rgba(10, 77, 104, 0.05);
-    }
-    100% {
-        background: var(--vp-c-bg-soft);
-    }
 }
 
 .section-header {
@@ -260,10 +222,6 @@ const getCoefficientColor = (index: number) => {
     letter-spacing: -0.01em;
 }
 
-.label-icon {
-    font-size: 1.2rem;
-}
-
 .helper-text {
     font-size: 0.85rem;
     color: var(--vp-c-text-3);
@@ -279,32 +237,21 @@ const getCoefficientColor = (index: number) => {
     width: 100%;
     padding: 1rem;
     border: 2px solid var(--vp-c-border);
-    border-radius: 12px;
+    border-radius: 8px;
     font-family: var(--vp-font-family-mono);
     font-size: 1rem;
     line-height: 1.6;
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: var(--vp-c-bg);
     color: var(--vp-c-text-1);
     resize: vertical;
-    transition: all var(--chem-transition-base);
+    transition: border-color var(--chem-transition-base), box-shadow var(--chem-transition-base);
     box-shadow: var(--chem-shadow-sm);
-}
-
-.dark .chemistry-textarea {
-    background: rgba(22, 34, 49, 0.7);
 }
 
 .chemistry-textarea:focus {
     outline: none;
     border-color: var(--chem-primary);
-    box-shadow: var(--chem-shadow-glow);
-    background: rgba(255, 255, 255, 0.95);
-}
-
-.dark .chemistry-textarea:focus {
-    background: rgba(22, 34, 49, 0.95);
+    box-shadow: 0 0 0 3px rgba(10, 77, 104, 0.15);
 }
 
 .chemistry-textarea.has-error {
@@ -323,18 +270,16 @@ const getCoefficientColor = (index: number) => {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: rgba(255, 255, 255, 0.9);
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 12px;
+    border-radius: 8px;
     z-index: 10;
 }
 
 .dark .processing-overlay {
-    background: rgba(13, 27, 42, 0.8);
+    background: rgba(13, 27, 42, 0.9);
 }
 
 .molecule-spinner {
@@ -389,53 +334,35 @@ const getCoefficientColor = (index: number) => {
 .example-btn {
     padding: 0.75rem 1rem;
     border: 2px solid var(--vp-c-border);
-    border-radius: 10px;
+    border-radius: 8px;
     background: var(--vp-c-bg);
     cursor: pointer;
-    transition: all var(--chem-transition-base);
+    transition: border-color var(--chem-transition-base), background-color var(--chem-transition-base);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
-    box-shadow: var(--chem-shadow-sm);
 }
 
 .example-btn:hover {
     border-color: var(--chem-primary);
-    transform: translateY(-2px);
-    box-shadow: var(--chem-shadow-md);
+    background: var(--vp-c-bg-soft);
 }
 
 .example-btn.metal {
     border-left: 4px solid var(--chem-metals);
 }
 
-.example-btn.metal:hover {
-    background: linear-gradient(135deg, rgba(141, 153, 174, 0.1) 0%, transparent 100%);
-}
-
 .example-btn.nonmetal {
     border-left: 4px solid var(--chem-nonmetals);
-}
-
-.example-btn.nonmetal:hover {
-    background: linear-gradient(135deg, rgba(45, 198, 83, 0.1) 0%, transparent 100%);
 }
 
 .example-btn.noble-gas {
     border-left: 4px solid var(--chem-noble-gases);
 }
 
-.example-btn.noble-gas:hover {
-    background: linear-gradient(135deg, rgba(199, 125, 255, 0.1) 0%, transparent 100%);
-}
-
 .example-btn.halogen {
     border-left: 4px solid var(--chem-halogens);
-}
-
-.example-btn.halogen:hover {
-    background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, transparent 100%);
 }
 
 .example-category {
@@ -456,17 +383,10 @@ const getCoefficientColor = (index: number) => {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
     padding: 1.25rem;
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-radius: 12px;
+    background: var(--vp-c-bg);
+    border-radius: 8px;
     border: 2px solid var(--vp-c-border);
     margin: 1.5rem 0;
-    box-shadow: var(--chem-shadow-sm);
-}
-
-.dark .options-section {
-    background: rgba(22, 34, 49, 0.6);
 }
 
 .option-group {
@@ -495,27 +415,25 @@ const getCoefficientColor = (index: number) => {
     width: 100%;
     padding: 0.75rem 2.5rem 0.75rem 1rem;
     border: 2px solid var(--vp-c-border);
-    border-radius: 10px;
+    border-radius: 8px;
     background: var(--vp-c-bg);
     color: var(--vp-c-text-1);
     font-size: 0.95rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all var(--chem-transition-base);
+    transition: border-color var(--chem-transition-base), box-shadow var(--chem-transition-base);
     appearance: none;
     -webkit-appearance: none;
-    box-shadow: var(--chem-shadow-sm);
 }
 
 .chemistry-select:hover {
     border-color: var(--chem-primary);
-    box-shadow: var(--chem-shadow-md);
 }
 
 .chemistry-select:focus {
     outline: none;
     border-color: var(--chem-primary);
-    box-shadow: var(--chem-shadow-glow);
+    box-shadow: 0 0 0 3px rgba(10, 77, 104, 0.15);
 }
 
 .select-arrow {
@@ -555,33 +473,32 @@ const getCoefficientColor = (index: number) => {
     width: 22px;
     height: 22px;
     border: 2px solid var(--vp-c-border);
-    border-radius: 6px;
+    border-radius: 4px;
     background: var(--vp-c-bg);
     position: relative;
-    transition: all var(--chem-transition-base);
-    box-shadow: var(--chem-shadow-sm);
+    transition: background-color var(--chem-transition-base), border-color var(--chem-transition-base);
 }
 
 .chemistry-checkbox input[type="checkbox"]:checked + .checkbox-custom {
-    background: var(--chem-gradient-primary);
+    background: var(--chem-primary);
     border-color: var(--chem-primary);
-    box-shadow: var(--chem-shadow-md);
 }
 
 .checkbox-custom::after {
-    content: '✓';
+    content: '';
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    color: white;
-    font-size: 14px;
-    font-weight: 700;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -50%) rotate(45deg) scale(0);
     transition: transform var(--chem-transition-base);
 }
 
 .chemistry-checkbox input[type="checkbox"]:checked + .checkbox-custom::after {
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) rotate(45deg) scale(1);
 }
 
 .checkbox-label {
@@ -595,25 +512,19 @@ const getCoefficientColor = (index: number) => {
 
 .error-section {
     padding: 1.25rem;
-    background: linear-gradient(135deg, rgba(239, 71, 111, 0.12) 0%, rgba(239, 71, 111, 0.08) 100%);
+    background: rgba(239, 71, 111, 0.08);
     border: 2px solid var(--chem-danger);
-    border-radius: 12px;
+    border-radius: 8px;
     margin: 1.5rem 0;
     display: flex;
     align-items: flex-start;
     gap: 1rem;
-    box-shadow: 0 4px 12px rgba(239, 71, 111, 0.15);
-    animation: errorShake 0.4s ease-out;
-}
-
-@keyframes errorShake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
 }
 
 .error-icon {
     font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--chem-danger);
     flex-shrink: 0;
 }
 
@@ -643,17 +554,10 @@ const getCoefficientColor = (index: number) => {
 .result-card {
     position: relative;
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(12px) saturate(180%);
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    background: var(--vp-c-bg);
     border: 2px solid var(--chem-primary);
-    border-radius: 12px;
-    box-shadow: var(--chem-shadow-lg);
+    border-radius: 8px;
     overflow: hidden;
-}
-
-.dark .result-card {
-    background: rgba(22, 34, 49, 0.9);
 }
 
 .result-card::before {
@@ -663,28 +567,7 @@ const getCoefficientColor = (index: number) => {
     left: 0;
     right: 0;
     height: 3px;
-    background: var(--chem-gradient-reaction);
-    animation: gradientSlide 3s ease infinite;
-    background-size: 200% 100%;
-}
-
-@keyframes gradientSlide {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-}
-
-.result-decoration {
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(10, 77, 104, 0.05) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-.dark .result-decoration {
-    background: radial-gradient(circle, rgba(8, 131, 155, 0.1) 0%, transparent 70%);
+    background: var(--chem-primary);
 }
 
 .result-display {
@@ -717,24 +600,24 @@ const getCoefficientColor = (index: number) => {
     font-size: 1.2rem;
     padding: 0.5rem 0.75rem;
     display: inline-block;
-    background: linear-gradient(135deg, rgba(10, 77, 104, 0.08) 0%, rgba(157, 78, 221, 0.08) 100%);
+    background: rgba(10, 77, 104, 0.06);
 }
 
 /* Chemical formula styling */
 :deep(.chemical-formula) {
     font-family: var(--vp-font-family-mono);
     font-weight: 600;
-    background: linear-gradient(135deg, rgba(10, 77, 104, 0.08) 0%, rgba(157, 78, 221, 0.08) 100%);
+    background: rgba(10, 77, 104, 0.06);
     border: 1px solid rgba(10, 77, 104, 0.2);
     color: var(--chem-primary);
     padding: 0.25em 0.5em;
-    border-radius: 6px;
+    border-radius: 4px;
     display: inline-block;
-    transition: all var(--chem-transition-fast);
+    transition: background-color var(--chem-transition-fast), border-color var(--chem-transition-fast);
 }
 
 .dark :deep(.chemical-formula) {
-    background: linear-gradient(135deg, rgba(8, 131, 155, 0.15) 0%, rgba(181, 126, 236, 0.15) 100%);
+    background: rgba(8, 131, 155, 0.1);
     border-color: rgba(8, 131, 155, 0.3);
     color: var(--chem-primary-light);
 }
@@ -859,10 +742,6 @@ const getCoefficientColor = (index: number) => {
     }
     
     .balance-demo.changed {
-        animation: none;
-    }
-    
-    .result-card::before {
         animation: none;
     }
 }
