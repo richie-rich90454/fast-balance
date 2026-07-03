@@ -1,22 +1,16 @@
 ---
-title: Examples Showcase
+title: Examples
 ---
 
-# Examples Showcase
+# Examples
 
-This page showcases real chemical equation examples curated from the **fast-balance** test suite. The library handles 89 test files covering diverse reaction types from basic stoichiometry to specialized nuclear chemistry.
+This page contains chemical equation examples from the fast-balance test suite. Each example shows the input equation, the balanced output, and a code snippet demonstrating the `balance()` function.
 
-Each example shows the **input equation** (unbalanced), **expected output** (balanced), and **code snippet** demonstrating how to balance it using the library. Click "Try in Demo" to experiment with similar reactions in the interactive demo.
+## Redox reactions
 
-::: tip Quick Start
-All examples use the same simple API: `balance("equation")`. See [API Reference](/api-reference.md) for full documentation.
-:::
+Redox reactions involve electron transfer between species. The library handles simple metal oxidation, ionic half-reactions, and displacement reactions.
 
-## Redox Reactions
-
-Redox (reduction-oxidation) reactions involve electron transfer between species. The library handles both simple metal oxidation and complex ionic redox equations including half-reactions.
-
-### Metal Oxidation
+### Metal oxidation
 
 Basic oxidation of metals by oxygen to form oxides.
 
@@ -30,22 +24,16 @@ Basic oxidation of metals by oxygen to form oxides.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Iron oxidation (rust formation)
 const result = balance('Fe + O2 -> Fe2O3');
 console.log(result.equation);
 // Output: "4 Fe + 3 O2 -> 2 Fe2O3"
-
-// Aluminum oxidation
-const result2 = balance('Al + O2 -> Al2O3');
-console.log(result2.equation);
-// Output: "4 Al + 3 O2 -> 2 Al2O3"
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
-### Ionic Redox Half-Reactions
+### Ionic redox half-reactions
 
-Half-reactions in acidic or basic medium, commonly used in electrochemistry and titration calculations.
+Half-reactions in acidic medium, commonly used in electrochemistry and titration calculations.
 
 | Input | Balanced Output |
 |-------|-----------------|
@@ -56,22 +44,16 @@ Half-reactions in acidic or basic medium, commonly used in electrochemistry and 
 ```typescript
 import { balance } from 'fast-balance';
 
-// Permanganate reduction (acidic medium)
 const result = balance('MnO4- + H+ + e- -> Mn2+ + H2O');
 console.log(result.equation);
 // Output: "1 MnO4- + 8 H+ + 5 e- -> 1 Mn2+ + 4 H2O"
-
-// Dichromate reduction (acidic medium)
-const result2 = balance('Cr2O7^2- + H+ + e- -> Cr3+ + H2O');
-console.log(result2.reactants[1].coefficient); // 14 (H+)
-console.log(result2.products[0].coefficient); // 2 (Cr3+)
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
-### Displacement Reactions
+### Displacement reactions
 
-Metal displacement reactions where a more reactive metal displaces a less reactive one from its compound.
+A more reactive metal displaces a less reactive metal from its compound.
 
 | Input | Balanced Output |
 |-------|-----------------|
@@ -82,25 +64,20 @@ Metal displacement reactions where a more reactive metal displaces a less reacti
 ```typescript
 import { balance } from 'fast-balance';
 
-// Zinc displacing copper
 const result = balance('Zn + CuSO4 -> ZnSO4 + Cu');
 console.log(result.equation);
 // Output: "1 Zn + 1 CuSO4 -> 1 ZnSO4 + 1 Cu"
-
-// Copper displacing silver
-const result2 = balance('Cu + AgNO3 -> Cu(NO3)2 + Ag');
-console.log(result2.reactants[1].coefficient); // 2 (AgNO3)
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
 ---
 
-## Organic Reactions
+## Organic reactions
 
-Organic chemistry reactions including combustion, esterification, and named reactions like Grignard, Friedel-Crafts, and more.
+Reactions including combustion, esterification, and named organic reactions.
 
-### Combustion Reactions
+### Combustion reactions
 
 Complete combustion of hydrocarbons and oxygenated organic compounds.
 
@@ -115,26 +92,16 @@ Complete combustion of hydrocarbons and oxygenated organic compounds.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Methane combustion
 const result = balance('CH4 + O2 -> CO2 + H2O');
 console.log(result.equation);
 // Output: "1 CH4 + 2 O2 -> 1 CO2 + 2 H2O"
-
-// Glucose combustion (respiration)
-const result2 = balance('C6H12O6 + O2 -> CO2 + H2O');
-console.log(result2.products[0].coefficient); // 6 (CO2)
-
-// Large hydrocarbon: Octane
-const result3 = balance('C8H18 + O2 -> CO2 + H2O');
-console.log(result3.equation);
-// Output: "2 C8H18 + 25 O2 -> 16 CO2 + 18 H2O"
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
-### Esterification Reactions
+### Esterification reactions
 
-Formation of esters from carboxylic acids and alcohols (Fischer esterification).
+Formation of esters from carboxylic acids and alcohols.
 
 | Input | Balanced Output |
 |-------|-----------------|
@@ -145,20 +112,14 @@ Formation of esters from carboxylic acids and alcohols (Fischer esterification).
 ```typescript
 import { balance } from 'fast-balance';
 
-// Fischer esterification: Acetic acid + Ethanol
 const result = balance('CH3COOH + C2H5OH -> CH3COOC2H5 + H2O');
 console.log(result.equation);
 // Output: "1 CH3COOH + 1 C2H5OH -> 1 CH3COOC2H5 + 1 H2O"
-
-// Saponification: Ethyl acetate + NaOH
-const result2 = balance('CH3COOC2H5 + NaOH -> CH3COONa + C2H5OH');
-console.log(result2.equation);
-// Output: "1 CH3COOC2H5 + 1 NaOH -> 1 CH3COONa + 1 C2H5OH"
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
-### Named Organic Reactions
+### Named organic reactions
 
 Classic named reactions from organic synthesis.
 
@@ -171,28 +132,22 @@ Classic named reactions from organic synthesis.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Friedel-Crafts alkylation (benzene + methyl chloride)
 const result = balance('C6H6 + CH3Cl -> C7H8 + HCl');
 console.log(result.equation);
 // Output: "1 C6H6 + 1 CH3Cl -> 1 C7H8 + 1 HCl"
-
-// Grignard formation
-const result2 = balance('C2H5Br + Mg -> C2H5MgBr');
-console.log(result2.equation);
-// Output: "1 C2H5Br + 1 Mg -> 1 C2H5MgBr"
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
 ---
 
-## Inorganic Reactions
+## Inorganic reactions
 
-Inorganic reactions cover alkali/alkaline earth metals, halogen chemistry, and acid-base neutralization.
+Inorganic reactions including alkali and alkaline earth metals, halogen chemistry, and acid-base neutralization.
 
-### Metal Reactions
+### Metal reactions
 
-Reactions of alkali and alkaline earth metals with water, acids, and halogens.
+Reactions of metals with water, acids, and halogens.
 
 | Input | Balanced Output |
 |-------|-----------------|
@@ -204,19 +159,14 @@ Reactions of alkali and alkaline earth metals with water, acids, and halogens.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Sodium with water
 const result = balance('Na + H2O -> NaOH + H2');
 console.log(result.equation);
 // Output: "2 Na + 2 H2O -> 2 NaOH + 1 H2"
-
-// Magnesium with hydrochloric acid
-const result2 = balance('Mg + HCl -> MgCl2 + H2');
-console.log(result2.reactants[1].coefficient); // 2 (HCl)
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
-### Acid-Base Neutralization
+### Acid-base neutralization
 
 Neutralization reactions between acids and bases.
 
@@ -230,19 +180,14 @@ Neutralization reactions between acids and bases.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Hydrochloric acid + Sodium hydroxide
 const result = balance('HCl + NaOH -> NaCl + H2O');
 console.log(result.equation);
 // Output: "1 HCl + 1 NaOH -> 1 NaCl + 1 H2O"
-
-// Sulfuric acid + Sodium hydroxide (diprotic acid)
-const result2 = balance('H2SO4 + NaOH -> Na2SO4 + H2O');
-console.log(result2.reactants[1].coefficient); // 2 (NaOH)
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
-### Precipitation Reactions
+### Precipitation reactions
 
 Formation of insoluble precipitates from ionic solutions.
 
@@ -255,25 +200,20 @@ Formation of insoluble precipitates from ionic solutions.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Silver chloride precipitation
 const result = balance('AgNO3 + NaCl -> AgCl + NaNO3');
 console.log(result.equation);
 // Output: "1 AgNO3 + 1 NaCl -> 1 AgCl + 1 NaNO3"
-
-// Barium sulfate precipitation
-const result2 = balance('BaCl2 + Na2SO4 -> BaSO4 + NaCl');
-console.log(result2.products[1].coefficient); // 2 (NaCl)
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
 ---
 
-## Industrial Reactions
+## Industrial reactions
 
 Major industrial processes used in chemical manufacturing.
 
-### Haber Process (Ammonia Synthesis)
+### Haber process
 
 Industrial synthesis of ammonia from nitrogen and hydrogen.
 
@@ -285,19 +225,14 @@ Industrial synthesis of ammonia from nitrogen and hydrogen.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Haber process: Nitrogen + Hydrogen -> Ammonia
 const result = balance('N2 + H2 -> NH3');
 console.log(result.equation);
 // Output: "1 N2 + 3 H2 -> 2 NH3"
-
-// Ammonia decomposition
-const result2 = balance('NH3 -> N2 + H2');
-console.log(result2.reactants[0].coefficient); // 2 (NH3)
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
-### Contact Process (Sulfuric Acid)
+### Contact process
 
 Industrial production of sulfuric acid from sulfur.
 
@@ -310,20 +245,14 @@ Industrial production of sulfuric acid from sulfur.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Sulfur combustion
 const result = balance('S + O2 -> SO2');
 console.log(result.equation);
 // Output: "1 S + 1 O2 -> 1 SO2"
-
-// SO2 to SO3 (catalytic oxidation)
-const result2 = balance('SO2 + O2 -> SO3');
-console.log(result2.equation);
-// Output: "2 SO2 + 1 O2 -> 2 SO3"
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
-### Ostwald Process (Nitric Acid)
+### Ostwald process
 
 Industrial production of nitric acid from ammonia.
 
@@ -336,19 +265,14 @@ Industrial production of nitric acid from ammonia.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Ammonia oxidation to nitric oxide
 const result = balance('NH3 + O2 -> NO + H2O');
 console.log(result.equation);
 // Output: "4 NH3 + 5 O2 -> 4 NO + 6 H2O"
-
-// NO2 absorption in water
-const result2 = balance('NO2 + H2O -> HNO3 + NO');
-console.log(result2.reactants[0].coefficient); // 3 (NO2)
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
-### Blast Furnace (Iron Production)
+### Blast furnace
 
 Reduction of iron ore to metallic iron.
 
@@ -361,26 +285,20 @@ Reduction of iron ore to metallic iron.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Hematite reduction by carbon monoxide
 const result = balance('Fe2O3 + CO -> Fe + CO2');
 console.log(result.equation);
 // Output: "1 Fe2O3 + 3 CO -> 2 Fe + 3 CO2"
-
-// Coke combustion in blast furnace
-const result2 = balance('C + O2 -> CO2');
-console.log(result2.equation);
-// Output: "1 C + 1 O2 -> 1 CO2"
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
 ---
 
-## Electrochemical Reactions
+## Electrochemical reactions
 
 Electrochemistry including galvanic cells, batteries, electrolysis, and electroplating.
 
-### Galvanic Cells
+### Galvanic cells
 
 Spontaneous redox reactions in electrochemical cells.
 
@@ -393,19 +311,14 @@ Spontaneous redox reactions in electrochemical cells.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Daniel cell: Zinc-Copper
 const result = balance('Zn + Cu2+ -> Zn2+ + Cu');
 console.log(result.equation);
 // Output: "1 Zn + 1 Cu2+ -> 1 Zn2+ + 1 Cu"
-
-// Aluminum-copper cell
-const result2 = balance('Al + Cu2+ -> Al3+ + Cu');
-console.log(result2.reactants[0].coefficient); // 2 (Al)
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
-### Battery Chemistry
+### Battery chemistry
 
 Reactions in common battery systems.
 
@@ -418,18 +331,12 @@ Reactions in common battery systems.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Lead-acid battery discharge
 const result = balance('Pb + PbO2 + H2SO4 -> PbSO4 + H2O');
 console.log(result.equation);
 // Output: "1 Pb + 1 PbO2 + 2 H2SO4 -> 2 PbSO4 + 2 H2O"
-
-// Lithium-ion intercalation
-const result2 = balance('Li + CoO2 -> LiCoO2');
-console.log(result2.equation);
-// Output: "1 Li + 1 CoO2 -> 1 LiCoO2"
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
 ### Electrolysis
 
@@ -444,25 +351,20 @@ Electrolytic decomposition reactions.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Water electrolysis
 const result = balance('H2O -> H2 + O2');
 console.log(result.equation);
 // Output: "2 H2O -> 2 H2 + 1 O2"
-
-// Hall-Héroult process (aluminum production)
-const result2 = balance('Al2O3 -> Al + O2');
-console.log(result2.products[0].coefficient); // 4 (Al)
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
 ---
 
-## Biochemical and Pharmaceutical Reactions
+## Biochemical and pharmaceutical reactions
 
-Reactions relevant to biochemistry, drug synthesis, and pharmaceutical processes.
+Reactions relevant to biochemistry and pharmaceutical synthesis.
 
-### Fermentation and Respiration
+### Fermentation and respiration
 
 Biological oxidation and fermentation reactions.
 
@@ -474,19 +376,14 @@ Biological oxidation and fermentation reactions.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Alcoholic fermentation
 const result = balance('C6H12O6 -> C2H5OH + CO2');
 console.log(result.equation);
 // Output: "1 C6H12O6 -> 2 C2H5OH + 2 CO2"
-
-// Cellular respiration
-const result2 = balance('C6H12O6 + O2 -> CO2 + H2O');
-console.log(result2.reactants[1].coefficient); // 6 (O2)
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
-### Drug Synthesis
+### Drug synthesis
 
 Key reactions in pharmaceutical manufacturing.
 
@@ -498,26 +395,20 @@ Key reactions in pharmaceutical manufacturing.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Aspirin synthesis (salicylic acid + acetic anhydride)
 const result = balance('C7H6O3 + C4H6O3 -> C9H8O4 + C2H4O2');
 console.log(result.equation);
 // Output: "1 C7H6O3 + 1 C4H6O3 -> 1 C9H8O4 + 1 C2H4O2"
-
-// Paracetamol synthesis
-const result2 = balance('C6H7NO + C4H6O3 -> C8H9NO2 + C2H4O2');
-console.log(result2.equation);
-// Output: "1 C6H7NO + 1 C4H6O3 -> 1 C8H9NO2 + 1 C2H4O2"
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
 ---
 
-## Environmental and Geochemistry Reactions
+## Environmental and geochemistry reactions
 
 Reactions relevant to environmental science, atmospheric chemistry, and geological processes.
 
-### Atmospheric Chemistry
+### Atmospheric chemistry
 
 Ozone depletion, smog formation, and greenhouse gas reactions.
 
@@ -530,20 +421,14 @@ Ozone depletion, smog formation, and greenhouse gas reactions.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Ozone depletion by NO
 const result = balance('O3 + NO -> NO2 + O2');
 console.log(result.equation);
 // Output: "1 O3 + 1 NO -> 1 NO2 + 1 O2"
-
-// Acid rain formation (SO3 + water)
-const result2 = balance('SO3 + H2O -> H2SO4');
-console.log(result2.equation);
-// Output: "1 SO3 + 1 H2O -> 1 H2SO4"
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
-### Carbon and Nitrogen Cycles
+### Carbon and nitrogen cycles
 
 Key reactions in biogeochemical cycles.
 
@@ -556,19 +441,14 @@ Key reactions in biogeochemical cycles.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Photosynthesis (simplified)
 const result = balance('CO2 + H2O -> C6H12O6 + O2');
 console.log(result.equation);
 // Output: "6 CO2 + 6 H2O -> 1 C6H12O6 + 6 O2"
-
-// Nitrogen fixation (Haber process)
-const result2 = balance('N2 + H2 -> NH3');
-console.log(result2.products[0].coefficient); // 2 (NH3)
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
-### Mineral Weathering
+### Mineral weathering
 
 Geological weathering and dissolution reactions.
 
@@ -581,27 +461,22 @@ Geological weathering and dissolution reactions.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Carbonate dissolution by acid rain
 const result = balance('CaCO3 + H2SO4 -> CaSO4 + CO2 + H2O');
 console.log(result.equation);
 // Output: "1 CaCO3 + 1 H2SO4 -> 1 CaSO4 + 1 CO2 + 1 H2O"
-
-// Iron oxide dissolution
-const result2 = balance('Fe2O3 + H+ -> Fe3+ + H2O');
-console.log(result2.reactants[1].coefficient); // 6 (H+)
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
 ---
 
-## Nuclear and Specialized Reactions
+## Nuclear and specialized reactions
 
 Nuclear fuel processing, actinide chemistry, and specialized compound reactions.
 
-### Nuclear Fuel Processing
+### Nuclear fuel processing
 
-Chemical processing reactions for nuclear materials (not nuclear decay).
+Chemical processing reactions for nuclear materials.
 
 | Input | Balanced Output |
 |-------|-----------------|
@@ -613,20 +488,14 @@ Chemical processing reactions for nuclear materials (not nuclear decay).
 ```typescript
 import { balance } from 'fast-balance';
 
-// Uranium oxide reduction
 const result = balance('UO2 + H2 -> U + H2O');
 console.log(result.equation);
 // Output: "1 UO2 + 2 H2 -> 1 U + 2 H2O"
-
-// Uranium hexafluoride production
-const result2 = balance('UF4 + F2 -> UF6');
-console.log(result2.equation);
-// Output: "1 UF4 + 1 F2 -> 1 UF6"
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
-### Coordination Chemistry
+### Coordination chemistry
 
 Formation of coordination complexes.
 
@@ -639,18 +508,13 @@ Formation of coordination complexes.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Tetraamminecopper(II) sulfate
 const result = balance('CuSO4 + NH3 -> [Cu(NH3)4]SO4');
 console.log(result.reactants[1].coefficient); // 4 (NH3)
-
-// Hexacyanoferrate(III) formation
-const result2 = balance('FeCl3 + KCN -> K3[Fe(CN)6] + KCl');
-console.log(result2.reactants[1].coefficient); // 6 (KCN)
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
-### Superoxide and Peroxide Reactions
+### Superoxide and peroxide reactions
 
 Reactions involving superoxide and peroxide species.
 
@@ -663,32 +527,24 @@ Reactions involving superoxide and peroxide species.
 ```typescript
 import { balance } from 'fast-balance';
 
-// Sodium peroxide formation
 const result = balance('Na + O2 -> Na2O2');
 console.log(result.equation);
 // Output: "2 Na + 1 O2 -> 1 Na2O2"
-
-// Hydrogen peroxide decomposition
-const result2 = balance('H2O2 -> H2O + O2');
-console.log(result2.equation);
-// Output: "2 H2O2 -> 2 H2O + 1 O2"
 ```
 
-[Try in Demo →](/demo.md)
+[Try in Demo](/demo.md)
 
 ---
 
 ## Summary
 
-The **fast-balance** library handles a wide variety of chemical equations:
+The fast-balance library handles a wide range of chemical equations:
 
-- **89 test files** covering diverse reaction types
-- **Simple API**: Just call `balance("equation")`
-- **Flexible output**: Text, HTML, or LaTeX formats
-- **Robust parsing**: Handles charges, parentheses, brackets, hydrates
+- Simple and complex stoichiometry
+- Redox, ionic, and electrochemical reactions
+- Organic combustion and named reactions
+- Industrial processes
+- Coordination compounds and hydrates
+- Environmental and nuclear chemistry
 
-::: info Next Steps
-- Try the [Live Demo](/demo.md) to experiment with your own equations
-- Read the [API Reference](/api-reference.md) for detailed documentation
-- Check [Notation Guide](/notation.md) for supported input formats
-:::
+For complete input syntax details, see the [Notation Guide](/notation.md). For API details, see the [API Reference](/api-reference.md).
