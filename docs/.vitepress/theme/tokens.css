@@ -1,0 +1,226 @@
+/**
+ * Carbon-influenced design tokens for the fast-balance VitePress theme.
+ *
+ * This is a pure token reference — no component rules.
+ * Import it at the top of custom.css when the theme is rewritten.
+ */
+
+/* ==========================================================================
+   Light mode tokens
+   ========================================================================== */
+
+:root {
+  /* -------------------------------------------------------------------------
+     Color tokens
+     ------------------------------------------------------------------------- */
+
+  /* Neutral gray palette (Carbon style) */
+  --fb-gray-0: #ffffff;
+  --fb-gray-10: #f4f4f4;
+  --fb-gray-20: #e0e0e0;
+  --fb-gray-30: #c6c6c6;
+  --fb-gray-40: #a8a8a8;
+  --fb-gray-50: #8d8d8d;
+  --fb-gray-60: #6f6f6f;
+  --fb-gray-70: #525252;
+  --fb-gray-80: #393939;
+  --fb-gray-90: #262626;
+  --fb-gray-100: #161616;
+
+  /* Chemistry accent colors */
+  --fb-primary: #0f62fe;
+  --fb-secondary: #198038;
+
+  /* Semantic colors */
+  --fb-error: #da1e28;
+  --fb-success: #24a148;
+  --fb-warning: #f1c21b;
+  --fb-info: #0043ce;
+
+  /* Text colors */
+  --fb-text-primary: #161616;
+  --fb-text-secondary: #525252;
+  --fb-text-helper: #6f6f6f;
+  --fb-text-inverse: #ffffff;
+
+  /* Background colors */
+  --fb-background: #ffffff;
+  --fb-background-hover: #f4f4f4;
+  --fb-background-active: #e0e0e0;
+  --fb-layer-01: #f4f4f4;
+  --fb-layer-02: #ffffff;
+
+  /* Border colors */
+  --fb-border-subtle: #e0e0e0;
+  --fb-border-strong: #8d8d8d;
+  --fb-border-interactive: var(--fb-primary);
+
+  /* -------------------------------------------------------------------------
+     Spacing scale (Carbon 2x grid)
+     ------------------------------------------------------------------------- */
+  --fb-spacing-01: 2px;
+  --fb-spacing-02: 4px;
+  --fb-spacing-03: 8px;
+  --fb-spacing-04: 12px;
+  --fb-spacing-05: 16px;
+  --fb-spacing-06: 24px;
+  --fb-spacing-07: 32px;
+  --fb-spacing-08: 40px;
+  --fb-spacing-09: 48px;
+  --fb-spacing-10: 64px;
+  --fb-spacing-11: 80px;
+  --fb-spacing-12: 96px;
+
+  /* -------------------------------------------------------------------------
+     Typography
+     ------------------------------------------------------------------------- */
+  --fb-font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  --fb-font-mono: 'IBM Plex Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* Type scale (1rem = 16px) */
+  --fb-caption: 0.75rem;
+  --fb-body: 1rem;
+  --fb-body-large: 1.125rem;
+  --fb-heading-01: 0.875rem;
+  --fb-heading-02: 1rem;
+  --fb-heading-03: 1.25rem;
+  --fb-heading-04: 1.75rem;
+  --fb-heading-05: 2rem;
+  --fb-heading-06: 2.625rem;
+  --fb-display: 3.375rem;
+
+  /* -------------------------------------------------------------------------
+     Component tokens
+     ------------------------------------------------------------------------- */
+
+  /* Border radius */
+  --fb-radius-sm: 2px;
+  --fb-radius-md: 4px;
+  --fb-radius-lg: 8px;
+  --fb-radius-full: 9999px;
+
+  /* Subtle, non-glow shadows for elevation */
+  --fb-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --fb-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --fb-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* Transitions */
+  --fb-transition-fast: 70ms cubic-bezier(0.4, 0, 0.2, 1);
+  --fb-transition-base: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --fb-transition-slow: 240ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Focus ring */
+  --fb-focus-ring: 0 0 0 2px var(--fb-background),
+    0 0 0 4px var(--fb-primary);
+}
+
+/* ==========================================================================
+   Dark mode tokens
+   ========================================================================== */
+
+.dark {
+  /* -------------------------------------------------------------------------
+     Color tokens
+     ------------------------------------------------------------------------- */
+
+  /* Neutral gray palette (inverted for dark surfaces) */
+  --fb-gray-0: #161616;
+  --fb-gray-10: #262626;
+  --fb-gray-20: #393939;
+  --fb-gray-30: #525252;
+  --fb-gray-40: #6f6f6f;
+  --fb-gray-50: #8d8d8d;
+  --fb-gray-60: #a8a8a8;
+  --fb-gray-70: #c6c6c6;
+  --fb-gray-80: #e0e0e0;
+  --fb-gray-90: #f4f4f4;
+  --fb-gray-100: #ffffff;
+
+  /* Chemistry accent colors (lightened for dark backgrounds) */
+  --fb-primary: #4589ff;
+  --fb-secondary: #42be65;
+
+  /* Semantic colors */
+  --fb-error: #ff8389;
+  --fb-success: #6fdc8c;
+  --fb-warning: #f1c21b;
+  --fb-info: #78a9ff;
+
+  /* Text colors */
+  --fb-text-primary: #f4f4f4;
+  --fb-text-secondary: #c6c6c6;
+  --fb-text-helper: #a8a8a8;
+  --fb-text-inverse: #161616;
+
+  /* Background colors */
+  --fb-background: #161616;
+  --fb-background-hover: #262626;
+  --fb-background-active: #393939;
+  --fb-layer-01: #262626;
+  --fb-layer-02: #393939;
+
+  /* Border colors */
+  --fb-border-subtle: #393939;
+  --fb-border-strong: #6f6f6f;
+  --fb-border-interactive: var(--fb-primary);
+
+  /* -------------------------------------------------------------------------
+     Spacing scale (Carbon 2x grid)
+     ------------------------------------------------------------------------- */
+  --fb-spacing-01: 2px;
+  --fb-spacing-02: 4px;
+  --fb-spacing-03: 8px;
+  --fb-spacing-04: 12px;
+  --fb-spacing-05: 16px;
+  --fb-spacing-06: 24px;
+  --fb-spacing-07: 32px;
+  --fb-spacing-08: 40px;
+  --fb-spacing-09: 48px;
+  --fb-spacing-10: 64px;
+  --fb-spacing-11: 80px;
+  --fb-spacing-12: 96px;
+
+  /* -------------------------------------------------------------------------
+     Typography
+     ------------------------------------------------------------------------- */
+  --fb-font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  --fb-font-mono: 'IBM Plex Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* Type scale (1rem = 16px) */
+  --fb-caption: 0.75rem;
+  --fb-body: 1rem;
+  --fb-body-large: 1.125rem;
+  --fb-heading-01: 0.875rem;
+  --fb-heading-02: 1rem;
+  --fb-heading-03: 1.25rem;
+  --fb-heading-04: 1.75rem;
+  --fb-heading-05: 2rem;
+  --fb-heading-06: 2.625rem;
+  --fb-display: 3.375rem;
+
+  /* -------------------------------------------------------------------------
+     Component tokens
+     ------------------------------------------------------------------------- */
+
+  /* Border radius */
+  --fb-radius-sm: 2px;
+  --fb-radius-md: 4px;
+  --fb-radius-lg: 8px;
+  --fb-radius-full: 9999px;
+
+  /* Subtle, non-glow shadows for elevation */
+  --fb-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.24);
+  --fb-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.32);
+  --fb-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+
+  /* Transitions */
+  --fb-transition-fast: 70ms cubic-bezier(0.4, 0, 0.2, 1);
+  --fb-transition-base: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --fb-transition-slow: 240ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Focus ring */
+  --fb-focus-ring: 0 0 0 2px var(--fb-background),
+    0 0 0 4px var(--fb-primary);
+}
