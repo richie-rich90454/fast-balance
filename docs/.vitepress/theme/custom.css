@@ -344,6 +344,33 @@ code.chemical-formula {
 .VPSidebar {
   background: var(--vp-c-bg);
   border-right: 1px solid var(--vp-c-divider);
+  position: relative;
+}
+
+/* Molecular structure pattern for sidebar */
+.VPSidebar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(circle at 10% 10%, rgba(10, 77, 104, 0.03) 0%, transparent 30%),
+    radial-gradient(circle at 90% 90%, rgba(157, 78, 221, 0.03) 0%, transparent 30%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark .VPSidebar::before {
+  background-image:
+    radial-gradient(circle at 10% 10%, rgba(8, 131, 155, 0.05) 0%, transparent 30%),
+    radial-gradient(circle at 90% 90%, rgba(181, 126, 236, 0.05) 0%, transparent 30%);
+}
+
+.VPSidebar .VPSidebarItem {
+  position: relative;
+  z-index: 1;
 }
 
 .VPSidebarItem {
@@ -363,13 +390,37 @@ code.chemical-formula {
   transition: all var(--chem-transition-base);
 }
 
+.VPSidebarItem::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background: transparent;
+  border-radius: 50%;
+  transition: all var(--chem-transition-base);
+  opacity: 0;
+}
+
 .VPSidebarItem:hover::before {
   background: var(--chem-gradient-reaction);
+}
+
+.VPSidebarItem:hover::after {
+  background: var(--chem-accent);
+  opacity: 0.5;
 }
 
 .VPSidebarItem.active::before {
   background: var(--chem-primary);
   width: 4px;
+}
+
+.VPSidebarItem.active::after {
+  background: var(--chem-secondary);
+  opacity: 1;
 }
 
 .VPSidebarItem.level-0 > .item > .text {
@@ -398,9 +449,10 @@ code.chemical-formula {
   position: relative;
   background: var(--vp-c-bg);
   overflow: hidden;
+  padding-bottom: 4rem;
 }
 
-/* Molecular Pattern Background */
+/* Enhanced Molecular Pattern Background */
 .VPHero::before {
   content: '';
   position: absolute;
@@ -408,19 +460,31 @@ code.chemical-formula {
   left: 0;
   right: 0;
   bottom: 0;
+  width: 200%;
+  height: 200%;
   background-image:
-    radial-gradient(circle at 20% 30%, rgba(10, 77, 104, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(157, 78, 221, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 60% 20%, rgba(0, 200, 150, 0.08) 0%, transparent 40%);
+    radial-gradient(circle at 15% 25%, rgba(10, 77, 104, 0.12) 0%, transparent 35%),
+    radial-gradient(circle at 85% 75%, rgba(157, 78, 221, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 25% 85%, rgba(0, 200, 150, 0.08) 0%, transparent 30%),
+    radial-gradient(circle at 75% 25%, rgba(255, 209, 102, 0.06) 0%, transparent 25%),
+    radial-gradient(circle at 50% 50%, rgba(17, 138, 178, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 35% 55%, rgba(6, 214, 160, 0.06) 0%, transparent 35%),
+    radial-gradient(circle at 65% 35%, rgba(239, 71, 111, 0.04) 0%, transparent 30%);
+  animation: molecularFloat 20s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
+  transform-origin: center center;
 }
 
 .dark .VPHero::before {
   background-image:
-    radial-gradient(circle at 20% 30%, rgba(8, 131, 155, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(181, 126, 236, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 60% 20%, rgba(0, 230, 172, 0.15) 0%, transparent 40%);
+    radial-gradient(circle at 15% 25%, rgba(8, 131, 155, 0.18) 0%, transparent 35%),
+    radial-gradient(circle at 85% 75%, rgba(181, 126, 236, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 25% 85%, rgba(0, 230, 172, 0.12) 0%, transparent 30%),
+    radial-gradient(circle at 75% 25%, rgba(255, 209, 102, 0.1) 0%, transparent 25%),
+    radial-gradient(circle at 50% 50%, rgba(17, 138, 178, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 35% 55%, rgba(6, 214, 160, 0.1) 0%, transparent 35%),
+    radial-gradient(circle at 65% 35%, rgba(239, 71, 111, 0.06) 0%, transparent 30%);
 }
 
 /* Hexagonal Molecular Pattern Overlay */
@@ -441,6 +505,13 @@ code.chemical-formula {
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15L30 0z' fill='none' stroke='%2308839B' stroke-width='0.5' stroke-opacity='0.08'/%3E%3C/svg%3E");
 }
 
+@keyframes molecularFloat {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(2%, 1%) rotate(1deg); }
+  50% { transform: translate(0, 2%) rotate(0deg); }
+  75% { transform: translate(-2%, 1%) rotate(-1deg); }
+}
+
 .VPHero .container {
   position: relative;
   z-index: 1;
@@ -456,6 +527,24 @@ code.chemical-formula {
   letter-spacing: -0.03em;
   animation: gradientShift 8s ease infinite;
   background-size: 200% 200%;
+  position: relative;
+}
+
+/* Animated glow effect for hero name */
+.VPHero .name::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--chem-primary), var(--chem-accent), var(--chem-secondary), transparent);
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.3; transform: scaleX(0.8); }
+  50% { opacity: 0.6; transform: scaleX(1); }
 }
 
 @keyframes gradientShift {
@@ -478,6 +567,24 @@ code.chemical-formula {
   color: var(--chem-accent);
   margin-top: 0.5rem;
   letter-spacing: -0.01em;
+  position: relative;
+}
+
+/* Animated underline for tagline */
+.VPHero .tagline::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--chem-gradient-accent);
+  animation: underlineGrow 2s ease-out forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes underlineGrow {
+  to { width: 100%; }
 }
 
 /* ============================================
@@ -638,14 +745,43 @@ code.chemical-formula {
 
 /* Feature Cards - Glassware Inspired */
 .VPFeature {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add molecular decoration to feature cards */
+.VPFeature::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(10, 77, 104, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  transition: all var(--chem-transition-base);
+}
+
+.VPFeature:hover::after {
+  transform: scale(1.5);
+  background: radial-gradient(circle, rgba(157, 78, 221, 0.1) 0%, transparent 70%);
 }
 
 .dark .VPFeature {
-  background: rgba(22, 34, 49, 0.9);
+  background: rgba(22, 34, 49, 0.95);
   border-color: var(--vp-c-border);
+}
+
+.dark .VPFeature::after {
+  background: radial-gradient(circle, rgba(8, 131, 155, 0.12) 0%, transparent 70%);
+}
+
+.dark .VPFeature:hover::after {
+  background: radial-gradient(circle, rgba(181, 126, 236, 0.15) 0%, transparent 70%);
 }
 
 .VPFeature .title {
@@ -654,6 +790,22 @@ code.chemical-formula {
   color: var(--chem-primary);
   margin-bottom: 0.5rem;
   letter-spacing: -0.01em;
+  position: relative;
+}
+
+/* Reaction arrow indicator for feature titles */
+.VPFeature .title::after {
+  content: '→';
+  position: absolute;
+  right: 0;
+  color: var(--chem-accent);
+  opacity: 0;
+  transition: all var(--chem-transition-base);
+}
+
+.VPFeature:hover .title::after {
+  opacity: 1;
+  transform: translateX(5px);
 }
 
 .dark .VPFeature .title {
@@ -944,10 +1096,46 @@ code.chemical-formula {
   background: var(--chem-gradient-reaction);
 }
 
+/* Molecular pattern for footer */
+.VPFooter::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background:
+    radial-gradient(ellipse at 30% 100%, rgba(10, 77, 104, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 100%, rgba(157, 78, 221, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.dark .VPFooter::after {
+  background:
+    radial-gradient(ellipse at 30% 100%, rgba(8, 131, 155, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 100%, rgba(181, 126, 236, 0.08) 0%, transparent 50%);
+}
+
 .VPFooter .container {
   color: var(--vp-c-text-2);
   font-size: 0.9rem;
   text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.VPFooter .message {
+  opacity: 0.8;
+  transition: opacity var(--chem-transition-fast);
+}
+
+.VPFooter .message:hover {
+  opacity: 1;
+  color: var(--chem-primary);
+}
+
+.dark .VPFooter .message:hover {
+  color: var(--chem-primary-light);
 }
 
 /* ============================================
@@ -1172,6 +1360,140 @@ code.chemical-formula {
 .element-badge:hover {
   transform: translateY(-4px);
   box-shadow: var(--chem-shadow-lg);
+}
+
+/* ============================================
+   SECTION TRANSITIONS - REACTION PROGRESS
+   ============================================ */
+
+/* Smooth section transitions */
+.vp-doc h2 {
+  position: relative;
+}
+
+.vp-doc h2::before {
+  content: '';
+  position: absolute;
+  left: -2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background: var(--chem-gradient-reaction);
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+/* Section fade-in animation */
+.vp-doc section,
+.vp-doc div[class*="solution-bg"],
+.vp-doc div[class*="molecular-decoration"] {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth scrolling for the entire page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Content area molecular decorations */
+.vp-doc {
+  position: relative;
+}
+
+.vp-doc::before {
+  content: '';
+  position: fixed;
+  top: 20%;
+  right: 5%;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(10, 77, 104, 0.03) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.vp-doc::after {
+  content: '';
+  position: fixed;
+  bottom: 20%;
+  left: 5%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(157, 78, 221, 0.03) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark .vp-doc::before {
+  background: radial-gradient(circle, rgba(8, 131, 155, 0.05) 0%, transparent 70%);
+}
+
+.dark .vp-doc::after {
+  background: radial-gradient(circle, rgba(181, 126, 236, 0.05) 0%, transparent 70%);
+}
+
+/* ============================================
+   VISUAL POLISH - CHEMISTRY ENHANCEMENTS
+   ============================================ */
+
+/* Gradient borders for images */
+.vp-doc img {
+  border-radius: 12px;
+  box-shadow: var(--chem-shadow-md);
+  transition: all var(--chem-transition-base);
+}
+
+.vp-doc img:hover {
+  transform: scale(1.02);
+  box-shadow: var(--chem-shadow-lg);
+}
+
+/* Chemistry-inspired link hover effect */
+.vp-doc a:not(.chem-feature-card) {
+  position: relative;
+}
+
+.vp-doc a:not(.chem-feature-card)::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--chem-gradient-reaction);
+  transition: width var(--chem-transition-base);
+}
+
+.vp-doc a:not(.chem-feature-card):hover::after {
+  width: 100%;
+}
+
+/* Smooth page transitions */
+.VPContent {
+  transition: opacity var(--chem-transition-slow);
+}
+
+/* Navigation hover glow effect */
+.VPNavBarMenuLink:hover {
+  box-shadow: 0 2px 8px rgba(10, 77, 104, 0.15);
+}
+
+.dark .VPNavBarMenuLink:hover {
+  box-shadow: 0 2px 8px rgba(8, 131, 155, 0.2);
 }
 
 /* Print Styles */
