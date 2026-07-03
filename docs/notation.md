@@ -1,4 +1,8 @@
-# Chemical Notation Support
+---
+title: Notation
+---
+
+# Notation
 
 This document describes all supported chemical notation formats in fast-balance.
 
