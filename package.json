@@ -20,7 +20,10 @@
     "prepublishOnly": "npm run test && npm run build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:es6": "es-check es6 dist/index.js --module && es-check es6 dist/index.cjs --module"
+    "test:es6": "es-check es6 dist/index.js --module && es-check es6 dist/index.cjs --module",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "keywords": [
     "chemistry",
@@ -98,6 +101,7 @@
     "es-check": "^9.6.4",
     "esbuild": "^0.28.0",
     "typescript": "^6.0.3",
+    "vitepress": "^1.0.0",
     "vitest": "^4.1.5"
   },
   "dependencies": {
