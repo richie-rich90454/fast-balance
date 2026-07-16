@@ -14,13 +14,11 @@
     }
   },
   "scripts": {
-    "build": "npm run build:types && npm run build:bundle",
-    "build:types": "tsc --emitDeclarationOnly",
-    "build:bundle": "rolldown --config rolldown.config.js",
+    "build": "tsdown",
     "prepublishOnly": "npm run test && npm run build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:es6": "es-check es6 dist/index.js --module && es-check es6 dist/index.cjs --module",
+    "test:es6": "es-check es6 dist/index.mjs --module && es-check es6 dist/index.cjs --module",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
@@ -99,7 +97,7 @@
   "license": "MIT",
   "devDependencies": {
     "es-check": "^9.6.4",
-    "rolldown": "^1.2.0",
+    "tsdown": "^0.22.8",
     "typescript": "^7.0.2",
     "vitepress": "^1.6.4",
     "vitest": "^4.1.10"
