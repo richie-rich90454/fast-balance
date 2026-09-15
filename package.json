@@ -96,11 +96,11 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "es-check": "^9.6.4",
-    "tsdown": "^0.22.8",
+    "es-check": "^9.7.2",
+    "tsdown": "^0.23.0",
     "typescript": "^7.0.2",
     "vitepress": "^1.6.4",
-    "vitest": "^4.1.10"
+    "vitest": "^5.0.1"
   },
   "dependencies": {
     "chemparse": "^1.0.3"

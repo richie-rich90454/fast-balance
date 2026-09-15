@@ -7,6 +7,9 @@ export default defineConfig({
     minify: true,
     target: "es2015",
     sourcemap: false,
+    inputOptions: {
+        treeshake: true,
+    },
     deps:{
         neverBundle: ["chemparse"]
     }
