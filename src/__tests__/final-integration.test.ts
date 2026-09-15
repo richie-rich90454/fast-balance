@@ -37,7 +37,7 @@ describe("balanced equation string format", () => {
     it("verify coefficients are integers in string", () => {
         let result = balance("C3H8 + O2 -> CO2 + H2O");
         let tokens = result.equation.split(/[\s+]+/);
-        let numericTokens = tokens.filter(t => /^[\d]+$/.test(t));
+        let numericTokens = tokens.filter((t) => /^[\d]+$/.test(t));
         for (let t of numericTokens) {
             expect(Number.isInteger(parseInt(t, 10))).toBe(true);
         }
@@ -211,17 +211,21 @@ describe("coefficient stability", () => {
     it("same input produces same output", () => {
         let r1 = balance("H2 + O2 -> H2O");
         let r2 = balance("H2 + O2 -> H2O");
-        expect(r1.reactants.map(r => r.coefficient)).toEqual(r2.reactants.map(r => r.coefficient));
-        expect(r1.products.map(p => p.coefficient)).toEqual(r2.products.map(p => p.coefficient));
+        expect(r1.reactants.map((r) => r.coefficient)).toEqual(
+            r2.reactants.map((r) => r.coefficient),
+        );
+        expect(r1.products.map((p) => p.coefficient)).toEqual(
+            r2.products.map((p) => p.coefficient),
+        );
         expect(r1.equation).toBe(r2.equation);
     });
 
     it("multiple calls return same result", () => {
         let inputs = ["H2 + O2 -> H2O", "Fe + O2 -> Fe2O3", "C3H8 + O2 -> CO2 + H2O"];
         for (let input of inputs) {
-            let first = balance(input).reactants.map(r => r.coefficient);
+            let first = balance(input).reactants.map((r) => r.coefficient);
             for (let i = 0; i < 5; i++) {
-                let next = balance(input).reactants.map(r => r.coefficient);
+                let next = balance(input).reactants.map((r) => r.coefficient);
                 expect(next).toEqual(first);
             }
         }
@@ -277,13 +281,15 @@ describe("balance function idempotency", () => {
         for (let r of result.reactants) {
             let parsed = parseFormula(r.formula);
             for (let el in parsed.elements) {
-                reactantsElements[el] = (reactantsElements[el] ?? 0) + parsed.elements[el]! * r.coefficient;
+                reactantsElements[el] =
+                    (reactantsElements[el] ?? 0) + parsed.elements[el]! * r.coefficient;
             }
         }
         for (let p of result.products) {
             let parsed = parseFormula(p.formula);
             for (let el in parsed.elements) {
-                productsElements[el] = (productsElements[el] ?? 0) + parsed.elements[el]! * p.coefficient;
+                productsElements[el] =
+                    (productsElements[el] ?? 0) + parsed.elements[el]! * p.coefficient;
             }
         }
         // Conservation
@@ -299,10 +305,18 @@ describe("balance function idempotency", () => {
         let text = balance("H2 + O2 -> H2O", { format: "text" });
         let html = balance("H2 + O2 -> H2O", { format: "html" });
         let latex = balance("H2 + O2 -> H2O", { format: "latex" });
-        expect(text.reactants.map(r => r.coefficient)).toEqual(html.reactants.map(r => r.coefficient));
-        expect(text.reactants.map(r => r.coefficient)).toEqual(latex.reactants.map(r => r.coefficient));
-        expect(text.products.map(p => p.coefficient)).toEqual(html.products.map(p => p.coefficient));
-        expect(text.products.map(p => p.coefficient)).toEqual(latex.products.map(p => p.coefficient));
+        expect(text.reactants.map((r) => r.coefficient)).toEqual(
+            html.reactants.map((r) => r.coefficient),
+        );
+        expect(text.reactants.map((r) => r.coefficient)).toEqual(
+            latex.reactants.map((r) => r.coefficient),
+        );
+        expect(text.products.map((p) => p.coefficient)).toEqual(
+            html.products.map((p) => p.coefficient),
+        );
+        expect(text.products.map((p) => p.coefficient)).toEqual(
+            latex.products.map((p) => p.coefficient),
+        );
     });
 
     it("scaling inputs gives proportional coefficients", () => {
@@ -322,13 +336,13 @@ describe("balance function idempotency", () => {
             "Fe + O2 -> Fe2O3",
             "C3H8 + O2 -> CO2 + H2O",
             "KMnO4 + HCl -> KCl + MnCl2 + Cl2 + H2O",
-            "Fe2O3 + CO -> Fe + CO2"
+            "Fe2O3 + CO -> Fe + CO2",
         ];
         for (let input of inputs) {
             let result = balance(input);
             let allCoeffs = [
-                ...result.reactants.map(r => r.coefficient),
-                ...result.products.map(p => p.coefficient)
+                ...result.reactants.map((r) => r.coefficient),
+                ...result.products.map((p) => p.coefficient),
             ];
             let g = allCoeffs[0];
             for (let i = 1; i < allCoeffs.length; i++) {
@@ -353,8 +367,8 @@ describe("special character handling", () => {
     it("non-ASCII arrow unicode is accepted", () => {
         let result = balance("H2 + O2 → H2O");
         // All coefficients should be positive
-        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
-        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        expect(result.reactants.every((r) => r.coefficient > 0)).toBe(true);
+        expect(result.products.every((p) => p.coefficient > 0)).toBe(true);
     });
 
     it("mixed case in element symbols works", () => {
@@ -370,8 +384,8 @@ describe("special character handling", () => {
         expect(result.reactants).toHaveLength(2);
         expect(result.products).toHaveLength(1);
         // Coefficients should be positive
-        expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
-        expect(result.products.every(p => p.coefficient > 0)).toBe(true);
+        expect(result.reactants.every((r) => r.coefficient > 0)).toBe(true);
+        expect(result.products.every((p) => p.coefficient > 0)).toBe(true);
     });
 
     it("tabs in input are handled like spaces", () => {
@@ -379,8 +393,12 @@ describe("special character handling", () => {
         expect(result.reactants).toHaveLength(2);
         expect(result.products).toHaveLength(1);
         // Coefficients should be positive integers
-        expect(result.reactants.every(r => Number.isInteger(r.coefficient) && r.coefficient > 0)).toBe(true);
-        expect(result.products.every(p => Number.isInteger(p.coefficient) && p.coefficient > 0)).toBe(true);
+        expect(
+            result.reactants.every((r) => Number.isInteger(r.coefficient) && r.coefficient > 0),
+        ).toBe(true);
+        expect(
+            result.products.every((p) => Number.isInteger(p.coefficient) && p.coefficient > 0),
+        ).toBe(true);
     });
 });
 
@@ -396,8 +414,8 @@ describe("large equation integration", () => {
         if (result) {
             // All coefficients should be positive integers
             let allCoeffs = [
-                ...result.reactants.map(r => r.coefficient),
-                ...result.products.map(p => p.coefficient)
+                ...result.reactants.map((r) => r.coefficient),
+                ...result.products.map((p) => p.coefficient),
             ];
             for (let c of allCoeffs) {
                 expect(Number.isInteger(c)).toBe(true);
@@ -409,13 +427,15 @@ describe("large equation integration", () => {
             for (let r of result.reactants) {
                 let parsed = parseFormula(r.formula);
                 for (let el in parsed.elements) {
-                    reactantsElements[el] = (reactantsElements[el] ?? 0) + parsed.elements[el]! * r.coefficient;
+                    reactantsElements[el] =
+                        (reactantsElements[el] ?? 0) + parsed.elements[el]! * r.coefficient;
                 }
             }
             for (let p of result.products) {
                 let parsed = parseFormula(p.formula);
                 for (let el in parsed.elements) {
-                    productsElements[el] = (productsElements[el] ?? 0) + parsed.elements[el]! * p.coefficient;
+                    productsElements[el] =
+                        (productsElements[el] ?? 0) + parsed.elements[el]! * p.coefficient;
                 }
             }
             for (let el in reactantsElements) {
@@ -427,8 +447,8 @@ describe("large equation integration", () => {
     it("complex nested formulas produce valid integer coefficients", () => {
         let result = balance("[Co(NH3)6]Cl3 + AgNO3 -> AgCl + [Co(NH3)6](NO3)3");
         let allCoeffs = [
-            ...result.reactants.map(r => r.coefficient),
-            ...result.products.map(p => p.coefficient)
+            ...result.reactants.map((r) => r.coefficient),
+            ...result.products.map((p) => p.coefficient),
         ];
         for (let c of allCoeffs) {
             expect(Number.isInteger(c)).toBe(true);
@@ -440,13 +460,15 @@ describe("large equation integration", () => {
         for (let r of result.reactants) {
             let parsed = parseFormula(r.formula);
             for (let el in parsed.elements) {
-                reactantsElements[el] = (reactantsElements[el] ?? 0) + parsed.elements[el]! * r.coefficient;
+                reactantsElements[el] =
+                    (reactantsElements[el] ?? 0) + parsed.elements[el]! * r.coefficient;
             }
         }
         for (let p of result.products) {
             let parsed = parseFormula(p.formula);
             for (let el in parsed.elements) {
-                productsElements[el] = (productsElements[el] ?? 0) + parsed.elements[el]! * p.coefficient;
+                productsElements[el] =
+                    (productsElements[el] ?? 0) + parsed.elements[el]! * p.coefficient;
             }
         }
         for (let el in reactantsElements) {
@@ -463,8 +485,8 @@ describe("large equation integration", () => {
         }
         if (result) {
             let allCoeffs = [
-                ...result.reactants.map(r => r.coefficient),
-                ...result.products.map(p => p.coefficient)
+                ...result.reactants.map((r) => r.coefficient),
+                ...result.products.map((p) => p.coefficient),
             ];
             for (let c of allCoeffs) {
                 expect(Number.isInteger(c)).toBe(true);
@@ -476,13 +498,15 @@ describe("large equation integration", () => {
             for (let r of result.reactants) {
                 let parsed = parseFormula(r.formula);
                 for (let el in parsed.elements) {
-                    reactantsElements[el] = (reactantsElements[el] ?? 0) + parsed.elements[el]! * r.coefficient;
+                    reactantsElements[el] =
+                        (reactantsElements[el] ?? 0) + parsed.elements[el]! * r.coefficient;
                 }
             }
             for (let p of result.products) {
                 let parsed = parseFormula(p.formula);
                 for (let el in parsed.elements) {
-                    productsElements[el] = (productsElements[el] ?? 0) + parsed.elements[el]! * p.coefficient;
+                    productsElements[el] =
+                        (productsElements[el] ?? 0) + parsed.elements[el]! * p.coefficient;
                 }
             }
             for (let el in reactantsElements) {
@@ -500,8 +524,8 @@ describe("large equation integration", () => {
         }
         if (result) {
             let allCoeffs = [
-                ...result.reactants.map(r => r.coefficient),
-                ...result.products.map(p => p.coefficient)
+                ...result.reactants.map((r) => r.coefficient),
+                ...result.products.map((p) => p.coefficient),
             ];
             for (let c of allCoeffs) {
                 expect(Number.isInteger(c)).toBe(true);
@@ -513,13 +537,15 @@ describe("large equation integration", () => {
             for (let r of result.reactants) {
                 let parsed = parseFormula(r.formula);
                 for (let el in parsed.elements) {
-                    reactantsElements[el] = (reactantsElements[el] ?? 0) + parsed.elements[el]! * r.coefficient;
+                    reactantsElements[el] =
+                        (reactantsElements[el] ?? 0) + parsed.elements[el]! * r.coefficient;
                 }
             }
             for (let p of result.products) {
                 let parsed = parseFormula(p.formula);
                 for (let el in parsed.elements) {
-                    productsElements[el] = (productsElements[el] ?? 0) + parsed.elements[el]! * p.coefficient;
+                    productsElements[el] =
+                        (productsElements[el] ?? 0) + parsed.elements[el]! * p.coefficient;
                 }
             }
             for (let el in reactantsElements) {
@@ -537,13 +563,13 @@ describe("large equation integration", () => {
             "CuSO4·5H2O + Fe -> FeSO4 + Cu + H2O",
             "[Co(NH3)6]Cl3 + AgNO3 -> AgCl + [Co(NH3)6](NO3)3",
             "MnO4- + H+ + e- -> Mn2+ + H2O",
-            "Ca3(PO4)2 + SiO2 + C -> CaSiO3 + CO + P"
+            "Ca3(PO4)2 + SiO2 + C -> CaSiO3 + CO + P",
         ];
         for (let eq of equations) {
             let result = balance(eq);
             let allCoeffs = [
-                ...result.reactants.map(r => r.coefficient),
-                ...result.products.map(p => p.coefficient)
+                ...result.reactants.map((r) => r.coefficient),
+                ...result.products.map((p) => p.coefficient),
             ];
             for (let c of allCoeffs) {
                 expect(Number.isInteger(c)).toBe(true);
