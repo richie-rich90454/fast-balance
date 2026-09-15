@@ -28,5 +28,5 @@ describe("verify-targeted", () => {
     writeFileSync("verify-results.txt", lines.join("\n"), "utf-8");
     it("writes results", () => {
         // Results file written successfully
-      });
+    });
 });
