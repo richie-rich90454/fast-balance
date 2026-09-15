@@ -31,7 +31,7 @@ interface Random {
 function makeRandom(seed: number): Random {
     const r = mulberry32(seed) as Random;
     r.int = (min: number, max: number) => min + Math.floor(r() * (max - min + 1));
-    r.pick = <T,>(arr: T[]): T => arr[r.int(0, arr.length - 1)]!;
+    r.pick = <T>(arr: T[]): T => arr[r.int(0, arr.length - 1)]!;
     return r;
 }
 
@@ -67,7 +67,8 @@ function verifyConserved(eq: string, r: ReturnType<typeof balance>): void {
     });
     r.products.forEach((s, i) => {
         const sp = splitEquation(eq).products[i]!;
-        for (const el in sp.elements) right[el] = (right[el] ?? 0) + sp.elements[el]! * s.coefficient;
+        for (const el in sp.elements)
+            right[el] = (right[el] ?? 0) + sp.elements[el]! * s.coefficient;
         chargeRight += sp.charge * s.coefficient;
     });
     expect(chargeLeft).toBe(chargeRight);
@@ -113,7 +114,7 @@ describe("conservation invariants (fuzz)", () => {
             // idempotence
             const again = balance(result.equation);
             expect([...again.reactants, ...again.products].map((s) => s.coefficient)).toEqual(
-                all.map((s) => s.coefficient)
+                all.map((s) => s.coefficient),
             );
         }
         expect(accepted).toBeGreaterThan(8);
@@ -170,7 +171,11 @@ describe("minimality against brute force", () => {
                         }
                     }
                     if (ok) {
-                        for (let i = 0; i < n; i++) charge += (i < species.reactants.length ? 1 : -1) * combo[i]! * all[i]!.charge;
+                        for (let i = 0; i < n; i++)
+                            charge +=
+                                (i < species.reactants.length ? 1 : -1) *
+                                combo[i]! *
+                                all[i]!.charge;
                         if (charge !== 0) ok = false;
                     }
                     if (ok) {
@@ -190,7 +195,7 @@ describe("minimality against brute force", () => {
             checked++;
             const total = [...result.reactants, ...result.products].reduce(
                 (a, s) => a + s.coefficient,
-                0
+                0,
             );
             expect(total).toBe(best);
         }
