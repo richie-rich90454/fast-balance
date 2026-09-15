@@ -253,12 +253,17 @@ debouncedBalance();
 
 .equation-output {
     margin-bottom: var(--fb-spacing-05);
+    min-width: 0;
 }
 
 .equation-output .chemical-formula {
     display: inline-block;
     font-size: var(--fb-body-large);
     padding: var(--fb-spacing-04);
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    white-space: normal;
 }
 
 .breakdown {
@@ -273,6 +278,13 @@ debouncedBalance();
     flex-wrap: wrap;
     align-items: center;
     gap: var(--fb-spacing-03);
+    min-width: 0;
+}
+
+.chemical-formula {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    max-width: 100%;
 }
 
 .breakdown-title {
