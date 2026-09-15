@@ -39,6 +39,30 @@ hero:
   </div>
 </div>
 
+## Why fast-balance
+
+Most balancers compute a nullspace in floating point and round the result. That
+fails quietly on large or stiff systems. `fast-balance` solves the conservation
+system over **exact BigInt rationals** and re-verifies conservation before it
+returns anything.
+
+| | fast-balance | Typical balancer |
+|---|---|---|
+| Arithmetic | Exact BigInt rationals | Floating point |
+| Large systems | Exact at any size | Silent rounding errors |
+| Duplicate / spectator species | Balanced | Often rejected |
+| Underdetermined systems | Minimal solution + `balanceAll` | Arbitrary or error |
+| Unknown symbols | Typed `UNKNOWN_ELEMENT` error | Silent misparse |
+| Complexity | `O(n)` in species | `O(n³)`-ish dense Gauss–Jordan |
+
+## Design guarantees
+
+- **Every returned equation is re-checked** for element and charge conservation.
+- **Coefficients are primitive positive integers** (divided by their GCD).
+- **No silent guessing** — ambiguous or unsupported notation raises a typed
+  error with a stable `.code`.
+- **Deterministic** — the same input always returns the same result.
+
 ## Quick examples
 
 ```javascript
