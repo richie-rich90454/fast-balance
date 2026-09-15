@@ -21,7 +21,7 @@ export interface SpeciesInput {
  */
 export function buildMatrix(
     reactants: SpeciesInput[],
-    products: SpeciesInput[]
+    products: SpeciesInput[],
 ): { matrix: Fraction[][]; cols: number } {
     const species: SpeciesInput[] = [...reactants, ...products];
     const elSet = new Set<string>();
@@ -32,7 +32,7 @@ export function buildMatrix(
     const cols = species.length;
 
     const M: Fraction[][] = Array.from({ length: rows }, () =>
-        Array.from({ length: cols }, () => Fraction.zero())
+        Array.from({ length: cols }, () => Fraction.zero()),
     );
 
     for (let j = 0; j < cols; j++) {
@@ -244,25 +244,16 @@ function rrefBig(input: Bf[][]): { R: Bf[][]; pivotCols: number[]; freeCols: num
     return { R: M, pivotCols, freeCols };
 }
 
-/**
- * Find the smallest all-positive integer solution of the homogeneous system.
- *
- * The free coordinates of any all-positive solution are themselves positive
- * (they are species coefficients), so only positive integer free assignments
- * are explored. Candidates are ordered by free-coordinate sum; total sum is
- * always >= the free sum, so the search stops once the free sum reaches the
- * best total found. Returns null if no positive solution exists.
- */
-export function solvePositive(matrix: Fraction[][], cols: number): number[] | null {
-    const rows = matrix.length;
-    if (rows === 0) return Array.from({ length: cols }, () => 1);
-
-    const M: Bf[][] = matrix.map((row) =>
-        row.map((f) => bf(BigInt(f.num), BigInt(f.den)))
-    );
+function bigSolver(
+    matrix: Fraction[][],
+    cols: number,
+): {
+    d: number;
+    compute: (t: number[]) => Bf[] | null;
+    primitive: (x: Bf[]) => number[] | null;
+} {
+    const M: Bf[][] = matrix.map((row) => row.map((f) => bf(BigInt(f.num), BigInt(f.den))));
     const { R, pivotCols, freeCols } = rrefBig(M);
-    if (freeCols.length === 0) return null;
-
     const d = freeCols.length;
     const pivotOfRow: Array<[number, number]> = pivotCols.map((p, r): [number, number] => [p, r]);
 
@@ -297,10 +288,27 @@ export function solvePositive(matrix: Fraction[][], cols: number): number[] | nu
         return out;
     };
 
+    return { d, compute, primitive };
+}
+
+/**
+ * Find the smallest all-positive integer solution of the homogeneous system.
+ *
+ * The free coordinates of any all-positive solution are themselves positive
+ * (they are species coefficients), so only positive integer free assignments
+ * are explored. Candidates are ordered by free-coordinate sum; total sum is
+ * always >= the free sum, so the search stops once the free sum reaches the
+ * best total found. Returns null if no positive solution exists.
+ */
+export function solvePositive(matrix: Fraction[][], cols: number): number[] | null {
+    if (matrix.length === 0) return Array.from({ length: cols }, () => 1);
+
+    const { d, compute, primitive } = bigSolver(matrix, cols);
+    if (d === 0) return null;
+
     if (d === 1) {
         const x = compute([1]);
-        if (x === null) return null;
-        return primitive(x);
+        return x === null ? null : primitive(x);
     }
 
     const MAX_SUM = 64;
@@ -345,8 +353,7 @@ export function solvePositive(matrix: Fraction[][], cols: number): number[] | nu
         if (stop) break;
     }
 
-    if (best !== null) return best;
-    return null;
+    return best;
 }
 
 /**
@@ -358,44 +365,11 @@ export function solveAllPositive(matrix: Fraction[][], cols: number): number[][]
     const results: number[][] = [];
     const minimal = solvePositive(matrix, cols);
     if (minimal !== null) results.push(minimal);
+    if (matrix.length === 0) return results;
 
-    const rows = matrix.length;
-    if (rows === 0) return results;
-    const M: Bf[][] = matrix.map((row) => row.map((f) => bf(BigInt(f.num), BigInt(f.den))));
-    const { R, pivotCols, freeCols } = rrefBig(M);
-    if (freeCols.length <= 1) return results;
+    const { d, compute, primitive } = bigSolver(matrix, cols);
+    if (d <= 1) return results;
 
-    const d = freeCols.length;
-    const pivotOfRow: Array<[number, number]> = pivotCols.map((p, r): [number, number] => [p, r]);
-    const compute = (t: number[]): Bf[] | null => {
-        const x: Bf[] = Array.from({ length: cols }, bzero);
-        for (let k = 0; k < d; k++) x[freeCols[k]!] = bf(BigInt(t[k]!), B1);
-        for (const [pivot, r] of pivotOfRow) {
-            let sum = bzero();
-            for (let k = 0; k < d; k++) {
-                const f = freeCols[k]!;
-                const coef = R[r]![f]!;
-                if (!bisZero(coef)) sum = badd(sum, bmul(coef, x[f]!));
-            }
-            x[pivot] = bneg(sum);
-        }
-        for (const v of x) if (v.n <= B0) return null;
-        return x;
-    };
-    const primitive = (x: Bf[]): number[] | null => {
-        let denLcm = B1;
-        for (const v of x) denLcm = blcm(denLcm, v.d);
-        const ints: bigint[] = x.map((v) => (v.n * denLcm) / v.d);
-        let g = B0;
-        for (const v of ints) g = bgcd(g, v);
-        const out: number[] = [];
-        for (const v of ints) {
-            const reduced = g > B1 ? v / g : v;
-            if (reduced <= B0 || reduced > BMAX_SAFE) return null;
-            out.push(Number(reduced));
-        }
-        return out;
-    };
     const push = (p: number[] | null): void => {
         if (p === null) return;
         if (!results.some((r) => r.length === p.length && r.every((v, i) => v === p[i]))) {
@@ -417,7 +391,7 @@ export function solveAllPositive(matrix: Fraction[][], cols: number): number[][]
 export function verifyConservation(
     reactants: SpeciesInput[],
     products: SpeciesInput[],
-    coeffs: number[]
+    coeffs: number[],
 ): boolean {
     const totals: Record<string, number> = {};
     let charge = 0;
