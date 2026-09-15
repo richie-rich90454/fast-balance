@@ -123,8 +123,8 @@ code {
   --vp-custom-block-danger-text: var(--fb-text-primary);
 
   /* Hero */
-  --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: linear-gradient(120deg, var(--fb-gold-70) 0%, var(--fb-gold-50) 45%, var(--fb-teal-50) 100%);
+  --vp-home-hero-name-color: var(--fb-primary);
+  --vp-home-hero-name-background: none;
   --vp-home-hero-image-background-image: none;
   --vp-home-hero-image-filter: none;
 }
@@ -155,7 +155,7 @@ code {
   --vp-custom-block-warning-bg: rgba(230, 205, 118, 0.14);
   --vp-custom-block-danger-bg: rgba(240, 169, 74, 0.12);
 
-  --vp-home-hero-name-background: linear-gradient(120deg, #fbe0a3 0%, var(--fb-primary) 50%, var(--fb-teal-30) 100%);
+  --vp-home-hero-name-background: none;
 }
 
 body {
@@ -175,9 +175,6 @@ body {
 
 .VPNav {
   background: var(--fb-background);
-  background: color-mix(in srgb, var(--fb-background) 86%, transparent);
-  -webkit-backdrop-filter: saturate(150%) blur(12px);
-  backdrop-filter: saturate(150%) blur(12px);
   border-bottom: 1px solid var(--fb-border-subtle);
 }
 
@@ -258,10 +255,7 @@ body {
   position: relative;
   overflow: hidden;
   padding: 96px 24px 72px;
-  background:
-    radial-gradient(60% 80% at 12% 0%, var(--fb-brand-soft) 0%, transparent 60%),
-    radial-gradient(50% 70% at 100% 20%, var(--fb-teal-soft) 0%, transparent 55%),
-    var(--fb-background);
+  background: var(--fb-background);
   border-bottom: 1px solid var(--fb-border-subtle);
 }
 
@@ -284,6 +278,9 @@ body {
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.05;
+  color: var(--fb-primary);
+  background: none;
+  -webkit-text-fill-color: currentColor;
 }
 
 .VPHero .text {
@@ -396,8 +393,7 @@ body {
   border: 1px solid var(--fb-border-subtle);
   border-radius: var(--fb-radius-lg);
   padding: 26px 24px;
-  transition: transform var(--fb-transition-base),
-    box-shadow var(--fb-transition-base), border-color var(--fb-transition-base);
+  transition: border-color var(--fb-transition-base);
 }
 
 .feature-card::before {
@@ -405,15 +401,13 @@ body {
   position: absolute;
   inset: 0 0 auto 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--fb-primary), var(--fb-accent));
+  background: var(--fb-primary);
   opacity: 0;
   transition: opacity var(--fb-transition-base);
 }
 
 .feature-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--fb-shadow-lg);
-  border-color: var(--fb-border-strong);
+  border-color: var(--fb-primary);
 }
 
 .feature-card:hover::before {
@@ -468,12 +462,11 @@ body {
   background: var(--fb-layer-02);
   border: 1px solid var(--fb-border-subtle);
   border-radius: var(--fb-radius-lg);
-  transition: transform var(--fb-transition-base), box-shadow var(--fb-transition-base);
+  transition: border-color var(--fb-transition-base);
 }
 
 .VPFeature:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--fb-shadow-md);
+  border-color: var(--fb-primary);
 }
 
 .VPFeature .title {
@@ -631,15 +624,6 @@ code {
   overflow: hidden;
 }
 
-.vp-doc div[class*='language-']::before {
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 3px;
-  content: '';
-  background: linear-gradient(90deg, var(--fb-primary), var(--fb-accent));
-  opacity: 0.55;
-}
-
 .vp-doc [class*='language-'] pre {
   padding: 20px 22px;
   background: transparent;
@@ -669,8 +653,7 @@ code {
   border: 1px solid var(--fb-border-subtle);
   border-radius: var(--fb-radius-lg);
   padding: 20px;
-  box-shadow: var(--fb-shadow-sm);
-  transition: border-color var(--fb-transition-base), box-shadow var(--fb-transition-base);
+  transition: border-color var(--fb-transition-base);
 }
 
 .fb-card:hover {
@@ -895,7 +878,7 @@ code {
 }
 
 .fb-badge--organic {
-  background: var(--fb-teal-soft);
+  background: var(--fb-brand-soft);
   color: var(--fb-teal-70);
 }
 
@@ -904,12 +887,12 @@ code {
 }
 
 .fb-badge--acid-base {
-  background: rgba(184, 130, 26, 0.18);
-  color: var(--fb-gold-70);
+  background: rgba(161, 86, 10, 0.14);
+  color: var(--fb-warning);
 }
 
 .dark .fb-badge--acid-base {
-  color: var(--fb-gold-30);
+  color: var(--fb-warning);
 }
 
 .fb-icon {
@@ -1013,11 +996,11 @@ code.chemical-formula {
 }
 
 .fb-category--halogen {
-  border-left-color: var(--fb-gold-40);
+  border-left-color: var(--fb-teal-40);
 }
 
 .fb-category--alkali {
-  border-left-color: var(--fb-gold-50);
+  border-left-color: var(--fb-teal-60);
 }
 
 .fb-category--alkaline {
@@ -1120,4 +1103,28 @@ code.chemical-formula {
 
 .dark .VPHero .image img[src*='hero-chemistry-light'] {
   content: url('/fast-balance/hero-chemistry-dark.svg');
+}
+
+/* --------------------------------------------------------------------------
+   Neutralise VitePress's bundled gradient overlays (flat design)
+   -------------------------------------------------------------------------- */
+
+.aside-curtain {
+  background: none !important;
+}
+
+.excerpt-gradient-top,
+.excerpt-gradient-bottom {
+  background: none !important;
+}
+
+:root,
+.dark {
+  --docsearch-key-gradient: transparent;
+}
+
+.DocSearch-Button-Key,
+.DocSearch-Commands-Key {
+  background: var(--fb-layer-01) !important;
+  box-shadow: none !important;
 }
