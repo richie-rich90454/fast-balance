@@ -65,10 +65,9 @@ returns anything.
 
 ## A note on the palette
 
-The site's colours come from two minerals. The brass-gold primary is **pyrite**
-(FeS₂), the iron disulfide better known as "fool's gold"; the teal complement is
-**verdigris**, the patina that forms on weathered copper. Both are tuned
-separately for light and dark mode.
+The site uses one flat colour drawn from **verdigris** — the green-teal patina
+that forms on weathered copper (basic copper carbonate and copper acetate). It
+is tuned separately for light and dark mode, with no gradients, glass or glow.
 
 ## Quick examples
 
