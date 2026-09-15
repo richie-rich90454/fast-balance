@@ -1100,12 +1100,12 @@ code.chemical-formula {
 
 .VPNavBarTitle .logo,
 .VPNavBar .logo {
-    content: url("/fast-balance/logo-light.svg");
+    content: url("/logo-light.svg");
 }
 
 .dark .VPNavBarTitle .logo,
 .dark .VPNavBar .logo {
-    content: url("/fast-balance/logo-dark.svg");
+    content: url("/logo-dark.svg");
 }
 
 /* VitePress prints the title next to the logo; the mark already reads clearly. */
@@ -1114,11 +1114,11 @@ code.chemical-formula {
 }
 
 .VPHero .image img[src*="hero-chemistry-light"] {
-    content: url("/fast-balance/hero-chemistry-light.svg");
+    content: url("/hero-chemistry-light.svg");
 }
 
 .dark .VPHero .image img[src*="hero-chemistry-light"] {
-    content: url("/fast-balance/hero-chemistry-dark.svg");
+    content: url("/hero-chemistry-dark.svg");
 }
 
 /* --------------------------------------------------------------------------

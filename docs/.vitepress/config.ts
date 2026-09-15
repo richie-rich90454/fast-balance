@@ -7,13 +7,8 @@ export default defineConfig({
         "Exact-arithmetic chemical equation balancer: redox, charges, hydrates, isotopes, nuclear mode.",
     base: "/fast-balance/",
     cleanUrls: true,
-
-    vite: {
-        publicDir: ".vitepress/public",
-    },
-
     head: [
-        ["link", { rel: "icon", type: "image/svg+xml", href: "/fast-balance/logo-light.svg" }],
+        ["link", { rel: "icon", type: "image/svg+xml", href: "/logo-light.svg" }],
         ["meta", { name: "theme-color", content: "#0f766e" }],
         ["meta", { name: "twitter:card", content: "summary_large_image" }],
         ["meta", { name: "twitter:title", content: "fast-balance | Chemical Equation Balancer" }],
