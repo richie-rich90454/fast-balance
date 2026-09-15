@@ -1,277 +1,200 @@
----
-title: API Reference
----
-
 # API Reference
 
-## Table of Contents
+All exports are available from the package root:
 
-- [balance()](#balance)
-- [BalanceOptions](#balanceoptions)
-- [BalanceResult](#balanceresult)
-- [BalancedSpecies](#balancedspecies)
-- [Examples](#examples)
+```ts
+import {
+  balance, balanceAll, isBalanced, verify, audit,
+  analyzeReaction, classify, oxidationStates,
+  parseFormula, parseWithoutMultiplier, splitEquation, stripStateSymbols,
+  normalizeText, normalizeArrows,
+  buildMatrix, solveSystem, fractionsToIntegers,
+  Fraction, gcd, lcm, BalanceError,
+} from 'fast-balance';
+```
 
-## balance()
+---
 
-Balances a chemical equation provided as a character string.
+## `balance(input, options?)`
 
-### Signature
+Balances a chemical equation and returns a `BalanceResult`.
 
-```typescript
+```ts
 function balance(input: string, options?: BalanceOptions): BalanceResult;
 ```
 
-### Parameters
+Throws a [`BalanceError`](#balanceerror) for invalid or unbalanceable input.
 
-#### `input` (string, required)
+### Options
 
-The chemical equation to balance. Whitespace and leading integer coefficients are permitted. The equation must contain a valid arrow separator to distinguish reactants from products.
+| Property       | Type                          | Default      | Description |
+|----------------|-------------------------------|--------------|-------------|
+| `showOne`      | `boolean`                     | `true`       | Render coefficients equal to 1. |
+| `format`       | `"text" \| "html" \| "latex"` | `"text"`     | Arrow representation in `equation`. |
+| `mode`         | `"chemical" \| "nuclear"`     | `"chemical"` | `nuclear` conserves mass number A and nuclear charge. |
+| `autoComplete` | `boolean`                     | `false`      | Opt-in inference of omitted `H2O` / `H+` / `OH-` / `e-`. |
+| `analyze`      | `boolean`                     | `false`      | Attach reaction classification and redox analysis. |
 
-Accepted arrow tokens:
-- `->` (hyphen greater-than)
-- `→` (Unicode right arrow)
-- `⇒` (Unicode double right arrow)
-- `⇌` (Unicode equilibrium arrows)
-- `<=>` (equilibrium notation)
-- `<->` (reversible reaction notation)
-- `-->` (long arrow)
-- `=` (equals sign)
+### `BalanceResult`
 
-#### `options` (BalanceOptions, optional)
-
-Configuration options for the balance operation. See [BalanceOptions](#balanceoptions) for detailed property descriptions.
-
-### Returns
-
-Returns a `BalanceResult` object containing the balanced coefficients and formatted equation string. See [BalanceResult](#balanceresult) for structure details.
-
-### Throws
-
-Throws an `Error` when:
-- The equation string lacks a valid arrow separator
-- The equation is unbalanceable (violates conservation laws)
-- The formula syntax is invalid
-- Either side of the equation is empty
-
-## BalanceOptions
-
-Configuration interface for the `balance()` function.
-
-### Properties
-
-#### `showOne` (boolean, optional)
-
-- **Default**: `true`
-- **Description**: When `true`, coefficients equal to unity (1) are rendered explicitly in the output `equation` string. When `false`, unit coefficients are omitted for cleaner output.
-- **Example**:
-  - With `showOne: true`: `"2 H2 + O2 -> 2 H2O"` (O2 has explicit 1)
-  - With `showOne: false`: `"2 H2 + O2 -> 2 H2O"` (unit coefficient hidden)
-
-#### `format` (string, optional)
-
-- **Default**: `"text"`
-- **Type**: `"text" | "html" | "latex"`
-- **Description**: Selects the arrow representation format in the output `equation` property.
-- **Values**:
-  - `"text"`: Uses `->` as the arrow separator
-  - `"html"`: Uses `&rarr;` HTML entity for the arrow
-  - `"latex"`: Uses `\rightarrow` LaTeX command for the arrow
-
-### Example
-
-```typescript
-const options: BalanceOptions = {
-    showOne: false,
-    format: 'html'
-};
-```
-
-## BalanceResult
-
-Result interface returned by the `balance()` function.
-
-### Properties
-
-#### `reactants` (BalancedSpecies[], required)
-
-An array of `BalancedSpecies` objects representing the reactant side of the balanced equation. Each object contains the coefficient and formula for one reactant species.
-
-#### `products` (BalancedSpecies[], required)
-
-An array of `BalancedSpecies` objects representing the product side of the balanced equation. Each object contains the coefficient and formula for one product species.
-
-#### `equation` (string, required)
-
-A fully formatted balanced equation string. The format of the arrow separator depends on the `format` option. Coefficient visibility depends on the `showOne` option.
-
-### Example
-
-```typescript
-const result: BalanceResult = balance('H2 + O2 -> H2O');
-// result.equation: "2 H2 + 1 O2 -> 2 H2O"
-// result.reactants: [{ coefficient: 2, formula: 'H2' }, { coefficient: 1, formula: 'O2' }]
-// result.products: [{ coefficient: 2, formula: 'H2O' }]
-```
-
-## BalancedSpecies
-
-Interface representing a single chemical species with its balanced coefficient.
-
-### Properties
-
-#### `coefficient` (number, required)
-
-The stoichiometric coefficient for this species in the balanced equation. Always a positive integer after balancing.
-
-#### `formula` (string, required)
-
-The chemical formula of the species, with state symbols stripped and hydrate separators normalized. Leading coefficients from the input are not preserved.
-
-### Example
-
-```typescript
-const species: BalancedSpecies = {
-    coefficient: 2,
-    formula: 'H2O'
-};
-```
-
-## Examples
-
-### Basic Usage (TypeScript)
-
-```typescript
-import { balance } from 'fast-balance';
-const result = balance('H2 + O2 -> H2O');
-console.log(result.equation); // "2 H2 + 1 O2 -> 2 H2O"
-console.log(result.reactants[0].coefficient); // 2
-console.log(result.reactants[0].formula); // "H2"
-console.log(result.products[0].coefficient); // 2
-console.log(result.products[0].formula); // "H2O"
-```
-
-### Basic Usage (JavaScript)
-
-```javascript
-const { balance } = require('fast-balance');
-const result = balance('Fe + O2 -> Fe2O3');
-console.log(result.equation); // "4 Fe + 3 O2 -> 2 Fe2O3"
-```
-
-### Using Options
-
-```typescript
-import { balance } from 'fast-balance';
-// Hide unit coefficients, use HTML format
-const result = balance('H2 + O2 -> H2O', {
-    showOne: false,
-    format: 'html'
-});
-console.log(result.equation); // "2 H2 + O2 &rarr; 2 H2O"
-```
-
-### LaTeX Output
-
-```typescript
-import { balance } from 'fast-balance';
-const result = balance('CH4 + O2 -> CO2 + H2O', { format: 'latex' });
-console.log(result.equation); // "1 CH4 + 2 O2 \rightarrow 1 CO2 + 2 H2O"
-```
-
-### Complex Ionic Equation
-
-```typescript
-import { balance } from 'fast-balance';
-const result = balance('MnO4- + H+ + e- -> Mn2+ + H2O');
-console.log(result.equation); // "1 MnO4- + 8 H+ + 5 e- -> 1 Mn2+ + 4 H2O"
-```
-
-### Nested Parentheses
-
-```typescript
-import { balance } from 'fast-balance';
-const result = balance('Ca3(PO4)2 + SiO2 -> CaSiO3 + P4O10');
-console.log(result.equation); // "2 Ca3(PO4)2 + 6 SiO2 -> 6 CaSiO3 + 1 P4O10"
-```
-
-### Bracket Notation
-
-```typescript
-import { balance } from 'fast-balance';
-const result = balance('[Fe(CN)6]4- + H2O2 -> Fe3+ + CO2 + NO3- + H+');
-// Returns balanced coefficients for the complex coordination compound
-```
-
-### Error Handling
-
-```typescript
-import { balance } from 'fast-balance';
-try {
-    // Missing arrow separator
-    const result = balance('H2 + O2');
-} catch (error) {
-    console.error(error.message); // "Invalid equation: missing a valid arrow"
+```ts
+interface BalancedSpecies {
+  coefficient: number;
+  formula: string;
 }
-try {
-    // Unbalanceable equation (violates conservation)
-    const result = balance('H2 -> O2');
-} catch (error) {
-    console.error(error.message); // "Unbalanceable equation"
+
+interface BalanceResult {
+  reactants: BalancedSpecies[];
+  products: BalancedSpecies[];
+  equation: string;
+  underdetermined?: boolean;   // present when >1 independent balance exists
+  warnings?: string[];         // present only when non-empty
+  analysis?: ReactionAnalysis; // present only when { analyze: true }
 }
 ```
 
-### Accessing Coefficients Programmatically
+---
 
-```typescript
-import { balance } from 'fast-balance';
-const result = balance('C2H6 + O2 -> CO2 + H2O');
-// Iterate through reactants
-result.reactants.forEach((species) => {
-    console.log(`${species.coefficient} ${species.formula}`);
-    // Output: "2 C2H6", "7 O2"
-});
-// Iterate through products
-result.products.forEach((species) => {
-    console.log(`${species.coefficient} ${species.formula}`);
-    // Output: "4 CO2", "6 H2O"
-});
+## `balanceAll(input, options?)`
+
+Returns every independent balance. For a unique reaction this is a single
+result; for underdetermined systems it includes the minimal balance plus one
+solution per independent free direction.
+
+```ts
+balanceAll('C + O2 -> CO + CO2').map(r => r.equation);
+// ["3 C + 2 O2 -> 2 CO + 1 CO2", "4 C + 3 O2 -> 2 CO + 2 CO2"]
 ```
 
-### Redox Half-Reaction
+## `isBalanced(input, options?)`
 
-```typescript
-import { balance } from 'fast-balance';
-// Reduction half-reaction
-const reduction = balance('Cr2O7^2- + H+ + e- -> Cr3+ + H2O');
-console.log(reduction.equation); // "1 Cr2O7^2- + 14 H+ + 6 e- -> 2 Cr3+ + 7 H2O"
+Returns `true` when the equation balances exactly (mass and charge), `false`
+for any parse or balance failure. Never throws.
+
+## `verify(input, options?)`
+
+Alias for `balance` that makes the throwing contract explicit.
+
+## `audit(input)`
+
+Reports per-element and charge totals for each side without requiring the
+equation to balance.
+
+```ts
+audit('H2 + O2 -> H2O');
+// { elements: { H: { left: 2, right: 2, balanced: true },
+//               O: { left: 2, right: 1, balanced: false } },
+//   charge:   { left: 0, right: 0, balanced: true } }
 ```
 
-### Hydrate Compounds
+---
 
-```typescript
-import { balance } from 'fast-balance';
-// Hydrate with dot separator
-const result = balance('CuSO4·5H2O -> CuSO4 + H2O');
-console.log(result.equation); // "1 CuSO4·5H2O -> 1 CuSO4 + 5 H2O"
+## Analysis
+
+### `analyzeReaction(reactants, products)`
+
+Classifies a reaction and reports which elements are oxidised/reduced, using
+conservative oxidation-state rules (only unambiguous assignments are reported).
+
+```ts
+interface ReactionAnalysis {
+  type: string;          // e.g. "combustion", "synthesis", "acid-base"
+  oxidized: string[];    // element symbols
+  reduced: string[];     // element symbols
+}
 ```
 
-### Input Coefficient Handling
+### `classify(reactants, products)`
 
-```typescript
-import { balance } from 'fast-balance';
-// Leading coefficients in input are ignored
-const result = balance('2 H2 + O2 -> 2 H2O');
-// Still returns properly balanced result
-console.log(result.equation); // "2 H2 + 1 O2 -> 2 H2O"
+Structural classification only: `combustion`, `decomposition`, `synthesis`,
+`single-displacement`, `acid-base` or `metathesis`.
+
+### `oxidationStates(species)`
+
+Average oxidation state per element for a single parsed species. Elements whose
+states cannot be determined unambiguously (e.g. both Fe and S in `Fe2(SO4)3`)
+are omitted rather than guessed.
+
+```ts
+oxidationStates(splitEquation('MnO4- + H+ -> Mn2+').reactants[0]);
+// { Mn: 7, O: -2 }
 ```
 
-### State Symbols (Automatically Stripped)
+---
 
-```typescript
-import { balance } from 'fast-balance';
-// State symbols are ignored during balancing
-const result = balance('H2(g) + O2(g) -> H2O(l)');
-console.log(result.reactants[0].formula); // "H2"
-console.log(result.products[0].formula); // "H2O"
+## Parsing
+
+| Function | Description |
+|---|---|
+| `parseFormula(formula)` | `{ elements, charge }` for a formula string. |
+| `parseWithoutMultiplier(str)` | Parses a formula body (no hydrate multiplier). |
+| `splitEquation(input)` | `{ reactants, products }` of `Species`. |
+| `stripStateSymbols(formula)` | Removes `(s)`, `(aq)`, `(gas)`, … |
+| `normalizeText(input)` | Normalises unicode sub/superscripts and dashes. |
+| `normalizeArrows(input)` | Normalises arrow variants and conditions. |
+
+```ts
+interface Species {
+  formula: string;
+  elements: Record<string, number>;
+  charge: number;
+  isotopes?: Record<string, number>;
+  variables?: string[];
+}
 ```
+
+---
+
+## Low-level solver
+
+| Function | Description |
+|---|---|
+| `buildMatrix(reactants, products)` | Conservation matrix (`Fraction[][]`) + column count. |
+| `solveSystem(matrix, cols)` | Rational nullspace vector (throws on full rank). |
+| `fractionsToIntegers(fracs)` | Smallest integer vector (sign-normalised). |
+| `gcd(a, b)` / `lcm(a, b)` | Integer helpers. |
+| `Fraction` | Exact rational with `num`/`den` and arithmetic methods. |
+
+---
+
+## `BalanceError`
+
+Errors thrown by `balance` are `BalanceError` instances with a stable `code`:
+
+```ts
+class BalanceError extends Error {
+  code:
+    | 'PARSE_ERROR'
+    | 'UNKNOWN_ELEMENT'
+    | 'AMBIGUOUS_CHARGE'
+    | 'UNBALANCEABLE'
+    | 'UNDERDETERMINED'
+    | 'INVALID_ARGUMENT'
+    | 'OVERFLOW';
+}
+```
+
+```ts
+import { balance, BalanceError } from 'fast-balance';
+
+try {
+  balance('Fe2+ + Cl- -> FeCl3');
+} catch (e) {
+  if (e instanceof BalanceError && e.code === 'UNBALANCEABLE') {
+    // handle
+  }
+}
+```
+
+---
+
+## Guarantees
+
+- **Exactness** — the balancing path uses BigInt rational arithmetic; results
+  never depend on floating point.
+- **Conservation** — every returned result is re-verified for element and
+  charge conservation before it is returned.
+- **Minimality** — solutions are primitive integer vectors; in underdetermined
+  systems the smallest positive solution is chosen when it can be found cheaply.
+- **Linearity** — because the element set is bounded, matrix elimination is
+  `O(m²·n)` with `m = O(1)`, i.e. linear in the number of species.
