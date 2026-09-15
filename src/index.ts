@@ -17,6 +17,7 @@ import type { ElementMap, Equation, ParsedUnit, Species } from "./parse";
 import {
     buildMatrix,
     fractionsToIntegers,
+    rref,
     solveAllPositive,
     solvePositive,
     solveSystem,
@@ -86,7 +87,7 @@ function formatEquation(
     reactants: BalancedSpecies[],
     products: BalancedSpecies[],
     showOne: boolean,
-    format: "text" | "html" | "latex"
+    format: "text" | "html" | "latex",
 ): string {
     const left = formatSpecies(reactants, showOne);
     const right = formatSpecies(products, showOne);
@@ -100,37 +101,8 @@ function formatEquation(
     }
 }
 
-function mathematicallyRank(matrix: Fraction[][]): number {
-    if (matrix.length === 0) return 0;
-    const rows = matrix.length;
-    const cols = matrix[0]!.length;
-    const M = matrix.map((row) => row.map((f) => f.clone()));
-    let rank = 0;
-    let lead = 0;
-    for (let r = 0; r < rows && lead < cols; ) {
-        let i = r;
-        while (i < rows && M[i]![lead]!.isZero()) i++;
-        if (i === rows) {
-            lead++;
-            continue;
-        }
-        [M[i]!, M[r]!] = [M[r]!, M[i]!];
-        const pivot = M[r]![lead]!;
-        for (let j = 0; j < cols; j++) M[r]![j] = M[r]![j]!.div(pivot);
-        for (let i2 = 0; i2 < rows; i2++) {
-            if (i2 === r) continue;
-            const factor = M[i2]![lead]!;
-            if (!factor.isZero()) {
-                for (let j = 0; j < cols; j++) {
-                    M[i2]![j] = M[i2]![j]!.sub(factor.mul(M[r]![j]!));
-                }
-            }
-        }
-        rank++;
-        lead++;
-        r++;
-    }
-    return rank;
+function rankOf(matrix: Fraction[][]): number {
+    return matrix.length === 0 ? 0 : rref(matrix).pivotCols.length;
 }
 
 function makeResult(
@@ -140,7 +112,7 @@ function makeResult(
     showOne: boolean,
     format: "text" | "html" | "latex",
     nullity: number,
-    options: BalanceOptions
+    options: BalanceOptions,
 ): BalanceResult {
     const n = reactants.length;
     const balancedReactants: BalancedSpecies[] = reactants.map((r, i) => ({
@@ -161,7 +133,7 @@ function makeResult(
     for (const s of [...reactants, ...products]) {
         if (s.variables && s.variables.length > 0) {
             warnings.push(
-                "Symbolic subscript (" + s.variables.join(", ") + ") treated as 1 in " + s.formula
+                "Symbolic subscript (" + s.variables.join(", ") + ") treated as 1 in " + s.formula,
             );
         }
     }
@@ -178,9 +150,10 @@ export function balance(input: string, options: BalanceOptions = {}): BalanceRes
     const mode = options.mode ?? "chemical";
 
     const run = (): BalanceResult => {
-        const { matrix, cols } = mode === "nuclear"
-            ? buildNuclearMatrix(reactants, products)
-            : buildMatrix(reactants, products);
+        const { matrix, cols } =
+            mode === "nuclear"
+                ? buildNuclearMatrix(reactants, products)
+                : buildMatrix(reactants, products);
 
         let coeffs = solvePositive(matrix, cols);
         if (coeffs === null) {
@@ -198,7 +171,7 @@ export function balance(input: string, options: BalanceOptions = {}): BalanceRes
         if (!verifyConservation(reactants, products, coeffs)) {
             if (mode === "chemical") throw unbalanceable();
         }
-        const nullity = cols - mathematicallyRank(matrix);
+        const nullity = cols - rankOf(matrix);
         return makeResult(reactants, products, coeffs, showOne, format, nullity, options);
     };
 
@@ -219,7 +192,7 @@ export function balance(input: string, options: BalanceOptions = {}): BalanceRes
  */
 function buildNuclearMatrix(
     reactants: Species[],
-    products: Species[]
+    products: Species[],
 ): { matrix: Fraction[][]; cols: number } {
     const all = [...reactants, ...products];
     const cols = all.length;
@@ -254,7 +227,9 @@ function buildNuclearMatrix(
                 const mass = sp.isotopes?.[el];
                 if (mass === undefined) {
                     throw parseError(
-                        'Nuclear mode requires isotope labels (expected element mass number for "' + el + '")'
+                        'Nuclear mode requires isotope labels (expected element mass number for "' +
+                            el +
+                            '")',
                     );
                 }
                 a += sp.elements[el]! * mass;
@@ -284,7 +259,7 @@ function tryAutoComplete(
     products: Species[],
     showOne: boolean,
     format: "text" | "html" | "latex",
-    options: BalanceOptions
+    options: BalanceOptions,
 ): BalanceResult {
     const helperSpecies = AUTO_HELPERS.map((h) => speciesFromFormula(h));
     let best: BalanceResult | null = null;
@@ -312,7 +287,7 @@ function tryAutoComplete(
         const coeffs = solvePositive(matrix, cols);
         if (coeffs === null) continue;
         if (!verifyConservation(left, right, coeffs)) continue;
-        const nullity = cols - mathematicallyRank(matrix);
+        const nullity = cols - rankOf(matrix);
         best = makeResult(left, right, coeffs, showOne, format, nullity, options);
         bestAdded = added;
     }
@@ -335,9 +310,9 @@ export function balanceAll(input: string, options: BalanceOptions = {}): Balance
     const { matrix, cols } = buildMatrix(reactants, products);
     const sols = solveAllPositive(matrix, cols);
     if (sols.length === 0) throw unbalanceable();
-    const nullity = cols - mathematicallyRank(matrix);
+    const nullity = cols - rankOf(matrix);
     return sols.map((coeffs) =>
-        makeResult(reactants, products, coeffs, showOne, format, nullity, options)
+        makeResult(reactants, products, coeffs, showOne, format, nullity, options),
     );
 }
 
