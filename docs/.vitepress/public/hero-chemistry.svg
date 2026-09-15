@@ -1,38 +1,71 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  <!-- Balanced equation -->
-  <g stroke="none" fill="currentColor" font-family="IBM Plex Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="32" font-weight="400">
-    <text x="55" y="160">H<tspan font-size="18" dy="8">2</tspan></text>
-    <text x="115" y="160" font-size="28">+</text>
-    <text x="150" y="160">Cl<tspan font-size="18" dy="8">2</tspan></text>
-    <text x="310" y="160">2HCl</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 320" role="img" aria-label="Molecule, reaction arrow and atom" fill="none">
+  <defs>
+    <radialGradient id="fbGlowL" cx="50%" cy="42%" r="62%">
+      <stop offset="0%" stop-color="#0f62fe" stop-opacity="0.16"/>
+      <stop offset="70%" stop-color="#0f62fe" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#0f62fe" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fbLineL" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f62fe"/>
+      <stop offset="100%" stop-color="#198038"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="420" height="320" fill="url(#fbGlowL)"/>
+
+  <!-- Delicate dot grid -->
+  <g fill="#0f62fe" opacity="0.16">
+    <circle cx="60" cy="60" r="2"/><circle cx="90" cy="60" r="2"/><circle cx="120" cy="60" r="2"/>
+    <circle cx="330" cy="60" r="2"/><circle cx="360" cy="60" r="2"/>
+    <circle cx="60" cy="270" r="2"/><circle cx="90" cy="270" r="2"/>
+    <circle cx="330" cy="270" r="2"/><circle cx="360" cy="270" r="2"/><circle cx="390" cy="270" r="2"/>
   </g>
 
-  <!-- Reaction arrow -->
-  <path d="M210 155h48M248 146l10 9-10 9" stroke-width="2.5"/>
-
-  <!-- Balance scale -->
-  <g transform="translate(200,50)">
-    <path d="M-15 0h30M-15 0v5M15 0v5M-18 8l3 3 3-3M12 8l3 3 3-3M0 0v10M-6 15h12l-6-5-6 5z"/>
+  <!-- Benzene-like molecule (left) -->
+  <g stroke="url(#fbLineL)" stroke-width="2.4" stroke-linejoin="round">
+    <path d="M136 140 L118 171 L82 171 L64 140 L82 109 L118 109 Z"/>
+    <circle cx="100" cy="140" r="18" stroke-width="2"/>
+    <path d="M136 140 L166 140" stroke-width="2.4"/>
+  </g>
+  <g fill="#0f62fe">
+    <circle cx="100" cy="140" r="5.5"/>
+    <circle cx="136" cy="140" r="5"/>
+    <circle cx="64" cy="140" r="5"/>
+    <circle cx="82" cy="171" r="5"/>
+    <circle cx="118" cy="171" r="5"/>
+    <circle cx="82" cy="109" r="5"/>
+    <circle cx="118" cy="109" r="5"/>
+    <circle cx="171" cy="140" r="4.5" fill="#198038"/>
   </g>
 
-  <!-- Atom -->
-  <g transform="translate(75,75)">
-    <ellipse rx="50" ry="16"/>
-    <ellipse rx="50" ry="16" transform="rotate(60)"/>
-    <ellipse rx="50" ry="16" transform="rotate(-60)"/>
-    <circle r="4" fill="currentColor" stroke="none"/>
+  <!-- Reaction arrow (center) -->
+  <g stroke="#161616" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.82">
+    <path d="M196 140 H244"/>
+    <path d="M234 129 L246 140 L234 151"/>
   </g>
 
-  <!-- Molecule -->
-  <g transform="translate(325,75)">
-    <path d="M0 -40l34.641 20v40L0 40l-34.641-20V-20z"/>
-    <circle r="12"/>
+  <!-- Orbit atom (right) -->
+  <g stroke="#0f62fe" stroke-width="2.2">
+    <ellipse cx="320" cy="140" rx="52" ry="18"/>
+    <ellipse cx="320" cy="140" rx="52" ry="18" transform="rotate(60 320 140)"/>
+    <ellipse cx="320" cy="140" rx="52" ry="18" transform="rotate(-60 320 140)"/>
+  </g>
+  <circle cx="320" cy="140" r="8.5" fill="#0f62fe"/>
+  <g fill="#198038">
+    <circle cx="372" cy="140" r="4"/>
+    <circle cx="294" cy="95" r="4"/>
+    <circle cx="294" cy="185" r="4"/>
   </g>
 
-  <!-- Flask -->
-  <path d="M68 205h24v15l6 40H62l6-40v-15z"/>
-
-  <!-- Beaker -->
-  <path d="M301 212l1-7h36l1 7v48h-38v-48z"/>
-  <path d="M308 220h6M308 232h6M308 244h6"/>
+  <!-- Ground line with flasks (bottom) -->
+  <g stroke="#0f62fe" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9">
+    <path d="M120 262 h18 v14 l12 30 h-42 l12 -30 v-14"/>
+    <path d="M118 288 h22"/>
+    <path d="M300 258 h22 v0 l0 12 l14 34 h-50 l14 -34 v-12"/>
+    <path d="M296 286 h30" opacity="0.7"/>
+  </g>
+  <g stroke="#198038" stroke-width="2.2" stroke-linecap="round" opacity="0.9">
+    <path d="M252 268 h18 v0 l0 9 l10 26 h-38 l10 -26 v-9"/>
+    <path d="M250 291 h22"/>
+  </g>
 </svg>
