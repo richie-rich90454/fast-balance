@@ -1,409 +1,396 @@
 /**
- * fast‑balance – a blazing‑fast chemical equation balancer
+ * fast-balance — exact, fast chemical equation balancing.
  *
- * @packageDocumentation
- *
- * ## Overview
- *
- * This module exports a single function `balance()` that accepts almost any
- * chemical equation string and returns the completely balanced coefficients.
- *
- * It handles:
- * - Simple reactions (`H2 + O2 -> H2O`)
- * - Nested parentheses and brackets (`Ca3(PO4)2`, `[Fe(CN)6]4-`)
- * - Ionic charges (`Fe2+`, `SO4^2-`, `MnO4-`)
- * - Explicit electrons (`e-`, `e`) for redox half‑reactions
- * - Hydrate dots (`CuSO4·5H2O`, `*`, `•`)
- * - State symbols (`(s)`, `(l)`, `(g)`, `(aq)`, `(solid)`, etc.) – automatically stripped
- * - Many arrow styles (`->`, `→`, `=`, `⇌`, `<=>`, `<->`, `-->`)
- * - Leading coefficients in the input (ignored)
- *
- * The algorithm works by parsing each term into an element‑count map and a net
- * charge, building a linear system, solving for its integer nullspace using
- * exact rational arithmetic (no floating‑point drift), and finally converting
- * the rational coefficients to the smallest integer set.
- *
- * ## Usage
- *
- * ```typescript
- * import { balance } from "fast-balance";
- *
- * const result = balance("H2 + O2 -> H2O");
- * console.log(result.equation); // "2 H2 + O2 -> 2 H2O"
- *
- * // Options
- * balance("Fe2+ + Cl- -> FeCl2", { showOne: false, format: "html" });
- * ```
- *
- * @example
- * ```typescript
- * // Redox half‑reaction in acidic medium
- * balance("MnO4- + H+ + e- -> Mn2+ + H2O");
- * // returns { reactants: [...], products: [...], equation: "MnO4- + 8 H+ + 5 e- -> Mn2+ + 4 H2O" }
- * ```
- *
- * @packageDocumentation
+ * Public entry point. All historical exports are preserved; new capabilities
+ * are additive and opt-in.
  */
-export class Fraction{
-    constructor(public readonly num: number, public readonly den: number=1){
-        if(den<0){ num=-num; den=-den; }
-        let g=gcd(Math.abs(num), den);
-        this.num=num/g;
-        this.den=den/g;
-    }
-    static zero(): Fraction{ return new Fraction(0); }
-    static one(): Fraction{ return new Fraction(1); }
-    isZero(): boolean{ return this.num===0; }
-    add(other: Fraction): Fraction{
-        return new Fraction(this.num*other.den+other.num*this.den, this.den*other.den);
-    }
-    sub(other: Fraction): Fraction{
-        return new Fraction(this.num*other.den-other.num*this.den, this.den*other.den);
-    }
-    mul(other: Fraction): Fraction{
-        return new Fraction(this.num*other.num, this.den*other.den);
-    }
-    div(other: Fraction): Fraction{
-        return new Fraction(this.num*other.den, this.den*other.num);
-    }
-    neg(): Fraction{
-        return new Fraction(-this.num, this.den);
-    }
-    equals(other: Fraction): boolean{
-        return this.num===other.num&&this.den===other.den;
-    }
-    clone(): Fraction{
-        return new Fraction(this.num, this.den);
-    }
-}
-export function gcd(a: number, b: number): number{
-    a=Math.abs(a);
-    b=Math.abs(b);
-    while (b!==0){ [a, b]=[b, a%b]; }
-    return a;
-}
-export function lcm(a: number, b: number): number{
-    return (a/gcd(a, b))*b;
-}
-let STATE_SYMBOLS=["s", "l", "g", "aq", "solid", "liquid", "gas", "aqueous", "cr", "am"] as const;
-let STATE_REGEX=new RegExp(`\\((${STATE_SYMBOLS.join("|")})\\)`, "gi");
-export type ElementMap=Record<string, number>;
-export interface ParsedUnit{
-    elements: ElementMap;
-    charge: number;
-}
-export function stripStateSymbols(formula: string): string{
-    return formula.replace(STATE_REGEX, "");
-}
-export function parseFormula(formula: string): ParsedUnit{
-    formula=formula.replace(STATE_REGEX, "");
-    let f=formula.trim();
-    if (/^e-?$/.test(f)) return { elements: {}, charge: -1 };
-    if (/^e\+$/.test(f)) return { elements: {}, charge: 1 };
-    let parts=f.split(/[·*•]/u).map(s=>s.trim()).filter(Boolean);
-    let totalElements: ElementMap={};
-    let totalCharge=0;
-    for (let part of parts){
-        let match=part.match(/^(\d+)\s*(.*)/);
-        let mult=1;
-        let rest=part;
-        if (match){
-            mult=parseInt(match[1]!, 10);
-            rest=match[2]!;
-        }
-        if (!rest) continue;
-        let inner=parseWithoutMultiplier(rest);
-        for (let el in inner.elements){
-            totalElements[el]=(totalElements[el]??0)+inner.elements[el]!*mult;
-        }
-        totalCharge+=inner.charge*mult;
-    }
-    return { elements: totalElements, charge: totalCharge };
-}
-export function parseWithoutMultiplier(str: string): ParsedUnit{
-    let i=0;
-    let elements: ElementMap={};
-    let totalCharge=0;
-    let currentSeen = false;
-    let tryParseCharge=(): { charge: number; len: number }|null=>{
-        let sub=str.slice(i);
-        let m=sub.match(/^(\^?)(\d*)([+-])/);
-        if (!m) return null;
-        let sign=m[3]==="+"?1:-1;
-        let num=m[2]===""?1:parseInt(m[2]!, 10);
-        return { charge: sign*num, len: m[0].length };
-    };
-    let parseExpression=(closeChar?: string): void=>{
-        while (i<str.length&&str[i]!==closeChar){
-            let unit=parseUnit();
-            for (let el in unit.elements){
-                elements[el]=(elements[el]??0)+unit.elements[el]!;
-            }
-            totalCharge+=unit.charge;
-        }
-        if (closeChar!==undefined&&i<str.length&&str[i]===closeChar) i++;
-        else if (closeChar!==undefined) throw new Error("Mismatched brackets: expected \""+closeChar+"\" at position "+i);
-    };
-    let parseUnit=(): ParsedUnit=>{
-        if (i>=str.length) throw new Error("Unexpected end of formula");
-        if (str[i]==="e"&&(i+1>=str.length||!/[a-z]/i.test(str[i+1]!))){
-            i++;
-            let charge=-1;
-            if (i<str.length&&(str[i]==="-"||str[i]==="+")){
-                charge=str[i]==="+"?1:-1;
-                i++;
-            }
-            return { elements: {}, charge };
-        }
-        if (str[i]==="("||str[i]==="["){
-            let open=str[i]!;
-            let close=open==="("?")":"]";
-            i++;
-            // Save outer seen and start a new scope
-            let savedSeen = currentSeen;
-            currentSeen = false;
-            let savedElements=elements;
-            let savedCharge=totalCharge;
-            elements={};
-            totalCharge=0;
-            parseExpression(close);
-            let group: ParsedUnit={ elements, charge: totalCharge };
-            elements=savedElements;
-            totalCharge=savedCharge;
-            // Restore outer seen (unchanged by inner elements)
-            currentSeen = savedSeen;
-            let subscript=1;
-            let charge=0;
-            if (i<str.length&&/\d/.test(str[i]!)){
-                let digitStart=i;
-                while (i<str.length&&/\d/.test(str[i]!)) i++;
-                if (i<str.length&&(str[i]==="+"||str[i]==="-")){
-                    if (!currentSeen){
-                        i=digitStart;
-                        let cr=tryParseCharge();
-                        if (cr){ charge=cr.charge; i+=cr.len; }
-                        subscript=1;
-                    } else {
-                        subscript=parseInt(str.slice(digitStart, i), 10);
-                        let cr=tryParseCharge();
-                        if (cr){ charge=cr.charge; i+=cr.len; }
-                    }
-                } else {
-                    subscript=parseInt(str.slice(digitStart, i), 10);
-                    let cr=tryParseCharge();
-                    if (cr){ charge=cr.charge; i+=cr.len; }
-                }
-            } else {
-                let cr=tryParseCharge();
-                if (cr){ charge=cr.charge; i+=cr.len; }
-            }
-            let multiplied: ElementMap={};
-            for (let el in group.elements) multiplied[el]=group.elements[el]!*subscript;
-            return { elements: multiplied, charge: group.charge*subscript+charge };
-        }
-        if (!/[A-Z]/.test(str[i]!)) throw new Error("Expected element at position "+i+", got '"+str[i]+"'");
-        let start=i;
-        i++;
-        while (i<str.length&&/[a-z]/.test(str[i]!)) i++;
-        let symbol=str.slice(start, i);
-        let subscript=1;
-        let charge=0;
-        if (i<str.length&&/\d/.test(str[i]!)){
-            let digitStart=i;
-            while (i<str.length&&/\d/.test(str[i]!)) i++;
-            if (i<str.length&&(str[i]==="+"||str[i]==="-")){
-                if (!currentSeen){
-                    i=digitStart;
-                    let cr=tryParseCharge();
-                    if (cr){ charge=cr.charge; i+=cr.len; }
-                    subscript=1;
-                } else {
-                    subscript=parseInt(str.slice(digitStart, i), 10);
-                    let cr=tryParseCharge();
-                    if (cr){ charge=cr.charge; i+=cr.len; }
-                }
-            } else {
-                subscript=parseInt(str.slice(digitStart, i), 10);
-                let cr=tryParseCharge();
-                if (cr){ charge=cr.charge; i+=cr.len; }
-            }
-        } else {
-            let cr=tryParseCharge();
-            if (cr){ charge=cr.charge; i+=cr.len; }
-        }
-        currentSeen = true;
-        return { elements: { [symbol]: subscript }, charge };
-    };
-    parseExpression();
-    if (i<str.length){
-        let trail=tryParseCharge();
-        if (trail){
-            totalCharge+=trail.charge;
-            i+=trail.len;
-        }
-    }
-    if (i<str.length) throw new Error("Unexpected characters at position "+i+": \""+str.slice(i)+"\"");
-    return { elements, charge: totalCharge };
-}
-export interface Species{
-    formula: string;
-    elements: ElementMap;
-    charge: number;
-}
-export interface Equation{
-    reactants: Species[];
-    products: Species[];
-}
-export function splitEquation(input: string): Equation{
-    let cleaned=input
-        .replace(/→|⇒|⇌|<=>|<->|-->/g, "->")
-        .replace(/=/g, "->");
-    let parts=cleaned.split("->");
-    if (parts.length!==2) throw new Error("Invalid equation: missing a valid arrow");
-    let leftStr=parts[0]!.trim();
-    let rightStr=parts[1]!.trim();
-    let parseSide=(side: string): Species[]=>
-        side.split(/\s+\+\s+/)
-            .map(term=>term.trim())
-            .filter(Boolean)
-            .map(term=>{
-                let match=term.match(/^(\d+)\s*(.*)/);
-                let formulaStr=term;
-                if (match) formulaStr=match[2]!;
-                let cleanedFormula=stripStateSymbols(formulaStr);
-                let { elements, charge }=parseFormula(formulaStr);
-                return { formula: cleanedFormula, elements, charge };
-            });
-    let reactants=parseSide(leftStr);
-    let products=parseSide(rightStr);
-    if (reactants.length===0) throw new Error("Left side of equation is empty");
-    if (products.length===0) throw new Error("Right side of equation is empty");
-    return { reactants, products };
-}
-export function buildMatrix(
-    reactants: Species[],
-    products: Species[]
-): { matrix: Fraction[][]; cols: number }{
-    let species=[...reactants, ...products];
-    let elSet=new Set<string>();
-    for (let s of species) for (let el in s.elements) elSet.add(el);
-    let elements=Array.from(elSet).sort();
-    let hasCharge=species.some(s=>s.charge!==0);
-    let rows=elements.length+(hasCharge?1:0);
-    let cols=species.length;
-    let M: Fraction[][]=Array.from({ length: rows }, ()=>
-        Array.from({ length: cols }, ()=>Fraction.zero())
-    );
-    for (let j=0; j<cols; j++){
-        let isReactant=j<reactants.length;
-        let sign=isReactant?1:-1;
-        let sp=species[j]!;
-        for (let i=0; i<elements.length; i++){
-            let el=elements[i]!;
-            let val=sp.elements[el]??0;
-            M[i]![j]=new Fraction(sign*val);
-        }
-        if (hasCharge) M[rows-1]![j]=new Fraction(sign*sp.charge);
-    }
-    if (rows===0){
-        M=[Array.from({ length: cols }, ()=>Fraction.zero())];
-        rows=1;
-    }
-    return { matrix: M, cols };
-}
-export function solveSystem(matrix: Fraction[][], cols: number): Fraction[]{
-    let rows=matrix.length;
-    if (rows===0) return Array.from({ length: cols }, ()=>Fraction.one());
-    let M=matrix.map(row=>row.map(f=>f.clone()));
-    let pivotCols: number[]=[];
-    let lead=0;
-    for (let r=0; r<rows; r++){
-        if (lead>=cols) break;
-        let i=r;
-        while (i<rows&&M[i]![lead]!.isZero()) i++;
-        if (i===rows){ lead++; r--; continue; }
-        [M[i]!, M[r]!]=[M[r]!, M[i]!];
-        let pivot=M[r]![lead]!;
-        for (let j=0; j<cols; j++) M[r]![j]=M[r]![j]!.div(pivot);
-        for (let i2=0; i2<rows; i2++){
-            if (i2===r) continue;
-            let factor=M[i2]![lead]!;
-            if (!factor.isZero()){
-                for (let j=0; j<cols; j++) M[i2]![j]=M[i2]![j]!.sub(factor.mul(M[r]![j]!));
-            }
-        }
-        pivotCols.push(lead);
-        lead++;
-    }
-    let pivotSet=new Set(pivotCols);
-    let freeCols: number[]=[];
-    for (let j=0; j<cols; j++) if (!pivotSet.has(j)) freeCols.push(j);
-    if (freeCols.length===0) throw new Error("Unbalanceable equation");
-    let result: Fraction[]=Array.from({ length: cols }, ()=>Fraction.zero());
-    result[freeCols[0]!]=Fraction.one();
-    for (let r=pivotCols.length-1; r>=0; r--){
-        let pivot=pivotCols[r]!;
-        let sum=Fraction.zero();
-        for (let j=0; j<cols; j++) if (j!==pivot&&!M[r]![j]!.isZero()) sum=sum.add(M[r]![j]!.mul(result[j]!));
-        result[pivot]=sum.neg();
-    }
-    return result;
-}
-export function fractionsToIntegers(fracs: Fraction[]): number[]{
-    let denLcm=1;
-    for (let f of fracs) if (!f.isZero()) denLcm=lcm(denLcm, Math.abs(f.den));
-    let ints=fracs.map(f=>{
-        let sign=f.num<0?-1:1;
-        return sign*Math.abs(f.num)*(denLcm/Math.abs(f.den));
-    });
-    let g=0;
-    for (let v of ints) g=gcd(Math.abs(v), g);
-    if (g>1) ints=ints.map(v=>v/g);
-    let negCount=0, posCount=0;
-    for (let v of ints){ if (v<0) negCount++; if (v>0) posCount++; }
-    if (negCount>posCount){
-        ints=ints.map(v=>-v);
-        g=0;
-        for (let v of ints) g=gcd(Math.abs(v), g);
-        if (g>1) ints=ints.map(v=>v/g);
-    }
-    return ints;
-}
-export interface BalancedSpecies{
+import { Fraction, gcd, lcm } from "./fraction";
+import {
+    normalizeText,
+    parseFormula,
+    parseWithoutMultiplier,
+    splitEquation,
+    stripStateSymbols,
+    normalizeArrows,
+} from "./parse";
+import type { ElementMap, Equation, ParsedUnit, Species } from "./parse";
+import {
+    buildMatrix,
+    fractionsToIntegers,
+    solveAllPositive,
+    solvePositive,
+    solveSystem,
+    verifyConservation,
+} from "./solver";
+import { BalanceError, parseError, unbalanceable, unknownElement } from "./errors";
+import type { BalanceErrorCode } from "./errors";
+import { analyzeReaction, classify, oxidationStates } from "./analysis";
+import type { ReactionAnalysis } from "./analysis";
+import { atomicNumberOf } from "./symbols";
+
+export {
+    Fraction,
+    gcd,
+    lcm,
+    parseFormula,
+    parseWithoutMultiplier,
+    splitEquation,
+    stripStateSymbols,
+    normalizeText,
+    normalizeArrows,
+    buildMatrix,
+    solveSystem,
+    fractionsToIntegers,
+    analyzeReaction,
+    classify,
+    oxidationStates,
+    BalanceError,
+};
+export type { ElementMap, Equation, ParsedUnit, Species, BalanceErrorCode, ReactionAnalysis };
+
+export interface BalancedSpecies {
     coefficient: number;
     formula: string;
 }
-export interface BalanceOptions{
+
+export interface BalanceOptions {
     showOne?: boolean;
-    format?: "text"|"html"|"latex";
+    format?: "text" | "html" | "latex";
+    /** `chemical` (default) balances element identity; `nuclear` balances A and nuclear charge. */
+    mode?: "chemical" | "nuclear";
+    /** Opt-in: infer omitted H2O/H+/OH-/e- to make a redox system balance. */
+    autoComplete?: boolean;
+    /** Opt-in: classify the reaction and report redox changes. */
+    analyze?: boolean;
 }
-export interface BalanceResult{
+
+export interface BalanceResult {
     reactants: BalancedSpecies[];
     products: BalancedSpecies[];
     equation: string;
+    /** Present (true) only when more than one independent solution exists. */
+    underdetermined?: boolean;
+    /** Human-readable notes, present only when non-empty. */
+    warnings?: string[];
+    /** Present only when `analyze: true`. */
+    analysis?: ReactionAnalysis;
 }
-export function balance(input: string, options: BalanceOptions={}): BalanceResult{
-    let { showOne=true, format="text" }=options;
-    let { reactants, products }=splitEquation(input);
-    let { matrix, cols }=buildMatrix(reactants, products);
-    let nullVec=solveSystem(matrix, cols);
-    let coeffs=fractionsToIntegers(nullVec);
-    if (coeffs.some(c=>c===0)) throw new Error("Unbalanceable equation");
-    let balancedReactants: BalancedSpecies[]=reactants.map((r, i)=>({
-        coefficient: coeffs[i]!,
-        formula: r.formula
-    }));
-    let balancedProducts: BalancedSpecies[]=products.map((p, i)=>({
-        coefficient: coeffs[reactants.length+i]!,
-        formula: p.formula
-    }));
-    let fmt=(side: BalancedSpecies[]): string=>
-        side.map(s=>(showOne||s.coefficient!==1?s.coefficient+" ":"")+s.formula).join(" + ");
-    let eqStr: string;
-    switch (format){
-        case "html": eqStr=fmt(balancedReactants)+" &rarr; "+fmt(balancedProducts); break;
-        case "latex": eqStr=fmt(balancedReactants)+" \\rightarrow "+fmt(balancedProducts); break;
-        default: eqStr=fmt(balancedReactants)+" -> "+fmt(balancedProducts);
+
+function formatSpecies(side: BalancedSpecies[], showOne: boolean): string {
+    return side
+        .map((s) => (showOne || s.coefficient !== 1 ? s.coefficient + " " : "") + s.formula)
+        .join(" + ");
+}
+
+function formatEquation(
+    reactants: BalancedSpecies[],
+    products: BalancedSpecies[],
+    showOne: boolean,
+    format: "text" | "html" | "latex"
+): string {
+    const left = formatSpecies(reactants, showOne);
+    const right = formatSpecies(products, showOne);
+    switch (format) {
+        case "html":
+            return left + " &rarr; " + right;
+        case "latex":
+            return left + " \\rightarrow " + right;
+        default:
+            return left + " -> " + right;
     }
-    return { reactants: balancedReactants, products: balancedProducts, equation: eqStr };
 }
+
+function mathematicallyRank(matrix: Fraction[][]): number {
+    if (matrix.length === 0) return 0;
+    const rows = matrix.length;
+    const cols = matrix[0]!.length;
+    const M = matrix.map((row) => row.map((f) => f.clone()));
+    let rank = 0;
+    let lead = 0;
+    for (let r = 0; r < rows && lead < cols; ) {
+        let i = r;
+        while (i < rows && M[i]![lead]!.isZero()) i++;
+        if (i === rows) {
+            lead++;
+            continue;
+        }
+        [M[i]!, M[r]!] = [M[r]!, M[i]!];
+        const pivot = M[r]![lead]!;
+        for (let j = 0; j < cols; j++) M[r]![j] = M[r]![j]!.div(pivot);
+        for (let i2 = 0; i2 < rows; i2++) {
+            if (i2 === r) continue;
+            const factor = M[i2]![lead]!;
+            if (!factor.isZero()) {
+                for (let j = 0; j < cols; j++) {
+                    M[i2]![j] = M[i2]![j]!.sub(factor.mul(M[r]![j]!));
+                }
+            }
+        }
+        rank++;
+        lead++;
+        r++;
+    }
+    return rank;
+}
+
+function makeResult(
+    reactants: Species[],
+    products: Species[],
+    coeffs: number[],
+    showOne: boolean,
+    format: "text" | "html" | "latex",
+    nullity: number,
+    options: BalanceOptions
+): BalanceResult {
+    const n = reactants.length;
+    const balancedReactants: BalancedSpecies[] = reactants.map((r, i) => ({
+        coefficient: coeffs[i]!,
+        formula: r.formula,
+    }));
+    const balancedProducts: BalancedSpecies[] = products.map((p, i) => ({
+        coefficient: coeffs[n + i]!,
+        formula: p.formula,
+    }));
+    const result: BalanceResult = {
+        reactants: balancedReactants,
+        products: balancedProducts,
+        equation: formatEquation(balancedReactants, balancedProducts, showOne, format),
+    };
+    if (nullity > 1) result.underdetermined = true;
+    const warnings: string[] = [];
+    for (const s of [...reactants, ...products]) {
+        if (s.variables && s.variables.length > 0) {
+            warnings.push(
+                "Symbolic subscript (" + s.variables.join(", ") + ") treated as 1 in " + s.formula
+            );
+        }
+    }
+    if (warnings.length > 0) result.warnings = warnings;
+    if (options.analyze) result.analysis = analyzeReaction(reactants, products);
+    return result;
+}
+
+/** Balance a chemical equation. */
+export function balance(input: string, options: BalanceOptions = {}): BalanceResult {
+    const showOne = options.showOne ?? true;
+    const format = options.format ?? "text";
+    const { reactants, products } = splitEquation(input);
+    const mode = options.mode ?? "chemical";
+
+    const run = (): BalanceResult => {
+        const { matrix, cols } = mode === "nuclear"
+            ? buildNuclearMatrix(reactants, products)
+            : buildMatrix(reactants, products);
+
+        let coeffs = solvePositive(matrix, cols);
+        if (coeffs === null) {
+            let vec: Fraction[];
+            try {
+                vec = solveSystem(matrix, cols);
+            } catch {
+                throw unbalanceable();
+            }
+            coeffs = fractionsToIntegers(vec);
+        }
+        if (coeffs.some((c) => c <= 0 || !Number.isFinite(c) || !Number.isInteger(c))) {
+            throw unbalanceable();
+        }
+        if (!verifyConservation(reactants, products, coeffs)) {
+            if (mode === "chemical") throw unbalanceable();
+        }
+        const nullity = cols - mathematicallyRank(matrix);
+        return makeResult(reactants, products, coeffs, showOne, format, nullity, options);
+    };
+
+    try {
+        return run();
+    } catch (e) {
+        if (options.autoComplete && mode === "chemical") {
+            return tryAutoComplete(reactants, products, showOne, format, options);
+        }
+        throw e;
+    }
+}
+
+/**
+ * Balance a nuclear equation. Conserves mass number A and nuclear charge Q
+ * (proton number for nuclides; charge for leptons). Isotope labels are
+ * required for nuclides.
+ */
+function buildNuclearMatrix(
+    reactants: Species[],
+    products: Species[]
+): { matrix: Fraction[][]; cols: number } {
+    const all = [...reactants, ...products];
+    const cols = all.length;
+    const matrix: Fraction[][] = [
+        Array.from({ length: cols }, () => Fraction.zero()),
+        Array.from({ length: cols }, () => Fraction.zero()),
+    ];
+    for (let j = 0; j < cols; j++) {
+        const sign = j < reactants.length ? 1 : -1;
+        const sp = all[j]!;
+        const keys = Object.keys(sp.elements);
+        let a = 0;
+        let q = 0;
+        if (keys.length === 0) {
+            const f = sp.formula;
+            if (f === "n") {
+                a = 1;
+                q = 0;
+            } else if (f === "p") {
+                a = 1;
+                q = 1;
+            } else {
+                a = 0;
+                q = sp.charge;
+            }
+        } else {
+            for (const el of keys) {
+                const z = atomicNumberOf(el);
+                if (z === undefined) {
+                    throw parseError('Nuclear mode expected element, got unknown "' + el + '"');
+                }
+                const mass = sp.isotopes?.[el];
+                if (mass === undefined) {
+                    throw parseError(
+                        'Nuclear mode requires isotope labels (expected element mass number for "' + el + '")'
+                    );
+                }
+                a += sp.elements[el]! * mass;
+                q += sp.elements[el]! * z;
+            }
+        }
+        matrix[0]![j] = new Fraction(sign * a);
+        matrix[1]![j] = new Fraction(sign * q);
+    }
+    return { matrix, cols };
+}
+
+const AUTO_HELPERS = ["H2O", "H+", "OH-", "e-"];
+
+function speciesFromFormula(formula: string): Species {
+    const { elements, charge } = parseFormula(formula);
+    return { formula, elements, charge };
+}
+
+/**
+ * Opt-in inference of omitted H2O / H+ / OH- / e-. Tries each combination of
+ * adding helpers to the left, the right, or not at all, and returns the
+ * balance that adds the fewest helpers.
+ */
+function tryAutoComplete(
+    reactants: Species[],
+    products: Species[],
+    showOne: boolean,
+    format: "text" | "html" | "latex",
+    options: BalanceOptions
+): BalanceResult {
+    const helperSpecies = AUTO_HELPERS.map((h) => speciesFromFormula(h));
+    let best: BalanceResult | null = null;
+    let bestAdded = Infinity;
+    const total = Math.pow(3, AUTO_HELPERS.length);
+
+    for (let mask = 0; mask < total; mask++) {
+        let m = mask;
+        const left: Species[] = [...reactants];
+        const right: Species[] = [...products];
+        let added = 0;
+        for (let k = 0; k < AUTO_HELPERS.length; k++) {
+            const choice = m % 3;
+            m = Math.floor(m / 3);
+            if (choice === 1) {
+                left.push(helperSpecies[k]!);
+                added++;
+            } else if (choice === 2) {
+                right.push(helperSpecies[k]!);
+                added++;
+            }
+        }
+        if (added === 0 || added >= bestAdded) continue;
+        const { matrix, cols } = buildMatrix(left, right);
+        const coeffs = solvePositive(matrix, cols);
+        if (coeffs === null) continue;
+        if (!verifyConservation(left, right, coeffs)) continue;
+        const nullity = cols - mathematicallyRank(matrix);
+        best = makeResult(left, right, coeffs, showOne, format, nullity, options);
+        bestAdded = added;
+    }
+
+    if (best === null) throw unbalanceable();
+    if (!best.warnings) best.warnings = [];
+    best.warnings.push("autoComplete inferred omitted species");
+    return best;
+}
+
+/**
+ * All independent balances of an equation. For a unique reaction this is a
+ * single result; for underdetermined systems it includes the minimal balance
+ * and one solution per independent free direction.
+ */
+export function balanceAll(input: string, options: BalanceOptions = {}): BalanceResult[] {
+    const showOne = options.showOne ?? true;
+    const format = options.format ?? "text";
+    const { reactants, products } = splitEquation(input);
+    const { matrix, cols } = buildMatrix(reactants, products);
+    const sols = solveAllPositive(matrix, cols);
+    if (sols.length === 0) throw unbalanceable();
+    const nullity = cols - mathematicallyRank(matrix);
+    return sols.map((coeffs) =>
+        makeResult(reactants, products, coeffs, showOne, format, nullity, options)
+    );
+}
+
+/** True when the equation balances exactly (mass and charge). */
+export function isBalanced(input: string, options: BalanceOptions = {}): boolean {
+    try {
+        balance(input, options);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+/** Alias for {@link balance} that makes the throwing contract explicit. */
+export function verify(input: string, options: BalanceOptions = {}): BalanceResult {
+    return balance(input, options);
+}
+
+/**
+ * Report left/right element and charge totals for an equation, without
+ * requiring it to balance.
+ */
+export function audit(input: string): {
+    elements: Record<string, { left: number; right: number; balanced: boolean }>;
+    charge: { left: number; right: number; balanced: boolean };
+} {
+    const { reactants, products } = splitEquation(input);
+    const totals: Record<string, { left: number; right: number }> = {};
+    let chargeLeft = 0;
+    let chargeRight = 0;
+    for (const s of reactants) {
+        for (const el in s.elements) {
+            const t = (totals[el] ??= { left: 0, right: 0 });
+            t.left += s.elements[el]!;
+        }
+        chargeLeft += s.charge;
+    }
+    for (const s of products) {
+        for (const el in s.elements) {
+            const t = (totals[el] ??= { left: 0, right: 0 });
+            t.right += s.elements[el]!;
+        }
+        chargeRight += s.charge;
+    }
+    const elements: Record<string, { left: number; right: number; balanced: boolean }> = {};
+    for (const el in totals) {
+        const t = totals[el]!;
+        elements[el] = { left: t.left, right: t.right, balanced: t.left === t.right };
+    }
+    return {
+        elements,
+        charge: { left: chargeLeft, right: chargeRight, balanced: chargeLeft === chargeRight },
+    };
+}
+
+export { parseError, unbalanceable, unknownElement, atomicNumberOf };
