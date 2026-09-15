@@ -20,10 +20,10 @@ describe("verify-bosch", () => {
         try {
             const r = balance(eq);
             const all = [
-                ...r.reactants.map(x => x.coefficient),
-                ...r.products.map(x => x.coefficient),
+                ...r.reactants.map((x) => x.coefficient),
+                ...r.products.map((x) => x.coefficient),
             ];
-            const ok = all.every(c => Number.isInteger(c) && c > 0);
+            const ok = all.every((c) => Number.isInteger(c) && c > 0);
             lines.push(`${ok ? "OK  " : "FAIL"}  ${eq}  =>  ${r.equation}`);
         } catch (e) {
             lines.push(`ERR  ${eq}  =>  ${(e as Error).message}`);
@@ -32,5 +32,5 @@ describe("verify-bosch", () => {
     writeFileSync("verify-bosch-results.txt", lines.join("\n"), "utf-8");
     it("writes results", () => {
         // Results file written successfully
-      });
+    });
 });
