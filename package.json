@@ -3,6 +3,7 @@
     "version": "1.0.7",
     "description": "Blazing fast chemical equation balancer - exact rational arithmetic, complex formulas, redox, charges, hydrates, isotopes, nuclear mode.",
     "type": "module",
+    "sideEffects": false,
     "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",
     "types": "./dist/index.d.mts",
@@ -18,7 +19,7 @@
         "prepublishOnly": "npm run test && npm run build",
         "test": "vitest run",
         "test:watch": "vitest",
-        "test:syntax": "es-check es2020 dist/index.mjs",
+        "test:syntax": "es-check es2020 dist/index.mjs --module && es-check es2020 dist/index.cjs",
         "bench": "vitest bench",
         "format": "oxfmt"
     },
