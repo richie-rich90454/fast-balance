@@ -12,8 +12,8 @@ export default defineConfig({
     },
 
     head: [
-        ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo-light.svg' }],
-        ['meta', { name: 'theme-color', content: '#0f62fe' }],
+        ['link', { rel: 'icon', type: 'image/svg+xml', href: '/fast-balance/logo-light.svg' }],
+        ['meta', { name: 'theme-color', content: '#9a6700' }],
         ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
         ['meta', { name: 'twitter:title', content: 'fast-balance | Chemical Equation Balancer' }],
         ['meta', { name: 'twitter:description', content: 'Exact-arithmetic chemical equation balancer: redox, charges, hydrates, isotopes, nuclear mode.' }],
