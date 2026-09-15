@@ -1,429 +1,142 @@
----
-title: Notation
----
-
 # Notation
 
-This document describes all supported chemical notation formats in fast-balance.
+`fast-balance` accepts a broad range of real-world chemical notation. Where a
+notation is genuinely ambiguous, it either follows the standard chemical
+convention or reports an explicit error — it never guesses silently.
 
-## Table of Contents
+---
 
-- [Element Symbols and Subscripts](#element-symbols-and-subscripts)
-- [Parenthetical and Bracket Grouping](#parenthetical-and-bracket-grouping)
-- [Ionic Charges](#ionic-charges)
-- [Electrons](#electrons)
-- [Hydrate Separators](#hydrate-separators)
-- [State Symbols](#state-symbols)
-- [Arrow Variants](#arrow-variants)
-- [Leading Coefficients](#leading-coefficients)
+## Equations and arrows
 
-## Element Symbols and Subscripts
+Reactants and products are separated by an arrow. A side is split on `" + "`
+(spaces around the plus). Supported arrows:
 
-### Element Symbols
+| Input | Notes |
+|---|---|
+| `->` | canonical |
+| `→` `⇒` `⇌` `↔` `⇋` | unicode arrows |
+| `-->` `--->` | dashed arrows |
+| `<=` `<->` `<=>` `=` | ASCII alternatives |
 
-fast-balance recognizes all standard chemical element symbols from the periodic table, including:
-- Single-letter symbols: `H`, `O`, `N`, `C`, `S`, `P`, `K`, `W`, `U`, etc.
-- Two-letter symbols: `He`, `Li`, `Be`, `Ne`, `Na`, `Mg`, `Al`, `Si`, `Cl`, `Ar`, `Fe`, `Cu`, `Zn`, `Ag`, `Au`, etc.
-- Three-letter symbols (systematic names): `Uut`, `Uuq`, `Uup`, etc.
-
-### Subscripts
-
-Subscripts are written as plain numbers immediately following the element symbol or group.
-
-**Examples**:
-```
-H2O          → Water (2 hydrogen atoms, 1 oxygen atom)
-C6H12O6      → Glucose (6 carbon, 12 hydrogen, 6 oxygen)
-CH3COOH      → Acetic acid (2 carbon, 4 hydrogen, 2 oxygen)
-Fe2O3        → Iron(III) oxide (2 iron, 3 oxygen)
-```
-
-## Parenthetical and Bracket Grouping
-
-### Parentheses `()`
-
-Parentheses group multiple atoms that appear together in a formula, with a subscript applied to the entire group.
-
-**Examples**:
-```
-Ca3(PO4)2    → Calcium phosphate
-             → 3 calcium, 2 phosphate groups
-             → Each PO4: 1 phosphorus, 4 oxygen
-             → Total: Ca3P2O8
-
-Al2(SO4)3    → Aluminum sulfate
-             → 2 aluminum, 3 sulfate groups
-             → Each SO4: 1 sulfur, 4 oxygen
-             → Total: Al2S3O12
-
-Mg(OH)2      → Magnesium hydroxide
-             → 1 magnesium, 2 hydroxide groups
-             → Each OH: 1 oxygen, 1 hydrogen
-             → Total: MgO2H2
-```
-
-### Brackets `[]`
-
-Brackets are commonly used for coordination compounds and complex ions. They function similarly to parentheses but are preserved in the output formula.
-
-**Examples**:
-```
-[Fe(CN)6]4-  → Hexacyanoferrate(II) ion
-             → 1 iron, 6 cyanide groups
-             → Each CN: 1 carbon, 1 nitrogen
-             → Charge: 4-
-
-[Co(NH3)6]3+ → Hexaamminecobalt(III) ion
-              → 1 cobalt, 6 ammonia ligands
-              → Each NH3: 1 nitrogen, 3 hydrogen
-              → Charge: 3+
-
-[Cu(NH3)4]2+ → Tetraamminecopper(II) ion
-              → 1 copper, 4 ammonia ligands
-```
-
-### Nested Grouping
-
-Parentheses and brackets can be nested to represent complex structures.
-
-**Examples**:
-```
-[Fe(CN)6]4-          → Iron surrounded by 6 CN groups
-Ca3(PO4)2            → Calcium phosphate with PO4 groups
-Al2(SO4)3            → Aluminum sulfate with SO4 groups
-(NH4)2SO4            → Ammonium sulfate
-```
-
-## Ionic Charges
-
-### Charge Notation
-
-Ionic charges can be specified using superscript-style notation or inline notation.
-
-#### Inline Notation
-
-The charge symbol (+ or -) is placed immediately after the formula or subscript.
-
-**Examples**:
-```
-Fe2+         → Iron(II) ion (charge: +2)
-Fe3+         → Iron(III) ion (charge: +3)
-Cl-          → Chloride ion (charge: -1)
-O2-          → Oxide ion (charge: -2)
-SO42-        → Sulfate ion (charge: -2)
-MnO4-        → Permanganate ion (charge: -1)
-```
-
-#### Caret Notation
-
-Use `^` followed by the charge magnitude and sign.
-
-**Examples**:
-```
-Fe^2+        → Iron(II) ion (charge: +2)
-SO4^2-       → Sulfate ion (charge: -2)
-O^2-         → Oxide ion (charge: -2)
-Cr2O7^2-     → Dichromate ion (charge: -2)
-```
-
-### Multiple Charge Formats
-
-Both formats can be used interchangeably, and fast-balance will normalize them.
-
-**Examples**:
-```
-Fe2+   ≡ Fe^2+    → Both represent iron(II) ion
-SO42-  ≡ SO4^2-   → Both represent sulfate ion
-MnO4-  ≡ MnO4^-   → Both represent permanganate ion
-```
-
-### Charge Position
-
-Charges can appear:
-- After an element: `Fe2+`, `O^2-`
-- After a subscript: `SO42-`, `PO43-`
-- After a group: `[Fe(CN)6]4-`, `(NH4)+`
-
-**Examples in equations**:
-```
-Fe2+ + Cl- -> FeCl2
-MnO4- + H+ + e- -> Mn2+ + H2O
-SO42- + Ba2+ -> BaSO4
-[Fe(CN)6]4- -> Fe2+ + CN-
-```
-
-## Electrons
-
-### Electron Notation
-
-Electrons are represented using `e-`, `e`, or `e+` (positron).
-
-**Examples**:
-```
-e-           → Electron (charge: -1)
-e            → Electron (charge: -1, implicit)
-e+           → Positron (charge: +1)
-```
-
-### Half-Reactions
-
-Electrons are commonly used in redox half-reactions.
-
-**Reduction half-reaction**:
-```
-MnO4- + H+ + e- -> Mn2+ + H2O
-Balanced: MnO4- + 8 H+ + 5 e- -> Mn2+ + 4 H2O
-```
-
-**Oxidation half-reaction**:
-```
-Fe2+ -> Fe3+ + e-
-Balanced: Fe2+ -> Fe3+ + 1 e-
-```
-
-**Complete redox equation**:
-```
-MnO4- + Fe2+ + H+ -> Mn2+ + Fe3+ + H2O
-Balanced: MnO4- + 5 Fe2+ + 8 H+ -> Mn2+ + 5 Fe3+ + 4 H2O
-```
-
-### Electron Examples
+Reaction conditions next to the arrow are ignored:
 
 ```
-e- + Cl2 -> Cl-
-Balanced: 2 e- + Cl2 -> 2 Cl-
-
-Na -> Na+ + e-
-Balanced: Na -> Na+ + 1 e-
-
-Cu2+ + e- -> Cu+
-Balanced: Cu2+ + 1 e- -> Cu+
+->[cat]      [cat]->      -Δ->      --Δ-->      -> Δ
 ```
 
-## Hydrate Separators
+Gas and precipitate markers `↑` `↓` at the end of a species are ignored.
 
-### Supported Separators
+---
 
-Hydrates can be represented using any of the following separator characters:
-- Middle dot: `·` (U+00B7)
-- Asterisk: `*`
-- Bullet: `•` (U+2022)
-
-### Hydrate Examples
-
-All three separators are equivalent and can be used interchangeably:
+## Elements and grouping
 
 ```
-CuSO4·5H2O   → Copper(II) sulfate pentahydrate
-CuSO4*5H2O   → Same compound, asterisk notation
-CuSO4•5H2O   → Same compound, bullet notation
-
-BaCl2·2H2O   → Barium chloride dihydrate
-Na2CO3·10H2O → Sodium carbonate decahydrate
-MgSO4*7H2O   → Magnesium sulfate heptahydrate
-CaCl2•6H2O   → Calcium chloride hexahydrate
+H2O            subscripts
+Ca3(PO4)2      nested parentheses
+[Fe(CN)6]4-    square brackets (complex ions)
+CuSO4·5H2O     hydrate separators · • * ∙
+H2O(l)         state symbols: (s) (l) (g) (aq) (v) (cr) (am)
+               (solid) (liquid) (gas) (aqueous) (solution) (sln)
+               (ppt) (precipitate) (mono) (monomer) (vapour) (vapor)
 ```
 
-### Hydrate Decomposition
+Element symbols are validated against the periodic table; historical symbols
+(`Uut`, `Uus`, …) are accepted. Unknown symbols raise `UNKNOWN_ELEMENT`.
+
+---
+
+## Charges
+
+| Form | Example | Meaning |
+|---|---|---|
+| bare sign | `Cl-`, `Na+` | ±1 |
+| element + sign | `Fe2+`, `O2-` | monatomic ion (`O2-` = oxide O²⁻) |
+| caret | `Fe^3+`, `SO4^2-`, `Mn^7+` | explicit |
+| braced | `Fe^{3+}`, `SO4^{2-}` | explicit |
+| sign-first | `Fe+2`, `SO4-2` | explicit |
+| square bracket | `[Fe(CN)6]4-`, `[Cu(NH3)4]2+` | complex-ion charge |
+| parentheses | `Al(OH)4-`, `(NH4)2SO4` | `(OH)4` is a subscript, charge is ±1 |
+
+Because `O2-` follows the long-standing convention of meaning oxide, the
+polyatomic interpretations require a caret:
 
 ```
-CuSO4·5H2O -> CuSO4 + H2O
-Balanced: CuSO4·5H2O -> CuSO4 + 5 H2O
-
-BaCl2·2H2O -> BaCl2 + H2O
-Balanced: BaCl2·2H2O -> BaCl2 + 2 H2O
+O2^-     superoxide
+O2^2-    peroxide
+O^2-     oxide (explicit)
 ```
 
-### Multiple Hydrate Units
+---
+
+## Electronics and particles
 
 ```
-Al2(SO4)3·18H2O -> Al2(SO4)3 + H2O
-Balanced: Al2(SO4)3·18H2O -> Al2(SO4)3 + 18 H2O
+e     e-     e+        electrons
+n                      neutron
+p                      proton
+hv    hν     photon    light / heat tokens (carry no atoms)
+Δ     delta
 ```
 
-## State Symbols
+---
 
-### Automatically Stripped Symbols
-
-State symbols are automatically removed during parsing and do not affect balancing. The following state symbols are recognized and stripped:
-
-**Abbreviated forms**:
-- `(s)` → solid
-- `(l)` → liquid
-- `(g)` → gas
-- `(aq)` → aqueous
-- `(cr)` → crystalline
-- `(am)` → amorphous
-
-**Full word forms**:
-- `(solid)`
-- `(liquid)`
-- `(gas)`
-- `(aqueous)`
-
-### Case Insensitivity
-
-State symbols are case-insensitive and can be written in any case combination:
-- `(s)`, `(S)`, `(S)`
-- `(aq)`, `(AQ)`, `(Aq)`
-- `(gas)`, `(GAS)`, `(Gas)`
-
-### State Symbol Examples
+## Isotopes and nuclear mode
 
 ```
-H2(g) + O2(g) -> H2O(l)
-Parsed as: H2 + O2 -> H2O
-Balanced: 2 H2 + 1 O2 -> 2 H2O
-
-NaCl(s) -> Na+(aq) + Cl-(aq)
-Parsed as: NaCl -> Na+ + Cl-
-Balanced: 1 NaCl -> 1 Na+ + 1 Cl-
-
-CaCO3(s) -> CaO(s) + CO2(g)
-Parsed as: CaCO3 -> CaO + CO2
-Balanced: 1 CaCO3 -> 1 CaO + 1 CO2
-
-AgNO3(aq) + NaCl(aq) -> AgCl(s) + NaNO3(aq)
-Parsed as: AgNO3 + NaCl -> AgCl + NaNO3
-Balanced: 1 AgNO3 + 1 NaCl -> 1 AgCl + 1 NaNO3
+^238U     ^14C      ^{235}U
+C-14      U-235     H-2
 ```
 
-## Arrow Variants
+Isotope labels are preserved and used by `{ mode: 'nuclear' }`, which
+conserves mass number `A` and nuclear charge instead of element identity:
 
-### Supported Arrow Styles
-
-fast-balance normalizes all of the following arrow variants to the canonical `->` separator:
-
-| Arrow Style | Description | Unicode |
-|-------------|-------------|---------|
-| `->` | Hyphen greater-than | ASCII |
-| `→` | Right arrow | U+2192 |
-| `⇒` | Double right arrow | U+21D2 |
-| `⇌` | Equilibrium arrows | U+21CC |
-| `<=>` | Equilibrium notation | ASCII |
-| `<->` | Reversible reaction | ASCII |
-| `-->` | Long arrow | ASCII |
-| `=` | Equals sign | ASCII |
-
-### Arrow Examples
-
-All of the following notations are equivalent:
-
-```
-H2 + O2 -> H2O
-H2 + O2 → H2O
-H2 + O2 ⇒ H2O
-H2 + O2 ⇌ H2O
-H2 + O2 <=> H2O
-H2 + O2 <-> H2O
-H2 + O2 --> H2O
-H2 + O2 = H2O
+```ts
+balance('^238U -> ^234Th + ^4He', { mode: 'nuclear' }).equation;
+// "^238U -> ^234Th + ^4He"
 ```
 
-All produce the same balanced result:
-```
-2 H2 + 1 O2 -> 2 H2O
-```
+Nuclear mode requires isotope labels for nuclides; an unlabelled nuclide raises
+a clear `PARSE_ERROR` rather than guessing a mass number.
 
-### Equilibrium Reactions
+---
 
-For equilibrium reactions, use `⇌` or `<=>`:
+## Organic shorthand and abbreviations
 
-```
-N2 + H2 ⇌ NH3
-Balanced: N2 + 3 H2 ⇌ 2 NH3
-
-H2O ⇌ H+ + OH-
-Balanced: H2O ⇌ 1 H+ + 1 OH-
-```
-
-## Leading Coefficients
-
-### Coefficient Handling
-
-Leading stoichiometric coefficients in the input string are automatically discarded before balancing. This means:
-- Already-balanced equations are re-balanced correctly
-- Partially-balanced equations are completed
-- User-provided coefficients are ignored
-
-### Examples
-
-**Already balanced equation**:
-```
-Input:  2 H2 + 1 O2 -> 2 H2O
-Parsed: H2 + O2 -> H2O
-Output: 2 H2 + 1 O2 -> 2 H2O
-```
-
-**Partially balanced equation**:
-```
-Input:  2 H2 + O2 -> H2O
-Parsed: H2 + O2 -> H2O
-Output: 2 H2 + 1 O2 -> 2 H2O
-```
-
-**Incorrect coefficients**:
-```
-Input:  3 H2 + 2 O2 -> 5 H2O
-Parsed: H2 + O2 -> H2O
-Output: 2 H2 + 1 O2 -> 2 H2O
-```
-
-**Complex example**:
-```
-Input:  4 Fe + 3 O2 -> 2 Fe2O3
-Parsed: Fe + O2 -> Fe2O3
-Output: 4 Fe + 3 O2 -> 2 Fe2O3
-```
-
-### Why Discard Coefficients?
-
-The library recalculates coefficients from scratch to ensure:
-1. **Correctness**: User-provided coefficients may be incorrect
-2. **Consistency**: Always produces the minimal integer coefficients
-3. **Flexibility**: Accepts any input format without manual normalization
-
-## Combined Notation Examples
-
-### Complex Ionic Compound
+Functional groups are expanded to explicit atoms:
 
 ```
-[Fe(CN)6]4- + H2O2 + H+ -> Fe3+ + CO2 + NO3- + H2O
+Ph  → C6H5
+Bn  → C7H7
+Me  → CH3
+Et  → C2H5
+Bu  → C4H9
+tBu → C4H9
 ```
 
-Parses correctly with:
-- Bracket notation: `[Fe(CN)6]4-`
-- Charge notation: `4-`, `3+`, `-`
-- Multiple species on each side
-
-### Hydrate with State Symbols
+Common biochemical abbreviations are expanded too:
 
 ```
-CuSO4·5H2O(s) -> CuSO4(s) + H2O(l)
+NADP  NADPH  NAD  NADH  FAD  FADH2  ATP  ADP
 ```
 
-Automatically strips:
-- State symbols: `(s)`, `(l)`
-- Recognizes hydrate separator: `·`
+---
 
-### Redox with Electrons
+## Placeholders
 
-```
-Cr2O7^2- + H+ + e- -> Cr3+ + H2O
-```
+A fixed set of pseudo-elements is accepted (kept constant so the solver stays
+linear): `R`, `M`, `X`, `Q`, `Z` (generic group/metal/halogen), plus `D` and
+`T` for the hydrogen isotopes.
 
-Handles:
-- Caret charge notation: `^2-`
-- Electrons: `e-`
-- Multiple charge formats: `^2-`, `3+`, `-`
+## Symbolic subscripts
 
-### Coordination Compound
+Polymer/variable subscripts such as `(C6H10O5)n` are parsed; the variable is
+treated as `1` and a warning is emitted on the result rather than silently
+dropping the variable.
 
-```
-[Co(NH3)6]2+ + H2O2 -> Co3+ + NH3 + H2O
-```
+---
 
-Recognizes:
-- Bracket grouping: `[Co(NH3)6]`
-- Charge on complex: `2+`
-- Nested elements in ligands: `NH3`
+## Separator rule
+
+A `+` separates species only when surrounded by spaces. This is intentional:
+without spaces `H2+O2` is ambiguous with a terminal charge (`H2+`). Inputs
+that omit the spaces raise an explicit `PARSE_ERROR` instead of misparsing.
