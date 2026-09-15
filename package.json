@@ -1,15 +1,15 @@
 {
   "name": "fast-balance",
   "version": "1.0.7",
-  "description": "Blazing fast chemical equation balancer - handles complex formulas, redox, charges, hydrates, all arrow styles.",
+  "description": "Blazing fast chemical equation balancer - exact rational arithmetic, complex formulas, redox, charges, hydrates, isotopes, nuclear mode.",
   "type": "module",
   "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
     }
   },
@@ -18,10 +18,8 @@
     "prepublishOnly": "npm run test && npm run build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:es6": "es-check es6 dist/index.mjs --module && es-check es6 dist/index.cjs --module",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "test:syntax": "es-check es2020 dist/index.mjs",
+    "bench": "vitest bench"
   },
   "keywords": [
     "chemistry",
@@ -52,6 +50,9 @@
     "oxidation-number",
     "electron",
     "electrons",
+    "isotope",
+    "isotopes",
+    "nuclear",
     "hydrate",
     "hydrates",
     "mineral",
@@ -87,26 +88,14 @@
     "chemistry-education"
   ],
   "files": [
-    "dist/index.js",
-    "dist/index.cjs",
-    "dist/index.d.ts",
-    "dist/index.js.map",
-    "dist/index.d.ts.map",
-    "README.md"
+    "dist"
   ],
   "license": "MIT",
   "devDependencies": {
     "es-check": "^9.7.2",
     "tsdown": "^0.23.0",
     "typescript": "^7.0.2",
-    "vitepress": "^1.6.4",
     "vitest": "^5.0.1"
-  },
-  "dependencies": {
-    "chemparse": "^1.0.3"
-  },
-  "overrides": {
-    "vite": "7.3.6"
   },
   "repository": {
     "type": "git",
