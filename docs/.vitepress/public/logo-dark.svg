@@ -1,18 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="fast-balance" fill="none">
-  <defs>
-    <linearGradient id="fbLogoGradD" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#f2c14e"/>
-      <stop offset="100%" stop-color="#2dd4bf"/>
-    </linearGradient>
-  </defs>
   <path d="M16 2.6 L27.7 9.3 V22.7 L16 29.4 L4.3 22.7 V9.3 Z"
-        stroke="url(#fbLogoGradD)" stroke-width="2" stroke-linejoin="round"/>
-  <g stroke="url(#fbLogoGradD)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        stroke="#2dd4bf" stroke-width="2" stroke-linejoin="round"/>
+  <g stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d="M9.5 12 H22.5"/>
     <path d="M16 12 V21"/>
     <path d="M11 20 H21"/>
     <path d="M9.5 12 L7 17 H12 Z"/>
     <path d="M22.5 12 L20 17 H25 Z"/>
   </g>
-  <circle cx="16" cy="12" r="1.9" fill="url(#fbLogoGradD)"/>
+  <circle cx="16" cy="12" r="1.9" fill="#2dd4bf"/>
 </svg>
