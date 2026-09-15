@@ -1,38 +1,71 @@
 /**
  * Reaction analysis: oxidation states, redox detection and classification.
  *
- * Oxidation states are assigned with standard electronegativity-based rules.
+ * Oxidation states are assigned with standard fixed-rule conventions.
  * This is diagnostic output only; it never influences balancing.
  */
-import { canonicalSymbol, atomicNumberOf } from "./symbols";
 import type { Species } from "./parse";
-
-/** Pauling electronegativities for the elements most often encountered. */
-const ELECTRONEGATIVITY: Readonly<Record<string, number>> = {
-    H: 2.2, He: 0.0, Li: 0.98, Be: 1.57, B: 2.04, C: 2.55, N: 3.04, O: 3.44, F: 3.98, Ne: 0.0,
-    Na: 0.93, Mg: 1.31, Al: 1.61, Si: 1.9, P: 2.19, S: 2.58, Cl: 3.16, Ar: 0.0,
-    K: 0.82, Ca: 1.0, Sc: 1.36, Ti: 1.54, V: 1.63, Cr: 1.66, Mn: 1.55, Fe: 1.83, Co: 1.88,
-    Ni: 1.91, Cu: 1.9, Zn: 1.65, Ga: 1.81, Ge: 2.01, As: 2.18, Se: 2.55, Br: 2.96, Kr: 0.0,
-    Rb: 0.82, Sr: 0.95, Y: 1.22, Zr: 1.33, Nb: 1.6, Mo: 2.16, Tc: 1.9, Ru: 2.2, Rh: 2.28,
-    Pd: 2.2, Ag: 1.93, Cd: 1.69, In: 1.78, Sn: 1.96, Sb: 2.05, Te: 2.1, I: 2.66, Xe: 2.6,
-    Cs: 0.79, Ba: 0.89, La: 1.1, Ce: 1.12, W: 2.36, Pt: 2.28, Au: 2.54, Hg: 2.0, Tl: 1.62,
-    Pb: 2.33, Bi: 2.02, Po: 2.0, At: 2.2, Rn: 0.0, Fr: 0.7, Ra: 0.9, Ac: 1.1, Th: 1.3,
-    U: 1.38, Pu: 1.28, Am: 1.13, Np: 1.36,
-};
-
-function electronegativity(symbol: string): number {
-    return ELECTRONEGATIVITY[symbol] ?? 1.5;
-}
 
 const GROUP1 = new Set(["Li", "Na", "K", "Rb", "Cs", "Fr"]);
 const GROUP2 = new Set(["Be", "Mg", "Ca", "Sr", "Ba", "Ra"]);
 const HALOGENS = ["F", "Cl", "Br", "I"];
 const METALS = new Set([
-    "Li", "Be", "Na", "Mg", "Al", "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe",
-    "Co", "Ni", "Cu", "Zn", "Ga", "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru",
-    "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Cs", "Ba", "La", "Ce", "Hf", "Ta", "W",
-    "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Fr", "Ra", "Ac", "Th",
-    "Pa", "U", "Np", "Pu",
+    "Li",
+    "Be",
+    "Na",
+    "Mg",
+    "Al",
+    "K",
+    "Ca",
+    "Sc",
+    "Ti",
+    "V",
+    "Cr",
+    "Mn",
+    "Fe",
+    "Co",
+    "Ni",
+    "Cu",
+    "Zn",
+    "Ga",
+    "Rb",
+    "Sr",
+    "Y",
+    "Zr",
+    "Nb",
+    "Mo",
+    "Tc",
+    "Ru",
+    "Rh",
+    "Pd",
+    "Ag",
+    "Cd",
+    "In",
+    "Sn",
+    "Cs",
+    "Ba",
+    "La",
+    "Ce",
+    "Hf",
+    "Ta",
+    "W",
+    "Re",
+    "Os",
+    "Ir",
+    "Pt",
+    "Au",
+    "Hg",
+    "Tl",
+    "Pb",
+    "Bi",
+    "Fr",
+    "Ra",
+    "Ac",
+    "Th",
+    "Pa",
+    "U",
+    "Np",
+    "Pu",
 ]);
 
 /**
@@ -123,8 +156,6 @@ export interface ReactionAnalysis {
 /** Classify a reaction and report redox changes. */
 export function analyzeReaction(reactants: Species[], products: Species[]): ReactionAnalysis {
     const type = classify(reactants, products);
-    const left = countSide(reactants);
-    const right = countSide(products);
 
     const oxidized: string[] = [];
     const reduced: string[] = [];
@@ -139,10 +170,7 @@ export function analyzeReaction(reactants: Species[], products: Species[]): Reac
         else if (after < before) reduced.push(el);
     }
 
-    const result: ReactionAnalysis = { type, oxidized, reduced };
-    void left;
-    void right;
-    return result;
+    return { type, oxidized, reduced };
 }
 
 function sumTotals(list: Array<Record<string, number>>): Record<string, number> {
@@ -164,12 +192,11 @@ export function classify(reactants: Species[], products: Species[]): string {
     const leftCount = reactants.length;
     const rightCount = products.length;
     const combustion =
-        reactants.some((s) => (s.elements["O"] ?? 0) === 2 && Object.keys(s.elements).length === 1) &&
+        reactants.some(
+            (s) => (s.elements["O"] ?? 0) === 2 && Object.keys(s.elements).length === 1,
+        ) &&
         products.some((s) => s.elements["C"] === 1 && (s.elements["O"] ?? 0) === 2) &&
         products.some((s) => (s.elements["H"] ?? 0) === 2 && (s.elements["O"] ?? 0) === 1);
-
-    const leftEls = countSide(reactants);
-    const rightEls = countSide(products);
 
     if (combustion) return "combustion";
     if (leftCount === 1 && rightCount > 1) return "decomposition";
@@ -183,13 +210,10 @@ export function classify(reactants: Species[], products: Species[]): string {
     // acid-base: proton transfer (H+ plus a base)
     const hasProton = reactants.some((s) => s.charge > 0 && (s.elements["H"] ?? 0) > 0);
     const yieldsWater = products.some(
-        (s) => s.elements["H"] === 2 && s.elements["O"] === 1 && Object.keys(s.elements).length === 2
+        (s) =>
+            s.elements["H"] === 2 && s.elements["O"] === 1 && Object.keys(s.elements).length === 2,
     );
     if (hasProton && yieldsWater) return "acid-base";
 
-    void leftEls;
-    void rightEls;
     return "metathesis";
 }
-
-export { canonicalSymbol, atomicNumberOf };
