@@ -1,25 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 320" role="img" aria-label="Molecule, reaction arrow and atom" fill="none">
-  <defs>
-    <radialGradient id="fbGlowL" cx="50%" cy="42%" r="62%">
-      <stop offset="0%" stop-color="#9a6700" stop-opacity="0.16"/>
-      <stop offset="70%" stop-color="#9a6700" stop-opacity="0.04"/>
-      <stop offset="100%" stop-color="#9a6700" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="fbGlowL2" cx="82%" cy="26%" r="46%">
-      <stop offset="0%" stop-color="#0d9488" stop-opacity="0.16"/>
-      <stop offset="100%" stop-color="#0d9488" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="fbLineL" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#b8821a"/>
-      <stop offset="100%" stop-color="#0d9488"/>
-    </linearGradient>
-  </defs>
-
-  <rect x="0" y="0" width="420" height="320" fill="url(#fbGlowL)"/>
-  <rect x="0" y="0" width="420" height="320" fill="url(#fbGlowL2)"/>
-
   <!-- Delicate dot grid -->
-  <g fill="#9a6700" opacity="0.18">
+  <g fill="#0f766e" opacity="0.18">
     <circle cx="60" cy="60" r="2"/><circle cx="90" cy="60" r="2"/><circle cx="120" cy="60" r="2"/>
     <circle cx="330" cy="60" r="2"/><circle cx="360" cy="60" r="2"/>
     <circle cx="60" cy="270" r="2"/><circle cx="90" cy="270" r="2"/>
@@ -27,12 +8,12 @@
   </g>
 
   <!-- Benzene-like molecule (left) -->
-  <g stroke="url(#fbLineL)" stroke-width="2.4" stroke-linejoin="round">
+  <g stroke="#0f766e" stroke-width="2.4" stroke-linejoin="round">
     <path d="M136 140 L118 171 L82 171 L64 140 L82 109 L118 109 Z"/>
     <circle cx="100" cy="140" r="18" stroke-width="2"/>
     <path d="M136 140 L166 140" stroke-width="2.4"/>
   </g>
-  <g fill="#b8821a">
+  <g fill="#0f766e">
     <circle cx="100" cy="140" r="5.5"/>
     <circle cx="136" cy="140" r="5"/>
     <circle cx="64" cy="140" r="5"/>
@@ -44,32 +25,32 @@
   </g>
 
   <!-- Reaction arrow (center) -->
-  <g stroke="#3d372b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+  <g stroke="#343b3b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
     <path d="M196 140 H244"/>
     <path d="M234 129 L246 140 L234 151"/>
   </g>
 
   <!-- Orbit atom (right) -->
-  <g stroke="#0d9488" stroke-width="2.2">
+  <g stroke="#0f766e" stroke-width="2.2">
     <ellipse cx="320" cy="140" rx="52" ry="18"/>
     <ellipse cx="320" cy="140" rx="52" ry="18" transform="rotate(60 320 140)"/>
     <ellipse cx="320" cy="140" rx="52" ry="18" transform="rotate(-60 320 140)"/>
   </g>
-  <circle cx="320" cy="140" r="8.5" fill="#0d9488"/>
-  <g fill="#b8821a">
+  <circle cx="320" cy="140" r="8.5" fill="#0f766e"/>
+  <g fill="#0d9488">
     <circle cx="372" cy="140" r="4"/>
     <circle cx="294" cy="95" r="4"/>
     <circle cx="294" cy="185" r="4"/>
   </g>
 
   <!-- Flasks (bottom) -->
-  <g stroke="#b8821a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9">
+  <g stroke="#0f766e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M120 262 h18 v14 l12 30 h-42 l12 -30 v-14"/>
     <path d="M118 288 h22"/>
     <path d="M300 258 h22 v0 l0 12 l14 34 h-50 l14 -34 v-12"/>
-    <path d="M296 286 h30" opacity="0.7"/>
+    <path d="M296 286 h30"/>
   </g>
-  <g stroke="#0d9488" stroke-width="2.2" stroke-linecap="round" opacity="0.9">
+  <g stroke="#0d9488" stroke-width="2.2" stroke-linecap="round">
     <path d="M252 268 h18 v0 l0 9 l10 26 h-38 l10 -26 v-9"/>
     <path d="M250 291 h22"/>
   </g>
