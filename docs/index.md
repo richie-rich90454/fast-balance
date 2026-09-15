@@ -63,6 +63,13 @@ returns anything.
   error with a stable `.code`.
 - **Deterministic** — the same input always returns the same result.
 
+## A note on the palette
+
+The site's colours come from two minerals. The brass-gold primary is **pyrite**
+(FeS₂), the iron disulfide better known as "fool's gold"; the teal complement is
+**verdigris**, the patina that forms on weathered copper. Both are tuned
+separately for light and dark mode.
+
 ## Quick examples
 
 ```javascript
