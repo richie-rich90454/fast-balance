@@ -30,7 +30,7 @@ export function parseError(message: string): BalanceError {
 export function unknownElement(symbol: string): BalanceError {
     return new BalanceError(
         "UNKNOWN_ELEMENT",
-        'Expected element symbol, got unknown "' + symbol + '"'
+        'Expected element symbol, got unknown "' + symbol + '"',
     );
 }
 
