@@ -1,11 +1,11 @@
-# fast‑balance
+# fast-balance
 
-> An exact‑arithmetic stoichiometric equation balancer for JavaScript and TypeScript,  
-> addressing conservation of mass and charge via rational nullspace computation  
-> — free of floating‑point discrepancy.
+> Exact, fast stoichiometric equation balancing for JavaScript and TypeScript.  
+> Conservation of mass and charge are solved with BigInt rational arithmetic —
+> no floating-point discrepancy, ever.
 
 [![npm version](https://img.shields.io/npm/v/fast-balance.svg)](https://www.npmjs.com/package/fast-balance)
-[![license](https://img.shields.io/npm/l/fast-balance.svg)](LICENSE)
+[![license](https://img.shields.io/npm/l/fast-balance)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-blue.svg)](https://www.typescriptlang.org/)
 [![ESM + CJS](https://img.shields.io/badge/ESM%2FCJS-dual-green)](#)
 
@@ -13,16 +13,19 @@
 
 ## Features
 
-- **Universal stoichiometry** — resolves equations ranging from elementary syntheses (`H2 + O2 → H2O`) to multi‑species redox systems.
-- **Complex chemical syntax** — nested parentheses `()` and brackets `[]` with subscripts, e.g., `Ca3(PO4)2`, `[Fe(CN)6]4-`.
-- **Ionic charge accounting** — explicit charge annotations: `Fe2+`, `SO4^2−`, `MnO4−`, `O^2−`.
-- **Electron handling** — recognizes `e−` (or bare `e`) for half‑reactions; allows `e+` for completeness.
-- **Hydrate notation** — accepts dot `·`, middle dot, bullet `•`, and asterisk `*` as hydrate separators (e.g., `CuSO4·5H2O`).
-- **State symbols (ignored)** — automatically strips `(s)`, `(l)`, `(g)`, `(aq)`, `(solid)`, `(liquid)`, `(gas)`, `(aqueous)`, `(cr)`, `(am)`.
-- **Arrow‑style robustness** — normalizes `→`, `⇒`, `⇌`, `<=>`, `<->`, `-->`, `=` to the canonical `->` separator.
-- **Rational arithmetic kernel** — solves the linear conservation system over the field ℚ to guarantee minimal integer coefficients without rounding artifacts.
-- **Input‑coefficient indifference** — leading stoichiometric coefficients in the input string are discarded; feeding an already‑balanced equation causes no perturbation.
-- **Compact bundle** — approximately 6 kB minified; zero runtime dependencies.
+- **Exact arithmetic** — the balancing kernel uses BigInt rationals, so results
+  are always the smallest exact integer coefficients.
+- **Linear-time core** — element symbols are validated against a fixed set, so
+  elimination is `O(m²·n)` with `m = O(1)`: linear in the number of species.
+- **Real chemistry** — nested `()`/`[]`, ionic charges, hydrates, state symbols,
+  isotopes, nuclear mode, functional groups and common abbreviations.
+- **Spectator species** — a species on both sides is balanced, not rejected
+  (`C3H8 + O2 + N2 -> CO2 + H2O + N2`).
+- **Underdetermined systems** — the minimal positive solution is returned and
+  flagged; `balanceAll` returns every independent balance.
+- **Honest errors** — typed `BalanceError` with stable codes; unknown elements,
+  ambiguous input and unbalanceable equations are reported explicitly.
+- **Zero runtime dependencies**, dual ESM/CommonJS build, TypeScript types.
 
 ---
 
@@ -32,139 +35,130 @@
 npm install fast-balance
 ```
 
-The package is distributed as a **dual ESM/CommonJS** module, employing Node.js conditional exports.  
-It functions equally well with `import` and `require`, targeting Node.js ≥ 12.20, contemporary bundlers, and ES‑module‑capable browsers.
+Requires an environment with native `BigInt` (Node.js ≥ 12.20, all current
+browsers, modern bundlers).
 
 ---
 
 ## Quick start
 
-### ES module
-
 ```javascript
 import { balance } from 'fast-balance';
 
-const result = balance('H2 + O2 -> H2O');
-console.log(result.equation); // "2 H2 + O2 -> 2 H2O"
-```
+balance('H2 + O2 -> H2O').equation;
+// "2 H2 + 1 O2 -> 2 H2O"
 
-### CommonJS
+balance('MnO4- + H+ + e- -> Mn2+ + H2O').equation;
+// "1 MnO4- + 8 H+ + 5 e- -> 1 Mn2+ + 4 H2O"
+
+// spectator species
+balance('C3H8 + O2 + N2 -> CO2 + H2O + N2').equation;
+// "1 C3H8 + 5 O2 + 1 N2 -> 3 CO2 + 4 H2O + 1 N2"
+
+// unicode input
+balance('H₂ + O₂ -> H₂O').equation;
+```
 
 ```javascript
 const { balance } = require('fast-balance');
-
-const result = balance('Fe2+ + Cl- -> FeCl2');
-console.log(result.reactants[0].coefficient); // 1
-```
-
-### With options
-
-```javascript
-// Suppress unit coefficients, generate HTML formatted arrow
-const result = balance('H2 + O2 -> H2O', { showOne: false, format: 'html' });
-console.log(result.equation); // "2 H2 + O2 &rarr; 2 H2O"
+balance('Fe2+ + Cl- -> FeCl2').reactants[0].coefficient; // 1
 ```
 
 ---
 
 ## API
 
-### `balance(input: string, options?: BalanceOptions): BalanceResult`
+### `balance(input, options?)`
 
-Balances a chemical equation provided as a character string.
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `showOne` | `boolean` | `true` | Render coefficients equal to 1. |
+| `format` | `"text" \| "html" \| "latex"` | `"text"` | Arrow representation. |
+| `mode` | `"chemical" \| "nuclear"` | `"chemical"` | `nuclear` conserves A and nuclear charge. |
+| `autoComplete` | `boolean` | `false` | Opt-in inference of omitted `H2O`/`H+`/`OH-`/`e-`. |
+| `analyze` | `boolean` | `false` | Attach classification and redox analysis. |
 
-#### `input` (string)
-
-The equation to balance. Whitespace and leading integer coefficients are permitted.  
-The accepted arrow tokens are: `->`, `→`, `⇒`, `⇌`, `<=>`, `<->`, `-->`, and `=`.
-
-#### `options` (object, optional)
-
-| Property  | Type                          | Default  | Description                                                          |
-|-----------|-------------------------------|----------|----------------------------------------------------------------------|
-| `showOne` | `boolean`                     | `true`   | When `true`, coefficients equal to unity are rendered explicitly.   |
-| `format`  | `"text" \| "html" \| "latex"` | `"text"` | Selects the arrow representation in the `equation` property.        |
-
-#### `BalanceResult`
-
-```typescript
-interface BalancedSpecies {
-  coefficient: number;
-  formula: string;
-}
-
+```ts
 interface BalanceResult {
   reactants: BalancedSpecies[];
-  products:  BalancedSpecies[];
-  equation:  string;   // fully formatted balanced‑equation string
+  products: BalancedSpecies[];
+  equation: string;
+  underdetermined?: boolean;
+  warnings?: string[];
+  analysis?: ReactionAnalysis;
 }
 ```
 
----
+### Other exports
 
-## Supported notation
+- `balanceAll(input, options?)` — every independent balance.
+- `isBalanced(input, options?)` — boolean check, never throws.
+- `verify(input, options?)` — alias for `balance` with an explicit throwing contract.
+- `audit(input)` — per-side element and charge totals.
+- `analyzeReaction(reactants, products)`, `classify(reactants, products)`, `oxidationStates(species)`.
+- `parseFormula`, `splitEquation`, `stripStateSymbols`, `normalizeText`, `normalizeArrows`.
+- `buildMatrix`, `solveSystem`, `fractionsToIntegers`, `Fraction`, `gcd`, `lcm`.
+- `BalanceError` with a stable `.code`.
 
-| Feature                         | Examples                                               |
-|---------------------------------|--------------------------------------------------------|
-| Element symbols                 | `H`, `He`, `C`, `O`, `Fe`, `Uut`                      |
-| Subscripts                      | `H2O`, `C6H12O6`                                      |
-| Parenthetical/bracket grouping  | `Ca3(PO4)2`, `[Fe(CN)6]4−`, `Al2(SO4)3`              |
-| Ionic charges                   | `Fe2+`, `Fe3+`, `SO4^2−`, `MnO4−`, `O^2−`            |
-| Electrons                       | `e−` (or bare `e`), `e+`                              |
-| Hydrate separators              | `CuSO4·5H2O`, `CuSO4*5H2O`, `CuSO4•5H2O`             |
-| State symbols (eliminated)      | `H2O(l)`, `CO2(g)`, `NaCl(aq)`, `AgCl(s)`             |
-| Arrow variants                  | `->`, `→`, `⇒`, `⇌`, `<=>`, `<->`, `-->`, `=`         |
-| Leading coefficient (ignored)   | `2 H2 + O2 -> 2 H2O` is parsed correctly              |
+Full documentation lives in [`docs/`](./docs) — its own npm package,
+`fast-balance-docs`, with a dedicated VitePress site.
 
 ---
 
-## Algorithmic exposition
+## Supported notation (summary)
 
-The library’s computational core proceeds through four stages:
+| Feature | Examples |
+|---|---|
+| Subscripts / groups | `H2O`, `Ca3(PO4)2`, `[Fe(CN)6]4-` |
+| Charges | `Fe2+`, `SO4^2-`, `Fe^{3+}`, `Fe+2`, `O2-` |
+| Electrons / particles | `e`, `e-`, `e+`, `n`, `p`, `hv`, `hν`, `Δ` |
+| Hydrates | `CuSO4·5H2O`, `CuSO4*5H2O`, `CuSO4•5H2O` |
+| State symbols | `(s) (l) (g) (aq) (cr) (am) (solid) (gas) …` |
+| Unicode | `H₂O`, `Fe²⁺`, `SO₄²⁻` |
+| Isotopes / nuclear | `^238U`, `C-14`, `H-2` (with `mode: 'nuclear'`) |
+| Functional groups | `Ph`, `Me`, `Et`, `Bu`, `tBu`, `Bn` |
+| Abbreviations | `NADP`, `NADPH`, `NAD`, `NADH`, `FAD`, `FADH2`, `ATP`, `ADP` |
+| Placeholders | `R`, `M`, `X`, `Q`, `Z`, `D`, `T` |
+| Arrows / conditions | `->`, `→`, `⇌`, `<=>`, `=`, `--Δ-->`, `->[cat]` |
 
-1. **Lexical & syntactic analysis**  
-   Each term (reactant or product) is decomposed into an *element‑count map* and a net ionic *charge*.
-   Parentheses, brackets, hydrates, and charge suffixes are handled by a recursive‑descent parser.
-   State symbols are stripped prior to decomposition.
-
-2. **Construction of the conservation matrix**  
-   For an equation with *n* species and *m* distinct elements, an *m*′ × *n* matrix is assembled,
-   where *m*′ = *m* + (1 if any species carries a non‑zero charge).  
-   Reactants contribute positive coefficients; products contribute negative ones.  
-   Each row represents conservation of one element (or charge).
-
-3. **Rational nullspace determination**  
-   Gaussian elimination is performed over the field of rational numbers, using a custom `Fraction` class that stores
-   numerator and denominator as reduced integers. This eliminates floating‑point drift entirely.  
-   The algorithm locates a free variable, sets it to unity, and back‑substitutes to obtain a rational nullspace vector.
-
-4. **Integer canonicalization**  
-   The rational vector is scaled to the least common multiple of the denominators, producing a provisional set of integer coefficients.  
-   These are then divided by their greatest common divisor and, if necessary, sign‑flipped so that positive coefficients predominate.
-
-The entire process guarantees the smallest possible integer coefficients consistent with the conservation laws.
-
-Because the linear system may possess multiple degrees of freedom (e.g., scaling an entire equation), the implementation selects the minimal solution in which the first free coefficient is set to one.
+A `+` separates species only when surrounded by spaces; `H2+O2` is ambiguous
+with a terminal charge and raises an explicit error rather than misparsing.
+`O2-` follows the standard convention of meaning oxide; superoxide and peroxide
+are written `O2^-` and `O2^2-`.
 
 ---
 
-## Dual‑module distribution
+## Algorithm
 
-The `package.json` conditions route `import` to the ESM bundle and `require` to the CJS bundle:
+1. **Parse** each species into an element-count map and net charge, normalising
+   unicode, charges, hydrates, isotopes and groups.
+2. **Build** the conservation matrix: one row per element (lexicographic) plus a
+   charge row when needed; reactants positive, products negative.
+3. **Reduce** the matrix to reduced row echelon form over exact BigInt rationals.
+4. **Select** the smallest all-positive primitive integer solution; for
+   underdetermined systems the free directions are searched in increasing order.
+5. **Verify** element and charge conservation on the result before returning.
 
-- `"main"` points to `dist/index.cjs` (CommonJS entry for legacy consumers).
-- `"module"` points to `dist/index.js` (ESM entry for bundlers that prefer the `module` field).
-- The `"exports"` map explicitly provides `"import"` and `"require"` conditions, with `"types"` listed first for TypeScript resolution.
-
-This architecture ensures seamless interoperability across modern Node.js, older CommonJS codebases, and ESM‑only environments.
+The element set is bounded, so step 3 is `O(m²·n)` with constant `m` — linear in
+the number of species.
 
 ---
 
-## TypeScript
+## Development
 
-Full type declarations are shipped (`dist/index.d.ts`).  
-All exported interfaces — `BalanceOptions`, `BalanceResult`, `BalancedSpecies` — are exposed,
-furnishing complete IntelliSense within compatible editors.
+```bash
+npm install
+npm test          # full test suite (strict conformance + conservation fuzzer)
+npm run build     # ESM + CJS + type declarations
+```
+
+Documentation lives in its own package:
+
+```bash
+cd docs
+npm install
+npm run dev
+```
 
 ---
 
