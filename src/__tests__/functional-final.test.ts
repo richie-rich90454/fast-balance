@@ -1,5 +1,5 @@
-import {describe, it, expect} from "vitest";
-import {balance, parseFormula, splitEquation} from "../index";
+import { describe, it, expect } from "vitest";
+import { balance, parseFormula, splitEquation } from "../index";
 
 describe("exact coefficient match", () => {
     it("matches CH4 + 2O2 -> CO2 + 2H2O exactly", () => {
@@ -160,29 +160,29 @@ describe("compound naming convention", () => {
     it("NaCl is named correctly in the output", () => {
         let result = balance("Na + Cl2 -> NaCl");
         let allFormulas = [
-            ...result.reactants.map(r => r.formula),
-            ...result.products.map(p => p.formula)
+            ...result.reactants.map((r) => r.formula),
+            ...result.products.map((p) => p.formula),
         ];
         expect(allFormulas).toContain("NaCl");
     });
     it("H2O formula is preserved in output", () => {
         let result = balance("H2 + O2 -> H2O");
-        let productFormulas = result.products.map(p => p.formula);
+        let productFormulas = result.products.map((p) => p.formula);
         expect(productFormulas).toContain("H2O");
     });
     it("CO2 formula is preserved in output", () => {
         let result = balance("C + O2 -> CO2");
-        let productFormulas = result.products.map(p => p.formula);
+        let productFormulas = result.products.map((p) => p.formula);
         expect(productFormulas).toContain("CO2");
     });
     it("Fe2O3 formula is preserved in output", () => {
         let result = balance("Fe + O2 -> Fe2O3");
-        let productFormulas = result.products.map(p => p.formula);
+        let productFormulas = result.products.map((p) => p.formula);
         expect(productFormulas).toContain("Fe2O3");
     });
     it("Ca(OH)2 formula is preserved in output", () => {
         let result = balance("CaO + H2O -> Ca(OH)2");
-        let productFormulas = result.products.map(p => p.formula);
+        let productFormulas = result.products.map((p) => p.formula);
         expect(productFormulas).toContain("Ca(OH)2");
     });
 });
