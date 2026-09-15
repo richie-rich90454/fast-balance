@@ -4,29 +4,39 @@ title: Live Demo
 
 # Live Demo
 
-Try the interactive demo below. Enter a chemical equation and select the output format to see the balanced result.
+Enter a chemical equation and choose the output format to see the balanced
+result.
 
 <BalanceDemo />
 
 ## How it works
 
-- Type or paste an unbalanced chemical equation into the input field.
+- Type or paste an unbalanced equation; the result updates as you type.
 - Choose the output format: plain text, HTML, or LaTeX.
-- Toggle the "Show coefficients of 1" option to control unit coefficient display.
-- The result updates as you type.
-- Invalid or unbalanceable equations display a clear error message.
+- Toggle "Show coefficient of 1" to control unit coefficient display.
+- Spectator species (a species on both sides) are balanced, not rejected.
+- Genuinely underdetermined systems return the minimal balance and set
+  `underdetermined: true`.
+- Invalid or unbalanceable input shows a clear error message.
 
 ## Supported notation
 
 | Notation | Example | Description |
-|----------|---------|-------------|
-| Arrow styles | `->`, `=`, `<=>`, `⇌` | Separates reactants and products |
-| Ionic charges | `Fe2+`, `SO4^2-` | Superscript-style or caret notation |
-| Electrons | `e-` | Used in redox half-reactions |
+|---|---|---|
+| Arrows | `->`, `→`, `⇌`, `<=>`, `=`, `-->` | Separates reactants and products |
+| Conditions | `--Δ-->`, `->[cat]` | Ignored |
+| Ionic charges | `Fe2+`, `SO4^2-`, `Fe^{3+}`, `Fe+2` | Several charge spellings |
+| Complex charge | `[Fe(CN)6]4-` | Digits after `]` are the charge |
+| Electrons | `e`, `e-`, `e+` | Redox half-reactions |
 | Parentheses | `Ca3(PO4)2` | Groups atoms with a subscript |
-| Brackets | `[Fe(CN)6]4-` | Preserved in coordination complexes |
-| Hydrates | `CuSO4·5H2O` | Middle dot, asterisk, or bullet separator |
+| Hydrates | `CuSO4·5H2O` | `·`, `•`, `*` separators |
 | State symbols | `(s)`, `(l)`, `(g)`, `(aq)` | Stripped during parsing |
+| Unicode | `H₂O`, `Fe²⁺` | Normalised automatically |
+| Isotopes | `^238U`, `C-14` | Used by nuclear mode |
+| Groups | `Ph`, `Me`, `Et`, `tBu` | Expanded to atoms |
+| Abbreviations | `NADP`, `NADPH`, `ATP` | Expanded to atoms |
+| Particles | `hv`, `hν`, `Δ`, `n`, `p` | Photon/heat/nucleon tokens |
+| Placeholders | `R`, `M`, `X`, `Q`, `Z` | Generic group/metal/halogen |
 
 ## Example equations
 
@@ -35,22 +45,27 @@ Try the interactive demo below. Enter a chemical equation and select the output 
 - `Fe + O2 -> Fe2O3`
 - `N2 + H2 -> NH3`
 
-### Combustion reactions
+### Combustion
 - `CH4 + O2 -> CO2 + H2O`
-- `C3H8 + O2 -> CO2 + H2O`
-- `C2H5OH + O2 -> CO2 + H2O`
+- `C3H8 + O2 + N2 -> CO2 + H2O + N2` (air, with N2 spectator)
 
-### Redox reactions
+### Redox
 - `MnO4- + H+ + e- -> Mn2+ + H2O`
 - `Cr2O7^2- + H+ + e- -> Cr3+ + H2O`
 - `Fe2+ + MnO4- + H+ -> Fe3+ + Mn2+ + H2O`
 
-### Ionic reactions
+### Ionic
 - `Ag+ + Cl- -> AgCl`
 - `Ba2+ + SO4^2- -> BaSO4`
-- `Pb2+ + 2I- -> PbI2`
+- `[Cu(NH3)4]2+ + Cl- -> [Cu(NH3)4]Cl2`
 
-### Complex reactions
+### Underdetermined
+- `C + O2 -> CO + CO2`
+
+### Unicode
+- `H₂ + O₂ -> H₂O`
+- `Fe²⁺ + Cl⁻ -> FeCl₂`
+
+### Complex
 - `Ca3(PO4)2 + SiO2 + C -> CaSiO3 + P4 + CO`
-- `KMnO4 + H2SO4 + H2O2 -> MnSO4 + K2SO4 + O2 + H2O`
-- `[Fe(CN)6]4- + H2O2 + H+ -> Fe3+ + CO2 + NO3- + H2O`
+- `K4Fe(CN)6 + KMnO4 + H2SO4 -> KHSO4 + Fe2(SO4)3 + MnSO4 + HNO3 + CO2 + H2O`
