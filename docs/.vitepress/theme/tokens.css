@@ -9,204 +9,204 @@
  */
 
 :root {
-  /* ---------------------------------------------------------------------
+    /* ---------------------------------------------------------------------
      Verdigris teal
      --------------------------------------------------------------------- */
-  --fb-teal-10: #d6f5ee;
-  --fb-teal-20: #a7f3e8;
-  --fb-teal-30: #5eead4;
-  --fb-teal-40: #2dd4bf;
-  --fb-teal-50: #14b8a6;
-  --fb-teal-60: #0d9488;
-  --fb-teal-70: #0f766e;
-  --fb-teal-80: #115e59;
-  --fb-teal-90: #134e4a;
+    --fb-teal-10: #d6f5ee;
+    --fb-teal-20: #a7f3e8;
+    --fb-teal-30: #5eead4;
+    --fb-teal-40: #2dd4bf;
+    --fb-teal-50: #14b8a6;
+    --fb-teal-60: #0d9488;
+    --fb-teal-70: #0f766e;
+    --fb-teal-80: #115e59;
+    --fb-teal-90: #134e4a;
 
-  /* ---------------------------------------------------------------------
+    /* ---------------------------------------------------------------------
      Cool neutrals
      --------------------------------------------------------------------- */
-  --fb-neutral-0: #ffffff;
-  --fb-neutral-10: #f6f8f8;
-  --fb-neutral-20: #edf1f1;
-  --fb-neutral-30: #dde3e3;
-  --fb-neutral-40: #bcc5c5;
-  --fb-neutral-50: #939e9e;
-  --fb-neutral-60: #6e7979;
-  --fb-neutral-70: #4e5858;
-  --fb-neutral-80: #343b3b;
-  --fb-neutral-90: #1e2323;
-  --fb-neutral-100: #101313;
+    --fb-neutral-0: #ffffff;
+    --fb-neutral-10: #f6f8f8;
+    --fb-neutral-20: #edf1f1;
+    --fb-neutral-30: #dde3e3;
+    --fb-neutral-40: #bcc5c5;
+    --fb-neutral-50: #939e9e;
+    --fb-neutral-60: #6e7979;
+    --fb-neutral-70: #4e5858;
+    --fb-neutral-80: #343b3b;
+    --fb-neutral-90: #1e2323;
+    --fb-neutral-100: #101313;
 
-  /* Back-compat aliases (used by category utilities) */
-  --fb-gray-0: var(--fb-neutral-0);
-  --fb-gray-10: var(--fb-neutral-10);
-  --fb-gray-20: var(--fb-neutral-20);
-  --fb-gray-30: var(--fb-neutral-30);
-  --fb-gray-40: var(--fb-neutral-40);
-  --fb-gray-50: var(--fb-neutral-50);
-  --fb-gray-60: var(--fb-neutral-60);
-  --fb-gray-70: var(--fb-neutral-70);
-  --fb-gray-80: var(--fb-neutral-80);
-  --fb-gray-90: var(--fb-neutral-90);
-  --fb-gray-100: var(--fb-neutral-100);
+    /* Back-compat aliases (used by category utilities) */
+    --fb-gray-0: var(--fb-neutral-0);
+    --fb-gray-10: var(--fb-neutral-10);
+    --fb-gray-20: var(--fb-neutral-20);
+    --fb-gray-30: var(--fb-neutral-30);
+    --fb-gray-40: var(--fb-neutral-40);
+    --fb-gray-50: var(--fb-neutral-50);
+    --fb-gray-60: var(--fb-neutral-60);
+    --fb-gray-70: var(--fb-neutral-70);
+    --fb-gray-80: var(--fb-neutral-80);
+    --fb-gray-90: var(--fb-neutral-90);
+    --fb-gray-100: var(--fb-neutral-100);
 
-  /* ---------------------------------------------------------------------
+    /* ---------------------------------------------------------------------
      Semantic colour
      --------------------------------------------------------------------- */
-  --fb-primary: var(--fb-teal-70);
-  --fb-primary-hover: var(--fb-teal-80);
-  --fb-primary-active: var(--fb-teal-90);
-  --fb-secondary: var(--fb-teal-60);
-  --fb-accent: var(--fb-teal-70);
+    --fb-primary: var(--fb-teal-70);
+    --fb-primary-hover: var(--fb-teal-80);
+    --fb-primary-active: var(--fb-teal-90);
+    --fb-secondary: var(--fb-teal-60);
+    --fb-accent: var(--fb-teal-70);
 
-  --fb-success: var(--fb-teal-70);
-  --fb-warning: #a1560a;
-  --fb-error: #9c3f0a;
-  --fb-info: var(--fb-teal-60);
+    --fb-success: var(--fb-teal-70);
+    --fb-warning: #a1560a;
+    --fb-error: #9c3f0a;
+    --fb-info: var(--fb-teal-60);
 
-  /* Text */
-  --fb-text-primary: var(--fb-neutral-90);
-  --fb-text-secondary: var(--fb-neutral-70);
-  --fb-text-helper: var(--fb-neutral-60);
-  --fb-text-inverse: #ffffff;
+    /* Text */
+    --fb-text-primary: var(--fb-neutral-90);
+    --fb-text-secondary: var(--fb-neutral-70);
+    --fb-text-helper: var(--fb-neutral-60);
+    --fb-text-inverse: #ffffff;
 
-  /* Surfaces */
-  --fb-background: var(--fb-neutral-0);
-  --fb-background-hover: var(--fb-neutral-10);
-  --fb-background-active: var(--fb-neutral-20);
-  --fb-layer-01: var(--fb-neutral-10);
-  --fb-layer-02: var(--fb-neutral-0);
-  --fb-layer-03: var(--fb-teal-10);
+    /* Surfaces */
+    --fb-background: var(--fb-neutral-0);
+    --fb-background-hover: var(--fb-neutral-10);
+    --fb-background-active: var(--fb-neutral-20);
+    --fb-layer-01: var(--fb-neutral-10);
+    --fb-layer-02: var(--fb-neutral-0);
+    --fb-layer-03: var(--fb-teal-10);
 
-  /* Borders */
-  --fb-border-subtle: var(--fb-neutral-30);
-  --fb-border-strong: var(--fb-neutral-40);
-  --fb-border-interactive: var(--fb-primary);
+    /* Borders */
+    --fb-border-subtle: var(--fb-neutral-30);
+    --fb-border-strong: var(--fb-neutral-40);
+    --fb-border-interactive: var(--fb-primary);
 
-  /* Flat brand tint */
-  --fb-brand-soft: rgba(15, 118, 110, 0.12);
+    /* Flat brand tint */
+    --fb-brand-soft: rgba(15, 118, 110, 0.12);
 
-  /* ---------------------------------------------------------------------
+    /* ---------------------------------------------------------------------
      Spacing (4px base grid)
      --------------------------------------------------------------------- */
-  --fb-spacing-01: 2px;
-  --fb-spacing-02: 4px;
-  --fb-spacing-03: 8px;
-  --fb-spacing-04: 12px;
-  --fb-spacing-05: 16px;
-  --fb-spacing-06: 24px;
-  --fb-spacing-07: 32px;
-  --fb-spacing-08: 40px;
-  --fb-spacing-09: 48px;
-  --fb-spacing-10: 64px;
-  --fb-spacing-11: 80px;
-  --fb-spacing-12: 96px;
+    --fb-spacing-01: 2px;
+    --fb-spacing-02: 4px;
+    --fb-spacing-03: 8px;
+    --fb-spacing-04: 12px;
+    --fb-spacing-05: 16px;
+    --fb-spacing-06: 24px;
+    --fb-spacing-07: 32px;
+    --fb-spacing-08: 40px;
+    --fb-spacing-09: 48px;
+    --fb-spacing-10: 64px;
+    --fb-spacing-11: 80px;
+    --fb-spacing-12: 96px;
 
-  /* ---------------------------------------------------------------------
+    /* ---------------------------------------------------------------------
      Typography
      --------------------------------------------------------------------- */
-  --fb-font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --fb-font-mono: 'IBM Plex Mono', 'Fira Code', 'Consolas', monospace;
-  --fb-font-display: 'Space Grotesk', 'IBM Plex Sans', -apple-system, sans-serif;
+    --fb-font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --fb-font-mono: "IBM Plex Mono", "Fira Code", "Consolas", monospace;
+    --fb-font-display: "Space Grotesk", "IBM Plex Sans", -apple-system, sans-serif;
 
-  --fb-caption: 0.75rem;
-  --fb-body: 1rem;
-  --fb-body-large: 1.125rem;
-  --fb-heading-01: 0.875rem;
-  --fb-heading-02: 1rem;
-  --fb-heading-03: 1.25rem;
-  --fb-heading-04: 1.75rem;
-  --fb-heading-05: 2rem;
-  --fb-heading-06: 2.625rem;
-  --fb-display: 3.5rem;
+    --fb-caption: 0.75rem;
+    --fb-body: 1rem;
+    --fb-body-large: 1.125rem;
+    --fb-heading-01: 0.875rem;
+    --fb-heading-02: 1rem;
+    --fb-heading-03: 1.25rem;
+    --fb-heading-04: 1.75rem;
+    --fb-heading-05: 2rem;
+    --fb-heading-06: 2.625rem;
+    --fb-display: 3.5rem;
 
-  /* ---------------------------------------------------------------------
+    /* ---------------------------------------------------------------------
      Shape and motion
      --------------------------------------------------------------------- */
-  --fb-radius-sm: 4px;
-  --fb-radius-md: 8px;
-  --fb-radius-lg: 12px;
-  --fb-radius-xl: 20px;
-  --fb-radius-full: 9999px;
+    --fb-radius-sm: 4px;
+    --fb-radius-md: 8px;
+    --fb-radius-lg: 12px;
+    --fb-radius-xl: 20px;
+    --fb-radius-full: 9999px;
 
-  --fb-transition-fast: 90ms cubic-bezier(0.4, 0, 0.2, 1);
-  --fb-transition-base: 160ms cubic-bezier(0.4, 0, 0.2, 1);
-  --fb-transition-slow: 260ms cubic-bezier(0.4, 0, 0.2, 1);
+    --fb-transition-fast: 90ms cubic-bezier(0.4, 0, 0.2, 1);
+    --fb-transition-base: 160ms cubic-bezier(0.4, 0, 0.2, 1);
+    --fb-transition-slow: 260ms cubic-bezier(0.4, 0, 0.2, 1);
 
-  --fb-focus-ring: 0 0 0 2px var(--fb-background), 0 0 0 4px var(--fb-primary);
+    --fb-focus-ring: 0 0 0 2px var(--fb-background), 0 0 0 4px var(--fb-primary);
 
-  /* Back-compat */
-  --chem-primary: var(--fb-primary);
-  --chem-primary-light: var(--fb-primary-hover);
-  --chem-primary-dark: var(--fb-primary-active);
-  --chem-secondary: var(--fb-secondary);
-  --chem-secondary-light: var(--fb-teal-40);
-  --chem-secondary-dark: var(--fb-teal-80);
-  --chem-accent: var(--fb-accent);
-  --chem-accent-light: var(--fb-teal-50);
-  --chem-accent-dark: var(--fb-teal-80);
-  --chem-success: var(--fb-success);
-  --chem-warning: var(--fb-warning);
-  --chem-danger: var(--fb-error);
-  --chem-info: var(--fb-info);
-  --chem-metals: var(--fb-neutral-50);
-  --chem-nonmetals: var(--fb-secondary);
-  --chem-noble-gases: var(--fb-teal-50);
-  --chem-halogens: var(--fb-teal-40);
-  --chem-alkali: var(--fb-teal-60);
-  --chem-alkaline: var(--fb-teal-70);
-  --chem-transition: var(--fb-primary);
-  --chem-transition-fast: var(--fb-transition-fast);
-  --chem-transition-base: var(--fb-transition-base);
-  --chem-transition-slow: var(--fb-transition-slow);
-  --chem-radius: var(--fb-radius-md);
+    /* Back-compat */
+    --chem-primary: var(--fb-primary);
+    --chem-primary-light: var(--fb-primary-hover);
+    --chem-primary-dark: var(--fb-primary-active);
+    --chem-secondary: var(--fb-secondary);
+    --chem-secondary-light: var(--fb-teal-40);
+    --chem-secondary-dark: var(--fb-teal-80);
+    --chem-accent: var(--fb-accent);
+    --chem-accent-light: var(--fb-teal-50);
+    --chem-accent-dark: var(--fb-teal-80);
+    --chem-success: var(--fb-success);
+    --chem-warning: var(--fb-warning);
+    --chem-danger: var(--fb-error);
+    --chem-info: var(--fb-info);
+    --chem-metals: var(--fb-neutral-50);
+    --chem-nonmetals: var(--fb-secondary);
+    --chem-noble-gases: var(--fb-teal-50);
+    --chem-halogens: var(--fb-teal-40);
+    --chem-alkali: var(--fb-teal-60);
+    --chem-alkaline: var(--fb-teal-70);
+    --chem-transition: var(--fb-primary);
+    --chem-transition-fast: var(--fb-transition-fast);
+    --chem-transition-base: var(--fb-transition-base);
+    --chem-transition-slow: var(--fb-transition-slow);
+    --chem-radius: var(--fb-radius-md);
 }
 
 .dark {
-  --fb-primary: #2dd4bf;
-  --fb-primary-hover: #5eead4;
-  --fb-primary-active: #99f6e4;
-  --fb-secondary: #14b8a6;
-  --fb-accent: #2dd4bf;
+    --fb-primary: #2dd4bf;
+    --fb-primary-hover: #5eead4;
+    --fb-primary-active: #99f6e4;
+    --fb-secondary: #14b8a6;
+    --fb-accent: #2dd4bf;
 
-  --fb-success: #2dd4bf;
-  --fb-warning: #e0a45c;
-  --fb-error: #e2935a;
-  --fb-info: #2dd4bf;
+    --fb-success: #2dd4bf;
+    --fb-warning: #e0a45c;
+    --fb-error: #e2935a;
+    --fb-info: #2dd4bf;
 
-  --fb-text-primary: #edf2f2;
-  --fb-text-secondary: #bcc5c5;
-  --fb-text-helper: #8e9999;
-  --fb-text-inverse: #04201c;
+    --fb-text-primary: #edf2f2;
+    --fb-text-secondary: #bcc5c5;
+    --fb-text-helper: #8e9999;
+    --fb-text-inverse: #04201c;
 
-  --fb-background: #101313;
-  --fb-background-hover: #181d1d;
-  --fb-background-active: #202626;
-  --fb-layer-01: #181d1d;
-  --fb-layer-02: #1e2424;
-  --fb-layer-03: #10201e;
+    --fb-background: #101313;
+    --fb-background-hover: #181d1d;
+    --fb-background-active: #202626;
+    --fb-layer-01: #181d1d;
+    --fb-layer-02: #1e2424;
+    --fb-layer-03: #10201e;
 
-  --fb-border-subtle: #2a3232;
-  --fb-border-strong: #3e4a4a;
-  --fb-border-interactive: var(--fb-primary);
+    --fb-border-subtle: #2a3232;
+    --fb-border-strong: #3e4a4a;
+    --fb-border-interactive: var(--fb-primary);
 
-  --fb-brand-soft: rgba(45, 212, 191, 0.16);
+    --fb-brand-soft: rgba(45, 212, 191, 0.16);
 
-  --fb-gray-0: #101313;
-  --fb-gray-10: #181d1d;
-  --fb-gray-20: #202626;
-  --fb-gray-30: #2a3232;
-  --fb-gray-40: #3e4a4a;
-  --fb-gray-50: #576363;
-  --fb-gray-60: #748080;
-  --fb-gray-70: #99a4a4;
-  --fb-gray-80: #bcc5c5;
-  --fb-gray-90: #dbe2e2;
-  --fb-gray-100: #edf2f2;
+    --fb-gray-0: #101313;
+    --fb-gray-10: #181d1d;
+    --fb-gray-20: #202626;
+    --fb-gray-30: #2a3232;
+    --fb-gray-40: #3e4a4a;
+    --fb-gray-50: #576363;
+    --fb-gray-60: #748080;
+    --fb-gray-70: #99a4a4;
+    --fb-gray-80: #bcc5c5;
+    --fb-gray-90: #dbe2e2;
+    --fb-gray-100: #edf2f2;
 
-  --chem-primary: var(--fb-primary);
-  --chem-primary-light: var(--fb-primary-hover);
-  --chem-primary-dark: var(--fb-primary-active);
-  --chem-secondary: var(--fb-secondary);
-  --chem-accent: var(--fb-accent);
+    --chem-primary: var(--fb-primary);
+    --chem-primary-light: var(--fb-primary-hover);
+    --chem-primary-dark: var(--fb-primary-active);
+    --chem-secondary: var(--fb-secondary);
+    --chem-accent: var(--fb-accent);
 }
