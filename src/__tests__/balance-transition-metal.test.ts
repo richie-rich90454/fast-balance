@@ -2,314 +2,314 @@ import { describe, it, expect } from "vitest";
 import { balance } from "../index";
 
 function expectPositiveCoefficients(result: ReturnType<typeof balance>) {
-  expect(result.reactants.every(r => r.coefficient > 0)).toBe(true);
-  expect(result.products.every(p => p.coefficient > 0)).toBe(true);
-  const all = [
-    ...result.reactants.map(r => r.coefficient),
-    ...result.products.map(p => p.coefficient),
-  ];
-  expect(all.every(c => Number.isInteger(c) && c > 0)).toBe(true);
+    expect(result.reactants.every((r) => r.coefficient > 0)).toBe(true);
+    expect(result.products.every((p) => p.coefficient > 0)).toBe(true);
+    const all = [
+        ...result.reactants.map((r) => r.coefficient),
+        ...result.products.map((p) => p.coefficient),
+    ];
+    expect(all.every((c) => Number.isInteger(c) && c > 0)).toBe(true);
 }
 
 describe("iron compound reactions", () => {
-  it("balances 2Fe + 3Cl2 -> 2FeCl3", () => {
-    const r = balance("Fe + Cl2 -> FeCl3");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 3]);
-    expect(r.products.map(x => x.coefficient)).toEqual([2]);
-  });
+    it("balances 2Fe + 3Cl2 -> 2FeCl3", () => {
+        const r = balance("Fe + Cl2 -> FeCl3");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([2, 3]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([2]);
+    });
 
-  it("balances Fe + S -> FeS", () => {
-    const r = balance("Fe + S -> FeS");
-    expectPositiveCoefficients(r);
-  });
+    it("balances Fe + S -> FeS", () => {
+        const r = balance("Fe + S -> FeS");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances Fe2O3 + 3CO -> 2Fe + 3CO2", () => {
-    const r = balance("Fe2O3 + CO -> Fe + CO2");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 3]);
-    expect(r.products.map(x => x.coefficient)).toEqual([2, 3]);
-  });
+    it("balances Fe2O3 + 3CO -> 2Fe + 3CO2", () => {
+        const r = balance("Fe2O3 + CO -> Fe + CO2");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 3]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([2, 3]);
+    });
 
-  it("balances Fe + O2 -> Fe2O3", () => {
-    const r = balance("Fe + O2 -> Fe2O3");
-    expectPositiveCoefficients(r);
-  });
+    it("balances Fe + O2 -> Fe2O3", () => {
+        const r = balance("Fe + O2 -> Fe2O3");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances FeCl3 + 3NaOH -> Fe(OH)3 + 3NaCl", () => {
-    const r = balance("FeCl3 + NaOH -> Fe(OH)3 + NaCl");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 3]);
-    expect(r.products.map(x => x.coefficient)).toEqual([1, 3]);
-  });
+    it("balances FeCl3 + 3NaOH -> Fe(OH)3 + 3NaCl", () => {
+        const r = balance("FeCl3 + NaOH -> Fe(OH)3 + NaCl");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 3]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([1, 3]);
+    });
 
-  it("balances Fe2O3 + 6HCl -> 2FeCl3 + 3H2O", () => {
-    const r = balance("Fe2O3 + HCl -> FeCl3 + H2O");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 6]);
-    expect(r.products.map(x => x.coefficient)).toEqual([2, 3]);
-  });
+    it("balances Fe2O3 + 6HCl -> 2FeCl3 + 3H2O", () => {
+        const r = balance("Fe2O3 + HCl -> FeCl3 + H2O");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 6]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([2, 3]);
+    });
 
-  it("balances Fe + CuSO4 -> FeSO4 + Cu", () => {
-    const r = balance("Fe + CuSO4 -> FeSO4 + Cu");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
-    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
-  });
+    it("balances Fe + CuSO4 -> FeSO4 + Cu", () => {
+        const r = balance("Fe + CuSO4 -> FeSO4 + Cu");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 1]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([1, 1]);
+    });
 
-  it("balances FeS + O2 -> Fe2O3 + SO2", () => {
-    const r = balance("FeS + O2 -> Fe2O3 + SO2");
-    expectPositiveCoefficients(r);
-  });
+    it("balances FeS + O2 -> Fe2O3 + SO2", () => {
+        const r = balance("FeS + O2 -> Fe2O3 + SO2");
+        expectPositiveCoefficients(r);
+    });
 });
 
 describe("copper compound reactions", () => {
-  it("balances Cu + Cl2 -> CuCl2", () => {
-    const r = balance("Cu + Cl2 -> CuCl2");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
-    expect(r.products.map(x => x.coefficient)).toEqual([1]);
-  });
+    it("balances Cu + Cl2 -> CuCl2", () => {
+        const r = balance("Cu + Cl2 -> CuCl2");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 1]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([1]);
+    });
 
-  it("balances 2Cu + O2 -> 2CuO", () => {
-    const r = balance("Cu + O2 -> CuO");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
-    expect(r.products.map(x => x.coefficient)).toEqual([2]);
-  });
+    it("balances 2Cu + O2 -> 2CuO", () => {
+        const r = balance("Cu + O2 -> CuO");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([2, 1]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([2]);
+    });
 
-  it("balances CuO + H2 -> Cu + H2O", () => {
-    const r = balance("CuO + H2 -> Cu + H2O");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
-    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
-  });
+    it("balances CuO + H2 -> Cu + H2O", () => {
+        const r = balance("CuO + H2 -> Cu + H2O");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 1]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([1, 1]);
+    });
 
-  it("balances Cu + 2AgNO3 -> Cu(NO3)2 + 2Ag", () => {
-    const r = balance("Cu + AgNO3 -> Cu(NO3)2 + Ag");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
-    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
-  });
+    it("balances Cu + 2AgNO3 -> Cu(NO3)2 + 2Ag", () => {
+        const r = balance("Cu + AgNO3 -> Cu(NO3)2 + Ag");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 2]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([1, 2]);
+    });
 
-  it("balances Cu(OH)2 + 2HCl -> CuCl2 + 2H2O", () => {
-    const r = balance("Cu(OH)2 + HCl -> CuCl2 + H2O");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
-    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
-  });
+    it("balances Cu(OH)2 + 2HCl -> CuCl2 + 2H2O", () => {
+        const r = balance("Cu(OH)2 + HCl -> CuCl2 + H2O");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 2]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([1, 2]);
+    });
 
-  it("balances CuCO3 -> CuO + CO2", () => {
-    const r = balance("CuCO3 -> CuO + CO2");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1]);
-    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
-  });
+    it("balances CuCO3 -> CuO + CO2", () => {
+        const r = balance("CuCO3 -> CuO + CO2");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([1, 1]);
+    });
 
-  it("balances Cu + S -> Cu2S", () => {
-    const r = balance("Cu + S -> Cu2S");
-    expectPositiveCoefficients(r);
-  });
+    it("balances Cu + S -> Cu2S", () => {
+        const r = balance("Cu + S -> Cu2S");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances CuSO4 + 2NaOH -> Cu(OH)2 + Na2SO4", () => {
-    const r = balance("CuSO4 + NaOH -> Cu(OH)2 + Na2SO4");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
-    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
-  });
+    it("balances CuSO4 + 2NaOH -> Cu(OH)2 + Na2SO4", () => {
+        const r = balance("CuSO4 + NaOH -> Cu(OH)2 + Na2SO4");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 2]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([1, 1]);
+    });
 });
 
 describe("zinc compound reactions", () => {
-  it("balances Zn + 2HCl -> ZnCl2 + H2", () => {
-    const r = balance("Zn + HCl -> ZnCl2 + H2");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
-    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
-  });
+    it("balances Zn + 2HCl -> ZnCl2 + H2", () => {
+        const r = balance("Zn + HCl -> ZnCl2 + H2");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 2]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([1, 1]);
+    });
 
-  it("balances 2Zn + O2 -> 2ZnO", () => {
-    const r = balance("Zn + O2 -> ZnO");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
-    expect(r.products.map(x => x.coefficient)).toEqual([2]);
-  });
+    it("balances 2Zn + O2 -> 2ZnO", () => {
+        const r = balance("Zn + O2 -> ZnO");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([2, 1]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([2]);
+    });
 
-  it("balances ZnO + 2HCl -> ZnCl2 + H2O", () => {
-    const r = balance("ZnO + HCl -> ZnCl2 + H2O");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
-    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
-  });
+    it("balances ZnO + 2HCl -> ZnCl2 + H2O", () => {
+        const r = balance("ZnO + HCl -> ZnCl2 + H2O");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 2]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([1, 1]);
+    });
 
-  it("balances Zn + CuSO4 -> ZnSO4 + Cu", () => {
-    const r = balance("Zn + CuSO4 -> ZnSO4 + Cu");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
-    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
-  });
+    it("balances Zn + CuSO4 -> ZnSO4 + Cu", () => {
+        const r = balance("Zn + CuSO4 -> ZnSO4 + Cu");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 1]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([1, 1]);
+    });
 
-  it("balances Zn + H2SO4 -> ZnSO4 + H2", () => {
-    const r = balance("Zn + H2SO4 -> ZnSO4 + H2");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
-    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
-  });
+    it("balances Zn + H2SO4 -> ZnSO4 + H2", () => {
+        const r = balance("Zn + H2SO4 -> ZnSO4 + H2");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 1]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([1, 1]);
+    });
 
-  it("balances Zn(OH)2 + 2HCl -> ZnCl2 + 2H2O", () => {
-    const r = balance("Zn(OH)2 + HCl -> ZnCl2 + H2O");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
-    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
-  });
+    it("balances Zn(OH)2 + 2HCl -> ZnCl2 + 2H2O", () => {
+        const r = balance("Zn(OH)2 + HCl -> ZnCl2 + H2O");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 2]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([1, 2]);
+    });
 });
 
 describe("aluminum compound reactions", () => {
-  it("balances 2Al + 3Cl2 -> 2AlCl3", () => {
-    const r = balance("Al + Cl2 -> AlCl3");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 3]);
-    expect(r.products.map(x => x.coefficient)).toEqual([2]);
-  });
+    it("balances 2Al + 3Cl2 -> 2AlCl3", () => {
+        const r = balance("Al + Cl2 -> AlCl3");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([2, 3]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([2]);
+    });
 
-  it("balances 4Al + 3O2 -> 2Al2O3", () => {
-    const r = balance("Al + O2 -> Al2O3");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([4, 3]);
-    expect(r.products.map(x => x.coefficient)).toEqual([2]);
-  });
+    it("balances 4Al + 3O2 -> 2Al2O3", () => {
+        const r = balance("Al + O2 -> Al2O3");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([4, 3]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([2]);
+    });
 
-  it("balances Al2O3 + 6HCl -> 2AlCl3 + 3H2O", () => {
-    const r = balance("Al2O3 + HCl -> AlCl3 + H2O");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 6]);
-    expect(r.products.map(x => x.coefficient)).toEqual([2, 3]);
-  });
+    it("balances Al2O3 + 6HCl -> 2AlCl3 + 3H2O", () => {
+        const r = balance("Al2O3 + HCl -> AlCl3 + H2O");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 6]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([2, 3]);
+    });
 
-  it("balances Al(OH)3 + 3HCl -> AlCl3 + 3H2O", () => {
-    const r = balance("Al(OH)3 + HCl -> AlCl3 + H2O");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 3]);
-    expect(r.products.map(x => x.coefficient)).toEqual([1, 3]);
-  });
+    it("balances Al(OH)3 + 3HCl -> AlCl3 + 3H2O", () => {
+        const r = balance("Al(OH)3 + HCl -> AlCl3 + H2O");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 3]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([1, 3]);
+    });
 
-  it("balances Al + HCl -> AlCl3 + H2", () => {
-    const r = balance("Al + HCl -> AlCl3 + H2");
-    expectPositiveCoefficients(r);
-  });
+    it("balances Al + HCl -> AlCl3 + H2", () => {
+        const r = balance("Al + HCl -> AlCl3 + H2");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances Al2(SO4)3 + 6NaOH -> 2Al(OH)3 + 3Na2SO4", () => {
-    const r = balance("Al2(SO4)3 + NaOH -> Al(OH)3 + Na2SO4");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 6]);
-    expect(r.products.map(x => x.coefficient)).toEqual([2, 3]);
-  });
+    it("balances Al2(SO4)3 + 6NaOH -> 2Al(OH)3 + 3Na2SO4", () => {
+        const r = balance("Al2(SO4)3 + NaOH -> Al(OH)3 + Na2SO4");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 6]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([2, 3]);
+    });
 });
 
 describe("silver compound reactions", () => {
-  it("balances Ag + Cl2 -> AgCl", () => {
-    const r = balance("Ag + Cl2 -> AgCl");
-    expectPositiveCoefficients(r);
-  });
+    it("balances Ag + Cl2 -> AgCl", () => {
+        const r = balance("Ag + Cl2 -> AgCl");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances AgNO3 + NaCl -> AgCl + NaNO3", () => {
-    const r = balance("AgNO3 + NaCl -> AgCl + NaNO3");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
-    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
-  });
+    it("balances AgNO3 + NaCl -> AgCl + NaNO3", () => {
+        const r = balance("AgNO3 + NaCl -> AgCl + NaNO3");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 1]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([1, 1]);
+    });
 
-  it("balances AgNO3 + KCl -> AgCl + KNO3", () => {
-    const r = balance("AgNO3 + KCl -> AgCl + KNO3");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 1]);
-    expect(r.products.map(x => x.coefficient)).toEqual([1, 1]);
-  });
+    it("balances AgNO3 + KCl -> AgCl + KNO3", () => {
+        const r = balance("AgNO3 + KCl -> AgCl + KNO3");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 1]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([1, 1]);
+    });
 
-  it("balances Ag2O -> Ag + O2", () => {
-    const r = balance("Ag2O -> Ag + O2");
-    expectPositiveCoefficients(r);
-  });
+    it("balances Ag2O -> Ag + O2", () => {
+        const r = balance("Ag2O -> Ag + O2");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances Ag + S -> Ag2S", () => {
-    const r = balance("Ag + S -> Ag2S");
-    expectPositiveCoefficients(r);
-  });
+    it("balances Ag + S -> Ag2S", () => {
+        const r = balance("Ag + S -> Ag2S");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances 2AgNO3 + Cu -> Cu(NO3)2 + 2Ag", () => {
-    const r = balance("AgNO3 + Cu -> Cu(NO3)2 + Ag");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([2, 1]);
-    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
-  });
+    it("balances 2AgNO3 + Cu -> Cu(NO3)2 + 2Ag", () => {
+        const r = balance("AgNO3 + Cu -> Cu(NO3)2 + Ag");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([2, 1]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([1, 2]);
+    });
 });
 
 describe("lead compound reactions", () => {
-  it("balances Pb + Cl2 -> PbCl2", () => {
-    const r = balance("Pb + Cl2 -> PbCl2");
-    expectPositiveCoefficients(r);
-  });
+    it("balances Pb + Cl2 -> PbCl2", () => {
+        const r = balance("Pb + Cl2 -> PbCl2");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances Pb(NO3)2 + 2KI -> PbI2 + 2KNO3", () => {
-    const r = balance("Pb(NO3)2 + KI -> PbI2 + KNO3");
-    expect(r.reactants.map(x => x.coefficient)).toEqual([1, 2]);
-    expect(r.products.map(x => x.coefficient)).toEqual([1, 2]);
-  });
+    it("balances Pb(NO3)2 + 2KI -> PbI2 + 2KNO3", () => {
+        const r = balance("Pb(NO3)2 + KI -> PbI2 + KNO3");
+        expect(r.reactants.map((x) => x.coefficient)).toEqual([1, 2]);
+        expect(r.products.map((x) => x.coefficient)).toEqual([1, 2]);
+    });
 
-  it("balances PbO + C -> Pb + CO2", () => {
-    const r = balance("PbO + C -> Pb + CO2");
-    expectPositiveCoefficients(r);
-  });
+    it("balances PbO + C -> Pb + CO2", () => {
+        const r = balance("PbO + C -> Pb + CO2");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances PbO + H2 -> Pb + H2O", () => {
-    const r = balance("PbO + H2 -> Pb + H2O");
-    expectPositiveCoefficients(r);
-  });
+    it("balances PbO + H2 -> Pb + H2O", () => {
+        const r = balance("PbO + H2 -> Pb + H2O");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances Pb + O2 -> PbO", () => {
-    const r = balance("Pb + O2 -> PbO");
-    expectPositiveCoefficients(r);
-  });
+    it("balances Pb + O2 -> PbO", () => {
+        const r = balance("Pb + O2 -> PbO");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances PbSO4 + Na2CO3 -> PbCO3 + Na2SO4", () => {
-    const r = balance("PbSO4 + Na2CO3 -> PbCO3 + Na2SO4");
-    expectPositiveCoefficients(r);
-  });
+    it("balances PbSO4 + Na2CO3 -> PbCO3 + Na2SO4", () => {
+        const r = balance("PbSO4 + Na2CO3 -> PbCO3 + Na2SO4");
+        expectPositiveCoefficients(r);
+    });
 });
 
 describe("chromium compound reactions", () => {
-  it("balances Cr + O2 -> Cr2O3", () => {
-    const r = balance("Cr + O2 -> Cr2O3");
-    expectPositiveCoefficients(r);
-  });
+    it("balances Cr + O2 -> Cr2O3", () => {
+        const r = balance("Cr + O2 -> Cr2O3");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances Cr2O3 + HCl -> CrCl3 + H2O", () => {
-    const r = balance("Cr2O3 + HCl -> CrCl3 + H2O");
-    expectPositiveCoefficients(r);
-  });
+    it("balances Cr2O3 + HCl -> CrCl3 + H2O", () => {
+        const r = balance("Cr2O3 + HCl -> CrCl3 + H2O");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances Cr2O7^2- + H+ + e- -> Cr3+ + H2O", () => {
-    const r = balance("Cr2O7^2- + H+ + e- -> Cr3+ + H2O");
-    expectPositiveCoefficients(r);
-  });
+    it("balances Cr2O7^2- + H+ + e- -> Cr3+ + H2O", () => {
+        const r = balance("Cr2O7^2- + H+ + e- -> Cr3+ + H2O");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances Cr + Cl2 -> CrCl3", () => {
-    const r = balance("Cr + Cl2 -> CrCl3");
-    expectPositiveCoefficients(r);
-  });
+    it("balances Cr + Cl2 -> CrCl3", () => {
+        const r = balance("Cr + Cl2 -> CrCl3");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances K2Cr2O7 + HCl -> KCl + CrCl3 + H2O + Cl2", () => {
-    const r = balance("K2Cr2O7 + HCl -> KCl + CrCl3 + H2O + Cl2");
-    expectPositiveCoefficients(r);
-  });
+    it("balances K2Cr2O7 + HCl -> KCl + CrCl3 + H2O + Cl2", () => {
+        const r = balance("K2Cr2O7 + HCl -> KCl + CrCl3 + H2O + Cl2");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances Cr(OH)3 + HCl -> CrCl3 + H2O", () => {
-    const r = balance("Cr(OH)3 + HCl -> CrCl3 + H2O");
-    expectPositiveCoefficients(r);
-  });
+    it("balances Cr(OH)3 + HCl -> CrCl3 + H2O", () => {
+        const r = balance("Cr(OH)3 + HCl -> CrCl3 + H2O");
+        expectPositiveCoefficients(r);
+    });
 });
 
 describe("manganese compound reactions", () => {
-  it("balances Mn + O2 -> MnO2", () => {
-    const r = balance("Mn + O2 -> MnO2");
-    expectPositiveCoefficients(r);
-  });
+    it("balances Mn + O2 -> MnO2", () => {
+        const r = balance("Mn + O2 -> MnO2");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances MnO4- + H+ + e- -> Mn2+ + H2O", () => {
-    const r = balance("MnO4- + H+ + e- -> Mn2+ + H2O");
-    expectPositiveCoefficients(r);
-  });
+    it("balances MnO4- + H+ + e- -> Mn2+ + H2O", () => {
+        const r = balance("MnO4- + H+ + e- -> Mn2+ + H2O");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances MnO2 + HCl -> MnCl2 + H2O + Cl2", () => {
-    const r = balance("MnO2 + HCl -> MnCl2 + H2O + Cl2");
-    expectPositiveCoefficients(r);
-  });
+    it("balances MnO2 + HCl -> MnCl2 + H2O + Cl2", () => {
+        const r = balance("MnO2 + HCl -> MnCl2 + H2O + Cl2");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances KMnO4 + HCl -> KCl + MnCl2 + H2O + Cl2", () => {
-    const r = balance("KMnO4 + HCl -> KCl + MnCl2 + H2O + Cl2");
-    expectPositiveCoefficients(r);
-  });
+    it("balances KMnO4 + HCl -> KCl + MnCl2 + H2O + Cl2", () => {
+        const r = balance("KMnO4 + HCl -> KCl + MnCl2 + H2O + Cl2");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances Mn + Cl2 -> MnCl2", () => {
-    const r = balance("Mn + Cl2 -> MnCl2");
-    expectPositiveCoefficients(r);
-  });
+    it("balances Mn + Cl2 -> MnCl2", () => {
+        const r = balance("Mn + Cl2 -> MnCl2");
+        expectPositiveCoefficients(r);
+    });
 
-  it("balances MnO2 + C -> Mn + CO2", () => {
-    const r = balance("MnO2 + C -> Mn + CO2");
-    expectPositiveCoefficients(r);
-  });
+    it("balances MnO2 + C -> Mn + CO2", () => {
+        const r = balance("MnO2 + C -> Mn + CO2");
+        expectPositiveCoefficients(r);
+    });
 });
