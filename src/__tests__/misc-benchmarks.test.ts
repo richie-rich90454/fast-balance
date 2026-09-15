@@ -44,7 +44,7 @@ describe("performance benchmarks", () => {
             "H2O -> H2 + O2",
             "Al + O2 -> Al2O3",
             "Zn + HCl -> ZnCl2 + H2",
-            "Mg + HCl -> MgCl2 + H2"
+            "Mg + HCl -> MgCl2 + H2",
         ];
         let start = performance.now();
         for (let i = 0; i < 100; i++) {
@@ -77,7 +77,7 @@ describe("large matrix handling", () => {
     it("balances a 5-species reaction", () => {
         let result = balance(fiveSpecies);
         expect(result.reactants.length + result.products.length).toBe(5);
-        let allCoeffs = [...result.reactants, ...result.products].map(s => s.coefficient);
+        let allCoeffs = [...result.reactants, ...result.products].map((s) => s.coefficient);
         for (let c of allCoeffs) {
             expect(c).toBeGreaterThan(0);
         }
@@ -86,7 +86,7 @@ describe("large matrix handling", () => {
     it("balances a 6-species reaction", () => {
         let result = balance(sixSpecies);
         expect(result.reactants.length + result.products.length).toBe(6);
-        let allCoeffs = [...result.reactants, ...result.products].map(s => s.coefficient);
+        let allCoeffs = [...result.reactants, ...result.products].map((s) => s.coefficient);
         for (let c of allCoeffs) {
             expect(c).toBeGreaterThan(0);
         }
@@ -95,7 +95,7 @@ describe("large matrix handling", () => {
     it("balances a 7-species reaction", () => {
         let result = balance(sevenSpecies);
         expect(result.reactants.length + result.products.length).toBe(7);
-        let allCoeffs = [...result.reactants, ...result.products].map(s => s.coefficient);
+        let allCoeffs = [...result.reactants, ...result.products].map((s) => s.coefficient);
         for (let c of allCoeffs) {
             expect(c).toBeGreaterThan(0);
         }
@@ -421,7 +421,7 @@ describe("benchmark summary", () => {
         "CH3OH + O2 -> CO2 + H2O",
         "C2H5OH + O2 -> CO2 + H2O",
         "CH3COOH + O2 -> CO2 + H2O",
-        "C6H12O6 + O2 -> CO2 + H2O"
+        "C6H12O6 + O2 -> CO2 + H2O",
     ];
 
     let ionicEquations = [
@@ -429,15 +429,10 @@ describe("benchmark summary", () => {
         "MnO4- + Fe2+ + H+ -> Mn2+ + Fe3+ + H2O",
         "Cu + Ag+ -> Cu2+ + Ag",
         "Zn + Cu2+ -> Zn2+ + Cu",
-        "Fe + Ag+ -> Fe2+ + Ag"
+        "Fe + Ag+ -> Fe2+ + Ag",
     ];
 
-    let mixedNotation = [
-        "H2 + O2 -> H2O",
-        "H2 + O2 --> H2O",
-        "H2 + O2 = H2O",
-        "H2 + O2 <=> H2O"
-    ];
+    let mixedNotation = ["H2 + O2 -> H2O", "H2 + O2 --> H2O", "H2 + O2 = H2O", "H2 + O2 <=> H2O"];
 
     it("completes 100 balance calls in under 5s", () => {
         let start = performance.now();
