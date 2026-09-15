@@ -1,32 +1,18 @@
 /**
  * Design tokens for the fast-balance documentation site.
  *
- * Palette: "pyrite" — the brass-gold of iron disulfide, FeS2 — paired with a
- * "verdigris" teal (the patina of weathered copper). No purple, no navy blue,
- * no red.
+ * Palette: a single flat verdigris teal — the colour of weathered copper
+ * (basic copper carbonate / copper acetate patina). Solid colours only:
+ * no gradients, no glass, no glow.
  *
  * Pure token layer — component rules live in custom.css.
  */
 
 :root {
   /* ---------------------------------------------------------------------
-     Pyrite gold (primary)
+     Verdigris teal
      --------------------------------------------------------------------- */
-  --fb-gold-05: #fdf8ec;
-  --fb-gold-10: #f9edcf;
-  --fb-gold-20: #f1dba0;
-  --fb-gold-30: #e6c267;
-  --fb-gold-40: #d3a336;
-  --fb-gold-50: #b8821a;
-  --fb-gold-60: #9a6700;
-  --fb-gold-70: #7a5100;
-  --fb-gold-80: #5c3d00;
-  --fb-gold-90: #3d2900;
-  --fb-gold-100: #201500;
-
-  /* ---------------------------------------------------------------------
-     Verdigris teal (complement)
-     --------------------------------------------------------------------- */
+  --fb-teal-10: #d6f5ee;
   --fb-teal-20: #a7f3e8;
   --fb-teal-30: #5eead4;
   --fb-teal-40: #2dd4bf;
@@ -37,19 +23,19 @@
   --fb-teal-90: #134e4a;
 
   /* ---------------------------------------------------------------------
-     Warm neutrals (paper / ink)
+     Cool neutrals
      --------------------------------------------------------------------- */
   --fb-neutral-0: #ffffff;
-  --fb-neutral-10: #faf6ec;
-  --fb-neutral-20: #f2ead8;
-  --fb-neutral-30: #e5d8bf;
-  --fb-neutral-40: #cbbc9d;
-  --fb-neutral-50: #a79b80;
-  --fb-neutral-60: #7f7460;
-  --fb-neutral-70: #5d5343;
-  --fb-neutral-80: #3d372b;
-  --fb-neutral-90: #26211a;
-  --fb-neutral-100: #14110c;
+  --fb-neutral-10: #f6f8f8;
+  --fb-neutral-20: #edf1f1;
+  --fb-neutral-30: #dde3e3;
+  --fb-neutral-40: #bcc5c5;
+  --fb-neutral-50: #939e9e;
+  --fb-neutral-60: #6e7979;
+  --fb-neutral-70: #4e5858;
+  --fb-neutral-80: #343b3b;
+  --fb-neutral-90: #1e2323;
+  --fb-neutral-100: #101313;
 
   /* Back-compat aliases (used by category utilities) */
   --fb-gray-0: var(--fb-neutral-0);
@@ -67,15 +53,15 @@
   /* ---------------------------------------------------------------------
      Semantic colour
      --------------------------------------------------------------------- */
-  --fb-primary: var(--fb-gold-60);
-  --fb-primary-hover: var(--fb-gold-70);
-  --fb-primary-active: var(--fb-gold-80);
-  --fb-secondary: var(--fb-teal-70);
-  --fb-accent: var(--fb-teal-60);
+  --fb-primary: var(--fb-teal-70);
+  --fb-primary-hover: var(--fb-teal-80);
+  --fb-primary-active: var(--fb-teal-90);
+  --fb-secondary: var(--fb-teal-60);
+  --fb-accent: var(--fb-teal-70);
 
   --fb-success: var(--fb-teal-70);
-  --fb-warning: var(--fb-gold-40);
-  --fb-error: #9a5b00; /* burnt amber — never red */
+  --fb-warning: #a1560a;
+  --fb-error: #9c3f0a;
   --fb-info: var(--fb-teal-60);
 
   /* Text */
@@ -90,16 +76,15 @@
   --fb-background-active: var(--fb-neutral-20);
   --fb-layer-01: var(--fb-neutral-10);
   --fb-layer-02: var(--fb-neutral-0);
-  --fb-layer-03: var(--fb-gold-05);
+  --fb-layer-03: var(--fb-teal-10);
 
   /* Borders */
   --fb-border-subtle: var(--fb-neutral-30);
   --fb-border-strong: var(--fb-neutral-40);
   --fb-border-interactive: var(--fb-primary);
 
-  /* Soft brand tint */
-  --fb-brand-soft: rgba(154, 103, 0, 0.12);
-  --fb-teal-soft: rgba(13, 148, 136, 0.12);
+  /* Flat brand tint */
+  --fb-brand-soft: rgba(15, 118, 110, 0.12);
 
   /* ---------------------------------------------------------------------
      Spacing (4px base grid)
@@ -136,21 +121,17 @@
   --fb-display: 3.5rem;
 
   /* ---------------------------------------------------------------------
-     Shape, elevation, motion
+     Shape and motion
      --------------------------------------------------------------------- */
   --fb-radius-sm: 4px;
-  --fb-radius-md: 10px;
-  --fb-radius-lg: 16px;
-  --fb-radius-xl: 24px;
+  --fb-radius-md: 8px;
+  --fb-radius-lg: 12px;
+  --fb-radius-xl: 20px;
   --fb-radius-full: 9999px;
 
-  --fb-shadow-sm: 0 1px 2px rgba(61, 41, 0, 0.06), 0 1px 3px rgba(61, 41, 0, 0.05);
-  --fb-shadow-md: 0 6px 16px rgba(61, 41, 0, 0.09), 0 2px 6px rgba(61, 41, 0, 0.05);
-  --fb-shadow-lg: 0 18px 40px rgba(61, 41, 0, 0.14), 0 6px 14px rgba(61, 41, 0, 0.08);
-
   --fb-transition-fast: 90ms cubic-bezier(0.4, 0, 0.2, 1);
-  --fb-transition-base: 180ms cubic-bezier(0.4, 0, 0.2, 1);
-  --fb-transition-slow: 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  --fb-transition-base: 160ms cubic-bezier(0.4, 0, 0.2, 1);
+  --fb-transition-slow: 260ms cubic-bezier(0.4, 0, 0.2, 1);
 
   --fb-focus-ring: 0 0 0 2px var(--fb-background), 0 0 0 4px var(--fb-primary);
 
@@ -162,7 +143,7 @@
   --chem-secondary-light: var(--fb-teal-40);
   --chem-secondary-dark: var(--fb-teal-80);
   --chem-accent: var(--fb-accent);
-  --chem-accent-light: var(--fb-teal-40);
+  --chem-accent-light: var(--fb-teal-50);
   --chem-accent-dark: var(--fb-teal-80);
   --chem-success: var(--fb-success);
   --chem-warning: var(--fb-warning);
@@ -171,13 +152,10 @@
   --chem-metals: var(--fb-neutral-50);
   --chem-nonmetals: var(--fb-secondary);
   --chem-noble-gases: var(--fb-teal-50);
-  --chem-halogens: var(--fb-gold-40);
-  --chem-alkali: var(--fb-gold-50);
-  --chem-alkaline: var(--fb-teal-60);
+  --chem-halogens: var(--fb-teal-40);
+  --chem-alkali: var(--fb-teal-60);
+  --chem-alkaline: var(--fb-teal-70);
   --chem-transition: var(--fb-primary);
-  --chem-shadow-sm: var(--fb-shadow-sm);
-  --chem-shadow-md: var(--fb-shadow-md);
-  --chem-shadow-lg: var(--fb-shadow-lg);
   --chem-transition-fast: var(--fb-transition-fast);
   --chem-transition-base: var(--fb-transition-base);
   --chem-transition-slow: var(--fb-transition-slow);
@@ -185,53 +163,46 @@
 }
 
 .dark {
-  --fb-primary: #f2c14e;
-  --fb-primary-hover: #f7d37c;
-  --fb-primary-active: #fbe0a3;
-  --fb-secondary: var(--fb-teal-40);
-  --fb-accent: var(--fb-teal-40);
+  --fb-primary: #2dd4bf;
+  --fb-primary-hover: #5eead4;
+  --fb-primary-active: #99f6e4;
+  --fb-secondary: #14b8a6;
+  --fb-accent: #2dd4bf;
 
-  --fb-success: var(--fb-teal-40);
-  --fb-warning: var(--fb-gold-30);
-  --fb-error: #e9a23b; /* burnt amber — never red */
-  --fb-info: var(--fb-teal-40);
+  --fb-success: #2dd4bf;
+  --fb-warning: #e0a45c;
+  --fb-error: #e2935a;
+  --fb-info: #2dd4bf;
 
-  --fb-text-primary: #f7f1e3;
-  --fb-text-secondary: #ccbfa4;
-  --fb-text-helper: #9c917a;
-  --fb-text-inverse: #241a00;
+  --fb-text-primary: #edf2f2;
+  --fb-text-secondary: #bcc5c5;
+  --fb-text-helper: #8e9999;
+  --fb-text-inverse: #04201c;
 
-  --fb-background: #13110c;
-  --fb-background-hover: #1d1913;
-  --fb-background-active: #26211a;
-  --fb-layer-01: #1c1811;
-  --fb-layer-02: #241f16;
-  --fb-layer-03: #2b2416;
+  --fb-background: #101313;
+  --fb-background-hover: #181d1d;
+  --fb-background-active: #202626;
+  --fb-layer-01: #181d1d;
+  --fb-layer-02: #1e2424;
+  --fb-layer-03: #10201e;
 
-  --fb-border-subtle: #3a3322;
-  --fb-border-strong: #564a32;
+  --fb-border-subtle: #2a3232;
+  --fb-border-strong: #3e4a4a;
   --fb-border-interactive: var(--fb-primary);
 
-  --fb-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --fb-shadow-md: 0 8px 20px rgba(0, 0, 0, 0.45);
-  --fb-shadow-lg: 0 20px 44px rgba(0, 0, 0, 0.55);
+  --fb-brand-soft: rgba(45, 212, 191, 0.16);
 
-  --fb-focus-ring: 0 0 0 2px var(--fb-background), 0 0 0 4px var(--fb-primary);
-
-  --fb-brand-soft: rgba(242, 193, 78, 0.16);
-  --fb-teal-soft: rgba(45, 212, 191, 0.16);
-
-  --fb-gray-0: #13110c;
-  --fb-gray-10: #1d1913;
-  --fb-gray-20: #26211a;
-  --fb-gray-30: #3a3322;
-  --fb-gray-40: #564a32;
-  --fb-gray-50: #6f6248;
-  --fb-gray-60: #93866a;
-  --fb-gray-70: #b6a988;
-  --fb-gray-80: #ccbfa4;
-  --fb-gray-90: #e6dcc6;
-  --fb-gray-100: #f7f1e3;
+  --fb-gray-0: #101313;
+  --fb-gray-10: #181d1d;
+  --fb-gray-20: #202626;
+  --fb-gray-30: #2a3232;
+  --fb-gray-40: #3e4a4a;
+  --fb-gray-50: #576363;
+  --fb-gray-60: #748080;
+  --fb-gray-70: #99a4a4;
+  --fb-gray-80: #bcc5c5;
+  --fb-gray-90: #dbe2e2;
+  --fb-gray-100: #edf2f2;
 
   --chem-primary: var(--fb-primary);
   --chem-primary-light: var(--fb-primary-hover);
