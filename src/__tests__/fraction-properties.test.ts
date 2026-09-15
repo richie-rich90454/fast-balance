@@ -2,263 +2,283 @@ import { describe, it, expect } from "vitest";
 import { Fraction } from "../index";
 
 describe("additive identity", () => {
-  it("a + 0 = a for positive fraction", () => {
-    const a = new Fraction(3, 7);
-    expect(a.add(Fraction.zero()).equals(a)).toBe(true);
-  });
-  it("a + 0 = a for negative fraction", () => {
-    const a = new Fraction(-5, 11);
-    expect(a.add(Fraction.zero()).equals(a)).toBe(true);
-  });
-  it("0 + a = a for positive fraction", () => {
-    const a = new Fraction(2, 9);
-    expect(Fraction.zero().add(a).equals(a)).toBe(true);
-  });
-  it("a - 0 = a", () => {
-    const a = new Fraction(7, 13);
-    expect(a.sub(Fraction.zero()).equals(a)).toBe(true);
-  });
-  it("0 - a = -a", () => {
-    const a = new Fraction(4, 15);
-    expect(Fraction.zero().sub(a).equals(a.neg())).toBe(true);
-  });
+    it("a + 0 = a for positive fraction", () => {
+        const a = new Fraction(3, 7);
+        expect(a.add(Fraction.zero()).equals(a)).toBe(true);
+    });
+    it("a + 0 = a for negative fraction", () => {
+        const a = new Fraction(-5, 11);
+        expect(a.add(Fraction.zero()).equals(a)).toBe(true);
+    });
+    it("0 + a = a for positive fraction", () => {
+        const a = new Fraction(2, 9);
+        expect(Fraction.zero().add(a).equals(a)).toBe(true);
+    });
+    it("a - 0 = a", () => {
+        const a = new Fraction(7, 13);
+        expect(a.sub(Fraction.zero()).equals(a)).toBe(true);
+    });
+    it("0 - a = -a", () => {
+        const a = new Fraction(4, 15);
+        expect(Fraction.zero().sub(a).equals(a.neg())).toBe(true);
+    });
 });
 
 describe("additive annihilation", () => {
-  it("a - a = 0", () => {
-    const a = new Fraction(5, 8);
-    expect(a.sub(a).isZero()).toBe(true);
-  });
-  it("a + (-a) = 0", () => {
-    const a = new Fraction(3, 7);
-    expect(a.add(a.neg()).isZero()).toBe(true);
-  });
-  it("0 - 0 = 0", () => {
-    expect(Fraction.zero().sub(Fraction.zero()).isZero()).toBe(true);
-  });
+    it("a - a = 0", () => {
+        const a = new Fraction(5, 8);
+        expect(a.sub(a).isZero()).toBe(true);
+    });
+    it("a + (-a) = 0", () => {
+        const a = new Fraction(3, 7);
+        expect(a.add(a.neg()).isZero()).toBe(true);
+    });
+    it("0 - 0 = 0", () => {
+        expect(Fraction.zero().sub(Fraction.zero()).isZero()).toBe(true);
+    });
 });
 
 describe("multiplicative identity", () => {
-  it("a * 1 = a for positive fraction", () => {
-    const a = new Fraction(3, 7);
-    expect(a.mul(Fraction.one()).equals(a)).toBe(true);
-  });
-  it("1 * a = a for negative fraction", () => {
-    const a = new Fraction(-2, 5);
-    expect(Fraction.one().mul(a).equals(a)).toBe(true);
-  });
-  it("a / 1 = a", () => {
-    const a = new Fraction(7, 11);
-    expect(a.div(Fraction.one()).equals(a)).toBe(true);
-  });
-  it("a * 1 = a for zero fraction", () => {
-    expect(Fraction.zero().mul(Fraction.one()).isZero()).toBe(true);
-  });
+    it("a * 1 = a for positive fraction", () => {
+        const a = new Fraction(3, 7);
+        expect(a.mul(Fraction.one()).equals(a)).toBe(true);
+    });
+    it("1 * a = a for negative fraction", () => {
+        const a = new Fraction(-2, 5);
+        expect(Fraction.one().mul(a).equals(a)).toBe(true);
+    });
+    it("a / 1 = a", () => {
+        const a = new Fraction(7, 11);
+        expect(a.div(Fraction.one()).equals(a)).toBe(true);
+    });
+    it("a * 1 = a for zero fraction", () => {
+        expect(Fraction.zero().mul(Fraction.one()).isZero()).toBe(true);
+    });
 });
 
 describe("multiplicative annihilation", () => {
-  it("a * 0 = 0 for positive a", () => {
-    const a = new Fraction(5, 9);
-    expect(a.mul(Fraction.zero()).isZero()).toBe(true);
-  });
-  it("0 * a = 0 for negative a", () => {
-    const a = new Fraction(-3, 4);
-    expect(Fraction.zero().mul(a).isZero()).toBe(true);
-  });
-  it("0 * 0 = 0", () => {
-    expect(Fraction.zero().mul(Fraction.zero()).isZero()).toBe(true);
-  });
+    it("a * 0 = 0 for positive a", () => {
+        const a = new Fraction(5, 9);
+        expect(a.mul(Fraction.zero()).isZero()).toBe(true);
+    });
+    it("0 * a = 0 for negative a", () => {
+        const a = new Fraction(-3, 4);
+        expect(Fraction.zero().mul(a).isZero()).toBe(true);
+    });
+    it("0 * 0 = 0", () => {
+        expect(Fraction.zero().mul(Fraction.zero()).isZero()).toBe(true);
+    });
 });
 
 describe("commutativity", () => {
-  it("a + b = b + a", () => {
-    const a = new Fraction(2, 5);
-    const b = new Fraction(3, 7);
-    expect(a.add(b).equals(b.add(a))).toBe(true);
-  });
-  it("a * b = b * a", () => {
-    const a = new Fraction(2, 5);
-    const b = new Fraction(3, 7);
-    expect(a.mul(b).equals(b.mul(a))).toBe(true);
-  });
-  it("commutativity with negative fractions", () => {
-    const a = new Fraction(-1, 3);
-    const b = new Fraction(2, 7);
-    expect(a.add(b).equals(b.add(a))).toBe(true);
-    expect(a.mul(b).equals(b.mul(a))).toBe(true);
-  });
-  it("commutativity with zero", () => {
-    const a = new Fraction(4, 9);
-    expect(a.add(Fraction.zero()).equals(Fraction.zero().add(a))).toBe(true);
-    expect(a.mul(Fraction.zero()).equals(Fraction.zero().mul(a))).toBe(true);
-  });
+    it("a + b = b + a", () => {
+        const a = new Fraction(2, 5);
+        const b = new Fraction(3, 7);
+        expect(a.add(b).equals(b.add(a))).toBe(true);
+    });
+    it("a * b = b * a", () => {
+        const a = new Fraction(2, 5);
+        const b = new Fraction(3, 7);
+        expect(a.mul(b).equals(b.mul(a))).toBe(true);
+    });
+    it("commutativity with negative fractions", () => {
+        const a = new Fraction(-1, 3);
+        const b = new Fraction(2, 7);
+        expect(a.add(b).equals(b.add(a))).toBe(true);
+        expect(a.mul(b).equals(b.mul(a))).toBe(true);
+    });
+    it("commutativity with zero", () => {
+        const a = new Fraction(4, 9);
+        expect(a.add(Fraction.zero()).equals(Fraction.zero().add(a))).toBe(true);
+        expect(a.mul(Fraction.zero()).equals(Fraction.zero().mul(a))).toBe(true);
+    });
 });
 
 describe("associativity", () => {
-  it("(a + b) + c = a + (b + c)", () => {
-    const a = new Fraction(1, 3);
-    const b = new Fraction(1, 5);
-    const c = new Fraction(1, 7);
-    expect(a.add(b).add(c).equals(a.add(b.add(c)))).toBe(true);
-  });
-  it("(a * b) * c = a * (b * c)", () => {
-    const a = new Fraction(1, 2);
-    const b = new Fraction(2, 3);
-    const c = new Fraction(3, 4);
-    expect(a.mul(b).mul(c).equals(a.mul(b.mul(c)))).toBe(true);
-  });
-  it("associativity with mixed signs", () => {
-    const a = new Fraction(-1, 3);
-    const b = new Fraction(2, 5);
-    const c = new Fraction(-3, 7);
-    expect(a.add(b).add(c).equals(a.add(b.add(c)))).toBe(true);
-    expect(a.mul(b).mul(c).equals(a.mul(b.mul(c)))).toBe(true);
-  });
+    it("(a + b) + c = a + (b + c)", () => {
+        const a = new Fraction(1, 3);
+        const b = new Fraction(1, 5);
+        const c = new Fraction(1, 7);
+        expect(
+            a
+                .add(b)
+                .add(c)
+                .equals(a.add(b.add(c))),
+        ).toBe(true);
+    });
+    it("(a * b) * c = a * (b * c)", () => {
+        const a = new Fraction(1, 2);
+        const b = new Fraction(2, 3);
+        const c = new Fraction(3, 4);
+        expect(
+            a
+                .mul(b)
+                .mul(c)
+                .equals(a.mul(b.mul(c))),
+        ).toBe(true);
+    });
+    it("associativity with mixed signs", () => {
+        const a = new Fraction(-1, 3);
+        const b = new Fraction(2, 5);
+        const c = new Fraction(-3, 7);
+        expect(
+            a
+                .add(b)
+                .add(c)
+                .equals(a.add(b.add(c))),
+        ).toBe(true);
+        expect(
+            a
+                .mul(b)
+                .mul(c)
+                .equals(a.mul(b.mul(c))),
+        ).toBe(true);
+    });
 });
 
 describe("distributivity", () => {
-  it("a * (b + c) = a*b + a*c", () => {
-    const a = new Fraction(2, 3);
-    const b = new Fraction(1, 4);
-    const c = new Fraction(1, 5);
-    const left = a.mul(b.add(c));
-    const right = a.mul(b).add(a.mul(c));
-    expect(left.equals(right)).toBe(true);
-  });
-  it("a * (b - c) = a*b - a*c", () => {
-    const a = new Fraction(3, 5);
-    const b = new Fraction(2, 7);
-    const c = new Fraction(1, 11);
-    const left = a.mul(b.sub(c));
-    const right = a.mul(b).sub(a.mul(c));
-    expect(left.equals(right)).toBe(true);
-  });
-  it("distributivity with negative multiplier", () => {
-    const a = new Fraction(-1, 2);
-    const b = new Fraction(3, 4);
-    const c = new Fraction(1, 6);
-    const left = a.mul(b.add(c));
-    const right = a.mul(b).add(a.mul(c));
-    expect(left.equals(right)).toBe(true);
-  });
+    it("a * (b + c) = a*b + a*c", () => {
+        const a = new Fraction(2, 3);
+        const b = new Fraction(1, 4);
+        const c = new Fraction(1, 5);
+        const left = a.mul(b.add(c));
+        const right = a.mul(b).add(a.mul(c));
+        expect(left.equals(right)).toBe(true);
+    });
+    it("a * (b - c) = a*b - a*c", () => {
+        const a = new Fraction(3, 5);
+        const b = new Fraction(2, 7);
+        const c = new Fraction(1, 11);
+        const left = a.mul(b.sub(c));
+        const right = a.mul(b).sub(a.mul(c));
+        expect(left.equals(right)).toBe(true);
+    });
+    it("distributivity with negative multiplier", () => {
+        const a = new Fraction(-1, 2);
+        const b = new Fraction(3, 4);
+        const c = new Fraction(1, 6);
+        const left = a.mul(b.add(c));
+        const right = a.mul(b).add(a.mul(c));
+        expect(left.equals(right)).toBe(true);
+    });
 });
 
 describe("self-operations", () => {
-  it("a + a = 2a", () => {
-    const a = new Fraction(3, 7);
-    expect(a.add(a).equals(new Fraction(6, 7))).toBe(true);
-  });
-  it("a * a = a^2", () => {
-    const a = new Fraction(2, 3);
-    expect(a.mul(a).equals(new Fraction(4, 9))).toBe(true);
-  });
-  it("a / a = 1 for non-zero a", () => {
-    const a = new Fraction(5, 8);
-    expect(a.div(a).equals(Fraction.one())).toBe(true);
-  });
-  it("a - a = 0", () => {
-    const a = new Fraction(11, 13);
-    expect(a.sub(a).isZero()).toBe(true);
-  });
+    it("a + a = 2a", () => {
+        const a = new Fraction(3, 7);
+        expect(a.add(a).equals(new Fraction(6, 7))).toBe(true);
+    });
+    it("a * a = a^2", () => {
+        const a = new Fraction(2, 3);
+        expect(a.mul(a).equals(new Fraction(4, 9))).toBe(true);
+    });
+    it("a / a = 1 for non-zero a", () => {
+        const a = new Fraction(5, 8);
+        expect(a.div(a).equals(Fraction.one())).toBe(true);
+    });
+    it("a - a = 0", () => {
+        const a = new Fraction(11, 13);
+        expect(a.sub(a).isZero()).toBe(true);
+    });
 });
 
 describe("operation chaining", () => {
-  it("a.add(b).sub(c).mul(d)", () => {
-    const a = new Fraction(1, 2);
-    const b = new Fraction(1, 3);
-    const c = new Fraction(1, 6);
-    const d = new Fraction(3, 4);
-    // (1/2 + 1/3 - 1/6) * 3/4 = (2/3) * 3/4 = 1/2
-    expect(a.add(b).sub(c).mul(d).equals(new Fraction(1, 2))).toBe(true);
-  });
-  it("a.mul(b).add(c.mul(d))", () => {
-    const a = new Fraction(1, 2);
-    const b = new Fraction(2, 3);
-    const c = new Fraction(1, 4);
-    const d = new Fraction(4, 5);
-    // 1/3 + 1/5 = 8/15
-    expect(a.mul(b).add(c.mul(d)).equals(new Fraction(8, 15))).toBe(true);
-  });
-  it("chained negation returns original", () => {
-    const a = new Fraction(3, 7);
-    expect(a.neg().neg().equals(a)).toBe(true);
-  });
+    it("a.add(b).sub(c).mul(d)", () => {
+        const a = new Fraction(1, 2);
+        const b = new Fraction(1, 3);
+        const c = new Fraction(1, 6);
+        const d = new Fraction(3, 4);
+        // (1/2 + 1/3 - 1/6) * 3/4 = (2/3) * 3/4 = 1/2
+        expect(a.add(b).sub(c).mul(d).equals(new Fraction(1, 2))).toBe(true);
+    });
+    it("a.mul(b).add(c.mul(d))", () => {
+        const a = new Fraction(1, 2);
+        const b = new Fraction(2, 3);
+        const c = new Fraction(1, 4);
+        const d = new Fraction(4, 5);
+        // 1/3 + 1/5 = 8/15
+        expect(a.mul(b).add(c.mul(d)).equals(new Fraction(8, 15))).toBe(true);
+    });
+    it("chained negation returns original", () => {
+        const a = new Fraction(3, 7);
+        expect(a.neg().neg().equals(a)).toBe(true);
+    });
 });
 
 describe("double negation", () => {
-  it("-(-a) = a for positive", () => {
-    const a = new Fraction(3, 7);
-    expect(a.neg().neg().equals(a)).toBe(true);
-  });
-  it("-(-a) = a for negative", () => {
-    const a = new Fraction(-5, 9);
-    expect(a.neg().neg().equals(a)).toBe(true);
-  });
-  it("-(-a) = a for zero", () => {
-    const a = Fraction.zero();
-    expect(a.neg().neg().equals(a)).toBe(true);
-  });
+    it("-(-a) = a for positive", () => {
+        const a = new Fraction(3, 7);
+        expect(a.neg().neg().equals(a)).toBe(true);
+    });
+    it("-(-a) = a for negative", () => {
+        const a = new Fraction(-5, 9);
+        expect(a.neg().neg().equals(a)).toBe(true);
+    });
+    it("-(-a) = a for zero", () => {
+        const a = Fraction.zero();
+        expect(a.neg().neg().equals(a)).toBe(true);
+    });
 });
 
 describe("multiplicative inverse", () => {
-  it("1/a for a > 1", () => {
-    const a = new Fraction(3, 1);
-    const inv = Fraction.one().div(a);
-    expect(inv.equals(new Fraction(1, 3))).toBe(true);
-  });
-  it("1/a for proper fraction", () => {
-    const a = new Fraction(2, 5);
-    const inv = Fraction.one().div(a);
-    expect(inv.equals(new Fraction(5, 2))).toBe(true);
-  });
-  it("a * (1/a) = 1 for non-zero a", () => {
-    const a = new Fraction(3, 7);
-    expect(a.mul(Fraction.one().div(a)).equals(Fraction.one())).toBe(true);
-  });
-  it("inverse of 1 is 1", () => {
-    expect(Fraction.one().div(Fraction.one()).equals(Fraction.one())).toBe(true);
-  });
-  it("inverse of negative fraction is negative", () => {
-    const a = new Fraction(-2, 5);
-    const inv = Fraction.one().div(a);
-    expect(inv.equals(new Fraction(-5, 2))).toBe(true);
-  });
+    it("1/a for a > 1", () => {
+        const a = new Fraction(3, 1);
+        const inv = Fraction.one().div(a);
+        expect(inv.equals(new Fraction(1, 3))).toBe(true);
+    });
+    it("1/a for proper fraction", () => {
+        const a = new Fraction(2, 5);
+        const inv = Fraction.one().div(a);
+        expect(inv.equals(new Fraction(5, 2))).toBe(true);
+    });
+    it("a * (1/a) = 1 for non-zero a", () => {
+        const a = new Fraction(3, 7);
+        expect(a.mul(Fraction.one().div(a)).equals(Fraction.one())).toBe(true);
+    });
+    it("inverse of 1 is 1", () => {
+        expect(Fraction.one().div(Fraction.one()).equals(Fraction.one())).toBe(true);
+    });
+    it("inverse of negative fraction is negative", () => {
+        const a = new Fraction(-2, 5);
+        const inv = Fraction.one().div(a);
+        expect(inv.equals(new Fraction(-5, 2))).toBe(true);
+    });
 });
 
 describe("clone and equals consistency", () => {
-  it("clone preserves value", () => {
-    const a = new Fraction(22, 7);
-    const b = a.clone();
-    expect(b.equals(a)).toBe(true);
-  });
-  it("clone is independent", () => {
-    const a = new Fraction(3, 5);
-    const b = a.clone();
-    const c = b.add(Fraction.one());
-    expect(b.equals(a)).toBe(true);
-    expect(c.equals(a)).toBe(false);
-  });
-  it("equals is reflexive", () => {
-    const a = new Fraction(7, 11);
-    expect(a.equals(a)).toBe(true);
-  });
-  it("equals is symmetric", () => {
-    const a = new Fraction(3, 8);
-    const b = new Fraction(3, 8);
-    expect(a.equals(b)).toBe(true);
-    expect(b.equals(a)).toBe(true);
-  });
-  it("equals works for equivalent fractions", () => {
-    const a = new Fraction(1, 2);
-    const b = new Fraction(2, 4);
-    const c = new Fraction(3, 6);
-    expect(a.equals(b)).toBe(true);
-    expect(b.equals(c)).toBe(true);
-    expect(a.equals(c)).toBe(true);
-  });
-  it("negated fraction is not equal to original (unless zero)", () => {
-    const a = new Fraction(3, 7);
-    expect(a.equals(a.neg())).toBe(false);
-    expect(Fraction.zero().equals(Fraction.zero().neg())).toBe(true);
-  });
+    it("clone preserves value", () => {
+        const a = new Fraction(22, 7);
+        const b = a.clone();
+        expect(b.equals(a)).toBe(true);
+    });
+    it("clone is independent", () => {
+        const a = new Fraction(3, 5);
+        const b = a.clone();
+        const c = b.add(Fraction.one());
+        expect(b.equals(a)).toBe(true);
+        expect(c.equals(a)).toBe(false);
+    });
+    it("equals is reflexive", () => {
+        const a = new Fraction(7, 11);
+        expect(a.equals(a)).toBe(true);
+    });
+    it("equals is symmetric", () => {
+        const a = new Fraction(3, 8);
+        const b = new Fraction(3, 8);
+        expect(a.equals(b)).toBe(true);
+        expect(b.equals(a)).toBe(true);
+    });
+    it("equals works for equivalent fractions", () => {
+        const a = new Fraction(1, 2);
+        const b = new Fraction(2, 4);
+        const c = new Fraction(3, 6);
+        expect(a.equals(b)).toBe(true);
+        expect(b.equals(c)).toBe(true);
+        expect(a.equals(c)).toBe(true);
+    });
+    it("negated fraction is not equal to original (unless zero)", () => {
+        const a = new Fraction(3, 7);
+        expect(a.equals(a.neg())).toBe(false);
+        expect(Fraction.zero().equals(Fraction.zero().neg())).toBe(true);
+    });
 });
