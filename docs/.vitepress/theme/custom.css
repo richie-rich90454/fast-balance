@@ -1055,3 +1055,54 @@ code.chemical-formula {
   --chem-secondary: var(--fb-secondary);
   --chem-accent: var(--fb-primary);
 }
+
+/* ==========================================================================
+   Theme-adaptive assets (light / dark)
+   ========================================================================== */
+
+/* Nav logo swaps with the colour scheme */
+.VPNavBarTitle .logo,
+.VPNavBar .logo {
+  content: url('/logo-light.svg');
+}
+
+.dark .VPNavBarTitle .logo,
+.dark .VPNavBar .logo {
+  content: url('/logo-dark.svg');
+}
+
+/* Hero illustration swaps with the colour scheme */
+.VPHero .image img[src*='hero-chemistry-light'] {
+  content: url('/hero-chemistry-light.svg');
+}
+
+.dark .VPHero .image img[src*='hero-chemistry-light'] {
+  content: url('/hero-chemistry-dark.svg');
+}
+
+/* Feature icons are masked so they inherit the theme colour and stay crisp
+   at any size in both colour schemes. */
+.fb-feature-icon {
+  display: block;
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--fb-spacing-04);
+  background-color: var(--fb-primary);
+  -webkit-mask: var(--fb-icon) center / contain no-repeat;
+  mask: var(--fb-icon) center / contain no-repeat;
+  transition: background-color var(--fb-transition-base),
+    transform var(--fb-transition-base);
+}
+
+.feature-card:hover .fb-feature-icon {
+  background-color: var(--fb-secondary);
+  transform: translateY(-2px);
+}
+
+/* Masked icons used inside the demo component */
+.fb-icon--mask {
+  background-color: var(--fb-text-secondary);
+  -webkit-mask: var(--fb-icon) center / contain no-repeat;
+  mask: var(--fb-icon) center / contain no-repeat;
+}
+
