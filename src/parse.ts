@@ -77,7 +77,15 @@ export function normalizeText(input: string): string {
             inSuper = false;
             continue;
         }
-        if (ch === "⁻" || ch === "−" || ch === "–" || ch === "‐" || ch === "‑" || ch === "—" || ch === "−") {
+        if (
+            ch === "⁻" ||
+            ch === "−" ||
+            ch === "–" ||
+            ch === "‐" ||
+            ch === "‑" ||
+            ch === "—" ||
+            ch === "−"
+        ) {
             out += "-";
             inSuper = false;
             continue;
@@ -98,9 +106,25 @@ export function normalizeText(input: string): string {
 /* ------------------------------------------------------------------ */
 
 const STATE_SYMBOLS = [
-    "s", "l", "g", "aq", "v", "cr", "am",
-    "solid", "liquid", "gas", "aqueous", "solution", "sln",
-    "ppt", "precipitate", "mono", "monomer", "vapour", "vapor",
+    "s",
+    "l",
+    "g",
+    "aq",
+    "v",
+    "cr",
+    "am",
+    "solid",
+    "liquid",
+    "gas",
+    "aqueous",
+    "solution",
+    "sln",
+    "ppt",
+    "precipitate",
+    "mono",
+    "monomer",
+    "vapour",
+    "vapor",
 ] as const;
 
 const STATE_REGEX = new RegExp("\\((" + STATE_SYMBOLS.join("|") + ")\\)", "gi");
@@ -255,7 +279,9 @@ function parseCore(input: string, validate: boolean): ParsedUnit {
             }
         }
         if (i >= s.length || !/[A-Z]/.test(s[i]!)) {
-            throw parseError("Expected element at position " + i + ", got '" + (s[i] ?? "end") + "'");
+            throw parseError(
+                "Expected element at position " + i + ", got '" + (s[i] ?? "end") + "'",
+            );
         }
         const start = i;
         i++;
@@ -268,7 +294,11 @@ function parseCore(input: string, validate: boolean): ParsedUnit {
             const chargeToken = readChargeAt(s, i);
             let charge = 0;
             if (chargeToken !== null) {
-                charge = chargeToken.hasCaret ? chargeToken.charge : chargeToken.charge > 0 ? 1 : -1;
+                charge = chargeToken.hasCaret
+                    ? chargeToken.charge
+                    : chargeToken.charge > 0
+                      ? 1
+                      : -1;
                 i += chargeToken.len;
             }
             const expanded = scaleElements(GROUP_EXPANSIONS[symbol]!, subscript);
@@ -406,7 +436,7 @@ function parseCore(input: string, validate: boolean): ParsedUnit {
 
     const unit = parseSequence();
     if (i < s.length) {
-        throw parseError('Unexpected characters at position ' + i + ': "' + s.slice(i) + '"');
+        throw parseError("Unexpected characters at position " + i + ': "' + s.slice(i) + '"');
     }
     return unit;
 }
@@ -514,7 +544,10 @@ export function parseFormula(formula: string): ParsedUnit {
     if (/^e-?$/.test(raw)) return { elements: {}, charge: -1 };
     if (/^e\+$/.test(raw)) return { elements: {}, charge: 1 };
 
-    const parts = raw.split(/[·*]/u).map((p) => p.trim()).filter(Boolean);
+    const parts = raw
+        .split(/[·*]/u)
+        .map((p) => p.trim())
+        .filter(Boolean);
     const totalElements: ElementMap = {};
     let totalCharge = 0;
     for (const part of parts) {
@@ -549,10 +582,10 @@ export function normalizeArrows(input: string): string {
     // reaction conditions written in brackets immediately after the arrow
     // (`->[cat]`, `[cat]->`). A whitespace-separated bracketed species is kept.
     s = s.replace(/->\[([^\]]*)\]/g, (whole: string, inner: string) =>
-        /[()[\]]/.test(inner) ? whole : "->"
+        /[()[\]]/.test(inner) ? whole : "->",
     );
     s = s.replace(/\[([^\]]*)\]->/g, (whole: string, inner: string) =>
-        /[()[\]]/.test(inner) ? whole : "->"
+        /[()[\]]/.test(inner) ? whole : "->",
     );
     // a dash-arrow carrying a short condition token, e.g. `-Δ->`, `-[cat]->`.
     // Parentheses/brackets/whitespace are excluded so charge suffixes such as
@@ -581,7 +614,10 @@ function parseSpecies(term: string, validate: boolean): Species {
 }
 
 function parseSpeciesFull(normalized: string, validate: boolean): Species {
-    const parts = normalized.split(/[·*]/u).map((p) => p.trim()).filter(Boolean);
+    const parts = normalized
+        .split(/[·*]/u)
+        .map((p) => p.trim())
+        .filter(Boolean);
     const elements: ElementMap = {};
     const isotopes: Record<string, number> = {};
     const variables: string[] = [];
@@ -619,7 +655,7 @@ function parseSpeciesUnit(
     input: string,
     validate: boolean,
     _outerIsotopes: Record<string, number>,
-    variables: string[]
+    variables: string[],
 ): UnitResult {
     // Reuse parseCore but also recover isotope/variable information by
     // re-scanning; parseCore handles validation.
@@ -634,7 +670,14 @@ function parseSpeciesUnit(
             else if (m[4] === "" && m[5] !== "") {
                 const ct = parseChargeSuffix(m[5] ?? "");
                 const z = atomicNumberOf(symbol);
-                if (ct !== null && !ct.hasCaret && ct.charge < 0 && z !== undefined && ct.magnitude >= z && ct.magnitude <= 3 * z) {
+                if (
+                    ct !== null &&
+                    !ct.hasCaret &&
+                    ct.charge < 0 &&
+                    z !== undefined &&
+                    ct.magnitude >= z &&
+                    ct.magnitude <= 3 * z
+                ) {
                     isotopes[symbol] = ct.magnitude;
                 }
             }
@@ -673,4 +716,3 @@ export function splitEquation(input: string): Equation {
     if (products.length === 0) throw parseError("Right side of equation is empty");
     return { reactants, products };
 }
-
