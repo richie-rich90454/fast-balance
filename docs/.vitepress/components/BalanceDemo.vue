@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
-import { balance } from 'fast-balance';
-import type { BalanceResult } from 'fast-balance';
+import { ref, computed, watch } from "vue";
+import { balance } from "fast-balance";
+import type { BalanceResult } from "fast-balance";
 
-const inputEquation = ref('H2 + O2 -> H2O');
-const selectedFormat = ref<'text' | 'html' | 'latex'>('text');
+const inputEquation = ref("H2 + O2 -> H2O");
+const selectedFormat = ref<"text" | "html" | "latex">("text");
 const showOne = ref(true);
 const result = ref<BalanceResult | null>(null);
 const error = ref<string | null>(null);
@@ -28,12 +28,12 @@ const debouncedBalance = () => {
         try {
             result.value = balance(raw, {
                 format: selectedFormat.value,
-                showOne: showOne.value
+                showOne: showOne.value,
             });
             error.value = null;
         } catch (e) {
             result.value = null;
-            error.value = e instanceof Error ? e.message : 'Failed to balance equation';
+            error.value = e instanceof Error ? e.message : "Failed to balance equation";
         }
     }, 150);
 };
@@ -41,13 +41,13 @@ const debouncedBalance = () => {
 watch([inputEquation, selectedFormat, showOne], debouncedBalance);
 
 const examples = [
-    { label: 'Synthesis', equation: 'H2 + O2 -> H2O' },
-    { label: 'Combustion + N2', equation: 'C3H8 + O2 + N2 -> CO2 + H2O + N2' },
-    { label: 'Redox', equation: 'MnO4- + H+ + e- -> Mn2+ + H2O' },
-    { label: 'Complex ion', equation: '[Cu(NH3)4]2+ + Cl- -> [Cu(NH3)4]Cl2' },
-    { label: 'Underdetermined', equation: 'C + O2 -> CO + CO2' },
-    { label: 'Unicode', equation: 'H₂ + O₂ -> H₂O' },
-    { label: 'Complex', equation: 'Ca3(PO4)2 + SiO2 + C -> CaSiO3 + P4 + CO' }
+    { label: "Synthesis", equation: "H2 + O2 -> H2O" },
+    { label: "Combustion + N2", equation: "C3H8 + O2 + N2 -> CO2 + H2O + N2" },
+    { label: "Redox", equation: "MnO4- + H+ + e- -> Mn2+ + H2O" },
+    { label: "Complex ion", equation: "[Cu(NH3)4]2+ + Cl- -> [Cu(NH3)4]Cl2" },
+    { label: "Underdetermined", equation: "C + O2 -> CO + CO2" },
+    { label: "Unicode", equation: "H₂ + O₂ -> H₂O" },
+    { label: "Complex", equation: "Ca3(PO4)2 + SiO2 + C -> CaSiO3 + P4 + CO" },
 ];
 
 const loadExample = (equation: string) => {
@@ -56,12 +56,12 @@ const loadExample = (equation: string) => {
 
 const arrowMarkup = computed(() => {
     switch (selectedFormat.value) {
-        case 'html':
-            return '&rarr;';
-        case 'latex':
-            return '\\rightarrow';
+        case "html":
+            return "&rarr;";
+        case "latex":
+            return "\\rightarrow";
         default:
-            return '->';
+            return "->";
     }
 });
 
@@ -93,7 +93,12 @@ debouncedBalance();
 
         <div class="input-section">
             <div class="label-row">
-                <span class="fb-icon demo-icon fb-icon--mask" style="--fb-icon: url('/icons/flask.svg')" role="img" aria-label="Equation"></span>
+                <span
+                    class="fb-icon demo-icon fb-icon--mask"
+                    style="--fb-icon: url(&quot;/icons/flask.svg&quot;)"
+                    role="img"
+                    aria-label="Equation"
+                ></span>
                 <label for="equation-input" class="fb-form-label">Chemical equation</label>
             </div>
 
@@ -130,7 +135,12 @@ debouncedBalance();
         <div aria-live="polite" aria-atomic="true">
             <div v-if="result" class="result-section fb-card">
                 <div class="result-header">
-                    <span class="fb-icon demo-icon fb-icon--mask" style="--fb-icon: url('/icons/reaction-arrow.svg')" role="img" aria-label="Balanced equation"></span>
+                    <span
+                        class="fb-icon demo-icon fb-icon--mask"
+                        style="--fb-icon: url(&quot;/icons/reaction-arrow.svg&quot;)"
+                        role="img"
+                        aria-label="Balanced equation"
+                    ></span>
                     <span class="fb-form-label result-title">Balanced equation</span>
                 </div>
 
@@ -147,13 +157,16 @@ debouncedBalance();
                     Multiple independent balances exist — showing the minimal one.
                 </p>
                 <p v-if="result.warnings && result.warnings.length" class="fb-helper-text">
-                    {{ result.warnings.join(' ') }}
+                    {{ result.warnings.join(" ") }}
                 </p>
 
                 <div class="breakdown">
                     <div class="breakdown-side">
                         <span class="breakdown-title">Reactants</span>
-                        <template v-for="(species, index) in result.reactants" :key="species.formula + '-r'">
+                        <template
+                            v-for="(species, index) in result.reactants"
+                            :key="species.formula + '-r'"
+                        >
                             <span v-if="index > 0" class="plus">+</span>
                             <span class="coefficient">{{ species.coefficient }}</span>
                             <code class="chemical-formula">{{ species.formula }}</code>
@@ -164,7 +177,10 @@ debouncedBalance();
 
                     <div class="breakdown-side">
                         <span class="breakdown-title">Products</span>
-                        <template v-for="(species, index) in result.products" :key="species.formula + '-p'">
+                        <template
+                            v-for="(species, index) in result.products"
+                            :key="species.formula + '-p'"
+                        >
                             <span v-if="index > 0" class="plus">+</span>
                             <span class="coefficient">{{ species.coefficient }}</span>
                             <code class="chemical-formula">{{ species.formula }}</code>
