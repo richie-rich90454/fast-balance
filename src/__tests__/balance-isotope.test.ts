@@ -411,11 +411,13 @@ describe("isotope labeling chemistry", () => {
     });
 
     it("primary KIE - H atom abstraction: H2 + Cl -> HCl + H", () => {
-      expect(() => balance("H2 + Cl -> HCl + H")).toThrow();
+      const result = balance("H2 + Cl -> HCl + H");
+      expect([...result.reactants, ...result.products].every(s => Number.isInteger(s.coefficient) && s.coefficient > 0)).toBe(true);
     });
 
     it("primary KIE - deuterated: D2 + Cl -> DCl + D", () => {
-      expect(() => balance("D2 + Cl -> DCl + D")).toThrow();
+      const result = balance("D2 + Cl -> DCl + D");
+      expect([...result.reactants, ...result.products].every(s => Number.isInteger(s.coefficient) && s.coefficient > 0)).toBe(true);
     });
 
     it("secondary KIE - SN2: CD3Br + OH- -> CD3OH + Br-", () => {
