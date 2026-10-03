@@ -25,9 +25,20 @@
 npm install fast-balance
 ```
 
-Requires an environment with native `BigInt` (Node.js ≥ 12.20, all current browsers, modern bundlers).
+Requires an environment with native `BigInt` (Node.js ≥ 12.20, all current browsers, modern bundlers). For pre-ES2020 / ES3 engines (old browsers, legacy WebViews) use the ES3 build, which has an identical API and byte-identical results (exact limb arithmetic replaces `BigInt` automatically):
 
-The published bundle is about **19 kB minified / 7.6 kB gzipped**, with no runtime dependencies.
+```javascript
+const { balance } = require("fast-balance/legacy"); // Node, no BigInt needed
+```
+
+```html
+<script src="fast-balance.global.js"></script>
+<script>
+    FastBalance.balance("H2 + O2 -> H2O").equation;
+</script>
+```
+
+The published bundle is about **19 kB minified / 7.6 kB gzipped**, with no runtime dependencies. The legacy ES3 bundle is about **57 kB / 14 kB gzipped**, with no runtime dependencies.
 
 ---
 
@@ -132,8 +143,9 @@ The element set is bounded, so step 3 is `O(m²·n)` with constant `m` — linea
 ```bash
 npm install
 npm test            # full test suite (strict conformance + conservation fuzzer)
-npm run test:syntax # verify the built bundles are ES2020 syntax-clean
-npm run build       # ESM + CJS + type declarations
+npm run test:syntax # verify the built bundles are ES2020 / ES3 syntax-clean
+npm run test:legacy # parity + no-BigInt + ancient-engine smoke test for dist/legacy
+npm run build       # ESM + CJS + type declarations + ES3 legacy bundle
 npm run format      # apply the oxfmt style
 ```
 
