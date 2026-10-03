@@ -1,6 +1,6 @@
 # API Reference
 
-All exports are available from the package root:
+All exports are available from the package root, and identically from the ES3 legacy build (`fast-balance/legacy` in Node, or the `FastBalance` global from `fast-balance.global.js` in classic pages):
 
 ```ts
 import {
@@ -197,7 +197,8 @@ try {
 
 ## Guarantees
 
-- **Exactness** — the balancing path uses BigInt rational arithmetic; results never depend on floating point.
+- **Exactness** — the balancing path uses BigInt rational arithmetic; results never depend on floating point. The ES3 legacy build (`fast-balance/legacy`) substitutes exact limb arithmetic when `BigInt` is absent and returns identical results.
 - **Conservation** — every returned result is re-verified for element and charge conservation before it is returned.
 - **Minimality** — solutions are primitive integer vectors; in underdetermined systems the smallest positive solution is chosen when it can be found cheaply.
 - **Linearity** — because the element set is bounded, matrix elimination is `O(m²·n)` with `m = O(1)`, i.e. linear in the number of species.
+- **Parity** — modern and legacy builds share the public surface (same exports, same `BalanceError.code` values, same `underdetermined` flags); the legacy bundle is verified byte-identical over the conformance corpus, a 500-equation fuzzer, and no-`BigInt` / ancient-engine sandboxes (`npm run test:legacy`).
