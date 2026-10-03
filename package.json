@@ -12,14 +12,20 @@
             "types": "./dist/index.d.mts",
             "import": "./dist/index.mjs",
             "require": "./dist/index.cjs"
+        },
+        "./legacy": {
+            "require": "./dist/legacy/index.cjs"
         }
     },
     "scripts": {
-        "build": "tsdown",
+        "build": "tsdown && node scripts/build-legacy.js",
+        "build:modern": "tsdown",
+        "build:legacy": "node scripts/build-legacy.js",
         "prepublishOnly": "npm run test && npm run build",
         "test": "vitest run",
         "test:watch": "vitest",
-        "test:syntax": "es-check es2020 dist/index.mjs --module && es-check es2020 dist/index.cjs",
+        "test:syntax": "es-check es2020 dist/index.mjs --module && es-check es2020 dist/index.cjs && es-check es3 dist/legacy/index.cjs && es-check es3 dist/legacy/fast-balance.global.js",
+        "test:legacy": "node scripts/smoke-legacy.cjs",
         "bench": "vitest bench",
         "format": "oxfmt"
     },
@@ -94,6 +100,8 @@
     ],
     "license": "MIT",
     "devDependencies": {
+        "@swc/cli": "^0.8.1",
+        "@swc/core": "^1.16.13",
         "es-check": "^9.8.1",
         "oxfmt": "^0.71.0",
         "tsdown": "^0.23.0",
