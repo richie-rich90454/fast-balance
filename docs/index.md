@@ -96,6 +96,8 @@ audit("H2 + O2 -> H2O"); // element/charge totals per side
 npm install fast-balance
 ```
 
+Modern runtimes import from the package root. Pre-ES2020 / ES3 engines use `fast-balance/legacy` (same API, same results) — see [Installation](/installation) for details.
+
 ## Explore
 
 - [Installation](/installation) — install and import the library
