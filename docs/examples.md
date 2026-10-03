@@ -1,6 +1,6 @@
 # Examples
 
-Every example below is the exact output of the current library.
+Every example below is the exact output of the current library, on both the modern build and the ES3 legacy build (`fast-balance/legacy`).
 
 ## Basic synthesis
 
