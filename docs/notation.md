@@ -2,6 +2,8 @@
 
 `fast-balance` accepts a broad range of real-world chemical notation. Where a notation is genuinely ambiguous, it either follows the standard chemical convention or reports an explicit error — it never guesses silently.
 
+Notation support is identical on the modern and ES3 legacy (`fast-balance/legacy`) builds, including unicode normalisation.
+
 ---
 
 ## Equations and arrows
