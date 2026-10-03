@@ -8,6 +8,8 @@ Enter a chemical equation and choose the output format to see the balanced resul
 
 <BalanceDemo />
 
+The demo runs the modern build; the ES3 legacy build (`fast-balance/legacy`) returns identical equations for every input — see [Installation](/installation).
+
 ## How it works
 
 - Type or paste an unbalanced equation; the result updates as you type.
