@@ -94,11 +94,11 @@
     ],
     "license": "MIT",
     "devDependencies": {
-        "es-check": "^9.7.2",
-        "oxfmt": "^0.68.0",
+        "es-check": "^9.8.1",
+        "oxfmt": "^0.71.0",
         "tsdown": "^0.23.0",
         "typescript": "^7.0.2",
-        "vitest": "^5.0.1"
+        "vitest": "^5.0.3"
     },
     "repository": {
         "type": "git",
