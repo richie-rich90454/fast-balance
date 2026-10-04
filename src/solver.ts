@@ -122,7 +122,7 @@ export function solveSystem(matrix: Fraction[][], cols: number): Fraction[] {
     return result;
 }
 
-/** Scale a rational vector to the smallest integer vector (sign-normalised). */
+/** Scale a rational vector to the smallest integer vector (sign-normalized). */
 export function fractionsToIntegers(fracs: Fraction[]): number[] {
     let denLcm = 1;
     for (const f of fracs) if (!f.isZero()) denLcm = lcm(denLcm, Math.abs(f.den));
