@@ -7,7 +7,7 @@
  *
  * Exactness without `BigInt`: base-1e7 limb integers with the same RREF +
  * smallest-positive search as `solver.ts`, so results are identical.
- * Avoids `Set`, `Array.from`, `??`, `?.` to minimise shim load.
+ * Avoids `Set`, `Array.from`, `??`, `?.` to minimize shim load.
  */
 import { Fraction, gcd, lcm } from "../fraction";
 import { parseError } from "../errors";
