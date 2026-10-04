@@ -30,7 +30,7 @@ For classic `<script>` pages use the UMD bundle, which exposes the same API as t
 </script>
 ```
 
-How it works: the ES3 bundle runs native `BigInt` rationals when present and exact base-1e7 limb arithmetic otherwise, so pre-ES2020 engines (old browsers, legacy WebViews, IE-era script hosts) return byte-identical equations, error codes (`BalanceError.code`), and `underdetermined` flags. No API or behaviour differences exist between the modern and legacy builds; the legacy bundle is larger (~57 kB / 14 kB gzipped) because it carries its own exact arithmetic and runtime shims.
+How it works: the ES3 bundle runs native `BigInt` rationals when present and exact base-1e7 limb arithmetic otherwise, so pre-ES2020 engines (old browsers, legacy WebViews, IE-era script hosts) return byte-identical equations, error codes (`BalanceError.code`), and `underdetermined` flags. No API or behavior differences exist between the modern and legacy builds; the legacy bundle is larger (~57 kB / 14 kB gzipped) because it carries its own exact arithmetic and runtime shims.
 
 ## ES modules
 
