@@ -1,5 +1,5 @@
 /**
- * Parsing and normalisation of chemical notation.
+ * Parsing and normalization of chemical notation.
  *
  * Deliberately permissive where notation is unambiguous, and explicit where it
  * is not. Symbol validation is applied by `splitEquation` (the balancing
@@ -42,14 +42,14 @@ export interface Equation {
 }
 
 /* ------------------------------------------------------------------ */
-/* Unicode normalisation                                              */
+/* Unicode normalization                                              */
 /* ------------------------------------------------------------------ */
 
 const SUBSCRIPT_DIGITS = "₀₁₂₃₄₅₆₇₈₉";
 const SUPERSCRIPT_DIGITS = "⁰¹²³⁴⁵⁶⁷⁸⁹";
 
 /**
- * Normalise typographic input to a plain ASCII skeleton:
+ * Normalize typographic input to a plain ASCII skeleton:
  * unicode subscripts -> digits, unicode superscripts -> `^digits`,
  * unicode minus/dash variants -> `-`, bullet hydrate separators -> `·`.
  */
@@ -573,7 +573,7 @@ export function parseFormula(formula: string): ParsedUnit {
 const ARROW_UNICODE = /[→⇒⇌↔⇋⇀⇁]|<=>|<->|--+>|=>|==/g;
 
 /**
- * Normalise arrow spellings and drop reaction conditions written next to an
+ * Normalize arrow spellings and drop reaction conditions written next to an
  * arrow (`--Δ-->`, `->[cat]`, `-[cat]->`, `-> Δ`).
  */
 export function normalizeArrows(input: string): string {
