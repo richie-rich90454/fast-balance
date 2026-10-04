@@ -62,11 +62,11 @@ describe("strict spectator / underdetermined conformance", () => {
 });
 
 describe("strict notation conformance", () => {
-    it("normalises unicode subscripts", () => {
+    it("normalizes unicode subscripts", () => {
         expect(coeffs(balance("H₂ + O₂ -> H₂O"))).toEqual([2, 1, 2]);
     });
 
-    it("normalises unicode superscript charges", () => {
+    it("normalizes unicode superscript charges", () => {
         expect(coeffs(balance("Fe²⁺ + Cl⁻ -> FeCl₂"))).toEqual([1, 2, 1]);
     });
 
