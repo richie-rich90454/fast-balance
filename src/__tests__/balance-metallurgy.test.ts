@@ -242,7 +242,7 @@ describe("electrometallurgy – copper electrowinning", () => {
     });
 });
 
-describe("electrometallurgy – aluminium (Hall-Héroult)", () => {
+describe("electrometallurgy – aluminum (Hall-Héroult)", () => {
     it("balances 2Al2O3 + 3C -> 4Al + 3CO2 (overall Hall-Heroult)", () => {
         const r = balance("Al2O3 + C -> Al + CO2");
         expect(r.reactants.map((x) => x.coefficient)).toEqual([2, 3]);
@@ -419,13 +419,13 @@ describe("alloy formation – brass, bronze, steel", () => {
         expect(r.products.map((x) => x.coefficient)).toEqual([1]);
     });
 
-    it("balances 2Mg + Si -> Mg2Si (aluminium alloy precipitate)", () => {
+    it("balances 2Mg + Si -> Mg2Si (aluminum alloy precipitate)", () => {
         const r = balance("Mg + Si -> Mg2Si");
         expect(r.reactants.map((x) => x.coefficient)).toEqual([2, 1]);
         expect(r.products.map((x) => x.coefficient)).toEqual([1]);
     });
 
-    it("balances Al + 3Cu -> AlCu3 (aluminium-copper intermetallic)", () => {
+    it("balances Al + 3Cu -> AlCu3 (aluminum-copper intermetallic)", () => {
         try {
             const r = balance("Al + Cu -> AlCu3");
             expect(r.reactants.every((x) => x.coefficient > 0)).toBe(true);
