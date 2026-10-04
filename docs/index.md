@@ -61,7 +61,7 @@ Most balancers compute a nullspace in floating point and round the result. That 
 
 ## A note on the palette
 
-The site uses one flat colour drawn from **verdigris** — the green-teal patina that forms on weathered copper (basic copper carbonate and copper acetate). It is tuned separately for light and dark mode, with no gradients, glass or glow.
+The site uses one flat color drawn from **verdigris** — the green-teal patina that forms on weathered copper (basic copper carbonate and copper acetate). It is tuned separately for light and dark mode, with no gradients, glass or glow.
 
 ## Quick examples
 
@@ -97,6 +97,8 @@ npm install fast-balance
 ```
 
 Modern runtimes import from the package root. Pre-ES2020 / ES3 engines use `fast-balance/legacy` (same API, same results) — see [Installation](/installation) for details.
+
+Behavior is pinned by 11 459 hand-written test cases covering every element, the combustion and oxidation ladders, notation and parsing, the solver internals, the error contract, nuclear mode, and field-by-field parity between the native and ES3 backends.
 
 ## Explore
 
