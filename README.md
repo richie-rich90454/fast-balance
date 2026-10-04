@@ -128,7 +128,7 @@ A `+` separates species only when surrounded by spaces; `H2+O2` is ambiguous wit
 
 ## Algorithm
 
-1. **Parse** each species into an element-count map and net charge, normalising unicode, charges, hydrates, isotopes and groups.
+1. **Parse** each species into an element-count map and net charge, normalizing unicode, charges, hydrates, isotopes and groups.
 2. **Build** the conservation matrix: one row per element (lexicographic) plus a charge row when needed; reactants positive, products negative.
 3. **Reduce** the matrix to reduced row echelon form over exact BigInt rationals.
 4. **Select** the smallest all-positive primitive integer solution; for underdetermined systems the free directions are searched in increasing order.
@@ -148,6 +148,32 @@ npm run test:legacy # parity + no-BigInt + ancient-engine smoke test for dist/le
 npm run build       # ESM + CJS + type declarations + ES3 legacy bundle
 npm run format      # apply the oxfmt style
 ```
+
+The suite runs **11 459 tests across 110 files**, every one of them a distinct
+hand-written input — no generated case tables. Besides the strict conformance
+corpus and the conservation fuzzer, the `coverage-*.test.ts` files sweep:
+
+| Area | File |
+| --- | --- |
+| Every element symbol, five reaction shapes each | `coverage-elements.test.ts` |
+| Combustion, hydration, dehydration, hydrates, hydrides | `coverage-combustion-ladders.test.ts` |
+| Oxidation-state ladders, half-reactions, metal oxides and halides | `coverage-redox-half-reactions.test.ts` |
+| Halogenated, nitrogenous, sulfur and phosphorus chemistry | `coverage-halogen-and-nitrogen-organics.test.ts` |
+| Named industrial and laboratory processes | `coverage-industrial-processes.test.ts` |
+| Arrows, state symbols, charges, groups, unicode, complexes | `coverage-parser-notation.test.ts` |
+| Esterification, neutralisation, polymers, cofactors, hydrolysis | `coverage-organic-polymers.test.ts` |
+| `Fraction`, `gcd`/`lcm`, `buildMatrix`, `rref`, `solveSystem`, `balanceAll` | `coverage-solver-and-fraction.test.ts` |
+| Large systems, spectator species, `audit` | `coverage-large-and-spectator.test.ts` |
+| Error codes, messages, determinism, no partial results | `coverage-error-contracts.test.ts` |
+| Oxidation states, classification, redox direction | `coverage-analysis.test.ts` |
+| Nuclear mode: alpha, beta and positron decay, isotopes | `coverage-nuclear-mode.test.ts` |
+| ES3 backend vs. native solver, field by field | `coverage-es3-parity.test.ts` |
+
+`src/__tests__/support/` holds the hand-written helpers those files share:
+`independent.ts` re-reads a rendered equation with its own tokenizer, so
+"conservation holds" is confirmed by code that shares nothing with the solver,
+and `expected.ts` builds expected equations from first principles rather than
+from the library.
 
 Documentation lives in its own package:
 
