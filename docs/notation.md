@@ -2,7 +2,7 @@
 
 `fast-balance` accepts a broad range of real-world chemical notation. Where a notation is genuinely ambiguous, it either follows the standard chemical convention or reports an explicit error — it never guesses silently.
 
-Notation support is identical on the modern and ES3 legacy (`fast-balance/legacy`) builds, including unicode normalisation.
+Notation support is identical on the modern and ES3 legacy (`fast-balance/legacy`) builds, including unicode normalization.
 
 ---
 
@@ -91,7 +91,7 @@ balance("^238U -> ^234Th + ^4He", { mode: "nuclear" }).equation;
 // "^238U -> ^234Th + ^4He"
 ```
 
-Nuclear mode requires isotope labels for nuclides; an unlabelled nuclide raises a clear `PARSE_ERROR` rather than guessing a mass number.
+Nuclear mode requires isotope labels for nuclides; an unlabeled nuclide raises a clear `PARSE_ERROR` rather than guessing a mass number.
 
 ---
 
