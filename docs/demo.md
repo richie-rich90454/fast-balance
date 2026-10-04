@@ -31,7 +31,7 @@ The demo runs the modern build; the ES3 legacy build (`fast-balance/legacy`) ret
 | Parentheses    | `Ca3(PO4)2`                         | Groups atoms with a subscript    |
 | Hydrates       | `CuSO4·5H2O`                        | `·`, `•`, `*` separators         |
 | State symbols  | `(s)`, `(l)`, `(g)`, `(aq)`         | Stripped during parsing          |
-| Unicode        | `H₂O`, `Fe²⁺`                       | Normalised automatically         |
+| Unicode        | `H₂O`, `Fe²⁺`                       | Normalized automatically         |
 | Isotopes       | `^238U`, `C-14`                     | Used by nuclear mode             |
 | Groups         | `Ph`, `Me`, `Et`, `tBu`             | Expanded to atoms                |
 | Abbreviations  | `NADP`, `NADPH`, `ATP`              | Expanded to atoms                |
