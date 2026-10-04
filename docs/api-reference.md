@@ -137,8 +137,8 @@ oxidationStates(splitEquation("MnO4- + H+ -> Mn2+").reactants[0]);
 | `parseWithoutMultiplier(str)` | Parses a formula body (no hydrate multiplier).  |
 | `splitEquation(input)`        | `{ reactants, products }` of `Species`.         |
 | `stripStateSymbols(formula)`  | Removes `(s)`, `(aq)`, `(gas)`, …               |
-| `normalizeText(input)`        | Normalises unicode sub/superscripts and dashes. |
-| `normalizeArrows(input)`      | Normalises arrow variants and conditions.       |
+| `normalizeText(input)`        | Normalizes unicode sub/superscripts and dashes. |
+| `normalizeArrows(input)`      | Normalizes arrow variants and conditions.       |
 
 ```ts
 interface Species {
@@ -158,7 +158,7 @@ interface Species {
 | ---------------------------------- | ------------------------------------------------------- |
 | `buildMatrix(reactants, products)` | Conservation matrix (`Fraction[][]`) + column count.    |
 | `solveSystem(matrix, cols)`        | Rational nullspace vector (throws on full rank).        |
-| `fractionsToIntegers(fracs)`       | Smallest integer vector (sign-normalised).              |
+| `fractionsToIntegers(fracs)`       | Smallest integer vector (sign-normalized).              |
 | `gcd(a, b)` / `lcm(a, b)`          | Integer helpers.                                        |
 | `Fraction`                         | Exact rational with `num`/`den` and arithmetic methods. |
 
@@ -201,4 +201,35 @@ try {
 - **Conservation** — every returned result is re-verified for element and charge conservation before it is returned.
 - **Minimality** — solutions are primitive integer vectors; in underdetermined systems the smallest positive solution is chosen when it can be found cheaply.
 - **Linearity** — because the element set is bounded, matrix elimination is `O(m²·n)` with `m = O(1)`, i.e. linear in the number of species.
-- **Parity** — modern and legacy builds share the public surface (same exports, same `BalanceError.code` values, same `underdetermined` flags); the legacy bundle is verified byte-identical over the conformance corpus, a 500-equation fuzzer, and no-`BigInt` / ancient-engine sandboxes (`npm run test:legacy`).
+- **Parity** — modern and legacy builds share the public surface (same exports, same `BalanceError.code` values, same `underdetermined` flags); the legacy bundle is verified byte-identical over the conformance corpus, a 500-equation fuzzer, and no-`BigInt` / ancient-engine sandboxes (`npm run test:legacy`). In the unit suite, `src/__tests__/coverage-es3-parity.test.ts` compares the two backends field by field — matrix, echelon form, nullspace, integer scaling, conservation verdict — over a hand-written corpus.
+
+---
+
+## Test coverage
+
+`npm test` runs 11 459 distinct cases across 110 files. Nothing is generated:
+every input is written out by hand, so a passing run is evidence about those
+exact equations rather than about a random sample.
+
+| Area | File | Cases |
+| --- | --- | --- |
+| Element symbols and per-element reactions | `coverage-elements.test.ts` | 708 |
+| Combustion, hydration, hydrates, hydrides | `coverage-combustion-ladders.test.ts` | 713 |
+| Oxidation ladders and half-reactions | `coverage-redox-half-reactions.test.ts` | 1 257 |
+| Halogen, nitrogen, sulfur, phosphorus chemistry | `coverage-halogen-and-nitrogen-organics.test.ts` | 274 |
+| Industrial processes | `coverage-industrial-processes.test.ts` | 96 |
+| Notation and parser surface | `coverage-parser-notation.test.ts` | 376 |
+| Organic, polymer and cofactor chemistry | `coverage-organic-polymers.test.ts` | 163 |
+| `Fraction`, `gcd`/`lcm`, `buildMatrix`, `rref`, `solveSystem`, `balanceAll` | `coverage-solver-and-fraction.test.ts` | 326 |
+| Large systems, spectators, `audit` | `coverage-large-and-spectator.test.ts` | 107 |
+| Error contract | `coverage-error-contracts.test.ts` | 387 |
+| Oxidation states, classification, analysis | `coverage-analysis.test.ts` | 157 |
+| Nuclear mode | `coverage-nuclear-mode.test.ts` | 107 |
+| ES3 backend parity | `coverage-es3-parity.test.ts` | 1 661 |
+
+Two hand-written helpers make these suites independent of the implementation:
+`src/__tests__/support/independent.ts` re-tokenises a rendered equation and
+recomputes element and charge totals from scratch, and
+`src/__tests__/support/expected.ts` derives expected equations arithmetically
+(combustion stoichiometry, hydrate water counts, oxide scaling) instead of
+copying library output.
